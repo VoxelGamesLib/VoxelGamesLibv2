@@ -2,7 +2,8 @@ target/
 *.iml
 .idea/
 *.jar
-# testserver stuff
+## testserver stuff ##
+######################
 /testserver/world
 /testserver/world_nether
 /testserver/world_the_end
@@ -13,3 +14,9 @@ target/
 /testserver/usercache.json
 /testserver/whitelist.json
 /testserver/plugins/PluginMetrics
+# order always changes...
+/testserver/spigot.yml
+/testserver/commands.yml
+/testserver/bukkit.yml
+/testserver/server.properties
+/testserver/permissions.yml
