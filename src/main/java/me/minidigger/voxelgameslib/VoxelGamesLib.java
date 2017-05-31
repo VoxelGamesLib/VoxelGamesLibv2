@@ -46,7 +46,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
   private void registerCommands() {
     try (MCTiming ignored = timingManager.of("RegisterCommands")) {
-      new Reflections("").getSubTypesOf(BaseCommand.class).stream()
+      new Reflections("me.minidigger.voxelgameslib").getSubTypesOf(BaseCommand.class).stream()
           .filter(clazz -> !clazz.getPackage().getName().equals(
               "me.minidigger.voxelgameslib.command")) // don't register acf internal commands
           .filter(clazz -> clazz.getEnclosingClass() == null) // only register top level commands

@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.commands;
+package me.minidigger.voxelgameslib.command.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
