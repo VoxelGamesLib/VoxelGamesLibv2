@@ -1,0 +1,4 @@
+name: VoxelGamesLib
+version: ${project.version}
+main: me.minidigger.voxelgameslib.VoxelGamesLib
+authors: [MiniDigger]
