@@ -1,3 +1,15 @@
 target/
 *.iml
 .idea/
+*.jar
+# testserver stuff
+/testserver/world
+/testserver/world_nether
+/testserver/world_the_end
+/testserver/logs
+/testserver/banned-ips.json
+/testserver/banned-players.json
+/testserver/ops.json
+/testserver/usercache.json
+/testserver/whitelist.json
+/testserver/plugins/PluginMetrics

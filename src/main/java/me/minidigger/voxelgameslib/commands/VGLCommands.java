@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import com.google.inject.name.Named;
 import javax.inject.Inject;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("vgl|voxelgameslib")
@@ -17,7 +18,7 @@ public final class VGLCommands extends BaseCommand {
 
   @Subcommand("version")
   @CommandPermission("vgl.version")
-  public void version(Player player) {
-    player.sendMessage("You are using VoxelGamesLib version " + pluginVersion);
+  public void version(CommandSender sender) {
+    sender.sendMessage("You are using VoxelGamesLib version " + pluginVersion);
   }
 }
