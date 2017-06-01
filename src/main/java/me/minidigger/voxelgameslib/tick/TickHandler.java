@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.feature.Feature;
-import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.phase.Phase;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is
- * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link Game} instance<br> Every server mod has it's own
+ * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link
+ * me.minidigger.voxelgameslib.api.game.Game} instance<br> Every server mod has it's own
  * implementation of the TickHandler
  */
 public abstract class TickHandler implements Handler {

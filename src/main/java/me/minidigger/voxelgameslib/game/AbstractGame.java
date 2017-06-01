@@ -9,15 +9,23 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.elo.EloHandler;
+import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
+import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
 import me.minidigger.voxelgameslib.feature.Feature;
+import me.minidigger.voxelgameslib.feature.features.DuelFeature;
+import me.minidigger.voxelgameslib.feature.features.TeamFeature;
+import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.lang.LangKey;
+import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.BaseComponent;
 import me.minidigger.voxelgameslib.phase.Phase;
-import me.minidigger.voxelgameslib.player.GamePlayer;
+import me.minidigger.voxelgameslib.server.Server;
+import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
-import net.md_5.bungee.api.chat.BaseComponent;
+import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.Bukkit;
 
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
@@ -36,24 +44,17 @@ public abstract class AbstractGame implements Game {
   @Inject
   private EloHandler eloHandler;
 
-  @Getter
+  @Nonnull
   private final GameMode gameMode;
   protected Phase activePhase;
 
-  @Getter
   private UUID uuid;
 
-  @Getter
-  @Setter
   private int minPlayers;
-  @Getter
-  @Setter
   private int maxPlayers;
 
-  @Getter
-  private final List<GamePlayer> players = new ArrayList<>();
-  @Getter
-  private final List<GamePlayer> spectators = new ArrayList<>();
+  private final List<User> players = new ArrayList<>();
+  private final List<User> spectators = new ArrayList<>();
 
   private Map<String, Object> gameData = new HashMap<>();
 
@@ -80,14 +81,14 @@ public abstract class AbstractGame implements Game {
   public void broadcastMessage(@Nonnull BaseComponent... message) {
     players.forEach(u -> u.sendMessage(message));
     spectators.forEach(u -> u.sendMessage(message));
-    GamePlayer.getConsolePlayer().sendMessage(message);
+    server.getConsoleUser().sendMessage(message);
   }
 
   @Override
   public void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args) {
     players.forEach(user -> Lang.msg(user, key, args));
     spectators.forEach(user -> Lang.msg(user, key, args));
-    Lang.msg(server.getConsoleUser(), key, args);
+    Lang.msg(Bukkit.getConsoleSender(), key, args);
   }
 
   @Override
@@ -236,8 +237,20 @@ public abstract class AbstractGame implements Game {
     }
   }
 
+  @Nonnull
   @Override
-  public void join(@Nonnull GamePlayer user) {
+  public GameMode getGameMode() {
+    return gameMode;
+  }
+
+  @Nonnull
+  @Override
+  public Phase getActivePhase() {
+    return activePhase;
+  }
+
+  @Override
+  public void join(@Nonnull User user) {
     if (!getActivePhase().allowJoin()) {
       spectate(user);
       return;
@@ -251,7 +264,7 @@ public abstract class AbstractGame implements Game {
   }
 
   @Override
-  public void spectate(@Nonnull GamePlayer user) {
+  public void spectate(@Nonnull User user) {
     if (!getActivePhase().allowSpectate()) {
       Lang.msg(user, LangKey.GAME_CANT_SPECTATE);
     }
@@ -272,12 +285,12 @@ public abstract class AbstractGame implements Game {
   }
 
   @Override
-  public boolean isPlaying(@Nonnull GamePlayer user) {
+  public boolean isPlaying(@Nonnull User user) {
     return players.contains(user);
   }
 
   @Override
-  public boolean isSpectating(@Nonnull GamePlayer user) {
+  public boolean isSpectating(@Nonnull User user) {
     return spectators.contains(user);
   }
 
@@ -297,6 +310,38 @@ public abstract class AbstractGame implements Game {
     phase.setGame(this);
     phase.init();
     return phase;
+  }
+
+  @Override
+  public void setMaxPlayers(int maxPlayers) {
+    this.maxPlayers = maxPlayers;
+  }
+
+  @Override
+  public int getMaxPlayers() {
+    return maxPlayers;
+  }
+
+  @Override
+  public void setMinPlayers(int minPlayers) {
+    this.minPlayers = minPlayers;
+  }
+
+  @Override
+  public int getMinPlayers() {
+    return minPlayers;
+  }
+
+  @Nonnull
+  @Override
+  public List<User> getPlayers() {
+    return players;
+  }
+
+  @Nonnull
+  @Override
+  public List<User> getSpectators() {
+    return spectators;
   }
 
   @Nullable

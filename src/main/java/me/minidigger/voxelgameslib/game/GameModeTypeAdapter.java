@@ -18,26 +18,28 @@ import lombok.extern.java.Log;
 @Log
 public class GameModeTypeAdapter implements JsonDeserializer<GameMode> {
 
-    @Inject
-    private Injector injector;
+  @Inject
+  private Injector injector;
 
-    @Override
-    public GameMode deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        try {
-            JsonObject jsonObject = json.getAsJsonObject();
+  @Override
+  public GameMode deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+      throws JsonParseException {
+    try {
+      JsonObject jsonObject = json.getAsJsonObject();
 
-            String name = jsonObject.get("name").getAsString();
-            String className = jsonObject.get("className").getAsString();
-            GameRatingInfo ratingInfo = context.deserialize(jsonObject.get("ratingInfo"), GameRatingInfo.class);
+      String name = jsonObject.get("name").getAsString();
+      String className = jsonObject.get("className").getAsString();
+      GameRatingInfo ratingInfo = context
+          .deserialize(jsonObject.get("ratingInfo"), GameRatingInfo.class);
 
-            Class clazz = Class.forName(className);
-            //noinspection unchecked
-            GameMode gameMode = new GameMode(name, clazz, ratingInfo);
-            injector.injectMembers(gameMode);
-            return gameMode;
-        } catch (Exception e) {
-            log.log(Level.WARNING, "Could not deserialize gamemode:\n" + json.toString(), e);
-        }
-        return null;
+      Class clazz = Class.forName(className);
+      //noinspection unchecked
+      GameMode gameMode = new GameMode(name, clazz, ratingInfo);
+      injector.injectMembers(gameMode);
+      return gameMode;
+    } catch (Exception e) {
+      log.log(Level.WARNING, "Could not deserialize gamemode:\n" + json.toString(), e);
     }
+    return null;
+  }
 }

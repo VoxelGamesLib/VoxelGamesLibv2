@@ -9,16 +9,11 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
-import me.minidigger.voxelgameslib.api.command.CommandArguments;
-import me.minidigger.voxelgameslib.api.command.CommandHandler;
-import me.minidigger.voxelgameslib.api.command.CommandInfo;
-import me.minidigger.voxelgameslib.api.event.VGLEventHandler;
-import me.minidigger.voxelgameslib.api.exception.DependencyGraphException;
-import me.minidigger.voxelgameslib.api.exception.NoSuchFeatureException;
-import me.minidigger.voxelgameslib.api.feature.Feature;
-import me.minidigger.voxelgameslib.api.game.Game;
-import me.minidigger.voxelgameslib.api.graph.Graph;
-import me.minidigger.voxelgameslib.api.role.Role;
+import me.minidigger.voxelgameslib.exception.DependencyGraphException;
+import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
+import me.minidigger.voxelgameslib.feature.Feature;
+import me.minidigger.voxelgameslib.game.Game;
+import me.minidigger.voxelgameslib.graph.Graph;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
@@ -187,7 +182,6 @@ public abstract class AbstractPhase implements Phase {
   }
 
   @SuppressWarnings("JavaDoc")
-  @CommandInfo(name = "skip", perm = "command.skip", role = Role.MODERATOR)
   public void skip(@Nonnull CommandArguments arguments) {
     if (getGame().isPlaying(arguments.getSender()) || getGame()
         .isSpectating(arguments.getSender())) {

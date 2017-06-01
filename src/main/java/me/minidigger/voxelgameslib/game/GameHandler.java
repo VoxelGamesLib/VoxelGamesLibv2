@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
-import me.minidigger.voxelgameslib.event.VGLEventHandler;
 import me.minidigger.voxelgameslib.event.events.game.GameStartEvent;
 import me.minidigger.voxelgameslib.exception.GameModeNotAvailableException;
 import me.minidigger.voxelgameslib.exception.GameStartException;
@@ -35,228 +34,234 @@ import me.minidigger.voxelgameslib.user.User;
 @Singleton
 public class GameHandler implements Handler {
 
-    @Inject
-    private TickHandler tickHandler;
-    @Inject
-    private Injector injector;
-    @Inject
-    private VGLEventHandler eventHandler;
-    @Inject
-    @Named("GameDefinitionFolder")
-    private File gameDefinitionFolder;
-    @Inject
-    private PersistenceHandler persistenceHandler;
-    @Inject
-    private Gson gson;
+  @Inject
+  private TickHandler tickHandler;
+  @Inject
+  private Injector injector;
+  @Inject
+  private VGLEventHandler eventHandler;
+  @Inject
+  @Named("GameDefinitionFolder")
+  private File gameDefinitionFolder;
+  @Inject
+  private PersistenceHandler persistenceHandler;
+  @Inject
+  private Gson gson;
 
-    private final List<Game> games = new ArrayList<>();
-    private final List<GameMode> modes = new ArrayList<>();
-    private final List<GameDefinition> gameDefinitions = new ArrayList<>();
+  private final List<Game> games = new ArrayList<>();
+  private final List<GameMode> modes = new ArrayList<>();
+  private final List<GameDefinition> gameDefinitions = new ArrayList<>();
 
-    @Override
-    public void start() {
-        loadGameDefinitons();
+  @Override
+  public void start() {
+    loadGameDefinitons();
+  }
+
+  @Override
+  public void stop() {
+    games.forEach(Game::stop);
+    games.clear();
+  }
+
+  /**
+   * Loads all game definitions that are found in the game definition folder and registers a new,
+   * custom gamemode if needed
+   */
+  public void loadGameDefinitons() {
+    File[] files = gameDefinitionFolder.listFiles();
+    if (files == null) {
+      log.warning("Could not load game definitions: could not list files!");
+      return;
     }
 
-    @Override
-    public void stop() {
-        games.forEach(Game::stop);
-        games.clear();
+    for (File file : files) {
+      if (!file.getName().endsWith(".json")) {
+        continue;
+      }
+      try {
+        GameDefinition definition = gson
+            .fromJson(new JsonReader(new FileReader(file)), GameDefinition.class);
+        if (definition != null) {
+          gameDefinitions.add(definition);
+          registerGameMode(definition.getGameMode());
+        }
+      } catch (Exception e) {
+        log.log(Level.WARNING, "Could not load game definition " + file.getName(), e);
+      }
     }
 
-    /**
-     * Loads all game definitions that are found in the game definition folder and registers a new,
-     * custom gamemode if needed
-     */
-    public void loadGameDefinitons() {
-        File[] files = gameDefinitionFolder.listFiles();
-        if (files == null) {
-            log.warning("Could not load game definitions: could not list files!");
-            return;
-        }
+    log.info("Loaded " + gameDefinitions.size() + " game definitions");
+  }
 
-        for (File file : files) {
-            if (!file.getName().endsWith(".json")) {
-                continue;
-            }
-            try {
-                GameDefinition definition = gson.fromJson(new JsonReader(new FileReader(file)), GameDefinition.class);
-                if (definition != null) {
-                    gameDefinitions.add(definition);
-                    registerGameMode(definition.getGameMode());
-                }
-            } catch (Exception e) {
-                log.log(Level.WARNING, "Could not load game definition " + file.getName(), e);
-            }
-        }
+  /**
+   * Registers a new {@link GameMode}. Fails silently if that {@link GameMode} is already
+   * registered.<br>
+   *
+   * @param mode the new mode to be registered
+   */
+  public void registerGameMode(@Nonnull GameMode mode) {
+    if (!modes.contains(mode)) {
+      modes.add(mode);
+    }
+  }
 
-        log.info("Loaded " + gameDefinitions.size() + " game definitions");
+  /**
+   * Starts a new {@link Game} instance of that {@link GameMode}.
+   *
+   * @param mode the {@link GameMode} that should be started.
+   * @return the started {@link Game}
+   * @throws GameModeNotAvailableException if that {@link GameMode} is not registered on this
+   * server
+   * @throws GameStartException if something goes wrong while starting
+   */
+  @Nonnull
+  public Game startGame(@Nonnull GameMode mode) {
+    if (!modes.contains(mode)) {
+      throw new GameModeNotAvailableException(mode);
     }
 
-    /**
-     * Registers a new {@link GameMode}. Fails silently if that {@link GameMode} is already
-     * registered.<br>
-     *
-     * @param mode the new mode to be registered
-     */
-    public void registerGameMode(@Nonnull GameMode mode) {
-        if (!modes.contains(mode)) {
-            modes.add(mode);
+    Game game = injector.getInstance(mode.getGameClass());
+    game.setUuid(UUID.randomUUID());
+    games.add(game);
+
+    Optional<GameDefinition> def = getGameDefinition(mode);
+    if (def.isPresent()) {
+      game.initGameFromDefinition(def.get());
+    } else {
+      game.initGameFromModule();
+
+      GameDefinition definition = game.saveGameDefinition();
+      File file = new File(gameDefinitionFolder, mode.getName() + ".json");
+      if (!file.exists()) {
+        if (!file.getParentFile().exists()) {
+          file.getParentFile().mkdirs();
         }
+
+        try {
+          file.createNewFile();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+
+      try {
+        Writer writer = new FileWriter(file, false);
+        gson.toJson(definition, writer);
+        writer.close();
+      } catch (Exception ex) {
+        log.log(Level.WARNING, "Could not save game definition to file " + file.getAbsolutePath(),
+            ex);
+      }
     }
 
-    /**
-     * Starts a new {@link Game} instance of that {@link GameMode}.
-     *
-     * @param mode the {@link GameMode} that should be started.
-     * @return the started {@link Game}
-     * @throws GameModeNotAvailableException if that {@link GameMode} is not registered on this
-     *                                       server
-     * @throws GameStartException            if something goes wrong while starting
-     */
-    @Nonnull
-    public Game startGame(@Nonnull GameMode mode) {
-        if (!modes.contains(mode)) {
-            throw new GameModeNotAvailableException(mode);
-        }
+    // registering calles start
+    tickHandler.registerTickable(game);
 
-        Game game = injector.getInstance(mode.getGameClass());
-        game.setUuid(UUID.randomUUID());
-        games.add(game);
+    eventHandler.callEvent(new GameStartEvent(game));
 
-        Optional<GameDefinition> def = getGameDefinition(mode);
-        if (def.isPresent()) {
-            game.initGameFromDefinition(def.get());
-        } else {
-            game.initGameFromModule();
+    return game;
+  }
 
-            GameDefinition definition = game.saveGameDefinition();
-            File file = new File(gameDefinitionFolder, mode.getName() + ".json");
-            if (!file.exists()) {
-                if (!file.getParentFile().exists()) {
-                    file.getParentFile().mkdirs();
-                }
+  /**
+   * @return a list with all registered gamemodes
+   */
+  @Nonnull
+  public List<GameMode> getGameModes() {
+    return modes;
+  }
 
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+  /**
+   * Gets a list of all games the user is playing in or spectating (if spectating is set to true)
+   *
+   * @param user the user which games should be returned
+   * @param spectate if we should include games where the user spectates
+   * @return the games of that users
+   */
+  @Nonnull
+  public List<Game> getGames(@Nonnull User user, boolean spectate) {
+    List<Game> result = new ArrayList<>();
+    for (Game game : games) {
+      if (game.isPlaying(user)) {
+        result.add(game);
+        continue;
+      }
 
-            try {
-                Writer writer = new FileWriter(file, false);
-                gson.toJson(definition, writer);
-                writer.close();
-            } catch (Exception ex) {
-                log.log(Level.WARNING, "Could not save game definition to file " + file.getAbsolutePath(), ex);
-            }
-        }
+      if (spectate && game.isSpectating(user)) {
+        result.add(game);
+      }
+    }
+    return result;
+  }
 
-        // registering calles start
-        tickHandler.registerTickable(game);
+  /**
+   * @return a list with all currently running games
+   */
+  @Nonnull
+  public List<Game> getGames() {
+    return games;
+  }
 
-        eventHandler.callEvent(new GameStartEvent(game));
+  /**
+   * Gets a game definition based on the game mode
+   *
+   * @param mode the game mode
+   * @return the game definition that matches the game mode, if present
+   */
+  @Nonnull
+  public Optional<GameDefinition> getGameDefinition(GameMode mode) {
+    return gameDefinitions.stream()
+        .filter(gameDefinition -> gameDefinition.getGameMode().equals(mode)).findAny();
+  }
 
-        return game;
+
+  /**
+   * Removes a game because it was ended
+   *
+   * @param game the game to remove
+   */
+  public void removeGame(Game game) {
+    games.remove(game);
+  }
+
+  /**
+   * Searches for a game the user can join
+   *
+   * @param user the user who wants to join
+   * @param gameMode the gamemode he wants to join
+   * @return the game he should join, if present
+   */
+  public Optional<Game> findGame(User user, GameMode gameMode) {
+    //TODO replace with a real matchmaking algorithm
+    List<Game> matched = games.stream().filter(g -> g.getGameMode().equals(gameMode))
+        .collect(Collectors.toList());
+    if (matched.size() == 0) {
+      return Optional.empty();
+    }
+    if (matched.size() == 1) {
+      return Optional.of(matched.get(0));
     }
 
-    /**
-     * @return a list with all registered gamemodes
-     */
-    @Nonnull
-    public List<GameMode> getGameModes() {
-        return modes;
-    }
+    matched = matched.stream().filter(g -> g.getActivePhase().allowJoin())
+        .collect(Collectors.toList());
 
-    /**
-     * Gets a list of all games the user is playing in or spectating (if spectating is set to true)
-     *
-     * @param user     the user which games should be returned
-     * @param spectate if we should include games where the user spectates
-     * @return the games of that users
-     */
-    @Nonnull
-    public List<Game> getGames(@Nonnull User user, boolean spectate) {
-        List<Game> result = new ArrayList<>();
-        for (Game game : games) {
-            if (game.isPlaying(user)) {
-                result.add(game);
-                continue;
-            }
+    if (matched.size() == 0) {
+      matched = matched.stream().filter(g -> g.getActivePhase().allowSpectate())
+          .collect(Collectors.toList());
+      if (matched.size() == 0) {
+        return Optional.empty();
+      }
 
-            if (spectate && game.isSpectating(user)) {
-                result.add(game);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * @return a list with all currently running games
-     */
-    @Nonnull
-    public List<Game> getGames() {
-        return games;
-    }
-
-    /**
-     * Gets a game definition based on the game mode
-     *
-     * @param mode the game mode
-     * @return the game definition that matches the game mode, if present
-     */
-    @Nonnull
-    public Optional<GameDefinition> getGameDefinition(GameMode mode) {
-        return gameDefinitions.stream().filter(gameDefinition -> gameDefinition.getGameMode().equals(mode)).findAny();
-    }
-
-
-    /**
-     * Removes a game because it was ended
-     *
-     * @param game the game to remove
-     */
-    public void removeGame(Game game) {
-        games.remove(game);
-    }
-
-    /**
-     * Searches for a game the user can join
-     *
-     * @param user     the user who wants to join
-     * @param gameMode the gamemode he wants to join
-     * @return the game he should join, if present
-     */
-    public Optional<Game> findGame(User user, GameMode gameMode) {
-        //TODO replace with a real matchmaking algorithm
-        List<Game> matched = games.stream().filter(g -> g.getGameMode().equals(gameMode)).collect(Collectors.toList());
-        if (matched.size() == 0) {
-            return Optional.empty();
-        }
-        if (matched.size() == 1) {
-            return Optional.of(matched.get(0));
-        }
-
-        matched = matched.stream().filter(g -> g.getActivePhase().allowJoin()).collect(Collectors.toList());
-
-        if (matched.size() == 0) {
-            matched = matched.stream().filter(g -> g.getActivePhase().allowSpectate()).collect(Collectors.toList());
-            if (matched.size() == 0) {
-                return Optional.empty();
-            }
-
-            if (matched.size() == 1) {
-                return Optional.of(matched.get(0));
-            }
-
-            return Optional.of(matched.get(0));
-        }
-
-        if (matched.size() == 1) {
-            return Optional.of(matched.get(0));
-        }
-
+      if (matched.size() == 1) {
         return Optional.of(matched.get(0));
+      }
+
+      return Optional.of(matched.get(0));
     }
+
+    if (matched.size() == 1) {
+      return Optional.of(matched.get(0));
+    }
+
+    return Optional.of(matched.get(0));
+  }
 }

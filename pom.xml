@@ -103,6 +103,10 @@
       <id>aikar</id>
       <url>https://ci.emc.gs/nexus/content/groups/aikar/</url>
     </repository>
+    <repository>
+      <id>jskill</id>
+      <url>https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -152,6 +156,18 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.0</version>
+    </dependency>
+    <!-- jkill - true skill for java -->
+    <dependency>
+      <groupId>de.davidbilge</groupId>
+      <artifactId>jskill</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+    <!-- zip stuff -->
+    <dependency>
+      <groupId>net.lingala.zip4j</groupId>
+      <artifactId>zip4j</artifactId>
+      <version>1.3.2</version>
     </dependency>
   </dependencies>
 </project>

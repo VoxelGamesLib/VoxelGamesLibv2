@@ -10,7 +10,6 @@ import com.google.gson.JsonSerializer;
 import com.google.inject.Injector;
 import java.lang.reflect.Type;
 import java.util.logging.Level;
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
@@ -22,14 +21,13 @@ import lombok.extern.java.Log;
 @Singleton
 public class FeatureTypeAdapter implements JsonDeserializer<Feature>, JsonSerializer<Feature> {
 
-  public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.feature.features";
+  public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.api.feature.features";
 
   @Inject
   private Injector injector;
 
   @Override
-  public Feature deserialize(@Nonnull JsonElement json, @Nonnull Type typeOfT,
-      @Nonnull JsonDeserializationContext context)
+  public Feature deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
     try {
       JsonObject jsonObject = json.getAsJsonObject();
@@ -51,8 +49,7 @@ public class FeatureTypeAdapter implements JsonDeserializer<Feature>, JsonSerial
   }
 
   @Override
-  public JsonElement serialize(@Nonnull Feature src, @Nonnull Type typeOfSrc,
-      @Nonnull JsonSerializationContext context) {
+  public JsonElement serialize(Feature src, Type typeOfSrc, JsonSerializationContext context) {
     return context.serialize(src, src.getClass());
   }
 }
