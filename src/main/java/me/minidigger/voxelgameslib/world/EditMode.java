@@ -7,20 +7,16 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import me.minidigger.voxelgameslib.item.Hand;
-import me.minidigger.voxelgameslib.item.Item;
-import me.minidigger.voxelgameslib.item.ItemBuilder;
-import me.minidigger.voxelgameslib.item.Material;
-import me.minidigger.voxelgameslib.item.metadata.SkullItemMetaData;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
+import org.bukkit.Material;
 
 /**
  * Commands related to the edit mode
  */
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
-public class EditMode {
+public class EditMode{
 
   @Inject
   private Injector injector;

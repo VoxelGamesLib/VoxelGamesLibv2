@@ -17,7 +17,6 @@ import javax.inject.Singleton;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.exception.ConfigException;
 import me.minidigger.voxelgameslib.handler.Handler;
-import me.minidigger.voxelgameslib.log.LoggerHandler;
 
 /**
  * the config handler handles all configs (uhh)
@@ -32,8 +31,6 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
 
   @Inject
   private Gson gson;
-  @Inject
-  private LoggerHandler logHandler;
 
   private File globalConfigFile;
   private GlobalConfig globalConfig;
@@ -53,15 +50,6 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
 
       if (checkMigrate(globalConfig)) {
         migrate(globalConfigFile, globalConfig);
-      }
-
-      // setting of the log level. its placed here since the log handler is loaded before the config
-      try {
-        logHandler.setLevel(Level.parse(globalConfig.logLevel));
-      } catch (IllegalArgumentException ex) {
-        log.warning("Unknown log level " + globalConfig.logLevel
-            + " specified via config, setting back to INFO");
-        logHandler.setLevel(Level.INFO);
       }
     }
   }

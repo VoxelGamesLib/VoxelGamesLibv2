@@ -3,15 +3,11 @@ package me.minidigger.voxelgameslib.signs;
 import java.util.Optional;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
-import me.minidigger.voxelgameslib.block.metadata.SignMetaData;
 import me.minidigger.voxelgameslib.event.events.sign.SignUpdateEvent;
-import me.minidigger.voxelgameslib.event.events.user.UserInteractEvent;
-import me.minidigger.voxelgameslib.item.Material;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
-import me.minidigger.voxelgameslib.server.Server;
 
 @Log
 @SuppressWarnings({"JavaDoc", "Duplicates"})

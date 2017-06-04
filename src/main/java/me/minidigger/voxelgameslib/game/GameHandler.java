@@ -26,6 +26,7 @@ import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.Bukkit;
 
 /**
  * Handles all {@link Game} instances and all {@link GameMode}s.
@@ -38,8 +39,6 @@ public class GameHandler implements Handler {
   private TickHandler tickHandler;
   @Inject
   private Injector injector;
-  @Inject
-  private VGLEventHandler eventHandler;
   @Inject
   @Named("GameDefinitionFolder")
   private File gameDefinitionFolder;
@@ -157,7 +156,7 @@ public class GameHandler implements Handler {
     // registering calles start
     tickHandler.registerTickable(game);
 
-    eventHandler.callEvent(new GameStartEvent(game));
+    Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent(game));
 
     return game;
   }
@@ -181,12 +180,12 @@ public class GameHandler implements Handler {
   public List<Game> getGames(@Nonnull User user, boolean spectate) {
     List<Game> result = new ArrayList<>();
     for (Game game : games) {
-      if (game.isPlaying(user)) {
+      if (game.isPlaying(user.getUuid())) {
         result.add(game);
         continue;
       }
 
-      if (spectate && game.isSpectating(user)) {
+      if (spectate && game.isSpectating(user.getUuid())) {
         result.add(game);
       }
     }

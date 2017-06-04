@@ -4,9 +4,6 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +11,6 @@ import lombok.Data;
  * Represents a language a player can select to get all messages in that language
  */
 @Data
-@Entity
 @AllArgsConstructor
 public class Locale implements Serializable {
 
@@ -74,12 +70,6 @@ public class Locale implements Serializable {
   }
 
   private String name;
-  @Id
-  @Column(name = "LOCALE_TAG")
   @Expose
   private String tag;
-
-  protected Locale() {
-    // JPA
-  }
 }

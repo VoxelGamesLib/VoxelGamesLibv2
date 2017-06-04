@@ -2,10 +2,10 @@ package me.minidigger.voxelgameslib.phase;
 
 import com.google.gson.annotations.Expose;
 import javax.inject.Inject;
-import me.minidigger.voxelgameslib.bossbar.BossBar;
-import me.minidigger.voxelgameslib.bossbar.BossBarColor;
-import me.minidigger.voxelgameslib.bossbar.BossBarStyle;
-import me.minidigger.voxelgameslib.server.Server;
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 
 /**
  * A special {@link Phase} that automatically ends after a specified amount of ticks.
@@ -14,9 +14,6 @@ public abstract class TimedPhase extends AbstractPhase {
 
   @Expose
   private int ticks;
-
-  @Inject
-  private Server server;
 
   private double originalTicks;
   private BossBar bossBar;
@@ -45,10 +42,10 @@ public abstract class TimedPhase extends AbstractPhase {
 
     originalTicks = ticks;
 
-    bossBar = server.createBossBar(getName(), BossBarColor.BLUE, BossBarStyle.SPLIT_20);
+    bossBar = Bukkit.createBossBar(getName(), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
-    getGame().getPlayers().forEach(u -> bossBar.addUser(u));
-    getGame().getSpectators().forEach(u -> bossBar.addUser(u));
+    getGame().getPlayers().forEach(u -> bossBar.addPlayer(u.getPlayer()));
+    getGame().getSpectators().forEach(u -> bossBar.addPlayer(u.getPlayer()));
 
     started = true;
   }

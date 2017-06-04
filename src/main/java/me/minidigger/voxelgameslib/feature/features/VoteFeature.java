@@ -1,5 +1,7 @@
 package me.minidigger.voxelgameslib.feature.features;
 
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Optional;
 import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.world.WorldConfig;
+import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
     description = "Simple feature that lets ppl vote on maps")
@@ -101,34 +104,28 @@ public class VoteFeature extends AbstractFeature {
     Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
   }
 
+  @EventHandler
   public void onJoin(@Nonnull GameJoinEvent event) {
     if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
       sendVoteMessage(event.getUser());
     }
   }
 
-  public void vote(@Nonnull CommandArguments args) {
-    if (args.getNumArgs() == 0) {
-      sendVoteMessage(args.getSender());
+  @CommandAlias("vote")
+  public void vote(User sender, @Optional Integer map) {
+    if (map == null) {
+      sendVoteMessage(sender);
     } else {
-      if (votes.containsKey(args.getSender().getUuid())) {
-        Lang.msg(args.getSender(), LangKey.VOTE_ALREADY_VOTED);
+      if (votes.containsKey(sender.getUuid())) {
+        Lang.msg(sender, LangKey.VOTE_ALREADY_VOTED);
       } else {
-        int map;
-        try {
-          map = Integer.parseInt(args.getArg(0));
-        } catch (NumberFormatException ex) {
-          Lang.msg(args.getSender(), LangKey.GENERAL_INVALID_NUMBER, args.getArg(0));
-          return;
-        }
-
         if (availableMaps.get(map) == null) {
-          Lang.msg(args.getSender(), LangKey.VOTE_UNKNOWN_MAP, map);
+          Lang.msg(sender, LangKey.VOTE_UNKNOWN_MAP, map);
           return;
         }
 
-        votes.put(args.getSender().getUuid(), map);
-        Lang.msg(args.getSender(), LangKey.VOTE_SUBMITTED, map);
+        votes.put(sender.getUuid(), map);
+        Lang.msg(sender, LangKey.VOTE_SUBMITTED, map);
       }
     }
   }

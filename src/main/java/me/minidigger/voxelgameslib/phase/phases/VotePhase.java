@@ -1,6 +1,5 @@
 package me.minidigger.voxelgameslib.phase.phases;
 
-import me.minidigger.voxelgameslib.GameConstants;
 import me.minidigger.voxelgameslib.feature.features.ClearInventoryFeature;
 import me.minidigger.voxelgameslib.feature.features.GameModeFeature;
 import me.minidigger.voxelgameslib.feature.features.HealFeature;

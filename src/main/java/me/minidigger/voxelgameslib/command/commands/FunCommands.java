@@ -1,5 +1,9 @@
-package me.minidigger.voxelgameslib.fun;
+package me.minidigger.voxelgameslib.command.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.stream.JsonReader;
@@ -10,15 +14,16 @@ import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.TextComponent;
-import me.minidigger.voxelgameslib.server.Server;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.command.CommandSender;
 
 /**
  * Small class to do fun stuff
  */
 @Log
 @Singleton
-public class FunCommands {
+@CommandAlias("fun")
+public class FunCommands extends BaseCommand{
 
   @Inject
   private Gson gson;
@@ -39,7 +44,10 @@ public class FunCommands {
     }
   }
 
-  public void tacoCommand(String recipent) {
+  @Subcommand("taco")
+  @CommandAlias("taco")
+  @Syntax("<recipent> - whoever should receive the taco")
+  public void tacoCommand(CommandSender sender, String recipent) {
     if (tacoStuff == null) {
       arguments.getSender().sendMessage(new TextComponent("No tacos loaded :("));
       return;

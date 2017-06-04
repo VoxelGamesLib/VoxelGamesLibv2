@@ -5,6 +5,7 @@ import java.util.Arrays;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 @FeatureInfo(name = "NoBlockPlaceFeature", author = "MiniDigger", version = "1.0",
@@ -64,6 +65,7 @@ public class NoBlockPlaceFeature extends AbstractFeature {
   }
 
   @SuppressWarnings({"JavaDoc", "Duplicates"})
+  @EventHandler
   public void onBlockBreak(BlockPlaceEvent event) {
     if (getPhase().getGame().isPlaying(event.getPlayer().getUniqueId())) {
       if (blacklist.length != 0) {

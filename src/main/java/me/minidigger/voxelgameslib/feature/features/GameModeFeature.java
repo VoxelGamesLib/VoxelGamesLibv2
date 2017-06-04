@@ -4,7 +4,8 @@ import com.google.gson.annotations.Expose;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
-import me.minidigger.voxelgameslib.user.GameMode;
+import org.bukkit.GameMode;
+import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "GameModeFeature", author = "MiniDigger", version = "1.0",
     description = "Simple feature that changes the gamemode of all players in the phase")
@@ -15,12 +16,13 @@ public class GameModeFeature extends AbstractFeature {
 
   @Override
   public void start() {
-    getPhase().getGame().getPlayers().forEach(u -> u.setGameMode(mode));
+    getPhase().getGame().getPlayers().forEach(u -> u.getPlayer().setGameMode(mode));
   }
 
+  @EventHandler
   public void onJoin(GameJoinEvent event) {
     if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-      event.getUser().setGameMode(mode);
+      event.getUser().getPlayer().setGameMode(mode);
     }
   }
 

@@ -1,7 +1,7 @@
 package me.minidigger.voxelgameslib.signs;
 
-import me.minidigger.voxelgameslib.block.Block;
 import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.block.Block;
 
 /**
  * Represents a sign a user can press to cause a action

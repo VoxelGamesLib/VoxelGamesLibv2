@@ -1,10 +1,13 @@
-package me.minidigger.voxelgameslib.game;
+package me.minidigger.voxelgameslib.command.commands;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.game.Game;
+import me.minidigger.voxelgameslib.game.GameHandler;
+import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 

@@ -15,13 +15,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.VoxelGamesLib;
-import me.minidigger.voxelgameslib.block.Block;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.handler.Handler;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.TextComponent;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
-import me.minidigger.voxelgameslib.server.Server;
 import me.minidigger.voxelgameslib.timings.Timings;
 
 /**
@@ -32,11 +29,8 @@ import me.minidigger.voxelgameslib.timings.Timings;
 public class SignHandler implements Handler {
 
   @Inject
-  private VGLEventHandler eventHandler;
-  @Inject
   private PersistenceHandler persistenceHandler;
   @Inject
-  private Server server;
   private GlobalConfig config;
   @Inject
   private Injector injector;

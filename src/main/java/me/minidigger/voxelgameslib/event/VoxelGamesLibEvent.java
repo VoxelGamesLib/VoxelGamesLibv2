@@ -1,10 +1,18 @@
 package me.minidigger.voxelgameslib.event;
 
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 /**
  * Marker class for events
  */
-public abstract class VoxelGamesLibEvent extends Event {
+public class VoxelGamesLibEvent extends Event {
+
+  private static final HandlerList handlers = new HandlerList();
+
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
   //TODO integrade events back into bukkit
 }

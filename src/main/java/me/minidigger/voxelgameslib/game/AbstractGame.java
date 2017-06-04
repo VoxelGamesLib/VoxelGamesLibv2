@@ -19,12 +19,11 @@ import me.minidigger.voxelgameslib.feature.features.DuelFeature;
 import me.minidigger.voxelgameslib.feature.features.TeamFeature;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.BaseComponent;
 import me.minidigger.voxelgameslib.phase.Phase;
-import me.minidigger.voxelgameslib.server.Server;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 
 /**
@@ -35,8 +34,6 @@ public abstract class AbstractGame implements Game {
 
   @Inject
   private Injector injector;
-  @Inject
-  private VGLEventHandler eventHandler;
   @Inject
   private TickHandler tickHandler;
   @Inject

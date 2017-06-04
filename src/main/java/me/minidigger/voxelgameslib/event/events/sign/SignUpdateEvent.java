@@ -6,13 +6,14 @@ import lombok.Setter;
 import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.event.Cancellable;
 
 /**
  * Called when a sign updates. this could be called via a regular update task or a send packet,
  * depending on server mod implementation. This can also be called when a user first places a sign.
  */
 @Getter
-public class SignUpdateEvent implements VoxelGamesLibEvent, Cancelable {
+public class SignUpdateEvent extends VoxelGamesLibEvent implements Cancellable{
 
   private boolean canceled = false;
 
@@ -62,12 +63,12 @@ public class SignUpdateEvent implements VoxelGamesLibEvent, Cancelable {
   }
 
   @Override
-  public void setCanceled(boolean canceled) {
+  public void setCancelled(boolean canceled) {
     this.canceled = canceled;
   }
 
   @Override
-  public boolean isCanceled() {
+  public boolean isCancelled() {
     return canceled;
   }
 }

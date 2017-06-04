@@ -7,7 +7,7 @@ import me.minidigger.voxelgameslib.game.Game;
 /**
  * Parent class for game events
  */
-public class GameEvent implements VoxelGamesLibEvent {
+public class GameEvent extends VoxelGamesLibEvent {
 
   private Game game;
 

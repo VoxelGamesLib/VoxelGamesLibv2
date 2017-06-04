@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.game;
+package me.minidigger.voxelgameslib.command.commands;
 
 
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.game.GameHandler;
 
 @Log
 @Singleton

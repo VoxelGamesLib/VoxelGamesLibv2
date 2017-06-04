@@ -3,11 +3,9 @@ package me.minidigger.voxelgameslib.lang;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import me.minidigger.voxelgameslib.exception.LangException;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.ChatColor;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.BaseComponent;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.ComponentBuilder;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 
 /**
  * Gives quick access to the lang storage and translation and stuff

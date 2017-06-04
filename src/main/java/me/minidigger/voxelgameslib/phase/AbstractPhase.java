@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.phase;
 
+import co.aikar.commands.CommandManager;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,9 +37,7 @@ public abstract class AbstractPhase implements Phase {
   private List<Feature> features = new ArrayList<>();
 
   @Inject
-  private VGLEventHandler eventHandler;
-  @Inject
-  private CommandHandler commandHandler;
+  private CommandManager commandManager;
 
   private Game game;
 
@@ -126,12 +125,12 @@ public abstract class AbstractPhase implements Phase {
         return;
       }
       eventHandler.registerEvents(feature);
-      commandHandler.register(feature);
+      commandManager.register(feature);
       startedFeatures.add(feature);
     }
 
     eventHandler.registerEvents(this);
-    commandHandler.register(this);
+    commandManager.register(this);
   }
 
   @Override
@@ -148,12 +147,12 @@ public abstract class AbstractPhase implements Phase {
         return;
       }
       eventHandler.unregisterEvents(feature);
-      commandHandler.unregister(feature, true);
+      commandManager.unregister(feature, true);
     }
     startedFeatures.clear();
 
     eventHandler.unregisterEvents(this);
-    commandHandler.unregister(this, true);
+    commandManager.unregister(this, true);
   }
 
   @Override

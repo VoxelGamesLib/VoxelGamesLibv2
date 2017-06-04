@@ -8,6 +8,7 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
 import org.bukkit.boss.BossBar;
+import org.bukkit.event.EventHandler;
 
 /**
  * Small feature that handles stuff related to the lobby phase
@@ -62,6 +63,7 @@ public class LobbyFeature extends AbstractFeature {
     return new Class[]{ScoreboardFeature.class, BossBarFeature.class};
   }
 
+  @EventHandler
   public void onJoin(GameJoinEvent event) {
     if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
       scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
@@ -78,6 +80,7 @@ public class LobbyFeature extends AbstractFeature {
     }
   }
 
+  @EventHandler
   public void onLeave(GameLeaveEvent event) {
     if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
       scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(

@@ -1,10 +1,14 @@
-package me.minidigger.voxelgameslib.lang;
+package me.minidigger.voxelgameslib.command.commands;
 
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
+import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.lang.LangHandler;
+import me.minidigger.voxelgameslib.lang.LangKey;
+import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 
 /**

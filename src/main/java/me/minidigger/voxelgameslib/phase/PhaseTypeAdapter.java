@@ -21,7 +21,7 @@ import lombok.extern.java.Log;
 @Singleton
 public class PhaseTypeAdapter implements JsonDeserializer<Phase>, JsonSerializer<Phase> {
 
-  public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.api.phase.phases";
+  public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.phase.phases";
 
   @Inject
   private Injector injector;

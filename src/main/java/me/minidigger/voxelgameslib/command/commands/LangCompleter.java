@@ -1,8 +1,9 @@
-package me.minidigger.voxelgameslib.lang;
+package me.minidigger.voxelgameslib.command.commands;
 
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Singleton;
+import me.minidigger.voxelgameslib.lang.Locale;
 
 
 @Singleton

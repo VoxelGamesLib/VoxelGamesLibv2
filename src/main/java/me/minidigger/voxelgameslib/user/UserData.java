@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 import jskills.Rating;
 import lombok.Getter;
 import lombok.Setter;
+import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Role;
@@ -26,33 +27,23 @@ import me.minidigger.voxelgameslib.role.Role;
 /**
  * The data for a user
  */
-@Entity
 @Getter
 @Setter
 public class UserData implements Serializable {
 
   @Inject
-  @Transient
   private PersistenceHandler persistenceHandler;
 
-  @Transient
+  @Expose
   private UUID uuid;
 
-  @Id
   @Expose
-  private String id;
-
-  @Expose
-  @Enumerated(EnumType.STRING)
   private Role role = Role.DEFAULT;
 
-  @OneToOne
-  @JoinColumn(name = "LOCALE_TAG")
   @Expose
   private Locale locale = Locale.ENGLISH;
 
   @Expose
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private Map<String, Rating> ratings = new HashMap<>();
 
   @Expose
@@ -70,21 +61,16 @@ public class UserData implements Serializable {
    */
   public UserData(UUID id) {
     this.uuid = id;
-    this.id = id.toString();
-  }
-
-  protected UserData() {
-    // JPA
   }
 
   /**
    * @param mode the mode to get the rating for
    * @return the rating of this player for gamemode mode. will return default values if not present
    */
-  public Rating getRating(me.minidigger.voxelgameslib.api.game.GameMode mode) {
+  public Rating getRating(GameMode mode) {
     Rating rating = ratings.get(mode.getName());
     if (rating == null) {
-      rating = mode.getRatingInfo().getDefaultRating();
+      rating = mode.getDefaultRating();
       // no need to save here
     }
     return rating;
@@ -96,7 +82,7 @@ public class UserData implements Serializable {
    * @param mode the mode the rating was achieved in
    * @param rating the new rating
    */
-  public void saveRating(me.minidigger.voxelgameslib.api.game.GameMode mode, Rating rating) {
+  public void saveRating(GameMode mode, Rating rating) {
     ratings.put(mode.getName(), rating);
     persistenceHandler.getProvider().saveUserData(this);
   }

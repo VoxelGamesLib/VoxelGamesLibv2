@@ -114,7 +114,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.11.2-R0.1-SNAPSHOT</version>
+      <version>1.12-pre5-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <!-- Command Framework (also timings) -->
@@ -168,6 +168,18 @@
       <groupId>net.lingala.zip4j</groupId>
       <artifactId>zip4j</artifactId>
       <version>1.3.2</version>
+    </dependency>
+    <!-- ordered property files-->
+    <dependency>
+      <groupId>nu.studer</groupId>
+      <artifactId>java-ordered-properties</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    <!-- taskchain -->
+    <dependency>
+      <groupId>co.aikar</groupId>
+      <artifactId>taskchain-core</artifactId>
+      <version>3.4.3</version>
     </dependency>
   </dependencies>
 </project>

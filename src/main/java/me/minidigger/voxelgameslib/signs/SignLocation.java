@@ -1,60 +1,41 @@
 package me.minidigger.voxelgameslib.signs;
 
 import com.google.gson.annotations.Expose;
+import java.beans.Transient;
 import java.util.Optional;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-import me.minidigger.voxelgameslib.block.Block;
-import me.minidigger.voxelgameslib.block.metadata.SignMetaData;
 import me.minidigger.voxelgameslib.event.events.sign.SignUpdateEvent;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.map.Vector3D;
-import me.minidigger.voxelgameslib.server.Server;
-import me.minidigger.voxelgameslib.world.World;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 
 /**
  * Stores the location of a traced sign into the db
  */
 @Data
-@Entity
 public class SignLocation {
 
-  @Id
-  @GeneratedValue
   private Long id;
 
   @Expose
-  @Column
   private Vector3D location;
 
   @Expose
-  @Column
   private String world;
 
-  @Transient
   private Block block;
 
   @Expose
-  @Column
-  @Setter(AccessLevel.PRIVATE)
   private String lines0;
   @Expose
-  @Column
-  @Setter(AccessLevel.PRIVATE)
   private String lines1;
   @Expose
-  @Column
-  @Setter(AccessLevel.PRIVATE)
   private String lines2;
   @Expose
-  @Column
-  @Setter(AccessLevel.PRIVATE)
   private String lines3;
 
   /**
@@ -65,12 +46,12 @@ public class SignLocation {
    * @param server the server to get block information from
    * @param lines the lines this sign currently has
    */
-  public SignLocation(Vector3D location, String world, Server server, String[] lines) {
+  public SignLocation(Vector3D location, String world, String[] lines) {
     this.location = location;
     this.world = world;
 
-    Optional<World> w = server.getWorld(world);
-    if (!w.isPresent()) {
+    World world = Bukkit.getWorld(world);
+    if (world == null) {
       throw new VoxelGameLibException("Unknown world " + world);
     }
 
@@ -79,11 +60,6 @@ public class SignLocation {
       throw new VoxelGameLibException("No sign at world " + world + " location " + location);
     }
     setLines(lines);
-  }
-
-  protected SignLocation() {
-    //JPA
-    setLines(new String[]{lines0, lines1, lines2, lines3});
   }
 
   public void setLines(String[] lines) {

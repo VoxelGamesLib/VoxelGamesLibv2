@@ -20,8 +20,6 @@ package me.minidigger.voxelgameslib.map;
 import com.google.gson.annotations.Expose;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -29,19 +27,15 @@ import org.bukkit.Location;
  * Represents an immutable vector in three dimensions. This class is not
  * final by design.
  */
-@Embeddable
 public class Vector3D implements Cloneable {
 
   public static final double EPSILON = 1e-6;
 
   @Expose
-  @Column
   private final double x;
   @Expose
-  @Column
   private final double y;
   @Expose
-  @Column
   private final double z;
 
   protected Vector3D() {

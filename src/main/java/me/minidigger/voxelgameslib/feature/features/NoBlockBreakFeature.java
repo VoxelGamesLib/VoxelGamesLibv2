@@ -6,6 +6,7 @@ import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
 @FeatureInfo(name = "NoBlockBreakFeature", author = "MiniDigger", version = "1.0",
@@ -67,6 +68,7 @@ public class NoBlockBreakFeature extends AbstractFeature {
   }
 
   @SuppressWarnings({"JavaDoc", "Duplicates"})
+  @EventHandler
   public void onBlockBreak(BlockBreakEvent event) {
     if (getPhase().getGame().isPlaying(event.getPlayer().getUniqueId())) {
       if (blacklist.length != 0) {

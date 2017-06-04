@@ -5,9 +5,9 @@ import javax.annotation.Nonnull;
 import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
-import me.minidigger.voxelgameslib.block.Direction;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.BaseComponent;
 import me.minidigger.voxelgameslib.role.Permission;
+import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -55,7 +55,7 @@ public interface User extends IPlayer, ISupportPartialPlay,
   /**
    * @return the direction the player is looking in
    */
-  Direction getFacingDirection();
+  BlockFace getFacingDirection();
 
   /**
    * @return the bukkit player

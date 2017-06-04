@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 @FeatureInfo(name = "NoDamageFeature", author = "MiniDigger", version = "1.0",
@@ -34,6 +35,7 @@ public class NoDamageFeature extends AbstractFeature {
   }
 
   @SuppressWarnings("JavaDoc")
+  @EventHandler
   public void onDmg(EntityDamageEvent event) {
     if (getPhase().getGame().isPlaying(event.getEntity().getUniqueId())) {
       event.setCancelled(true);

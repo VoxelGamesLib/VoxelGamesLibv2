@@ -4,25 +4,21 @@ import com.google.inject.Injector;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import me.minidigger.voxelgameslib.event.events.user.AsyncUserLoginEvent;
-import me.minidigger.voxelgameslib.event.events.user.UserJoinEvent;
-import me.minidigger.voxelgameslib.event.events.user.UserLeaveEvent;
-import me.minidigger.voxelgameslib.event.events.user.UserLoginEvent;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
-import me.minidigger.voxelgameslib.server.Server;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 @Singleton
 @SuppressWarnings("JavaDoc")// no need for javadoc on event listeners
-public class UserListener {
+public class UserListener implements Listener{
 
   @Inject
   private UserHandler handler;
   @Inject
   private Injector injector;
-  @Inject
-  private Server server;
 
+  @EventHandler
   public void onAsyncLogin(@Nonnull AsyncUserLoginEvent event) {
     if (!handler.login(event.getUuid())) {
       // something went horribly wrong
@@ -32,6 +28,7 @@ public class UserListener {
     }
   }
 
+  @EventHandler
   public void onLogin(@Nonnull UserLoginEvent event) {
     if (!handler.hasLoggedIn(event.getUuid())) {
       // worst case: load data sync
@@ -48,11 +45,13 @@ public class UserListener {
     handler.join(event.getUuid(), event.getPlayerObject());
   }
 
+  @EventHandler
   public void onJoin(@Nonnull UserJoinEvent event) {
     // tp to spawn
     event.getUser().teleport(server.getSpawn().getFirst(), server.getSpawn().getSecond());
   }
 
+  @EventHandler
   public void onLeave(@Nonnull UserLeaveEvent event) {
     handler.logout(event.getUser().getUuid());
   }

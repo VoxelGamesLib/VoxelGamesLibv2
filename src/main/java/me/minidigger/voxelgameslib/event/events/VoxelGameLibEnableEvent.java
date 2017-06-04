@@ -5,6 +5,6 @@ import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
 /**
  * Called when this plugin was enabled
  */
-public class VoxelGameLibEnableEvent implements VoxelGamesLibEvent {
+public class VoxelGameLibEnableEvent extends VoxelGamesLibEvent {
 
 }

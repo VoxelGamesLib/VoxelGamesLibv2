@@ -6,11 +6,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.lang.LangKey;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.BaseComponent;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.Tickable;
 import me.minidigger.voxelgameslib.user.User;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 /**
  * A {@link Game} is the representation of an instance of a {@link GameMode}. Handles everything
@@ -48,16 +48,16 @@ public interface Game extends Tickable {
   void initGameFromModule();
 
   /**
-   * Sends a message to every {@link me.minidigger.voxelgameslib.user.User} that
-   * is related to this game. This could be a participant in the game or a spectator.
+   * Sends a message to every {@link me.minidigger.voxelgameslib.user.User} that is related to this
+   * game. This could be a participant in the game or a spectator.
    *
    * @param message the message to be send
    */
   void broadcastMessage(@Nonnull BaseComponent... message);
 
   /**
-   * Sends a message to everr User that
-   * is related to this game. This could be a participant in the game or a spectator.
+   * Sends a message to everr User that is related to this game. This could be a participant in the
+   * game or a spectator.
    *
    * @param key the message to be send
    * @param args the arguments for the key

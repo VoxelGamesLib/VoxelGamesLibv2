@@ -2,7 +2,7 @@ package me.minidigger.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
 import javax.annotation.Nonnull;
-import me.minidigger.voxelgameslib.item.Item;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * A chest marker is a marker that is a chest (uh)<br>
@@ -12,7 +12,7 @@ public class ChestMarker extends Marker {
 
   @Nonnull
   @Expose
-  private final Item[] items;
+  private final ItemStack[] items;
 
   /**
    * constructs a new chest marker
@@ -21,7 +21,7 @@ public class ChestMarker extends Marker {
    * @param name the name of this chest marker (the name of the inventory)
    * @param items the items that ar in that chest
    */
-  public ChestMarker(@Nonnull Vector3D loc, @Nonnull String name, @Nonnull Item[] items) {
+  public ChestMarker(@Nonnull Vector3D loc, @Nonnull String name, @Nonnull ItemStack[] items) {
     super(loc, 0.0, name);
     this.items = items;
   }
@@ -30,7 +30,7 @@ public class ChestMarker extends Marker {
    * @return the items that are in this chest
    */
   @Nonnull
-  public Item[] getItems() {
+  public ItemStack[] getItems() {
     return items;
   }
 }
