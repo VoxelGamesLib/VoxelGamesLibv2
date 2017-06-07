@@ -17,7 +17,7 @@ import javax.inject.Singleton;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.user.User;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.text.TextComponent;
 
 /**
  * Small class to do fun stuff

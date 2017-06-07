@@ -11,6 +11,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.elo.EloHandler;
+import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
+import me.minidigger.voxelgameslib.event.events.game.GameEndEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
@@ -23,8 +25,9 @@ import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.kyori.text.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
@@ -55,6 +58,8 @@ public abstract class AbstractGame implements Game {
 
   private Map<String, Object> gameData = new HashMap<>();
 
+  private boolean aborted = false;
+
   /**
    * Constructs a new {@link AbstractGame}
    *
@@ -78,14 +83,17 @@ public abstract class AbstractGame implements Game {
   public void broadcastMessage(@Nonnull BaseComponent... message) {
     players.forEach(u -> u.sendMessage(message));
     spectators.forEach(u -> u.sendMessage(message));
-    server.getConsoleUser().sendMessage(message);
+
+    for(BaseComponent msg : message) {
+      Bukkit.getConsoleSender().sendMessage(msg.toString());
+    }
   }
 
   @Override
   public void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args) {
     players.forEach(user -> Lang.msg(user, key, args));
     spectators.forEach(user -> Lang.msg(user, key, args));
-    Lang.msg(Bukkit.getConsoleSender(), key, args);
+    Bukkit.getConsoleSender().sendMessage(Lang.string(key, args));
   }
 
   @Override
@@ -177,6 +185,19 @@ public abstract class AbstractGame implements Game {
     handleElo(winnerTeam, winnerUser);
     //TODO handle stats
 
+    int duration = 0; // todo: add game duration (possibly to activePhase)
+
+    if(winnerTeam != null) {
+      Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
+    } else if(winnerUser != null) {
+      List<User> winningUsers = new ArrayList<User>();
+      winningUsers.add(winnerUser);
+
+      Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winningUsers, duration, aborted));
+    } else {
+      Bukkit.getPluginManager().callEvent(new GameEndEvent(this, new ArrayList<User>(), duration, aborted));
+    }
+
     broadcastMessage(LangKey.GAME_END);
 
     end();
@@ -200,6 +221,7 @@ public abstract class AbstractGame implements Game {
   public void abortGame() {
     log.finer("abort  game");
 
+    aborted = true;
     broadcastMessage(LangKey.GAME_ABORT);
 
     end();
@@ -255,7 +277,7 @@ public abstract class AbstractGame implements Game {
 
     if (!isPlaying(user)) {
       players.add(user);
-      eventHandler.callEvent(new GameJoinEvent(this, user));
+      Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
       broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
     }
   }
@@ -275,10 +297,10 @@ public abstract class AbstractGame implements Game {
   public void leave(@Nonnull User user) {
     players.remove(user);
     spectators.remove(user);
-    eventHandler.callEvent(new GameLeaveEvent(this, user));
+    Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
     broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
-    // tp to spawn
-    user.teleport(server.getSpawn().getFirst(), server.getSpawn().getSecond());
+
+    user.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
   }
 
   @Override
