@@ -12,7 +12,7 @@ import me.minidigger.voxelgameslib.feature.features.NoDamageFeature;
 import me.minidigger.voxelgameslib.feature.features.ScoreboardFeature;
 import me.minidigger.voxelgameslib.feature.features.SpawnFeature;
 import me.minidigger.voxelgameslib.phase.TimedPhase;
-import me.minidigger.voxelgameslib.user.GameMode;
+import org.bukkit.GameMode;
 
 /**
  * The grace phase is the phase before the real action starts. pvp is disabled, players are expected

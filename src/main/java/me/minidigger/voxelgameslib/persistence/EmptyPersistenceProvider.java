@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.signs.SignLocation;
-import me.minidigger.voxelgameslib.user.UserData;
+import me.minidigger.voxelgameslib.user.User;
 
 /**
  * Empty persistence provider, used when persistence is disabled
@@ -24,12 +24,12 @@ public class EmptyPersistenceProvider implements PersistenceProvider {
   }
 
   @Override
-  public void saveUserData(UserData user) {
+  public void saveUser(User user) {
     // ignore
   }
 
   @Override
-  public Optional<UserData> loadUserData(UUID id) {
+  public Optional<User> loadUser(UUID id) {
     return Optional.empty();
   }
 

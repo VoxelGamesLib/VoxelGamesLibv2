@@ -6,7 +6,7 @@ import java.util.UUID;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.signs.SignLocation;
-import me.minidigger.voxelgameslib.user.UserData;
+import me.minidigger.voxelgameslib.user.User;
 
 /**
  * A persistence provider handles loading and saving of all kinds of data
@@ -18,15 +18,15 @@ public interface PersistenceProvider extends Handler {
    *
    * @param user the user data to persist
    */
-  void saveUserData(UserData user);
+  void saveUser(User user);
 
   /**
    * Tries to load the data for a user based on a uuid
    *
    * @param id the uuid of the user data
-   * @return the userdata, if present
+   * @return the User, if present
    */
-  Optional<UserData> loadUserData(UUID id);
+  Optional<User> loadUser(UUID id);
 
   /**
    * Persists a locale

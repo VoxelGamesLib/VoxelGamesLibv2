@@ -2,8 +2,10 @@ package me.minidigger.voxelgameslib.lang;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -14,11 +16,10 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
  */
 public class Lang {
 
+  @Inject
   private static LangHandler handler;
-
-  static void setLangHandler(@Nonnull LangHandler handler) {
-    Lang.handler = handler;
-  }
+  @Inject
+  private static UserHandler userHandler;
 
   /**
    * Creates an ComponentBuilder based on that LangKey
@@ -247,7 +248,12 @@ public class Lang {
     return result.toString();
   }
 
-  public static void broadcast(BaseComponent... message){
-    for()
+  /**
+   * Sends a message to all players
+   *
+   * @param message the message to send
+   */
+  public static void broadcast(BaseComponent... message) {
+    userHandler.getUsers().forEach(user -> user.sendMessage(message));
   }
 }

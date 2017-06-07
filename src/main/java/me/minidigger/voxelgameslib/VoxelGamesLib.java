@@ -9,20 +9,24 @@ import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.command.commands.FunCommands;
 import me.minidigger.voxelgameslib.command.commands.GameCommands;
 import me.minidigger.voxelgameslib.command.commands.LangCommands;
+import me.minidigger.voxelgameslib.command.commands.RoleCommands;
 import me.minidigger.voxelgameslib.command.commands.VGLCommands;
+import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
+import me.minidigger.voxelgameslib.lang.Locale;
+import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,15 +55,12 @@ public final class VoxelGamesLib extends JavaPlugin {
     // commands
     commandManager = ACF.createManager(this);
 
-    // gson
-    gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-
     // task chain
     taskChainFactory = BukkitTaskChainFactory.create(this);
 
     // guice
     VoxelGamesLibModule voxelGamesLibModule = new VoxelGamesLibModule(this, timingManager,
-        commandManager, getDescription().getVersion(), gson);
+        commandManager, getDescription().getVersion(), getDataFolder());
     injector = Guice.createInjector(voxelGamesLibModule);
     injector.injectMembers(this);
 
@@ -76,7 +77,6 @@ public final class VoxelGamesLib extends JavaPlugin {
     timingManager = null;
     commandManager = null;
     injector = null;
-    gson = null;
   }
 
   private void registerCommandContexts() {
@@ -86,6 +86,10 @@ public final class VoxelGamesLib extends JavaPlugin {
     con.registerContext(GameMode.class, c -> gameHandler.getGameModes().stream()
         .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
         .orElseThrow(() -> new VoxelGameLibException("Unknown gamemode " + c.getFirstArg())));
+    con.registerContext(Locale.class, c -> Locale.fromName(c.getFirstArg()).orElse(Locale
+        .fromTag(c.getFirstArg())
+        .orElseThrow(() -> new LangException("Unknown locale " + c.getFirstArg()))));
+    con.registerContext(Role.class, c -> Role.fromName(c.getFirstArg()));
   }
 
   private void registerCommandReplacements() {
@@ -93,6 +97,11 @@ public final class VoxelGamesLib extends JavaPlugin {
     rep.addReplacement("@gamemodes",
         gameHandler.getGameModes().stream().map(GameMode::getName).collect(
             Collectors.joining("|")));
+    rep.addReplacement("@locales",
+        Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag())
+            .collect(Collectors.joining("|")));
+    rep.addReplacement("@roles",
+        Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
 
     rep.addReplacement("%user", "voxelgameslib.role.user");
     rep.addReplacement("%premium", "voxelgameslib.role.premium");
@@ -105,6 +114,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     commandManager.registerCommand(injector.getInstance(GameCommands.class));
     commandManager.registerCommand(injector.getInstance(LangCommands.class));
     commandManager.registerCommand(injector.getInstance(VGLCommands.class));
+    commandManager.registerCommand(injector.getInstance(RoleCommands.class));
   }
 
 
@@ -127,5 +137,9 @@ public final class VoxelGamesLib extends JavaPlugin {
   @Nonnull
   public static <T> TaskChain<T> newSharedChain(@Nonnull String name) {
     return taskChainFactory.newSharedChain(name);
+  }
+
+  public Injector getInjector() {
+    return injector;
   }
 }

@@ -1,7 +1,6 @@
 package me.minidigger.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
-import com.google.inject.Injector;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -10,12 +9,14 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import jskills.Rating;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
+import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
+import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
+import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.chat.ComponentSerializer;
-import me.minidigger.voxelgameslib.role.Permission;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -24,15 +25,19 @@ import org.bukkit.entity.Player;
  */
 public class GameUser implements User {
 
-  @Expose
-  private UserData userData;
-
-  private Player player;
+  // TODO this call is a mess, clean it up
 
   @Inject
   private GlobalConfig config;
+  @Inject
+  private PersistenceHandler persistenceHandler;
 
   private BaseComponent[] displayName;
+
+  @Expose
+  private User User;
+
+  private Player player;
 
   @Expose
   private UUID uuid;
@@ -59,7 +64,7 @@ public class GameUser implements User {
 
   @Override
   public void sendMessage(@Nonnull BaseComponent... message) {
-
+//TODO GameUser#sendMessage
   }
 
   @Override
@@ -95,6 +100,47 @@ public class GameUser implements User {
   @Override
   public Player getPlayer() {
     return player;
+  }
+
+  @Override
+  public Locale getLocale() {
+    return locale;
+  }
+
+  @Override
+  public void setLocale(Locale locale) {
+    this.locale = locale;
+  }
+
+  @Override
+  public Role getRole() {
+    return role;
+  }
+
+  @Override
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  @Override
+  public Rating getRating(GameMode mode) {
+    Rating rating = ratings.get(mode.getName());
+    if (rating == null) {
+      rating = mode.getDefaultRating();
+      // no need to save here
+    }
+    return rating;
+  }
+
+  @Override
+  public void saveRating(GameMode mode, Rating rating) {
+    ratings.put(mode.getName(), rating);
+    persistenceHandler.getProvider().saveUser(this);
+  }
+
+  @Override
+  public Map<String, Rating> getRatings() {
+    return ratings;
   }
 
   @Override

@@ -1,10 +1,14 @@
 package me.minidigger.voxelgameslib.user;
 
-import com.google.inject.Injector;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jskills.Rating;
+import me.minidigger.voxelgameslib.game.GameMode;
+import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
+import me.minidigger.voxelgameslib.role.Role;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.block.BlockFace;
@@ -36,6 +40,41 @@ public class GameConsoleUser implements ConsoleUser {
     return null;
   }
 
+  @Override
+  public Locale getLocale() {
+    return Locale.ENGLISH;
+  }
+
+  @Override
+  public void setLocale(Locale locale) {
+// ignore
+  }
+
+  @Override
+  public Role getRole() {
+    return Role.ADMIN;
+  }
+
+  @Override
+  public void setRole(Role role) {
+    // ignore
+  }
+
+  @Override
+  public Rating getRating(GameMode mode) {
+    return mode.getDefaultRating();
+  }
+
+  @Override
+  public void saveRating(GameMode mode, Rating rating) {
+
+  }
+
+  @Override
+  public Map<String, Rating> getRatings() {
+    return new HashMap<>();
+  }
+
   @Nonnull
   @Override
   public UUID getUuid() {
@@ -44,7 +83,7 @@ public class GameConsoleUser implements ConsoleUser {
 
   @Override
   public void sendMessage(@Nonnull BaseComponent... message) {
-
+//TODO GameConsoleUser#sendMessage
   }
 
   @Override
