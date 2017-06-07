@@ -3,11 +3,12 @@ package me.minidigger.voxelgameslib.feature;
 import com.google.gson.annotations.Expose;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.phase.Phase;
+import org.bukkit.event.Listener;
 
 /**
  * Abstract implementation of Phase
  */
-public abstract class AbstractFeature implements Feature {
+public abstract class AbstractFeature implements Feature, Listener {
 
   @Expose
   private String name;

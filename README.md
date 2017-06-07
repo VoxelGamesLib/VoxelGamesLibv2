@@ -1,9 +1,14 @@
-# VoxelGamesLibv2
-Yeah, I did rewrite it, again
+# VoxelGamesLib v2
+
+Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
+
+> WIP! THIS PROJECT IS STILL IN ACTIVE DEVELOPMENT. Not all features are currently implemented. Feel free to contribute!
+
+This will be a large-scaled, fully-modular and well-documented minigames API.
 
 # Building
 
-its maven, go figure.  
+its maven, go figure.
 install also installs the jar into /testserver/plugins, if you don't want that use package.
 
 # Dev Setup

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
  * This event is called when a player is eliminated from a game.<br>Gametypes should call this themselves.
  */
 public class PlayerEliminationEvent extends PlayerEvent {
-    
+
     @Getter private Game game;
 
     public PlayerEliminationEvent(@Nonnull User user, @Nonnull Game game) {
