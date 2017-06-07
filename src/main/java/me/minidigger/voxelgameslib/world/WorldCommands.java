@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
-import me.minidigger.voxelgameslib.libs.net.md_5.bungee.api.chat.TextComponent;
 import me.minidigger.voxelgameslib.map.Map;
+import net.kyori.text.TextComponent;
 
 /**
  * Commands related to worlds
