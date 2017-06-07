@@ -67,4 +67,12 @@ public interface User extends IPlayer, ISupportPartialPlay,
    * @return the players currently selected locale
    */
   Locale getLocale();
+
+  /**
+   * sets the players locale. locale doesn't need to be installed, will default to default server
+   * locale
+   *
+   * @param locale the new locale
+   */
+  void setLocale(Locale locale);
 }

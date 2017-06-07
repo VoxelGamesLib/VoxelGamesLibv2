@@ -4,16 +4,13 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
-import java.util.Optional;
-import javax.annotation.Nonnull;
+import co.aikar.commands.annotation.Syntax;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.lang.Locale;
-import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.user.User;
 
 /**
@@ -25,10 +22,6 @@ public class LangCommands {
 
   @Inject
   private LangHandler langHandler;
-  @Inject
-  private GlobalConfig globalConfig;
-  @Inject
-  private PersistenceHandler persistenceHandler;
 
   @CommandAlias("lang")
   @CommandPermission("%user")
@@ -43,21 +36,16 @@ public class LangCommands {
   }
 
   @Subcommand("set")
-  public void set(User sender, ) {
-    Optional<Locale> loc = Locale.fromTag(args.getArg(0));
-    if (!loc.isPresent()) {
-      loc = Locale.fromName(args.getArg(0));
-      if (!loc.isPresent()) {
-        Lang.msg(args.getSender(), LangKey.LANG_UNKNOWN, args.getArg(0));
-        return;
-      }
-    }
-    args.getSender().getData().setLocale(loc.get());
-    Lang.msg(args.getSender(), LangKey.LANG_UPDATE, loc.get().getName());
-    if (!langHandler.getInstalledLocales().contains(loc.get())) {
-      Lang.msg(args.getSender(), LangKey.LANG_NOT_ENABLED, loc.get().getName());
+  @CommandPermission("%user")
+  @Syntax("<locale> - the new locale you want to use")
+  @CommandCompletion("@locales")
+  public void set(User sender, Locale locale) {
+    sender.setLocale(locale);
+    Lang.msg(sender, LangKey.LANG_UPDATE, locale.getName());
+    if (!langHandler.getInstalledLocales().contains(locale)) {
+      Lang.msg(sender, LangKey.LANG_NOT_ENABLED, locale.getName());
     }
 
-    persistenceHandler.getProvider().saveUserData(args.getSender().getData());
+    //TODO force user data save
   }
 }
