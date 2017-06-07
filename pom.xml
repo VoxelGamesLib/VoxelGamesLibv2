@@ -107,6 +107,10 @@
       <id>jskill</id>
       <url>https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/</url>
     </repository>
+    <repository>
+      <id>java-utilities</id>
+      <url>http://dl.bintray.com/etienne/java-utilities</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -178,8 +182,8 @@
     <!-- taskchain -->
     <dependency>
       <groupId>co.aikar</groupId>
-      <artifactId>taskchain-core</artifactId>
-      <version>3.4.3</version>
+      <artifactId>taskchain-bukkit</artifactId>
+      <version>3.6.0</version>
     </dependency>
   </dependencies>
 </project>

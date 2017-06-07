@@ -2,20 +2,22 @@ package me.minidigger.voxelgameslib.command.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.stream.JsonReader;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.user.User;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.command.CommandSender;
 
 /**
  * Small class to do fun stuff
@@ -23,7 +25,7 @@ import org.bukkit.command.CommandSender;
 @Log
 @Singleton
 @CommandAlias("fun")
-public class FunCommands extends BaseCommand{
+public class FunCommands extends BaseCommand {
 
   @Inject
   private Gson gson;
@@ -47,18 +49,16 @@ public class FunCommands extends BaseCommand{
   @Subcommand("taco")
   @CommandAlias("taco")
   @Syntax("<recipent> - whoever should receive the taco")
-  public void tacoCommand(CommandSender sender, String recipent) {
+  @CommandCompletion("@players")
+  @CommandPermission("%user")
+  public void tacoCommand(User user, String recipent) {
     if (tacoStuff == null) {
-      arguments.getSender().sendMessage(new TextComponent("No tacos loaded :("));
+      user.sendMessage(new TextComponent("No tacos loaded :("));
       return;
     }
 
     String message = taco(recipent);
-    server.broadcastMessage(new TextComponent("The server " + message));
-  }
-
-  public List<String> tacoCompleter(CommandArguments arguments) {
-    return CommandUtil.completeWithPlayerNames(arguments.getArg(0));
+    Lang.broadcast(new TextComponent("The server " + message));
   }
 
   private String taco(String user) {

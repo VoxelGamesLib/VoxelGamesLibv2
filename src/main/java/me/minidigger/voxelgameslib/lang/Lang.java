@@ -5,6 +5,8 @@ import javax.annotation.Nullable;
 import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 /**
@@ -30,8 +32,8 @@ public class Lang {
   }
 
   /**
-   * Creates an ComponentBuilder based on that LangKey<br>
-   * The specified arguments are used to fill out placeholders
+   * Creates an ComponentBuilder based on that LangKey<br> The specified arguments are used to fill
+   * out placeholders
    *
    * @param key the lang key that should be translated
    * @param args the arguments that should be replaying placeholders
@@ -43,8 +45,8 @@ public class Lang {
   }
 
   /**
-   * Creates an ComponentBuilder based on that LangKey<br>
-   * Allows to specify a locale that should be used to translate
+   * Creates an ComponentBuilder based on that LangKey<br> Allows to specify a locale that should be
+   * used to translate
    *
    * @param key the lang key that should be translated
    * @param loc the locale that should be used to translate the key
@@ -56,9 +58,8 @@ public class Lang {
   }
 
   /**
-   * Creates an ComponentBuilder based on that LangKey<br>
-   * Allows to specify a locale that should be used to translate<br>
-   * The specified arguments are used to fill out placeholders
+   * Creates an ComponentBuilder based on that LangKey<br> Allows to specify a locale that should be
+   * used to translate<br> The specified arguments are used to fill out placeholders
    *
    * @param key the lang key that should be translated
    * @param loc the locale that should be used to translate the key
@@ -76,8 +77,7 @@ public class Lang {
   }
 
   /**
-   * Parses a string into a component builder.<br>
-   * Takes care of {color} variables
+   * Parses a string into a component builder.<br> Takes care of {color} variables
    *
    * @param string the input string
    * @return the outputted and properly filled component builder
@@ -122,7 +122,9 @@ public class Lang {
           continue outer;
         }
       }
-      stringBuilder.append(ChatColor.COLOR_CHAR).append(savedColor.getCode()).append(token);
+      // why don't you just expose getCode?....
+      stringBuilder.append(ChatColor.COLOR_CHAR).append(savedColor.toString().substring(1, 1))
+          .append(token);
     }
 
     return stringBuilder.toString();
@@ -141,8 +143,7 @@ public class Lang {
 
   /**
    * Sends the user a message that contains the translated version (using his local) of the
-   * specified key<br>
-   * The specified arguments are used to fill out placeholders
+   * specified key<br> The specified arguments are used to fill out placeholders
    *
    * @param user the user that should receive the message
    * @param key the lang key that should be translated
@@ -164,8 +165,8 @@ public class Lang {
   }
 
   /**
-   * Translates the specified lang key into a string<br>
-   * The specified arguments are used to fill out placeholders
+   * Translates the specified lang key into a string<br> The specified arguments are used to fill
+   * out placeholders
    *
    * @param key the key to translate
    * @param args the args that should be replacing placeholders
@@ -177,8 +178,8 @@ public class Lang {
   }
 
   /**
-   * Translates the specified lang key into a string<br>
-   * Allows to specify a locale that should be used to translate
+   * Translates the specified lang key into a string<br> Allows to specify a locale that should be
+   * used to translate
    *
    * @param key the key to translate
    * @param loc the locale that should be used to translate the key
@@ -190,9 +191,8 @@ public class Lang {
   }
 
   /**
-   * Translates the specified lang key into a string<br>
-   * Allows to specify a locale that should be used to translate<br>
-   * The specified arguments are used to fill out placeholders
+   * Translates the specified lang key into a string<br> Allows to specify a locale that should be
+   * used to translate<br> The specified arguments are used to fill out placeholders
    *
    * @param key the key to translate
    * @param loc the locale that should be used to translate the key
@@ -229,7 +229,7 @@ public class Lang {
   }
 
   @Nonnull
-  public static String legacyColors(String message) {
+  public static String legacyColors(@Nonnull String message) {
     StringBuilder result = new StringBuilder();
     String[] tokens = message.split("\\{|}");
     outer:
@@ -245,5 +245,9 @@ public class Lang {
     }
 
     return result.toString();
+  }
+
+  public static void broadcast(BaseComponent... message){
+    for()
   }
 }

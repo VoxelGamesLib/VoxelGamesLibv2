@@ -1,5 +1,9 @@
 package me.minidigger.voxelgameslib.command.commands;
 
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -10,6 +14,7 @@ import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
+import me.minidigger.voxelgameslib.user.User;
 
 /**
  * Handles all commands related to lang and i18n
@@ -25,18 +30,20 @@ public class LangCommands {
   @Inject
   private PersistenceHandler persistenceHandler;
 
-  public void lang(@Nonnull CommandArguments args) {
+  @CommandAlias("lang")
+  @CommandPermission("%user")
+  public void lang(User sender) {
     StringBuilder sb = new StringBuilder();
     for (Locale loc : langHandler.getInstalledLocales()) {
       sb.append(loc.getTag()).append(" (").append(loc.getName()).append("), ");
     }
     sb.setLength(sb.length() - 1);
-    Lang.msg(args.getSender(), LangKey.LANG_INSTALLED, sb.toString());
-    Lang.msg(args.getSender(), LangKey.LANG_CURRENT,
-        args.getSender().getData().getLocale().getName());
+    Lang.msg(sender, LangKey.LANG_INSTALLED, sb.toString());
+    Lang.msg(sender, LangKey.LANG_CURRENT, sender.getLocale().getName());
   }
 
-  public void set(@Nonnull CommandArguments args) {
+  @Subcommand("set")
+  public void set(User sender, ) {
     Optional<Locale> loc = Locale.fromTag(args.getArg(0));
     if (!loc.isPresent()) {
       loc = Locale.fromName(args.getArg(0));

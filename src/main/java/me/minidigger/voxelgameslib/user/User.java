@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
+import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.block.BlockFace;
@@ -62,4 +63,8 @@ public interface User extends IPlayer, ISupportPartialPlay,
    */
   Player getPlayer();
 
+  /**
+   * @return the players currently selected locale
+   */
+  Locale getLocale();
 }
