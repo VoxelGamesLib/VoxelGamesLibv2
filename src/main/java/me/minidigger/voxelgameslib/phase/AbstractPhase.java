@@ -125,12 +125,12 @@ public abstract class AbstractPhase implements Phase {
         return;
       }
       eventHandler.registerEvents(feature);
-      commandManager.register(feature);
+      commandManager.registerCommand(features);
       startedFeatures.add(feature);
     }
 
     eventHandler.registerEvents(this);
-    commandManager.register(this);
+    commandManager.registerCommand(this);
   }
 
   @Override

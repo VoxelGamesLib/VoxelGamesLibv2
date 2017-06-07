@@ -34,8 +34,6 @@ public class LangHandler implements Handler {
 
   @Override
   public void start() {
-    Lang.setLangHandler(this);
-
     defaultLocale = configHandler.get().defaultLocale;
 
     defaultStorage = voxelGameLib.getInjector().getInstance(LangStorage.class);

@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.command.commands;
 
+import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
@@ -18,7 +19,7 @@ import me.minidigger.voxelgameslib.user.User;
  */
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
-public class LangCommands {
+public class LangCommands extends BaseCommand{
 
   @Inject
   private LangHandler langHandler;

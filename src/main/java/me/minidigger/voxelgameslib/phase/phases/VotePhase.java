@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.phase.phases;
 
+import me.minidigger.voxelgameslib.GameConstants;
 import me.minidigger.voxelgameslib.feature.features.ClearInventoryFeature;
 import me.minidigger.voxelgameslib.feature.features.GameModeFeature;
 import me.minidigger.voxelgameslib.feature.features.HealFeature;
@@ -10,7 +11,7 @@ import me.minidigger.voxelgameslib.feature.features.NoDamageFeature;
 import me.minidigger.voxelgameslib.feature.features.SpawnFeature;
 import me.minidigger.voxelgameslib.feature.features.VoteFeature;
 import me.minidigger.voxelgameslib.phase.TimedPhase;
-import me.minidigger.voxelgameslib.user.GameMode;
+import org.bukkit.GameMode;
 
 /**
  * Can be used to vote on the next gamemode or the next map.

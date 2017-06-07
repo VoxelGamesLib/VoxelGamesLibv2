@@ -12,7 +12,7 @@ import me.minidigger.voxelgameslib.feature.features.NoDamageFeature;
 import me.minidigger.voxelgameslib.feature.features.ScoreboardFeature;
 import me.minidigger.voxelgameslib.feature.features.SpawnFeature;
 import me.minidigger.voxelgameslib.phase.AbstractPhase;
-import me.minidigger.voxelgameslib.user.GameMode;
+import org.bukkit.GameMode;
 
 /**
  * The lobby phase is the phase that part before the game starts. players can do cool activities

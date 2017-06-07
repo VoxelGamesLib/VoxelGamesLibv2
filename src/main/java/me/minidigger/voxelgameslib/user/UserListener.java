@@ -1,6 +1,5 @@
 package me.minidigger.voxelgameslib.user;
 
-import com.google.inject.Injector;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -8,51 +7,53 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 @Singleton
 @SuppressWarnings("JavaDoc")// no need for javadoc on event listeners
-public class UserListener implements Listener{
+public class UserListener implements Listener {
 
   @Inject
   private UserHandler handler;
-  @Inject
-  private Injector injector;
 
   @EventHandler
-  public void onAsyncLogin(@Nonnull AsyncUserLoginEvent event) {
-    if (!handler.login(event.getUuid())) {
+  public void onAsyncLogin(@Nonnull AsyncPlayerPreLoginEvent event) {
+    if (!handler.login(event.getUniqueId())) {
       // something went horribly wrong
-      event.setCanceled(true);
       // we don't have a locale here since the data was not loaded :/
-      event.setKickMessage(Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
+      event.disallow(Result.KICK_OTHER, Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
     }
   }
 
   @EventHandler
-  public void onLogin(@Nonnull UserLoginEvent event) {
-    if (!handler.hasLoggedIn(event.getUuid())) {
+  public void onLogin(@Nonnull PlayerLoginEvent event) {
+    if (!handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
       // worst case: load data sync
-      boolean login = handler.login(event.getUuid());
-      if (!login || !handler.hasLoggedIn(event.getUuid())) {
+      boolean login = handler.login(event.getPlayer().getUniqueId());
+      if (!login || !handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
         // something went horribly wrong
-        event.setCanceled(true);
         // we don't have a locale here since the data was not loaded :/
-        event.setKickMessage(Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
+        event.disallow(PlayerLoginEvent.Result.KICK_OTHER,
+            Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
         return;
       }
     }
 
-    handler.join(event.getUuid(), event.getPlayerObject());
+    handler.join(event.getPlayer().getUniqueId(), event.getPlayer());
   }
 
   @EventHandler
-  public void onJoin(@Nonnull UserJoinEvent event) {
+  public void onJoin(@Nonnull PlayerJoinEvent event) {
     // tp to spawn
-    event.getUser().teleport(server.getSpawn().getFirst(), server.getSpawn().getSecond());
+    event.getPlayer().teleport(server.getSpawn().getFirst(), server.getSpawn().getSecond());
   }
 
   @EventHandler
-  public void onLeave(@Nonnull UserLeaveEvent event) {
-    handler.logout(event.getUser().getUuid());
+  public void onLeave(@Nonnull PlayerQuitEvent event) {
+    handler.logout(event.getPlayer().getUniqueId());
   }
 }

@@ -20,6 +20,7 @@ import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.timings.Timings;
+import net.md_5.bungee.api.chat.TextComponent;
 
 /**
  * Handles placeholder sign and interaction signs

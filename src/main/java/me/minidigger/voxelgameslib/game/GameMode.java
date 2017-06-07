@@ -15,10 +15,8 @@ public class GameMode extends jskills.GameInfo {
   @Expose
   private String name;
 
-  private Class<? extends Game> gameClass;
-
   @Expose
-  private String className;
+  private Class<? extends Game> gameClass;
 
   private GameInfo info;
 
@@ -34,7 +32,6 @@ public class GameMode extends jskills.GameInfo {
     super(initialMean, initialStandardDeviation, beta, dynamicFactor, drawProbability);
     this.name = name;
     this.gameClass = gameClass;
-    className = gameClass.getName();
     GameInfo[] infos = gameClass.getAnnotationsByType(GameInfo.class);
     if (infos.length > 0) {
       info = infos[0];

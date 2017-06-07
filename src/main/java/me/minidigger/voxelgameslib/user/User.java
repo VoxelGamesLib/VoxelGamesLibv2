@@ -1,14 +1,18 @@
 package me.minidigger.voxelgameslib.user;
 
+import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
+import jskills.Rating;
+import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.role.Permission;
 import net.kyori.text.BaseComponent;
+import me.minidigger.voxelgameslib.role.Role;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -76,4 +80,35 @@ public interface User extends IPlayer, ISupportPartialPlay,
    * @param locale the new locale
    */
   void setLocale(Locale locale);
+
+  /**
+   * @return the role of that player
+   */
+  Role getRole();
+
+  /**
+   * changes the role of the user
+   *
+   * @param role the new role
+   */
+  void setRole(Role role);
+
+  /**
+   * @param mode the mode to get the rating for
+   * @return the rating of this player for gamemode mode. will return default values if not present
+   */
+  Rating getRating(GameMode mode);
+
+  /**
+   * Saves a rating for this users. will override existing ratings
+   *
+   * @param mode the mode the rating was achieved in
+   * @param rating the new rating
+   */
+  void saveRating(GameMode mode, Rating rating);
+
+  /**
+   * @return all ratings for this player
+   */
+  Map<String, Rating> getRatings();
 }

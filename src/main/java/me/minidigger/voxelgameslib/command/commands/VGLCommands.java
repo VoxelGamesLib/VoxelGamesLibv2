@@ -16,7 +16,7 @@ public final class VGLCommands extends BaseCommand {
   private String pluginVersion;
 
   @Subcommand("version")
-  @CommandPermission("vgl.version")
+  @CommandPermission("%user")
   public void version(CommandSender sender) {
     sender.sendMessage("You are using VoxelGamesLib version " + pluginVersion);
   }

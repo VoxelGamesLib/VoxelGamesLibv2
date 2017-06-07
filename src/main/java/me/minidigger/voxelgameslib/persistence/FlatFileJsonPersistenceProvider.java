@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.signs.SignLocation;
-import me.minidigger.voxelgameslib.user.UserData;
+import me.minidigger.voxelgameslib.user.User;
 
 /**
  * Simple persistence provider which uses gson to save the stuff as json to a flat file<br>
@@ -31,8 +31,8 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
   @Named("DataFolder")
   private File folder;
 
-  private File userDataFile;
-  private Map<UUID, UserData> userDataMap;
+  private File UserFile;
+  private Map<UUID, User> UserMap;
 
   private File localeFile;
   private List<Locale> localeList;
@@ -48,20 +48,20 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     }
 
     // users
-    userDataFile = new File(folder, "userdata.json");
-    userDataMap = new HashMap<>();
+    UserFile = new File(folder, "User.json");
+    UserMap = new HashMap<>();
 
-    if (!userDataFile.exists()) {
+    if (!UserFile.exists()) {
       saveUsers();
     }
 
     try {
-      String json = Files.readAllLines(userDataFile.toPath()).stream()
+      String json = Files.readAllLines(UserFile.toPath()).stream()
           .collect(Collectors.joining());
       //noinspection unchecked
-      userDataMap = gson.fromJson(json, Map.class);
-      if (userDataMap == null) {
-        userDataMap = new HashMap<>();
+      UserMap = gson.fromJson(json, Map.class);
+      if (UserMap == null) {
+        UserMap = new HashMap<>();
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -108,28 +108,28 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
   @Override
   public void stop() {
-    userDataMap.clear();
+    UserMap.clear();
     localeList.clear();
     signList.clear();
   }
 
   @Override
-  public void saveUserData(UserData user) {
-    userDataMap.put(user.getUuid(), user);
+  public void saveUser(User user) {
+    UserMap.put(user.getUuid(), user);
     saveUsers();
   }
 
   private void saveUsers() {
-    try (FileWriter fw = new FileWriter(userDataFile)) {
-      fw.write(gson.toJson(userDataMap));
+    try (FileWriter fw = new FileWriter(UserFile)) {
+      fw.write(gson.toJson(UserMap));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   @Override
-  public Optional<UserData> loadUserData(UUID id) {
-    return Optional.ofNullable(userDataMap.get(id));
+  public Optional<User> loadUser(UUID id) {
+    return Optional.ofNullable(UserMap.get(id));
   }
 
   @Override

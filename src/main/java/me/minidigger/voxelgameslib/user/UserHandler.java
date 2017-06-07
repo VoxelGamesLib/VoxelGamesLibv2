@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.user;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class UserHandler implements Handler {
   private Injector injector;
 
   private Map<UUID, User> users;
-  private Map<UUID, UserData> tempData;
+  private Map<UUID, User> tempData;
 
   @Override
   public void start() {
@@ -54,7 +55,7 @@ public class UserHandler implements Handler {
       throw new UserException("User " + uuid + " tried to join without being logged in!");
     }
 
-    UserData data = tempData.remove(uuid);
+    User data = tempData.remove(uuid);
     User user = injector.getInstance(User.class);
     user.setData(data);
     //noinspection unchecked
@@ -75,7 +76,7 @@ public class UserHandler implements Handler {
     if (user.isPresent()) {
       //TODO go away, gamehandler, use the events!
       gameHandler.getGames(user.get(), true).forEach(game -> game.leave(user.get()));
-      persistenceHandler.getProvider().saveUserData(user.get().getData());
+      persistenceHandler.getProvider().saveUser(user.get().getData());
     }
 
     users.remove(id);
@@ -102,13 +103,13 @@ public class UserHandler implements Handler {
   public boolean login(@Nonnull UUID uniqueId) {
     log.info("Loading data for user " + uniqueId);
 
-    Optional<UserData> data = persistenceHandler.getProvider().loadUserData(uniqueId);
+    Optional<User> data = persistenceHandler.getProvider().loadUser(uniqueId);
     if (data.isPresent()) {
-      UserData userDara = data.get();
+      User userDara = data.get();
       injector.injectMembers(userDara);
       tempData.put(uniqueId, userDara);
     } else {
-      UserData userDara = new UserData(uniqueId);
+      User userDara = new User(uniqueId);
       try {
         userDara.setDisplayName(MojangUtil.getDisplayName(uniqueId));
       } catch (Exception ignore) {
@@ -139,6 +140,13 @@ public class UserHandler implements Handler {
    */
   public Optional<User> getUser(String displayname) {
     return users.values().stream()
-        .filter(u -> u.getData().getDisplayName().equalsIgnoreCase(displayname)).findFirst();
+        .filter(u -> u.getPlayer().getName().equalsIgnoreCase(displayname)).findFirst();
+  }
+
+  /**
+   * @return all users currently online
+   */
+  public Collection<User> getUsers() {
+    return users.values();
   }
 }

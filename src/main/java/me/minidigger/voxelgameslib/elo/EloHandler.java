@@ -46,7 +46,7 @@ public class EloHandler implements Handler {
     List<ITeam> teams = new ArrayList<>();
     teams.addAll(Arrays.asList(teamFeature.getTeamsOrdered()));
     Map<IPlayer, Rating> newRatings = calculator
-        .calculateNewRatings(game.getGameMode().getRatingInfo(), teams,
+        .calculateNewRatings(game.getGameMode(), teams,
             IntStream.of(teamFeature.getTeamsOrdered().length).toArray());
     update(game, newRatings);
   }
@@ -61,14 +61,14 @@ public class EloHandler implements Handler {
   public void handleGameEnd(Game game, DuelFeature duelFeature, User winner) {
     List<ITeam> teams = new ArrayList<>();
     teams.add(new jskills.Team(duelFeature.getOne(),
-        duelFeature.getOne().getData().getRating(game.getGameMode())));
+        duelFeature.getOne().getRating(game.getGameMode())));
     teams.add(new jskills.Team(duelFeature.getTwo(),
-        duelFeature.getTwo().getData().getRating(game.getGameMode())));
+        duelFeature.getTwo().getRating(game.getGameMode())));
     if (!winner.equals(duelFeature.getOne())) {
       Collections.reverse(teams);
     }
     Map<IPlayer, Rating> newRatings = calculator
-        .calculateNewRatings(game.getGameMode().getRatingInfo(), teams, 1, 2);
+        .calculateNewRatings(game.getGameMode(), teams, 1, 2);
     update(game, newRatings);
   }
 
@@ -81,10 +81,10 @@ public class EloHandler implements Handler {
   public void handleGameEnd(Game game, User... users) {
     List<ITeam> teams = new ArrayList<>();
     for (User user : users) {
-      teams.add(new jskills.Team(user, user.getData().getRating(game.getGameMode())));
+      teams.add(new jskills.Team(user, user.getRating(game.getGameMode())));
     }
     Map<IPlayer, Rating> newRatings = calculator
-        .calculateNewRatings(game.getGameMode().getRatingInfo(), teams,
+        .calculateNewRatings(game.getGameMode(), teams,
             IntStream.of(users.length).toArray());
     update(game, newRatings);
   }
@@ -97,8 +97,9 @@ public class EloHandler implements Handler {
       }
 
       User user = (User) iPlayer;
-      user.getData().saveRating(game.getGameMode(), newRatings.get(iPlayer));
-      log.info("New Rating for " + user.getData().getDisplayName() + " is "
+      user.saveRating(game.getGameMode(), newRatings.get(iPlayer));
+      //TODO fixme
+      log.info("New Rating for " + user.getDisplayName() + " is "
           + newRatings.get(iPlayer).getMean() + "(" + newRatings.get(iPlayer).getStandardDeviation()
           + ")");
     }
