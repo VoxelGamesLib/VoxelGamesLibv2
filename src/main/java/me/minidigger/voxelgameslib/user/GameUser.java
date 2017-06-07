@@ -16,13 +16,18 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.chat.ComponentSerializer;
 import me.minidigger.voxelgameslib.role.Permission;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 
 /**
  * abstract implementation of the user interface that deals with some stuff
  */
-public abstract class AbstractUser implements User {
+public class GameUser implements User {
 
+  @Expose
   private UserData userData;
+
+  private Player player;
 
   @Inject
   private GlobalConfig config;
@@ -46,6 +51,17 @@ public abstract class AbstractUser implements User {
   @Expose
   private BaseComponent[] suffix;
 
+  @Nonnull
+  @Override
+  public UUID getUuid() {
+    return uuid;
+  }
+
+  @Override
+  public void sendMessage(@Nonnull BaseComponent... message) {
+
+  }
+
   @Override
   public boolean hasPermission(@Nonnull Permission perm) {
     if (config.useRoleSystem) {
@@ -64,6 +80,21 @@ public abstract class AbstractUser implements User {
           .toArray(BaseComponent[]::new);
     }
     return displayName;
+  }
+
+  @Override
+  public String getRawDisplayName() {
+    return null;
+  }
+
+  @Override
+  public BlockFace getFacingDirection() {
+    return null;
+  }
+
+  @Override
+  public Player getPlayer() {
+    return player;
   }
 
   @Override

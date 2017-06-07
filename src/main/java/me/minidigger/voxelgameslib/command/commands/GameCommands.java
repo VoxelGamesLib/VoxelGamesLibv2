@@ -1,7 +1,12 @@
 package me.minidigger.voxelgameslib.command.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
 import java.util.Optional;
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
@@ -10,71 +15,76 @@ import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
+import me.minidigger.voxelgameslib.user.User;
 
 @Singleton
 @Log
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
-public class GameCommands {
+@CommandAlias("game")
+public class GameCommands extends BaseCommand {
 
   @Inject
   private GameHandler gameHandler;
 
-  public void game(@Nonnull CommandArguments args) {
+  @Subcommand("help")
+  @CommandAlias("game")
+  @CommandPermission("%user")
+  public void game(User sender) {
     // todo game command
   }
 
-  public void gameList(@Nonnull CommandArguments args) {
-    Lang.msg(args.getSender(), LangKey.GAME_GAMELIST_HEADER);
+  @Subcommand("list")
+  @CommandPermission("%user")
+  public void gameList(User sender) {
+    Lang.msg(sender, LangKey.GAME_GAMELIST_HEADER);
     for (Game game : gameHandler.getGames()) {
-      Lang.msg(args.getSender(), LangKey.GAME_GAMELIST_ENTRY,
+      Lang.msg(sender, LangKey.GAME_GAMELIST_ENTRY,
           game.getUuid().toString().split("-")[0], game.getGameMode().getName(),
           game.getActivePhase().getName(), game.getPlayers().size(), game.getSpectators().size());
     }
-    Lang.msg(args.getSender(), LangKey.GAME_GAMELIST_FOOTER);
+    Lang.msg(sender, LangKey.GAME_GAMELIST_FOOTER);
   }
 
-  public void gameListModes(@Nonnull CommandArguments args) {
+  @Subcommand("modes")
+  @CommandPermission("%user")
+  public void gameListModes(User sender) {
     StringBuilder sb = new StringBuilder();
     gameHandler.getGameModes().forEach(m -> sb.append(m.getName()).append(", "));
     sb.replace(sb.length() - 2, sb.length(), ".");
-    Lang.msg(args.getSender(), LangKey.GAME_GAMEMODE_INSTALLED, sb.toString());
+    Lang.msg(sender, LangKey.GAME_GAMEMODE_INSTALLED, sb.toString());
   }
 
-  public void gameStart(@Nonnull CommandArguments args) {
-    Optional<GameMode> mode = gameHandler.getGameModes().stream()
-        .filter(gameMode -> gameMode.getName().equalsIgnoreCase(args.getArg(0))).findAny();
-    if (!mode.isPresent()) {
-      Lang.msg(args.getSender(), LangKey.GAME_GAMEMODE_UNKNOWN, args.getArg(0));
-      return;
-    }
-    Game game = gameHandler.startGame(mode.get());
+  @Subcommand("start")
+  @CommandCompletion("@gamemodes")
+  @Syntax("<mode> - the mode you want to start")
+  @CommandPermission("%premium")
+  public void gameStart(User sender, GameMode mode) {
+    Game game = gameHandler.startGame(mode);
 
     if (game.getActivePhase().isRunning()) {
-      game.join(args.getSender());
-      Lang.msg(args.getSender(), LangKey.GAME_GAME_STARTED);
+      game.join(sender);
+      Lang.msg(sender, LangKey.GAME_GAME_STARTED);
     } else {
-      Lang.msg(args.getSender(), LangKey.GAME_COULD_NOT_START);
+      Lang.msg(sender, LangKey.GAME_COULD_NOT_START);
     }
   }
 
-  public void gameJoin(@Nonnull CommandArguments args) {
-    // todo game join command
-    Optional<GameMode> mode = gameHandler.getGameModes().stream()
-        .filter(gameMode -> gameMode.getName().equalsIgnoreCase(args.getArg(0))).findAny();
-    if (!mode.isPresent()) {
-      Lang.msg(args.getSender(), LangKey.GAME_GAMEMODE_UNKNOWN, args.getArg(0));
-      return;
-    }
-
-    Optional<Game> game = gameHandler.findGame(args.getSender(), mode.get());
+  @Subcommand("join")
+  @CommandCompletion("@gamemodes")
+  @Syntax("<mode> - the mode you want to start")
+  @CommandPermission("%user")
+  public void gameJoin(User sender, GameMode mode) {
+    Optional<Game> game = gameHandler.findGame(sender, mode);
     if (game.isPresent()) {
-      game.get().join(args.getSender());
+      game.get().join(sender);
     } else {
-      Lang.msg(args.getSender(), LangKey.GAME_NO_GAME_FOUND);
+      Lang.msg(sender, LangKey.GAME_NO_GAME_FOUND);
     }
   }
 
-  public void gameLeave(@Nonnull CommandArguments args) {
+  @Subcommand("leave")
+  @CommandPermission("%user")
+  public void gameLeave(User sender) {
     // todo game leave command
   }
 }
