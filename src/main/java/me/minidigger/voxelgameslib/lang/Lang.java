@@ -11,6 +11,7 @@ import net.kyori.text.BaseComponent;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 /**
  * Gives quick access to the lang storage and translation and stuff
@@ -97,7 +98,7 @@ public class Lang {
           continue outer;
         }
       }
-      componentBuilder.append(token);
+      componentBuilder.append(new TextComponent(token));
       componentBuilder.color(savedColor);
     }
 
@@ -140,7 +141,7 @@ public class Lang {
    * @param key the lang key that should be translated
    */
   public static void msg(@Nonnull User user, @Nonnull LangKey key) {
-    user.sendMessage(trans(key).create());
+    user.sendMessage(trans(key));
   }
 
   /**
@@ -152,7 +153,7 @@ public class Lang {
    * @param args the args that should be replacing placeholders
    */
   public static void msg(@Nonnull User user, @Nonnull LangKey key, @Nullable Object... args) {
-    user.sendMessage(trans(key, args).create());
+    user.sendMessage(trans(key, args));
   }
 
   /**
