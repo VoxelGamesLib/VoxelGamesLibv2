@@ -10,17 +10,23 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.exception.DependencyGraphException;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
  */
 @Log
-public abstract class AbstractPhase implements Phase {
+public abstract class AbstractPhase implements Phase, Listener {
+  private VoxelGamesLib main;
 
   @Expose
   private String name;
@@ -47,6 +53,7 @@ public abstract class AbstractPhase implements Phase {
 
   public AbstractPhase() {
     className = getClass().getName().replace(PhaseTypeAdapter.DEFAULT_PATH + ".", "");
+    main = JavaPlugin.getPlugin(VoxelGamesLib.class);
   }
 
   @Override
@@ -124,12 +131,18 @@ public abstract class AbstractPhase implements Phase {
         game.abortGame();
         return;
       }
-      eventHandler.registerEvents(feature);
+
+      if (feature instanceof Listener) {
+        Bukkit.getPluginManager().registerEvents((Listener) feature, main);
+      }
+
+      // todo: implement command stuffs
+
       commandManager.registerCommand(features);
       startedFeatures.add(feature);
     }
 
-    eventHandler.registerEvents(this);
+    Bukkit.getPluginManager().registerEvents(this, main);
     commandManager.registerCommand(this);
   }
 
@@ -146,12 +159,18 @@ public abstract class AbstractPhase implements Phase {
         ex.printStackTrace();
         return;
       }
-      eventHandler.unregisterEvents(feature);
+
+      if(feature instanceof Listener) {
+        HandlerList.unregisterAll((Listener) feature);
+      }
+
+      // todo: implement command stuffs
+
       commandManager.unregister(feature, true);
     }
     startedFeatures.clear();
 
-    eventHandler.unregisterEvents(this);
+    HandlerList.unregisterAll(this);
     commandManager.unregister(this, true);
   }
 
