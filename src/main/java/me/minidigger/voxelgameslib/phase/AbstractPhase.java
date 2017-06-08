@@ -16,6 +16,7 @@ import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.exception.DependencyGraphException;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
 import me.minidigger.voxelgameslib.feature.Feature;
+import me.minidigger.voxelgameslib.feature.FeatureImplementor;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
 import org.bukkit.Bukkit;
@@ -146,12 +147,15 @@ public abstract class AbstractPhase implements Phase, Listener {
 
       // todo: implement command stuffs
 
-      commandManager.registerCommand(features);
+      if (feature instanceof FeatureImplementor) {
+        commandManager.registerCommand(((FeatureImplementor) feature).getCommandClass());
+      }
+
       startedFeatures.add(feature);
     }
 
     Bukkit.getPluginManager().registerEvents(this, main);
-    commandManager.registerCommand(this);
+    // commandManager.registerCommand(this); // register commands in features only?
   }
 
   @Override

@@ -8,10 +8,13 @@ import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
-import me.minidigger.voxelgameslib.feature.AbstractFeature;
-import me.minidigger.voxelgameslib.feature.Feature;
-import me.minidigger.voxelgameslib.feature.FeatureInfo;
+import me.minidigger.voxelgameslib.feature.*;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
@@ -20,9 +23,11 @@ import me.minidigger.voxelgameslib.world.WorldConfig;
 import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
-    description = "Simple feature that lets ppl vote on maps")
-public class VoteFeature extends AbstractFeature {
+    description = "Allow players to vote on maps")
+public class VoteFeature extends AbstractFeature implements FeatureImplementor {
 
+  @Getter
+  @Setter
   @Expose
   private int maxMaps = 3;
 
@@ -90,6 +95,12 @@ public class VoteFeature extends AbstractFeature {
 
   }
 
+  @Override
+  public AbstractFeatureCommand getCommandClass() {
+    // todo: use guice dependency injection here
+    return new VoteFeatureCommand();
+  }
+
   /**
    * Sends the vote message to that user
    *
@@ -111,28 +122,34 @@ public class VoteFeature extends AbstractFeature {
     }
   }
 
-  @CommandAlias("vote")
-  public void vote(User sender, @Optional Integer map) {
-    if (map == null) {
-      sendVoteMessage(sender);
-    } else {
-      if (votes.containsKey(sender.getUuid())) {
-        Lang.msg(sender, LangKey.VOTE_ALREADY_VOTED);
-      } else {
-        if (availableMaps.get(map) == null) {
-          Lang.msg(sender, LangKey.VOTE_UNKNOWN_MAP, map);
-          return;
-        }
-
-        votes.put(sender.getUuid(), map);
-        Lang.msg(sender, LangKey.VOTE_SUBMITTED, map);
-      }
-    }
-  }
-
   @Override
   @SuppressWarnings("unchecked")
   public Class<? extends Feature>[] getDependencies() {
     return new Class[0];
+  }
+
+  @Log
+  @Singleton
+  class VoteFeatureCommand extends AbstractFeatureCommand {
+
+    @CommandAlias("vote")
+    public void vote(User sender, @Optional Integer map) {
+      if (map == null) {
+        sendVoteMessage(sender);
+      } else {
+        if (votes.containsKey(sender.getUuid())) {
+          Lang.msg(sender, LangKey.VOTE_ALREADY_VOTED);
+        } else {
+          if (availableMaps.get(map) == null) {
+            Lang.msg(sender, LangKey.VOTE_UNKNOWN_MAP, map);
+            return;
+          }
+
+          votes.put(sender.getUuid(), map);
+          Lang.msg(sender, LangKey.VOTE_SUBMITTED, map);
+        }
+      }
+    }
+
   }
 }

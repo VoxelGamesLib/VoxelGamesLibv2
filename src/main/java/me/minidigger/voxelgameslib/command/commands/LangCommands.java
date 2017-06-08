@@ -19,7 +19,7 @@ import me.minidigger.voxelgameslib.user.User;
  */
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
-public class LangCommands extends BaseCommand{
+public class LangCommands extends BaseCommand {
 
   @Inject
   private LangHandler langHandler;
