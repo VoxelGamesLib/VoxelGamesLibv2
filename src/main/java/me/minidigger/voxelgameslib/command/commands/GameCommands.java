@@ -87,4 +87,19 @@ public class GameCommands extends BaseCommand {
   public void gameLeave(User sender) {
     // todo game leave command
   }
+
+  @Subcommand("skip-phase")
+  @CommandPermission("%admin")
+  public void skipPhase(User sender) {
+    // todo skip phase command
+    // need to access the User's game via object
+
+    /*
+    if (getGame().isPlaying(arguments.getSender()) || getGame()
+        .isSpectating(arguments.getSender())) {
+      log.finer("skip " + getName());
+      getGame().endPhase();
+    }
+    */
+  }
 }

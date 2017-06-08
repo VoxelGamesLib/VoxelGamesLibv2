@@ -1,24 +1,24 @@
 # Contributing
 
-### Translations
+## Translations
 
 It helps to translate the framework's messages in other languages and locales.
 
 Feel free to PR any new locale resource files.
 
-### Contributing code
+## Contributing code
 
-#### Guidelines
+### Guidelines
 
 * Code style: Use the formatting style located in the root of the project.
 * Javadocs: Every public method needs to have javadoc annotations
 * Comments: Please throw in comments in your code where appropriate so other developers can understand it better.
 
-### Building
+## Building
 
 See [README.md](README.md)
 
-### Dev Setup
+## Dev Setup
 
 An optimised test server is packaged with VoxelGamesLib.
 

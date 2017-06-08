@@ -210,15 +210,6 @@ public abstract class AbstractPhase implements Phase, Listener {
     this.allowSpectate = allowSpectate;
   }
 
-  @SuppressWarnings("JavaDoc")
-  public void skip(@Nonnull CommandArguments arguments) {
-    if (getGame().isPlaying(arguments.getSender()) || getGame()
-        .isSpectating(arguments.getSender())) {
-      log.finer("skip " + getName());
-      getGame().endPhase();
-    }
-  }
-
   @Override
   public void setRunning(boolean running) {
     isRunning = running;

@@ -114,18 +114,18 @@ public interface Game extends Tickable {
   /**
    * Checks if that user is playing (not spectating!) this game
    *
-   * @param uuid the uuid of the user to check
+   * @param user the user to check
    * @return if the user is playing this game
    */
-  boolean isPlaying(@Nonnull User uuid);
+  boolean isPlaying(@Nonnull User user);
 
   /**
    * Checks if that user is spectating (not playing!) this game
    *
-   * @param uuid the uuid of the user to check
+   * @param user the user to check
    * @return if the user is spectating this game
    */
-  boolean isSpectating(@Nonnull User uuid);
+  boolean isSpectating(@Nonnull User user);
 
   /**
    * Creates a new feature class (using guice and stuff)
