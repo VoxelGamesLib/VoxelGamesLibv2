@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.game;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -198,4 +199,12 @@ public interface Game extends Tickable {
    * Similar to endGame, but doesn't with stuff like elo or stats
    */
   void abortGame();
+
+  /**
+   * if running: get the duration between start and now.<br> else: get the duration this phase has
+   * run
+   *
+   * @return the duration
+   */
+  Duration getDuration();
 }

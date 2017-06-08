@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.phase;
 
+import java.time.Duration;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,8 +10,8 @@ import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.tick.Tickable;
 
 /**
- * A {@link Phase} is directly tied to a {@link Game}. A {@link Phase} is a collection of
- * {@link Feature}. A {@link Phase} is directly linked to the next {@link Phase}.
+ * A {@link Phase} is directly tied to a {@link Game}. A {@link Phase} is a collection of {@link
+ * Feature}. A {@link Phase} is directly linked to the next {@link Phase}.
  */
 public interface Phase extends Tickable {
 
@@ -116,4 +117,12 @@ public interface Phase extends Tickable {
    * @return the current status of the phase. true if the phase is active
    */
   boolean isRunning();
+
+  /**
+   * if running: get the duration between start and now.<br> else: get the duration this phase has
+   * run
+   *
+   * @return the duration
+   */
+  Duration getDuration();
 }

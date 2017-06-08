@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.event.events.game;
 
+import java.time.Duration;
 import java.util.List;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.game.Game;
@@ -11,7 +12,7 @@ import me.minidigger.voxelgameslib.user.User;
 public class GameEndEvent extends GameEvent {
 
   private List<User> winners;
-  private int duration;
+  private Duration duration;
   private boolean wasAborted;
 
   /**
@@ -19,7 +20,7 @@ public class GameEndEvent extends GameEvent {
    * @param winners the winners. can be 0, 1 or many
    * @param wasAborted if the game was aborted (server shutdown, all players leave, by command)
    */
-  public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, int duration, boolean wasAborted) {
+  public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, Duration duration, boolean wasAborted) {
     super(game);
     this.winners = winners;
     this.duration = duration;
@@ -35,10 +36,10 @@ public class GameEndEvent extends GameEvent {
   }
 
   /**
-   * @return duration of game (in seconds)
+   * @return duration of game
    */
   @Nonnull
-  public int getGameDuration() {
+  public Duration getGameDuration() {
     return duration;
   }
 

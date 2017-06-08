@@ -1,6 +1,8 @@
 package me.minidigger.voxelgameslib.game;
 
 import com.google.inject.Injector;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.elo.EloHandler;
-import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameEndEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
@@ -27,7 +28,6 @@ import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
 import net.kyori.text.BaseComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
@@ -60,6 +60,9 @@ public abstract class AbstractGame implements Game {
 
   private boolean aborted = false;
 
+  private LocalDateTime startTime;
+  private Duration duration;
+
   /**
    * Constructs a new {@link AbstractGame}
    *
@@ -84,7 +87,7 @@ public abstract class AbstractGame implements Game {
     players.forEach(u -> u.sendMessage(message));
     spectators.forEach(u -> u.sendMessage(message));
 
-    for(BaseComponent msg : message) {
+    for (BaseComponent msg : message) {
       Bukkit.getConsoleSender().sendMessage(msg.toString());
     }
   }
@@ -180,22 +183,24 @@ public abstract class AbstractGame implements Game {
 
   @Override
   public void endGame(@Nullable Team winnerTeam, @Nullable User winnerUser) {
+    // stop timer
+    duration = Duration.between(startTime, LocalDateTime.now());
+
     log.finer("end game");
 
     handleElo(winnerTeam, winnerUser);
     //TODO handle stats
-
-    int duration = 0; // todo: add game duration (possibly to activePhase)
-
-    if(winnerTeam != null) {
-      Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
-    } else if(winnerUser != null) {
+    if (winnerTeam != null) {
+      Bukkit.getPluginManager()
+          .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
+    } else if (winnerUser != null) {
       List<User> winningUsers = new ArrayList<User>();
       winningUsers.add(winnerUser);
 
       Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winningUsers, duration, aborted));
     } else {
-      Bukkit.getPluginManager().callEvent(new GameEndEvent(this, new ArrayList<User>(), duration, aborted));
+      Bukkit.getPluginManager()
+          .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
     }
 
     broadcastMessage(LangKey.GAME_END);
@@ -372,5 +377,14 @@ public abstract class AbstractGame implements Game {
   @Override
   public void putGameData(@Nonnull String key, @Nonnull Object data) {
     gameData.put(key, data);
+  }
+
+  @Override
+  public Duration getDuration() {
+    if (duration == null) {
+      return Duration.between(startTime, LocalDateTime.now());
+    } else {
+      return duration;
+    }
   }
 }

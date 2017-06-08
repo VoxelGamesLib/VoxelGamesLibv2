@@ -2,6 +2,8 @@ package me.minidigger.voxelgameslib.phase;
 
 import co.aikar.commands.CommandManager;
 import com.google.gson.annotations.Expose;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +53,9 @@ public abstract class AbstractPhase implements Phase, Listener {
   private Phase nextPhase;
   private boolean isRunning;
   private List<Feature> startedFeatures = new ArrayList<>();
+
+  private LocalDateTime startTime;
+  private Duration duration;
 
   public AbstractPhase() {
     className = getClass().getName().replace(PhaseTypeAdapter.DEFAULT_PATH + ".", "");
@@ -120,6 +125,9 @@ public abstract class AbstractPhase implements Phase, Listener {
       game.abortGame();
       return;
     }
+    // start timer
+    startTime = LocalDateTime.now();
+
     log.finer("start phase" + getName());
     for (Feature feature : features) {
       log.finer("start " + feature.getName());
@@ -148,6 +156,9 @@ public abstract class AbstractPhase implements Phase, Listener {
 
   @Override
   public void stop() {
+    // stop timer
+    duration = Duration.between(startTime, LocalDateTime.now());
+
     log.finer("stop phase " + getName());
     // only stop features that have been started to avoid errors
     for (Feature feature : startedFeatures) {
@@ -275,5 +286,14 @@ public abstract class AbstractPhase implements Phase, Listener {
         .collect(Collectors.toList());
 
     return true;
+  }
+
+  @Override
+  public Duration getDuration() {
+    if (duration == null) {
+      return Duration.between(startTime, LocalDateTime.now());
+    } else {
+      return duration;
+    }
   }
 }
