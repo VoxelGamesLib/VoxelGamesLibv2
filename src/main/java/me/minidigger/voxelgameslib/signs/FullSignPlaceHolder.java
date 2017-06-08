@@ -1,6 +1,6 @@
 package me.minidigger.voxelgameslib.signs;
 
-import me.minidigger.voxelgameslib.event.events.sign.SignUpdateEvent;
+import org.bukkit.event.block.SignChangeEvent;
 
 /**
  * Sign placeholder that replaces the whole sign
@@ -14,5 +14,5 @@ public interface FullSignPlaceHolder extends SignPlaceHolder {
    * @param key the key of the placeholder
    * @return the replaced sign lines
    */
-  String[] apply(SignUpdateEvent event, String key);
+  String[] apply(SignChangeEvent event, String key);
 }

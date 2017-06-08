@@ -17,10 +17,11 @@ import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.handler.Handler;
-import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.timings.Timings;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.text.TextComponent;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 /**
  * Handles placeholder sign and interaction signs
@@ -90,13 +91,12 @@ public class SignHandler implements Handler {
   /**
    * Checks if there is a sign at the given location and returns it
    *
-   * @param vector3D the location to check
-   * @param world the world to check
+   * @param location the location to check
    * @return the sign, if present
    */
-  public Optional<SignLocation> getSignAt(Vector3D vector3D, String world) {
+  public Optional<SignLocation> getSignAt(Location location) {
     for (SignLocation signLocation : signLocations) {
-      if (signLocation.getLocation().equals(vector3D) && signLocation.getWorld().equals(world)) {
+      if (signLocation.getLocation().equals(location)) {
         return Optional.of(signLocation);
       }
     }
@@ -129,10 +129,10 @@ public class SignHandler implements Handler {
       Iterator<SignLocation> iterator = signLocations.listIterator();
       while (iterator.hasNext()) {
         SignLocation loc = iterator.next();
-        if (loc.isStillValid(server)) {
-          loc.fireUpdateEvent(eventHandler);
+        if (loc.isStillValid()) {
+          loc.fireUpdateEvent();
         } else {
-          log.finer("Removing old placeholder sign at " + loc.getWorld() + " " + loc.getLocation());
+          log.finer("Removing old placeholder sign at " + loc.getLocation());
           dirty = true;
           iterator.remove();
           markedForRemoval.add(loc);
@@ -151,8 +151,7 @@ public class SignHandler implements Handler {
     ListIterator<SignLocation> iterator = signLocations.listIterator();
     while (iterator.hasNext()) {
       SignLocation loc = iterator.next();
-      if (loc.getWorld().equals(block.getWorld()) && loc.getLocation()
-          .equals(block.getLocation())) {
+      if (loc.getLocation().equals(block.getLocation())) {
         iterator.remove();
         markedForRemoval.add(loc);
       }
@@ -163,13 +162,12 @@ public class SignHandler implements Handler {
    * Adds a entry to the sign location list
    *
    * @param location the location of the new sign
-   * @param world the world of the new sign
    * @param lines the lines the new sign has
    */
-  public void addSign(Vector3D location, String world, String[] lines) {
+  public void addSign(Location location, String[] lines) {
     dirty = true;
-    if (!getSignAt(location, world).isPresent()) {
-      signLocations.add(new SignLocation(location, world, server, lines));
+    if (!getSignAt(location).isPresent()) {
+      signLocations.add(new SignLocation(location, lines));
     }
   }
 }

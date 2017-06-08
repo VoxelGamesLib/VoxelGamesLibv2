@@ -10,6 +10,7 @@ import me.minidigger.voxelgameslib.event.events.sign.SignUpdateEvent;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -22,10 +23,7 @@ public class SignLocation {
   private Long id;
 
   @Expose
-  private Vector3D location;
-
-  @Expose
-  private String world;
+  private Location location;
 
   private Block block;
 
@@ -41,23 +39,15 @@ public class SignLocation {
   /**
    * Constructs a new sign location
    *
-   * @param location the coordinates
-   * @param world the world
-   * @param server the server to get block information from
+   * @param location the location
    * @param lines the lines this sign currently has
    */
-  public SignLocation(Vector3D location, String world, String[] lines) {
+  public SignLocation(Location location, String[] lines) {
     this.location = location;
-    this.world = world;
 
-    World world = Bukkit.getWorld(world);
-    if (world == null) {
-      throw new VoxelGameLibException("Unknown world " + world);
-    }
-
-    block = w.get().getBlockAt(location);
+    block = location.getBlock();
     if (!(block.getMetaData() instanceof SignMetaData)) {
-      throw new VoxelGameLibException("No sign at world " + world + " location " + location);
+      throw new VoxelGameLibException("No sign at location " + location);
     }
     setLines(lines);
   }
@@ -82,14 +72,11 @@ public class SignLocation {
    *
    * @return if the block is still a sign
    */
-  public boolean isStillValid(Server server) {
+  public boolean isStillValid() {
     if (block == null) {
-      Optional<World> w = server.getWorld(world);
-      if (!w.isPresent()) {
-        throw new VoxelGameLibException("Unknown world " + world);
+      if(location.getWorld() != null){
+        block = location.getBlock();
       }
-
-      block = w.get().getBlockAt(location);
     }
 
     return block.getMetaData() instanceof SignMetaData;
@@ -97,10 +84,8 @@ public class SignLocation {
 
   /**
    * Fires a SignUpdateEvent for the sign at this location
-   *
-   * @param eventHandler the event handler that should handle the event
    */
-  public void fireUpdateEvent(VGLEventHandler eventHandler) {
+  public void fireUpdateEvent() {
     SignMetaData metaData = (SignMetaData) block.getMetaData();
     String[] text = metaData.getLines();
     SignUpdateEvent event = new SignUpdateEvent(world, location, text);

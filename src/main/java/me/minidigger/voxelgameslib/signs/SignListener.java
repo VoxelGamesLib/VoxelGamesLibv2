@@ -3,15 +3,19 @@ package me.minidigger.voxelgameslib.signs;
 import java.util.Optional;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
-import me.minidigger.voxelgameslib.event.events.sign.SignUpdateEvent;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 @Log
 @SuppressWarnings({"JavaDoc", "Duplicates"})
-public class SignListener {
+public class SignListener implements Listener {
 
   private Permission placeHolderSignPlace = Permission
       .register("sign.placeholder.place", Role.MODERATOR);
@@ -22,36 +26,31 @@ public class SignListener {
 
   @Inject
   private SignHandler signHandler;
-  @Inject
-  private Server server;
 
-  public void signUpdate(SignUpdateEvent event) {
-    Optional<SignLocation> sign = signHandler.getSignAt(event.getLocation(), event.getWorld());
+  @EventHandler
+  public void signUpdate(SignChangeEvent event) {
+    Optional<SignLocation> sign = signHandler.getSignAt(event.getBlock().getLocation());
     // this isn't a handled sign and it isn't a new sign
     if (!sign.isPresent()) {
-      if (event.getUser().isPresent()) {
-        // might be a new sign!
-        sign = Optional
-            .of(new SignLocation(event.getLocation(), event.getWorld(), server, event.getText()));
-        assert sign.isPresent();
-      } else {
-        return;
+      if (event.getPlayer() != null) {
+        sign = Optional.of(new SignLocation(event.getBlock().getLocation(), event.getLines()));
       }
+      //TODO do we need another check here? check old source
     }
     for (int i = 0; i < sign.get().getLines().length; i++) {
       String line = sign.get().getLines()[i];
       for (String key : signHandler.getPlaceHolders().keySet()) {
         if (line.contains("%" + key + "%")) {
           // we got a sign with a placeholder, first check if a user placed it and if he is allowed to do that
-          if (event.getUser().isPresent()) {
-            if (!event.getUser().get().hasPermission(placeHolderSignPlace)) {
-              Lang.msg(event.getUser().get(), LangKey.SIGNS_PLACE_NO_PERM, key,
+          if (event.getPlayer() != null) {
+            if (!event.getPlayer().hasPermission(placeHolderSignPlace)) {
+              Lang.msg(event.getPlayer(), LangKey.SIGNS_PLACE_NO_PERM, key,
                   placeHolderSignPlace.getRole().getName());
               event.setCanceled(true);
               return;
             } else {
-              Lang.msg(event.getUser().get(), LangKey.SIGNS_PLACE_SUCCESS, key);
-              signHandler.addSign(event.getLocation(), event.getWorld(), event.getText());
+              Lang.msg(event.getPlayer(), LangKey.SIGNS_PLACE_SUCCESS, key);
+              signHandler.addSign(event.getBlock().getLocation(), event.getLines());
             }
           }
 
@@ -60,7 +59,7 @@ public class SignListener {
             line = line
                 .replace("%" + key + "%", ((SimpleSignPlaceHolder) placeHolder).apply(event, key));
           } else if (placeHolder instanceof FullSignPlaceHolder) {
-            event.setText(((FullSignPlaceHolder) placeHolder).apply(event, key));
+            event.setLines(((FullSignPlaceHolder) placeHolder).apply(event, key));
             return;
           } else {
             log.warning(
@@ -71,27 +70,28 @@ public class SignListener {
       }
 
       // this is a new sign, has it a sign button?
-      if (event.getUser().isPresent()) {
+      if (event.getPlayer() != null){
         for (String key : signHandler.getButtons().keySet()) {
           if (line.contains("%" + key + "%")) {
-            if (!event.getUser().get().hasPermission(buttonSignPlace)) {
-              Lang.msg(event.getUser().get(), LangKey.SIGNS_PLACE_NO_PERM, key,
+            if (!event.getPlayer().hasPermission(buttonSignPlace)) {
+              Lang.msg(event.getPlayer(), LangKey.SIGNS_PLACE_NO_PERM, key,
                   buttonSignBreak.getRole().getName());
               event.setCanceled(true);
               return;
             } else {
-              Lang.msg(event.getUser().get(), LangKey.SIGNS_PLACE_SUCCESS, key);
+              Lang.msg(event.getPlayer(), LangKey.SIGNS_PLACE_SUCCESS, key);
               // we don't need to worry here if the text has been modified since it never can override the real text
-              signHandler.addSign(event.getLocation(), event.getWorld(), event.getText());
+              signHandler.addSign(event.getBlock().getLocation(), event.getLines());
             }
           }
         }
       }
 
-      event.getText()[i] = line;
+      event.getLines()[i] = line;
     }
   }
 
+  @EventHandler
   public void signBreakEvent(BlockBreakEvent event) {
     // is block a sign?
     if (event.getBlock().getMetaData() instanceof SignMetaData) {
@@ -141,7 +141,8 @@ public class SignListener {
     }
   }
 
-  public void signInteract(UserInteractEvent event) {
+  @EventHandler
+  public void signInteract(PlayerInteractEvent event) {
     if (event.getType() != UserInteractEvent.Type.RIGHT_CLICK_BLOCK || event.getBlock() == null) {
       return;
     }

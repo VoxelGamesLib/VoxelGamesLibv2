@@ -180,12 +180,12 @@ public class GameHandler implements Handler {
   public List<Game> getGames(@Nonnull User user, boolean spectate) {
     List<Game> result = new ArrayList<>();
     for (Game game : games) {
-      if (game.isPlaying(user.getUuid())) {
+      if (game.isPlaying(user)) {
         result.add(game);
         continue;
       }
 
-      if (spectate && game.isSpectating(user.getUuid())) {
+      if (spectate && game.isSpectating(user)) {
         result.add(game);
       }
     }
