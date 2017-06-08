@@ -78,6 +78,16 @@ public class GameConsoleUser implements ConsoleUser {
     return new HashMap<>();
   }
 
+  @Override
+  public void setPlayer(Player player) {
+// ignore
+  }
+
+  @Override
+  public void setDisplayName(String displayName) {
+// ignore
+  }
+
   @Nonnull
   @Override
   public UUID getUuid() {

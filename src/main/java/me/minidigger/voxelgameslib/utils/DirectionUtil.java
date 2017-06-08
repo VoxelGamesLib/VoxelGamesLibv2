@@ -88,6 +88,6 @@ public class DirectionUtil {
         return RADIAL[Math.floorMod(i + steps, RADIAL.length)];
       }
     }
-    return Direction.SELF;
+    return BlockFace.SELF;
   }
 }

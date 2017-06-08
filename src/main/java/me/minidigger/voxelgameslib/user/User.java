@@ -9,10 +9,9 @@ import jskills.ISupportPartialUpdate;
 import jskills.Rating;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
-import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.role.Permission;
-import net.kyori.text.BaseComponent;
 import me.minidigger.voxelgameslib.role.Role;
+import net.kyori.text.BaseComponent;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -111,4 +110,18 @@ public interface User extends IPlayer, ISupportPartialPlay,
    * @return all ratings for this player
    */
   Map<String, Rating> getRatings();
+
+  /**
+   * sets the player object for this user
+   *
+   * @param player the new player object
+   */
+  void setPlayer(Player player);
+
+  /**
+   * sets the raw display name for this user
+   *
+   * @param displayName the raw display name
+   */
+  void setDisplayName(String displayName);
 }

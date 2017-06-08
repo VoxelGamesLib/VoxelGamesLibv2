@@ -3,8 +3,10 @@ package me.minidigger.voxelgameslib.user;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -13,6 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+@Log
 @Singleton
 @SuppressWarnings("JavaDoc")// no need for javadoc on event listeners
 public class UserListener implements Listener {
@@ -33,6 +36,8 @@ public class UserListener implements Listener {
   public void onLogin(@Nonnull PlayerLoginEvent event) {
     if (!handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
       // worst case: load data sync
+      log.warning("Loading data for player " + event.getPlayer().getName() + "(" + event.getPlayer()
+          .getUniqueId() + ") sync!");
       boolean login = handler.login(event.getPlayer().getUniqueId());
       if (!login || !handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
         // something went horribly wrong
@@ -43,13 +48,13 @@ public class UserListener implements Listener {
       }
     }
 
-    handler.join(event.getPlayer().getUniqueId(), event.getPlayer());
+    handler.join(event.getPlayer());
   }
 
   @EventHandler
   public void onJoin(@Nonnull PlayerJoinEvent event) {
     // tp to spawn
-    event.getPlayer().teleport(server.getSpawn().getFirst(), server.getSpawn().getSecond());
+    event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
   }
 
   @EventHandler

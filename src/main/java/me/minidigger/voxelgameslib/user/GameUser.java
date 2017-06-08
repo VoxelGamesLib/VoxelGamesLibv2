@@ -1,7 +1,6 @@
 package me.minidigger.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +15,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
-import net.kyori.text.BaseComponent;
 import net.kyori.text.TextComponent;
-import net.kyori.text.serializer.ComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 

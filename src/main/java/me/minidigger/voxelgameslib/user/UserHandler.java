@@ -16,6 +16,7 @@ import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.utils.MojangUtil;
+import org.bukkit.entity.Player;
 
 @Log
 @Singleton
@@ -46,24 +47,21 @@ public class UserHandler implements Handler {
   /**
    * Creates the user object for a new user
    *
-   * @param uuid the uuid of the new user
-   * @param playerObject the implementation type of the user
+   * @param player the player that joined
    * @throws UserException when the player was not logged in
    */
-  public void join(@Nonnull UUID uuid, @Nonnull Object playerObject) {
-    if (!hasLoggedIn(uuid)) {
-      throw new UserException("User " + uuid + " tried to join without being logged in!");
+  public void join(@Nonnull Player player) {
+    if (!hasLoggedIn(player.getUniqueId())) {
+      throw new UserException("User " + player.getName() + "(" + player.getUniqueId()
+          + ") tried to join without being logged in!");
     }
 
-    User data = tempData.remove(uuid);
-    User user = injector.getInstance(User.class);
-    user.setData(data);
-    //noinspection unchecked
-    user.setImplementationType(playerObject);
+    User user = tempData.remove(player.getUniqueId());
+    user.setPlayer(player);
     users.put(user.getUuid(), user);
     log.info(
-        "Applied data for user " + user.getUuid() + "(" + user.getData().getRole().getName() + " "
-            + user.getData().getDisplayName() + ")");
+        "Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " "
+            + user.getDisplayName() + ")");
   }
 
   /**
@@ -76,7 +74,7 @@ public class UserHandler implements Handler {
     if (user.isPresent()) {
       //TODO go away, gamehandler, use the events!
       gameHandler.getGames(user.get(), true).forEach(game -> game.leave(user.get()));
-      persistenceHandler.getProvider().saveUser(user.get().getData());
+      persistenceHandler.getProvider().saveUser(user.get());
     }
 
     users.remove(id);
@@ -109,14 +107,14 @@ public class UserHandler implements Handler {
       injector.injectMembers(userDara);
       tempData.put(uniqueId, userDara);
     } else {
-      User userDara = new User(uniqueId);
+      User user = new GameUser();
       try {
-        userDara.setDisplayName(MojangUtil.getDisplayName(uniqueId));
+        user.setDisplayName(MojangUtil.getDisplayName(uniqueId));
       } catch (Exception ignore) {
         // offline users don't have a real name
       }
-      injector.injectMembers(userDara);
-      tempData.put(uniqueId, userDara);
+      injector.injectMembers(user);
+      tempData.put(uniqueId, user);
     }
 
     return true;
