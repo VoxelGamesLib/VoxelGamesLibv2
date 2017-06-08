@@ -18,7 +18,7 @@ public class ChatUtil {
   public static String toPlainText(@Nonnull BaseComponent... comps) {
     StringBuilder sb = new StringBuilder();
     for (BaseComponent comp : comps) {
-      sb.append(comp.toPlainText()); // todo: make component into plaintext
+      sb.append(comp.); // todo: make component into plaintext
     }
     return sb.toString();
   }

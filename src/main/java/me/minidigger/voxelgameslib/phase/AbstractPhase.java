@@ -19,14 +19,17 @@ import me.minidigger.voxelgameslib.graph.Graph;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
  */
 @Log
 public abstract class AbstractPhase implements Phase, Listener {
+
+  @Inject
   private VoxelGamesLib main;
+  @Inject
+  private CommandManager commandManager;
 
   @Expose
   private String name;
@@ -42,8 +45,6 @@ public abstract class AbstractPhase implements Phase, Listener {
   @Expose
   private List<Feature> features = new ArrayList<>();
 
-  @Inject
-  private CommandManager commandManager;
 
   private Game game;
 
@@ -53,7 +54,6 @@ public abstract class AbstractPhase implements Phase, Listener {
 
   public AbstractPhase() {
     className = getClass().getName().replace(PhaseTypeAdapter.DEFAULT_PATH + ".", "");
-    main = JavaPlugin.getPlugin(VoxelGamesLib.class);
   }
 
   @Override
@@ -160,7 +160,7 @@ public abstract class AbstractPhase implements Phase, Listener {
         return;
       }
 
-      if(feature instanceof Listener) {
+      if (feature instanceof Listener) {
         HandlerList.unregisterAll((Listener) feature);
       }
 

@@ -38,7 +38,6 @@ public final class VoxelGamesLib extends JavaPlugin {
   private TimingManager timingManager;
   private CommandManager commandManager;
   private Injector injector;
-  private Gson gson;
 
   @Inject
   private UserHandler userHandler;
