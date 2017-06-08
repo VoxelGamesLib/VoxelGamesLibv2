@@ -28,7 +28,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
-import org.bukkit.WorldCreator;
+import me.minidigger.voxelgameslib.world.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class VoxelGamesLib extends JavaPlugin {
