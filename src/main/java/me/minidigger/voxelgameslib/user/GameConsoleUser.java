@@ -10,8 +10,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import net.kyori.text.BaseComponent;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.kyori.text.TextComponent;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -23,7 +22,10 @@ public class GameConsoleUser implements ConsoleUser {
   @Nonnull
   @Override
   public BaseComponent[] getDisplayName() {
-    return new ComponentBuilder("ConsoleUser").create();
+    // todo: this really doesn't need to be an array... but did this anyway, another compile error fixed
+    BaseComponent[] components = new TextComponent[1];
+    components[0] = new TextComponent("Console");
+    return components;
   }
 
   @Override
