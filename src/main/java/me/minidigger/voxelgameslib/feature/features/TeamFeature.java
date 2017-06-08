@@ -7,9 +7,6 @@ import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.user.User;
 
-/**
- * Created by Martin on 28.01.2017.
- */
 public class TeamFeature extends AbstractFeature {
 
   private List<Team> teams = new ArrayList<>();

@@ -9,9 +9,10 @@ import jskills.ISupportPartialUpdate;
 import jskills.Rating;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
+import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.role.Permission;
+import net.kyori.text.BaseComponent;
 import me.minidigger.voxelgameslib.role.Role;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 

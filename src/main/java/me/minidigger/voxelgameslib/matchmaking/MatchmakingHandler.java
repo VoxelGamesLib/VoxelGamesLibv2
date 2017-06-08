@@ -6,9 +6,6 @@ import javax.inject.Singleton;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.handler.Handler;
 
-/**
- * Created by Martin on 04.02.2017.
- */
 @Singleton
 public class MatchmakingHandler implements Handler {
 

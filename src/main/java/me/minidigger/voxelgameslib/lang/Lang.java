@@ -7,9 +7,11 @@ import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.kyori.text.BaseComponent;
+import net.kyori.text.TextComponent;
+import net.kyori.text.format.TextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 /**
  * Gives quick access to the lang storage and translation and stuff
@@ -28,7 +30,7 @@ public class Lang {
    * @return the created component builder
    */
   @Nonnull
-  public static ComponentBuilder trans(@Nonnull LangKey key) {
+  public static TextComponent trans(@Nonnull LangKey key) {
     return trans(key, handler.getDefaultLocale());
   }
 
@@ -41,7 +43,7 @@ public class Lang {
    * @return the created component builder
    */
   @Nonnull
-  public static ComponentBuilder trans(@Nonnull LangKey key, @Nullable Object... args) {
+  public static TextComponent trans(@Nonnull LangKey key, @Nullable Object... args) {
     return trans(key, handler.getDefaultLocale(), args);
   }
 
@@ -54,7 +56,7 @@ public class Lang {
    * @return the created component builder
    */
   @Nonnull
-  public static ComponentBuilder trans(@Nonnull LangKey key, @Nonnull Locale loc) {
+  public static TextComponent trans(@Nonnull LangKey key, @Nonnull Locale loc) {
     return trans(key, loc, new Object[0]);
   }
 
@@ -68,7 +70,7 @@ public class Lang {
    * @return the created component builder
    */
   @Nonnull
-  public static ComponentBuilder trans(@Nonnull LangKey key, @Nonnull Locale loc,
+  public static TextComponent trans(@Nonnull LangKey key, @Nonnull Locale loc,
       @Nullable Object... args) {
     if (args == null) {
       args = new Object[0];
@@ -84,19 +86,19 @@ public class Lang {
    * @return the outputted and properly filled component builder
    */
   @Nonnull
-  public static ComponentBuilder parseFormat(@Nonnull String string) {
-    ComponentBuilder componentBuilder = new ComponentBuilder("");
+  public static TextComponent parseFormat(@Nonnull String string) {
+    TextComponent componentBuilder = new TextComponent("");
     String[] tokens = string.split("\\{|}");
-    ChatColor savedColor = ChatColor.WHITE;
+    TextColor savedColor = TextColor.WHITE;
     outer:
     for (String token : tokens) {
-      for (ChatColor color : ChatColor.values()) {
+      for (TextColor color : TextColor.values()) {
         if (color.name().equalsIgnoreCase(token)) {
           savedColor = color;
           continue outer;
         }
       }
-      componentBuilder.append(token);
+      componentBuilder.append(new TextComponent(token));
       componentBuilder.color(savedColor);
     }
 
@@ -114,17 +116,17 @@ public class Lang {
   public static String parseLegacyFormat(@Nonnull String string) {
     StringBuilder stringBuilder = new StringBuilder();
     String[] tokens = string.split("\\{|}");
-    ChatColor savedColor = ChatColor.WHITE;
+    TextColor savedColor = TextColor.WHITE;
     outer:
     for (String token : tokens) {
-      for (ChatColor color : ChatColor.values()) {
+      for (TextColor color : TextColor.values()) {
         if (color.name().equalsIgnoreCase(token)) {
           savedColor = color;
           continue outer;
         }
       }
       // why don't you just expose getCode?....
-      stringBuilder.append(ChatColor.COLOR_CHAR).append(savedColor.toString().substring(1, 1))
+      stringBuilder.append(ChatColor.COLOR_CHAR).append(savedColor.toString().substring(1, 1)) // no COLOR_CHAR in text
           .append(token);
     }
 
@@ -139,7 +141,7 @@ public class Lang {
    * @param key the lang key that should be translated
    */
   public static void msg(@Nonnull User user, @Nonnull LangKey key) {
-    user.sendMessage(trans(key).create());
+    user.sendMessage(trans(key));
   }
 
   /**
@@ -151,7 +153,7 @@ public class Lang {
    * @param args the args that should be replacing placeholders
    */
   public static void msg(@Nonnull User user, @Nonnull LangKey key, @Nullable Object... args) {
-    user.sendMessage(trans(key, args).create());
+    user.sendMessage(trans(key, args));
   }
 
   /**
@@ -235,7 +237,7 @@ public class Lang {
     String[] tokens = message.split("\\{|}");
     outer:
     for (String token : tokens) {
-      for (ChatColor color : ChatColor.values()) {
+      for (TextColor color : TextColor.values()) {
         if (color.name().equalsIgnoreCase(token)) {
           result.append(color);
           continue outer;

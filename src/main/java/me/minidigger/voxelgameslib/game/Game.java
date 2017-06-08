@@ -10,7 +10,7 @@ import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.Tickable;
 import me.minidigger.voxelgameslib.user.User;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.kyori.text.BaseComponent;
 
 /**
  * A {@link Game} is the representation of an instance of a {@link GameMode}. Handles everything
@@ -116,7 +116,7 @@ public interface Game extends Tickable {
    * @param uuid the uuid of the user to check
    * @return if the user is playing this game
    */
-  boolean isPlaying(@Nonnull UUID uuid);
+  boolean isPlaying(@Nonnull User uuid);
 
   /**
    * Checks if that user is spectating (not playing!) this game
@@ -124,7 +124,7 @@ public interface Game extends Tickable {
    * @param uuid the uuid of the user to check
    * @return if the user is spectating this game
    */
-  boolean isSpectating(@Nonnull UUID uuid);
+  boolean isSpectating(@Nonnull User uuid);
 
   /**
    * Creates a new feature class (using guice and stuff)

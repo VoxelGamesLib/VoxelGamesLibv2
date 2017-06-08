@@ -18,9 +18,6 @@ import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.user.User;
 
-/**
- * Created by Martin on 28.01.2017.
- */
 @Log
 public class EloHandler implements Handler {
 

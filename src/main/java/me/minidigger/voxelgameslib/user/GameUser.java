@@ -1,6 +1,8 @@
 package me.minidigger.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +16,9 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
+import net.kyori.text.BaseComponent;
+import net.kyori.text.TextComponent;
+import net.kyori.text.serializer.ComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -64,7 +69,7 @@ public class GameUser implements User {
 
   @Override
   public void sendMessage(@Nonnull BaseComponent... message) {
-//TODO GameUser#sendMessage
+    Arrays.stream(message).forEach(msg -> player.sendMessage(msg.toString()));
   }
 
   @Override
@@ -79,7 +84,7 @@ public class GameUser implements User {
   public BaseComponent[] getDisplayName() {
     if (displayName == null) {
       displayName = Stream.of(ComponentSerializer.parse(getPrefix()),
-          new ComponentBuilder(getDisplayName()).create(),
+          new TextComponent(getDisplayName()).create(),
           ComponentSerializer.parse(getPrefix()))
           .flatMap(Stream::of)
           .toArray(BaseComponent[]::new);
