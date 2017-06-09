@@ -1,8 +1,10 @@
 package me.minidigger.voxelgameslib.utils;
 
 import javax.annotation.Nonnull;
+import me.minidigger.voxelgameslib.user.GameUser;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
+import net.kyori.text.serializer.ComponentSerializer;
 
 /**
  * Small util for chat related stuff
@@ -30,5 +32,15 @@ public class ChatUtil {
     if (component.children().size() > 0) {
       component.children().forEach(c -> toPlainText(sb, c));
     }
+  }
+
+  /**
+   * Sends the message to the user
+   *
+   * @param gameUser the user that should get the message
+   * @param message the message to send to the user
+   */
+  public static void sendMessage(GameUser gameUser, Component message) {
+    gameUser.getPlayer().sendRawMessage(ComponentSerializer.serialize(message));
   }
 }

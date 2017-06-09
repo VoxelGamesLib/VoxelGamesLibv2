@@ -108,6 +108,7 @@ public class UserHandler implements Handler {
       tempData.put(uniqueId, userDara);
     } else {
       User user = new GameUser();
+      user.setUuid(uniqueId);
       try {
         user.setDisplayName(MojangUtil.getDisplayName(uniqueId));
       } catch (Exception ignore) {

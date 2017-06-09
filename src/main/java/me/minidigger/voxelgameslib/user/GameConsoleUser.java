@@ -9,9 +9,10 @@ import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
-import net.kyori.text.BaseComponent;
+import me.minidigger.voxelgameslib.utils.ChatUtil;
+import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
-import org.bukkit.block.BlockFace;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,23 +20,9 @@ import org.bukkit.entity.Player;
  */
 public class GameConsoleUser implements ConsoleUser {
 
-  @Nonnull
-  @Override
-  public BaseComponent[] getDisplayName() {
-    // todo: this really doesn't need to be an array... but did this anyway, another compile error fixed
-    BaseComponent[] components = new TextComponent[1];
-    components[0] = new TextComponent("Console");
-    return components;
-  }
-
   @Override
   public String getRawDisplayName() {
-    return null;
-  }
-
-  @Override
-  public BlockFace getFacingDirection() {
-    return null;
+    return "Console";
   }
 
   @Override
@@ -70,7 +57,7 @@ public class GameConsoleUser implements ConsoleUser {
 
   @Override
   public void saveRating(GameMode mode, Rating rating) {
-
+// ignore
   }
 
   @Override
@@ -88,6 +75,31 @@ public class GameConsoleUser implements ConsoleUser {
 // ignore
   }
 
+  @Override
+  public Component getPrefix() {
+    return new TextComponent("");
+  }
+
+  @Override
+  public Component getSuffix() {
+    return new TextComponent("");
+  }
+
+  @Override
+  public void setPrefix(Component prefix) {
+// ignore
+  }
+
+  @Override
+  public void setSuffix(Component suffix) {
+// ignore
+  }
+
+  @Override
+  public void setUuid(UUID uuid) {
+// ignore
+  }
+
   @Nonnull
   @Override
   public UUID getUuid() {
@@ -95,13 +107,18 @@ public class GameConsoleUser implements ConsoleUser {
   }
 
   @Override
-  public void sendMessage(@Nonnull BaseComponent... message) {
-//TODO GameConsoleUser#sendMessage
+  public void sendMessage(@Nonnull Component message) {
+    Bukkit.getConsoleSender().sendMessage("[VGL] " + ChatUtil.toPlainText(message));
   }
 
   @Override
   public boolean hasPermission(@Nonnull Permission perm) {
     return true;
+  }
+
+  @Override
+  public Component getDisplayName() {
+    return new TextComponent("Console");
   }
 
   /* elo stuff */

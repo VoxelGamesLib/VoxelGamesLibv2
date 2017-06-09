@@ -1,11 +1,9 @@
 package me.minidigger.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import jskills.Rating;
@@ -15,9 +13,9 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
+import me.minidigger.voxelgameslib.utils.ChatUtil;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -32,10 +30,6 @@ public class GameUser implements User {
   @Inject
   private PersistenceHandler persistenceHandler;
 
-  private Component[] displayName;
-
-  @Expose
-  private User User;
 
   private Player player;
 
@@ -51,10 +45,16 @@ public class GameUser implements User {
   @Expose
   private Map<String, Rating> ratings = new HashMap<>();
 
+  // combination of <prefix> <rawdisplayname> <suffix>
+  private Component displayName;
+
   @Expose
-  private Component[] prefix;
+  private String rawDisplayName;
+
   @Expose
-  private Component[] suffix;
+  private Component prefix;
+  @Expose
+  private Component suffix;
 
   @Nonnull
   @Override
@@ -63,8 +63,8 @@ public class GameUser implements User {
   }
 
   @Override
-  public void sendMessage(@Nonnull Component... message) {
-    Arrays.stream(message).forEach(msg -> player.sendMessage(msg.toString()));
+  public void sendMessage(@Nonnull Component message) {
+    ChatUtil.sendMessage(this, message);
   }
 
   @Override
@@ -72,29 +72,20 @@ public class GameUser implements User {
     if (config.useRoleSystem) {
       return getRole().hasPermission(perm);
     }
-    return false;
+    return getPlayer().hasPermission(perm.getString());
   }
 
   @Override
-  public Component[] getDisplayName() {
+  public Component getDisplayName() {
     if (displayName == null) {
-      displayName = Stream.of(ComponentSerializer.parse(getPrefix()),
-          new TextComponent(getDisplayName()).create(),
-          ComponentSerializer.parse(getPrefix()))
-          .flatMap(Stream::of)
-          .toArray(Component[]::new);
+      displayName = prefix.copy().append(new TextComponent(rawDisplayName)).append(suffix);
     }
     return displayName;
   }
 
   @Override
   public String getRawDisplayName() {
-    return null;
-  }
-
-  @Override
-  public BlockFace getFacingDirection() {
-    return null;
+    return rawDisplayName;
   }
 
   @Override
@@ -144,6 +135,17 @@ public class GameUser implements User {
   }
 
   @Override
+  public void setPlayer(Player player) {
+    this.player = player;
+  }
+
+  @Override
+  public void setDisplayName(String displayName) {
+    this.rawDisplayName = displayName;
+    this.displayName = null; // regenerate full display name
+  }
+
+  @Override
   public double getPartialPlayPercentage() {
     return 1.0;
   }
@@ -153,4 +155,28 @@ public class GameUser implements User {
     return 1.0;
   }
 
+  @Override
+  public Component getPrefix() {
+    return prefix;
+  }
+
+  @Override
+  public Component getSuffix() {
+    return suffix;
+  }
+
+  @Override
+  public void setPrefix(Component prefix) {
+    this.prefix = prefix;
+  }
+
+  @Override
+  public void setSuffix(Component suffix) {
+    this.suffix = suffix;
+  }
+
+  @Override
+  public void setUuid(UUID uuid) {
+    this.uuid = uuid;
+  }
 }

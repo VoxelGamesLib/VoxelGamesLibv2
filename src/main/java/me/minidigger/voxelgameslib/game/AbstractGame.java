@@ -26,6 +26,7 @@ import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.utils.ChatUtil;
 import net.kyori.text.BaseComponent;
 import org.bukkit.Bukkit;
 
@@ -83,13 +84,11 @@ public abstract class AbstractGame implements Game {
   }
 
   @Override
-  public void broadcastMessage(@Nonnull BaseComponent... message) {
+  public void broadcastMessage(@Nonnull BaseComponent message) {
     players.forEach(u -> u.sendMessage(message));
     spectators.forEach(u -> u.sendMessage(message));
 
-    for (BaseComponent msg : message) {
-      Bukkit.getConsoleSender().sendMessage(msg.toString());
-    }
+    Bukkit.getConsoleSender().sendMessage(ChatUtil.toPlainText(message));
   }
 
   @Override

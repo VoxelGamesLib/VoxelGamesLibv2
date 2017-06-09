@@ -11,8 +11,7 @@ import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
-import net.kyori.text.BaseComponent;
-import org.bukkit.block.BlockFace;
+import net.kyori.text.Component;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,7 +32,7 @@ public interface User extends IPlayer, ISupportPartialPlay,
    *
    * @param message the message to be send
    */
-  void sendMessage(@Nonnull BaseComponent... message);
+  void sendMessage(@Nonnull Component message);
 
   /**
    * checks if that user has the desired permission.
@@ -44,23 +43,18 @@ public interface User extends IPlayer, ISupportPartialPlay,
   boolean hasPermission(@Nonnull Permission perm);
 
   /**
-   * returns the display name of the user, consists of prefix, name and suffix.
+   * returns the display name of the user, consists of prefix, raw display name and suffix.
    *
-   * @return the display name of the user, consists of prefix, name and suffix.
+   * @return the display name of the user, consists of prefix, raw display name and suffix.
    */
-  BaseComponent[] getDisplayName();
+  Component getDisplayName();
 
   /**
-   * returns the display name of the user, consists of prefix, name and suffix.
+   * returns the display name of the user
    *
-   * @return the display name of the user, consists of prefix, name and suffix.
+   * @return the display name of the user
    */
   String getRawDisplayName();
-
-  /**
-   * @return the direction the player is looking in
-   */
-  BlockFace getFacingDirection();
 
   /**
    * @return the bukkit player
@@ -124,4 +118,35 @@ public interface User extends IPlayer, ISupportPartialPlay,
    * @param displayName the raw display name
    */
   void setDisplayName(String displayName);
+
+  /**
+   * @return the prefix for this user
+   */
+  Component getPrefix();
+
+  /**
+   * @return the suffix for this user
+   */
+  Component getSuffix();
+
+  /**
+   * changes the prefix for this user. forces the display name to be regenerated
+   *
+   * @param prefix the new prefix
+   */
+  void setPrefix(Component prefix);
+
+  /**
+   * changes the suffix for this user. forces the display name to be regenerated
+   *
+   * @param suffix the new suffix
+   */
+  void setSuffix(Component suffix);
+
+  /**
+   * sets the uuid of this user. shouldn't be used, unless you are gamehandler
+   *
+   * @param uuid the new uuid
+   */
+  void setUuid(UUID uuid);
 }

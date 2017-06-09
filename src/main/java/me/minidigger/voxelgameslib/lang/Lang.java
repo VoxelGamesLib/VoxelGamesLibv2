@@ -10,7 +10,6 @@ import me.minidigger.voxelgameslib.utils.ChatUtil;
 import net.kyori.text.BaseComponent;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 /**
@@ -126,7 +125,8 @@ public class Lang {
         }
       }
       // why don't you just expose getCode?....
-      stringBuilder.append(ChatColor.COLOR_CHAR).append(savedColor.toString().substring(1, 1)) // no COLOR_CHAR in text
+      stringBuilder.append(ChatColor.COLOR_CHAR)
+          .append(savedColor.toString().substring(1, 1)) // no COLOR_CHAR in text
           .append(token);
     }
 
@@ -255,7 +255,7 @@ public class Lang {
    *
    * @param message the message to send
    */
-  public static void broadcast(BaseComponent... message) {
+  public static void broadcast(BaseComponent message) {
     userHandler.getUsers().forEach(user -> user.sendMessage(message));
   }
 }

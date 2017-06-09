@@ -54,7 +54,7 @@ public interface Game extends Tickable {
    *
    * @param message the message to be send
    */
-  void broadcastMessage(@Nonnull BaseComponent... message);
+  void broadcastMessage(@Nonnull BaseComponent message);
 
   /**
    * Sends a message to everr User that is related to this game. This could be a participant in the
