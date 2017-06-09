@@ -9,7 +9,7 @@ import lombok.extern.java.Log;
  * Scans the map for markers.
  */
 @Log
-public abstract class MapScanner {
+public class MapScanner {
 
   /**
    * Scans a map for markers
@@ -52,5 +52,7 @@ public abstract class MapScanner {
    * @param center the center location
    * @param range the range in where to scan
    */
-  public abstract void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range);
+  public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range) {
+
+  }
 }

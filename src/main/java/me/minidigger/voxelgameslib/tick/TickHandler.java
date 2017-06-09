@@ -12,7 +12,7 @@ import me.minidigger.voxelgameslib.phase.Phase;
  * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link me.minidigger.voxelgameslib.game.Game} instance<br> Every server mod has it's own
  * implementation of the TickHandler
  */
-public abstract class TickHandler implements Handler {
+public class TickHandler implements Handler {
 
   private final List<Tickable> tickables = new ArrayList<>();
 
@@ -21,6 +21,13 @@ public abstract class TickHandler implements Handler {
    */
   public void tick() {
     tickables.forEach(Tickable::tick);
+  }
+
+  /**
+   * Starts the ticker
+   */
+  public void start() {
+    //
   }
 
   /**

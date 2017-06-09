@@ -29,7 +29,7 @@ import net.lingala.zip4j.model.FileHeader;
  * Handles the worlds (loading, unloading etc)
  */
 @Log
-public abstract class WorldHandler implements Handler, Provider<WorldConfig> {
+public class WorldHandler implements Handler, Provider<WorldConfig> {
 
   @Inject
   @Named("WorldsFolder")
@@ -183,7 +183,9 @@ public abstract class WorldHandler implements Handler, Provider<WorldConfig> {
    * @param name the world to load
    * @throws WorldException if the world is not found or something else goes wrong
    */
-  public abstract void loadLocalWorld(@Nonnull String name);
+  public void loadLocalWorld(@Nonnull String name) {
+    // todo
+  }
 
   /**
    * Unloads a local world
@@ -191,7 +193,9 @@ public abstract class WorldHandler implements Handler, Provider<WorldConfig> {
    * @param name the world to load
    * @throws WorldException if the world is not found or something else goes wrong
    */
-  public abstract void unloadLocalWorld(@Nonnull String name);
+  public void unloadLocalWorld(@Nonnull String name) {
+    // todo
+  }
 
   /**
    * @return the folder where the playerable worlds are saved in (think about it as a repo for

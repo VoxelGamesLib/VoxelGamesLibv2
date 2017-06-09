@@ -3,7 +3,7 @@ package me.minidigger.voxelgameslib.team;
 import me.minidigger.voxelgameslib.handler.Handler;
 
 /**
- * Created by Martin on 28.01.2017.
+ * Handles the teams
  */
 public class TeamHandler implements Handler {
 
