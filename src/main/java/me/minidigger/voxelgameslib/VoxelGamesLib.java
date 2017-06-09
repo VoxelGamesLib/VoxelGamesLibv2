@@ -19,6 +19,7 @@ import me.minidigger.voxelgameslib.command.commands.GameCommands;
 import me.minidigger.voxelgameslib.command.commands.LangCommands;
 import me.minidigger.voxelgameslib.command.commands.RoleCommands;
 import me.minidigger.voxelgameslib.command.commands.VGLCommands;
+import me.minidigger.voxelgameslib.command.commands.WorldCommands;
 import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
@@ -115,6 +116,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     commandManager.registerCommand(injector.getInstance(VGLCommands.class));
     commandManager.registerCommand(injector.getInstance(RoleCommands.class));
     commandManager.registerCommand(injector.getInstance(WorldCreator.class));
+    commandManager.registerCommand(injector.getInstance(WorldCommands.class));
   }
 
 
