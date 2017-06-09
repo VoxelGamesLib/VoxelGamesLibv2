@@ -5,17 +5,18 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
-import com.google.inject.Injector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.utils.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * Commands related to the edit mode
@@ -23,9 +24,6 @@ import org.bukkit.Material;
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class EditMode extends BaseCommand {
-
-  @Inject
-  private Injector injector;
 
   @Nonnull
   private List<UUID> editMode = new ArrayList<>();
@@ -63,8 +61,8 @@ public class EditMode extends BaseCommand {
   @Syntax("<name> - the name of the skull")
   public void skull(User sender, String name) {
     if (editMode.contains(sender.getUuid())) {
-      Item skull = new ItemBuilder(Material.SKULL_ITEM, injector).variation((byte) 3).name(name)
-          .meta(m -> ((SkullItemMetaData) m).setOwner(name)).build();
+      ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
+          .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(name))).build();
       sender.getPlayer().getInventory().setItemInMainHand(skull);
     } else {
       Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
@@ -76,7 +74,7 @@ public class EditMode extends BaseCommand {
   @Syntax("<name> - the name of the chest")
   public void chest(User sender, String name) {
     if (editMode.contains(sender.getUuid())) {
-      Item chest = new ItemBuilder(Material.CHEST, injector).name(name).build();
+      ItemStack chest = new ItemBuilder(Material.CHEST).name(name).build();
       sender.getPlayer().getInventory().setItemInMainHand(chest);
     } else {
       Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);

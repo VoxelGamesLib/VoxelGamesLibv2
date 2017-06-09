@@ -7,6 +7,7 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -110,7 +111,7 @@ public class SignListener implements Listener {
             if (event.getUser().hasPermission(placeHolderSignBreak)) {
               Lang.msg(event.getUser(), LangKey.SIGNS_BREAK_SUCCESS, key);
               signHandler.removeSign(event.getBlock());
-              event.getBlock().setMaterial(Material.AIR);// to force a refresh of the block meta....
+              event.getBlock().setType(Material.AIR);// to force a refresh of the block meta....
               return;
             } else {
               event.setCanceled(true);
