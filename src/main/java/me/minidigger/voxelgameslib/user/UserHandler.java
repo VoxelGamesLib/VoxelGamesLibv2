@@ -73,7 +73,7 @@ public class UserHandler implements Handler {
     Optional<User> user = getUser(id);
     if (user.isPresent()) {
       //TODO go away, gamehandler, use the events!
-      gameHandler.getGames(user.get(), true).forEach(game -> game.leave(user.get()));
+      gameHandler.getGames(user.get().getUuid(), true).forEach(game -> game.leave(user.get()));
       persistenceHandler.getProvider().saveUser(user.get());
     }
 

@@ -1,6 +1,6 @@
 package me.minidigger.voxelgameslib;
 
-import co.aikar.commands.CommandManager;
+import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,12 +24,12 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
   private VoxelGamesLib voxelGamesLib;
   private TimingManager timingManager;
-  private CommandManager commandManager;
+  private BukkitCommandManager commandManager;
   private String pluginVersion;
   private File dataFolder;
 
   public VoxelGamesLibModule(VoxelGamesLib voxelGamesLib,
-      TimingManager timingManager, CommandManager commandManager,
+      TimingManager timingManager, BukkitCommandManager commandManager,
       String pluginVersion, File dataFolder) {
     this.voxelGamesLib = voxelGamesLib;
     this.timingManager = timingManager;
@@ -42,7 +42,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
   protected void configure() {
     bind(VoxelGamesLib.class).toInstance(voxelGamesLib);
     bind(TimingManager.class).toInstance(timingManager);
-    bind(CommandManager.class).toInstance(commandManager);
+    bind(BukkitCommandManager.class).toInstance(commandManager);
 
     bind(String.class).annotatedWith(Names.named("PluginVersion")).toInstance(pluginVersion);
 

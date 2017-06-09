@@ -1,8 +1,10 @@
 package me.minidigger.voxelgameslib;
 
-import co.aikar.commands.ACF;
+import co.aikar.commands.BukkitCommandCompletionContext;
+import co.aikar.commands.BukkitCommandExecutionContext;
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.CommandCompletions;
 import co.aikar.commands.CommandContexts;
-import co.aikar.commands.CommandManager;
 import co.aikar.commands.CommandReplacements;
 import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
@@ -31,6 +33,7 @@ import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.world.EditMode;
 import me.minidigger.voxelgameslib.world.WorldCreator;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class VoxelGamesLib extends JavaPlugin {
@@ -38,7 +41,7 @@ public final class VoxelGamesLib extends JavaPlugin {
   private static TaskChainFactory taskChainFactory;
 
   private TimingManager timingManager;
-  private CommandManager commandManager;
+  private BukkitCommandManager commandManager;
   private Injector injector;
 
   @Inject
@@ -54,7 +57,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     timingManager = TimingManager.of(this);
 
     // commands
-    commandManager = ACF.createManager(this);
+    commandManager = new BukkitCommandManager(this);
 
     // task chain
     taskChainFactory = BukkitTaskChainFactory.create(this);
@@ -69,6 +72,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     registerCommandContexts();
     registerCommandReplacements();
     registerCommands();
+    registerCommandCompletions();
   }
 
   @Override
@@ -81,7 +85,7 @@ public final class VoxelGamesLib extends JavaPlugin {
   }
 
   private void registerCommandContexts() {
-    CommandContexts con = commandManager.getCommandContexts();
+    CommandContexts<BukkitCommandExecutionContext> con = commandManager.getCommandContexts();
     con.registerContext(User.class, c -> userHandler.getUser(c.getSender().getName())
         .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName())));
     con.registerContext(GameMode.class, c -> gameHandler.getGameModes().stream()
@@ -108,6 +112,13 @@ public final class VoxelGamesLib extends JavaPlugin {
     rep.addReplacement("%premium", "voxelgameslib.role.premium");
     rep.addReplacement("%moderator", "voxelgameslib.role.moderator");
     rep.addReplacement("%admin", "voxelgameslib.role.admin");
+  }
+
+  private void registerCommandCompletions() {
+    CommandCompletions<CommandSender, BukkitCommandCompletionContext> comp = commandManager
+        .getCommandCompletions();
+
+    //TODO add tab completion everywhere
   }
 
   private void registerCommands() {

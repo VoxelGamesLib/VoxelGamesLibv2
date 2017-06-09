@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.phase;
 
-import co.aikar.commands.CommandManager;
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.BukkitRootCommand;
 import com.google.gson.annotations.Expose;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -27,12 +28,12 @@ import org.bukkit.event.Listener;
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
  */
 @Log
-public abstract class AbstractPhase implements Phase, Listener {
+public abstract class AbstractPhase implements Phase {
 
   @Inject
   private VoxelGamesLib main;
   @Inject
-  private CommandManager commandManager;
+  private BukkitCommandManager commandManager;
 
   @Expose
   private String name;
@@ -153,9 +154,6 @@ public abstract class AbstractPhase implements Phase, Listener {
 
       startedFeatures.add(feature);
     }
-
-    Bukkit.getPluginManager().registerEvents(this, main);
-    // commandManager.registerCommand(this); // register commands in features only?
   }
 
   @Override
@@ -179,14 +177,14 @@ public abstract class AbstractPhase implements Phase, Listener {
         HandlerList.unregisterAll((Listener) feature);
       }
 
-      // todo: implement command stuffs
-
-      commandManager.unregister(feature, true);
+      if (features instanceof BukkitRootCommand) {
+        commandManager.unregisterCommand((BukkitRootCommand) feature);
+      } else {
+        log.warning(
+            "Something went wrong while unregistering commands for feature " + feature.getName());
+      }
     }
     startedFeatures.clear();
-
-    HandlerList.unregisterAll(this);
-    commandManager.unregister(this, true);
   }
 
   @Override
