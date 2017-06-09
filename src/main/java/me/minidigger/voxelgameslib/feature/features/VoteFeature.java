@@ -136,7 +136,6 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
     return new Class[0];
   }
 
-  @Log
   @Singleton
   class VoteFeatureCommand extends AbstractFeatureCommand {
 

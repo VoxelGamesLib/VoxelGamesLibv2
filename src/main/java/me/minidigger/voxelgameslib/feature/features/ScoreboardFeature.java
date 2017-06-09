@@ -34,7 +34,9 @@ public class ScoreboardFeature extends AbstractFeature {
   @Override
   public void init() {
     //TODO fix scoreboard api
-    scoreboard = Bukkit.createScoreboard(getPhase().getGame().getGameMode().getName());
+
+    // disabled for now so we can actually compile:
+    // scoreboard = Bukkit.createScoreboard(getPhase().getGame().getGameMode().getName());
   }
 
   @Override
