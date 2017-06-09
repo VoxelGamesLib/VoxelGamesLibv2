@@ -53,11 +53,16 @@ public class SignHandler implements Handler {
 
     signLocations = persistenceHandler.getProvider().loadSigns();
 
-    placeHolders.put("world", (SimpleSignPlaceHolder) (event, key) -> event.getWorld());
+    placeHolders.put("world",
+        (SimpleSignPlaceHolder) (event, key) -> event.getBlock().getLocation().getWorld()
+            .getName());
     placeHolders.put("time",
         (SimpleSignPlaceHolder) (event, key) -> DateTimeFormatter.ISO_TIME.format(LocalTime.now()));
     placeHolders.put("location",
-        (SimpleSignPlaceHolder) (event, key) -> event.getLocation().toString().replace("V", ""));
+        (SimpleSignPlaceHolder) (event, key) -> {
+          Location loc = event.getBlock().getLocation();
+          return "X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ();
+        });
 
     buttons.put("test", (user, block) -> user.sendMessage(new TextComponent("WOW")));
 

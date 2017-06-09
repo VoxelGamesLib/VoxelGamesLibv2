@@ -11,14 +11,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 @Log
 @SuppressWarnings("JavaDoc")
-public class GameListener implements Listener{
+public class GameListener implements Listener {
 
   @Inject
   private GameHandler gameHandler;
 
   @EventHandler
   public void onLeave(@Nonnull PlayerQuitEvent event) {
-    gameHandler.getGames(event.getUser(), true).forEach((game -> game.leave(event.getPlayer())));
+    gameHandler.getGames(event.getPlayer().getUniqueId(), true)
+        .forEach((game -> game.leave(event.getPlayer().getUniqueId())));
   }
 
   @EventHandler

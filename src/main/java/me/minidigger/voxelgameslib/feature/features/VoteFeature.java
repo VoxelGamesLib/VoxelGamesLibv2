@@ -1,20 +1,26 @@
 package me.minidigger.voxelgameslib.feature.features;
 
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Syntax;
 import com.google.gson.annotations.Expose;
+import com.google.inject.Injector;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
-import me.minidigger.voxelgameslib.feature.*;
+import me.minidigger.voxelgameslib.feature.AbstractFeature;
+import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
+import me.minidigger.voxelgameslib.feature.Feature;
+import me.minidigger.voxelgameslib.feature.FeatureImplementor;
+import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
@@ -33,6 +39,9 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
 
   @Inject
   private WorldConfig config;
+
+  @Inject
+  private Injector injector;
 
   private Map<UUID, Integer> votes = new HashMap<>();
   private Map<Integer, MapInfo> availableMaps = new HashMap<>();
@@ -97,8 +106,7 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
 
   @Override
   public AbstractFeatureCommand getCommandClass() {
-    // todo: use guice dependency injection here
-    return new VoteFeatureCommand();
+    return injector.getInstance(VoteFeatureCommand.class);
   }
 
   /**
@@ -133,6 +141,8 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
   class VoteFeatureCommand extends AbstractFeatureCommand {
 
     @CommandAlias("vote")
+    @CommandPermission("%user")
+    @Syntax("[map] - the map to vote for")
     public void vote(User sender, @Optional Integer map) {
       if (map == null) {
         sendVoteMessage(sender);
@@ -150,6 +160,5 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
         }
       }
     }
-
   }
 }

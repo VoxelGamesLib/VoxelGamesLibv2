@@ -3,6 +3,7 @@ package me.minidigger.voxelgameslib.feature.features;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
@@ -13,8 +14,7 @@ import me.minidigger.voxelgameslib.map.Map;
 import me.minidigger.voxelgameslib.map.Marker;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.user.User;
-import org.bukkit.entity.Player;
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -40,7 +40,7 @@ public class SpawnFeature extends AbstractFeature {
     }
     if (isInitialSpawn) {
       for (User user : getPhase().getGame().getPlayers()) {
-        user.getPlayer().teleport(Bukkit.getWorld(map.getWorldName()), getSpawn(user.getPlayer()));
+        user.getPlayer().teleport(getSpawn(user.getPlayer().getUniqueId()));
       }
     }
   }
@@ -48,27 +48,28 @@ public class SpawnFeature extends AbstractFeature {
   /**
    * Generates a spawn location for that user
    *
-   * @param user the user which wants to spawn
+   * @param id the uuid user which wants to spawn
    * @return the location he should spawn
    */
-  public Vector3D getSpawn(@Nonnull Player player) {
+  public Location getSpawn(@Nonnull UUID id) {
     //TODO super fancy spawn algorithm
-    return spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()));
+    return spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()))
+        .toLocation(map.getWorldName());
   }
 
   @SuppressWarnings("JavaDoc")
   @EventHandler
   public void onRespawn(PlayerRespawnEvent e) {
     if (getPhase().getGame().isPlaying(e.getPlayer().getUniqueId())) {
-      e.setRespawnLocation(getSpawn(e.getPlayer()));
+      e.setRespawnLocation(getSpawn(e.getPlayer().getUniqueId()));
     }
   }
 
   @SuppressWarnings("JavaDoc")
   @EventHandler
   public void onJoin(GameJoinEvent e) {
-    if (getPhase().getGame().isPlaying(e.getUser())) {
-      e.getUser().teleport(map.getWorldName(), getSpawn(e.getUser()));
+    if (getPhase().getGame().isPlaying(e.getUser().getUuid())) {
+      e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
     }
   }
 

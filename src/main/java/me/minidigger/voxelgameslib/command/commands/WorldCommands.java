@@ -21,7 +21,7 @@ import org.bukkit.Bukkit;
  */
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
-public class WorldCommands extends BaseCommand{
+public class WorldCommands extends BaseCommand {
 
   //TODO world command completer
 
@@ -41,7 +41,7 @@ public class WorldCommands extends BaseCommand{
   @Syntax("<mapname> - the name of the map to load")
   public void load(User sender, String mapName) {
     Optional<Map> o = handler.getMap(mapName);
-    Map map = o.orElseGet(() -> handler.loadMap(mapName);
+    Map map = o.orElseGet(() -> handler.loadMap(mapName));
 
     handler.loadWorld(map);
   }
@@ -79,7 +79,7 @@ public class WorldCommands extends BaseCommand{
     Optional<Map> o = handler.getMap(world);
     if (o.isPresent()) {
       Map map = o.get();
-      sender.teleport(map.getWorldName(), map.getCenter());
+      sender.getPlayer().teleport(map.getCenter().toLocation(map.getWorldName()));
     } else {
       sender.getPlayer().teleport(Bukkit.getWorld(world).getSpawnLocation());
       Lang.msg(sender, LangKey.WORLD_UNKNOWN_MAP, world);

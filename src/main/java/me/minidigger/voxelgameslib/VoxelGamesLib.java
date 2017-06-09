@@ -29,6 +29,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
+import me.minidigger.voxelgameslib.world.EditMode;
 import me.minidigger.voxelgameslib.world.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -117,6 +118,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     commandManager.registerCommand(injector.getInstance(RoleCommands.class));
     commandManager.registerCommand(injector.getInstance(WorldCreator.class));
     commandManager.registerCommand(injector.getInstance(WorldCommands.class));
+    commandManager.registerCommand(injector.getInstance(EditMode.class));
   }
 
 

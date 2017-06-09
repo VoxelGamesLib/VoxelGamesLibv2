@@ -172,20 +172,20 @@ public class GameHandler implements Handler {
   /**
    * Gets a list of all games the user is playing in or spectating (if spectating is set to true)
    *
-   * @param user the user which games should be returned
+   * @param id the id of the user which games should be returned
    * @param spectate if we should include games where the user spectates
    * @return the games of that users
    */
   @Nonnull
-  public List<Game> getGames(@Nonnull User user, boolean spectate) {
+  public List<Game> getGames(@Nonnull UUID id, boolean spectate) {
     List<Game> result = new ArrayList<>();
     for (Game game : games) {
-      if (game.isPlaying(user)) {
+      if (game.isPlaying(id)) {
         result.add(game);
         continue;
       }
 
-      if (spectate && game.isSpectating(user)) {
+      if (spectate && game.isSpectating(id)) {
         result.add(game);
       }
     }

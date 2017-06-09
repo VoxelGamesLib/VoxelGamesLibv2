@@ -101,6 +101,7 @@ public abstract class AbstractGame implements Game {
 
   @Override
   public void start() {
+    startTime = LocalDateTime.now();
     activePhase.setRunning(true);
     activePhase.start();
   }
@@ -280,7 +281,7 @@ public abstract class AbstractGame implements Game {
       return;
     }
 
-    if (!isPlaying(user)) {
+    if (!isPlaying(user.getUuid())) {
       players.add(user);
       Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
       broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
@@ -293,7 +294,7 @@ public abstract class AbstractGame implements Game {
       Lang.msg(user, LangKey.GAME_CANT_SPECTATE);
     }
 
-    if (!isPlaying(user) && !isSpectating(user)) {
+    if (!isPlaying(user.getUuid()) && !isSpectating(user.getUuid())) {
       spectators.add(user);
     }
   }
@@ -309,13 +310,13 @@ public abstract class AbstractGame implements Game {
   }
 
   @Override
-  public boolean isPlaying(@Nonnull User user) {
-    return players.contains(user);
+  public boolean isPlaying(@Nonnull UUID user) {
+    return players.stream().anyMatch(u -> u.getUuid().equals(user));
   }
 
   @Override
-  public boolean isSpectating(@Nonnull User user) {
-    return spectators.contains(user);
+  public boolean isSpectating(@Nonnull UUID user) {
+    return spectators.stream().anyMatch(u -> u.getUuid().equals(user));
   }
 
   @Override

@@ -15,6 +15,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
+import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class GameUser implements User {
   @Inject
   private PersistenceHandler persistenceHandler;
 
-  private BaseComponent[] displayName;
+  private Component[] displayName;
 
   @Expose
   private User User;
@@ -51,9 +52,9 @@ public class GameUser implements User {
   private Map<String, Rating> ratings = new HashMap<>();
 
   @Expose
-  private BaseComponent[] prefix;
+  private Component[] prefix;
   @Expose
-  private BaseComponent[] suffix;
+  private Component[] suffix;
 
   @Nonnull
   @Override
@@ -62,7 +63,7 @@ public class GameUser implements User {
   }
 
   @Override
-  public void sendMessage(@Nonnull BaseComponent... message) {
+  public void sendMessage(@Nonnull Component... message) {
     Arrays.stream(message).forEach(msg -> player.sendMessage(msg.toString()));
   }
 
@@ -75,13 +76,13 @@ public class GameUser implements User {
   }
 
   @Override
-  public BaseComponent[] getDisplayName() {
+  public Component[] getDisplayName() {
     if (displayName == null) {
       displayName = Stream.of(ComponentSerializer.parse(getPrefix()),
           new TextComponent(getDisplayName()).create(),
           ComponentSerializer.parse(getPrefix()))
           .flatMap(Stream::of)
-          .toArray(BaseComponent[]::new);
+          .toArray(Component[]::new);
     }
     return displayName;
   }

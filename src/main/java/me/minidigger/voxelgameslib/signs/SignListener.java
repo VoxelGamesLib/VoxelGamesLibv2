@@ -124,7 +124,7 @@ public class SignListener implements Listener {
         for (String key : signHandler.getButtons().keySet()) {
           if (line.contains("%" + key + "%")) {
             // has user permission for that?
-            if (event.getUser().hasPermission(buttonSignBreak)) {
+            if (event.getPlayer().hasPermission(buttonSignBreak)) {
               Lang.msg(event.getUser(), LangKey.SIGNS_BREAK_SUCCESS, key);
               signHandler.removeSign(event.getBlock());
               event.getBlock().setMaterial(Material.AIR);// to force a refresh of the block meta....

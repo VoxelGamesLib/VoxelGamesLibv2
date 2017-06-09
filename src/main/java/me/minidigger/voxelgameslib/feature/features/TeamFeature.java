@@ -16,7 +16,7 @@ public class TeamFeature extends AbstractFeature {
     // TODO team feature
     for (User user : getPhase().getGame().getPlayers()) {
       Team team = new Team();
-      team.put(user, user.getData().getRating(getPhase().getGame().getGameMode()));
+      team.put(user, user.getRating(getPhase().getGame().getGameMode()));
       teams.add(team);
     }
   }
