@@ -19,6 +19,7 @@ target/
 /testserver/usercache.json
 /testserver/whitelist.json
 /testserver/plugins/PluginMetrics
+/testserver/plugins/bStats
 # order always changes...
 /testserver/spigot.yml
 /testserver/commands.yml

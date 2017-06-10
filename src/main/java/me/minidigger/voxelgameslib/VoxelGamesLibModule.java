@@ -5,6 +5,7 @@ import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
@@ -36,6 +37,10 @@ public final class VoxelGamesLibModule extends AbstractModule {
     this.commandManager = commandManager;
     this.pluginVersion = pluginVersion;
     this.dataFolder = dataFolder;
+  }
+
+  public Injector createInjector() {
+    return Guice.createInjector(this);
   }
 
   @Override

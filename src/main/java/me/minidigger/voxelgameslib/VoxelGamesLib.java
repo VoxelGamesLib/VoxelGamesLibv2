@@ -10,7 +10,7 @@ import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
-import com.google.inject.Guice;
+import com.bugsnag.Severity;
 import com.google.inject.Injector;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -61,6 +61,7 @@ public final class VoxelGamesLib extends JavaPlugin {
   private TimingManager timingManager;
   private BukkitCommandManager commandManager;
   private Injector injector;
+  private ErrorHandler errorHandler;
 
   @Inject
   private ConfigHandler configHandler;
@@ -72,8 +73,6 @@ public final class VoxelGamesLib extends JavaPlugin {
   private UserHandler userHandler;
   @Inject
   private RoleHandler roleHandler;
-  @Inject
-  private ErrorHandler errorHandler;
   @Inject
   private MapHandler mapHandler;
   @Inject
@@ -96,83 +95,95 @@ public final class VoxelGamesLib extends JavaPlugin {
   private MetricHandler metricHandler;
 
   @Override
+  public void onLoad() {
+    errorHandler = new ErrorHandler(this);
+    errorHandler.start();
+  }
+
+  @Override
   public void onEnable() {
-    // start by enabling external stuff. they don't require any VGL stuff
+    try {
+      // start by enabling external stuff. they don't require any VGL stuff
 
-    // timings
-    timingManager = TimingManager.of(this);
+      // timings
+      timingManager = TimingManager.of(this);
 
-    // commands
-    commandManager = new BukkitCommandManager(this);
+      // commands
+      commandManager = new BukkitCommandManager(this);
 
-    // task chain
-    taskChainFactory = BukkitTaskChainFactory.create(this);
-    taskChainFactory.setDefaultErrorHandler((e, t) -> {
-      log.severe("Task " + t.hashCode() + " generated an exception:");
-      e.printStackTrace();
-    });
+      // task chain
+      taskChainFactory = BukkitTaskChainFactory.create(this);
+      taskChainFactory.setDefaultErrorHandler((e, t) -> {
+        log.severe("Task " + t.hashCode() + " generated an exception:");
+        e.printStackTrace();
+      });
 
-    // guice
-    VoxelGamesLibModule voxelGamesLibModule = new VoxelGamesLibModule(this, timingManager,
-        commandManager, getDescription().getVersion(), getDataFolder());
-    injector = Guice.createInjector(voxelGamesLibModule);
-    injector.injectMembers(this);
+      // guice
+      injector = new VoxelGamesLibModule(this, timingManager,
+          commandManager, getDescription().getVersion(), getDataFolder()).createInjector();
+      injector.injectMembers(this);
 
-    // then enable all VGL stuff
-    Timings.time("EnableAllHandler", () -> {
-      configHandler.start();
-      persistenceHandler.start();
-      langHandler.start();
-      tickHandler.start();
-      userHandler.start();
-      roleHandler.start();
-      errorHandler.start();
-      mapHandler.start();
-      worldHandler.start();
-      teamHandler.start();
-      eloHandler.start();
-      matchmakingHandler.start();
-      signHandler.start();
-      metricHandler.start();
+      // then enable all VGL stuff
+      Timings.time("EnableAllHandler", () -> {
+        configHandler.start();
+        persistenceHandler.start();
+        langHandler.start();
+        tickHandler.start();
+        userHandler.start();
+        roleHandler.start();
+        mapHandler.start();
+        worldHandler.start();
+        teamHandler.start();
+        eloHandler.start();
+        matchmakingHandler.start();
+        signHandler.start();
+        metricHandler.start();
 
-      gameHandler.start();
-      moduleHandler.start();
-    });
+        gameHandler.start();
+        moduleHandler.start();
+      });
 
-    // register commands
-    registerCommandContexts();
-    registerCommandReplacements();
-    registerCommands();
-    registerCommandCompletions();
+      // register commands
+      registerCommandContexts();
+      registerCommandReplacements();
+      registerCommands();
+      registerCommandCompletions();
 
-    registerListeners();
+      registerListeners();
+    } catch (Exception ex) {
+      errorHandler.handle(ex, Severity.ERROR);
+    }
   }
 
   @Override
   public void onDisable() {
-    getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
-    Timings.time("DisableAllHandler", () -> {
-      configHandler.stop();
-      langHandler.stop();
-      tickHandler.stop();
-      userHandler.stop();
-      roleHandler.stop();
-      errorHandler.stop();
-      mapHandler.stop();
-      worldHandler.stop();
-      teamHandler.stop();
-      eloHandler.stop();
-      matchmakingHandler.stop();
-      signHandler.stop();
-      metricHandler.stop();
+    try {
+      getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
+      Timings.time("DisableAllHandler", () -> {
+        configHandler.stop();
+        langHandler.stop();
+        tickHandler.stop();
+        userHandler.stop();
+        roleHandler.stop();
+        mapHandler.stop();
+        worldHandler.stop();
+        teamHandler.stop();
+        eloHandler.stop();
+        matchmakingHandler.stop();
+        signHandler.stop();
+        metricHandler.stop();
 
-      gameHandler.stop();
-      moduleHandler.stop();
+        gameHandler.stop();
+        moduleHandler.stop();
 
-      persistenceHandler.stop();
+        persistenceHandler.stop();
+        errorHandler.stop();
 
-      injector = null;
-    });
+        injector = null;
+      });
+    } catch (Exception ex) {
+      errorHandler.handle(ex, Severity.ERROR);
+    }
   }
 
   private void registerCommandContexts() {
