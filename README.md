@@ -11,7 +11,7 @@ This will be a large-scaled, fully-modular and well-documented minigames API.
 VoxelGamesLib uses [Maven 3](http://maven.apache.org/) for compilation. To compile:
 
 * Install Git and clone the repository
-* Run `mvn package`
+* Run `mvn install`
 
 # Licence
 
