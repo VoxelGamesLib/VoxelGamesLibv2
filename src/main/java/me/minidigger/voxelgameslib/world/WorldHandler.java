@@ -25,6 +25,10 @@ import me.minidigger.voxelgameslib.utils.FileUtils;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 
 /**
  * Handles the worlds (loading, unloading etc)
@@ -130,6 +134,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     } catch (ZipException e) {
       throw new WorldException("Could not unzip world " + map.getWorldName() + ".", e);
     }
+
+    loadLocalWorld(map.getWorldName());
   }
 
   /**
@@ -140,6 +146,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
    * @param map the map that should be unloaded.
    */
   public void unloadWorld(@Nonnull Map map) {
+    unloadLocalWorld(map.getWorldName());
     map.setLoaded(false);
 
     FileUtils.delete(new File(worldContainer, map.getWorldName()));
@@ -186,7 +193,14 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
    * @throws WorldException if the world is not found or something else goes wrong
    */
   public void loadLocalWorld(@Nonnull String name) {
-    // todo
+    org.bukkit.WorldCreator wc = new WorldCreator(name);
+    wc.environment(World.Environment.NORMAL); //TODO do we need support for environment in maps?
+    wc.generateStructures(false);
+    wc.type(WorldType.NORMAL);
+    wc.generator(new CleanRoomChunkGenerator());
+    wc.generatorSettings("");
+    World world = wc.createWorld();
+    world.setAutoSave(false);
   }
 
   /**
@@ -196,7 +210,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
    * @throws WorldException if the world is not found or something else goes wrong
    */
   public void unloadLocalWorld(@Nonnull String name) {
-    // todo
+    Bukkit.unloadWorld(name, false);
   }
 
   /**
