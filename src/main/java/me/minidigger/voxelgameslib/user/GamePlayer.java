@@ -50,9 +50,9 @@ public class GamePlayer implements User {
   private String rawDisplayName;
 
   @Expose
-  private Component prefix;
+  private Component prefix = new TextComponent("");
   @Expose
-  private Component suffix;
+  private Component suffix = new TextComponent("");
 
   @Nonnull
   @Override
