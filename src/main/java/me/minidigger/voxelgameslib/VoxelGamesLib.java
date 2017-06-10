@@ -115,6 +115,9 @@ public final class VoxelGamesLib extends JavaPlugin {
 
       // commands
       commandManager = new BukkitCommandManager(this);
+      commandManager.registerExceptionHandler((sender, args, e) -> {
+        errorHandler.handle(sender, args, e);
+      });
 
       // task chain
       taskChainFactory = BukkitTaskChainFactory.create(this);

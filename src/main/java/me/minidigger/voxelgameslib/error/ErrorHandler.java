@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.error;
 
+import co.aikar.commands.CommandIssuer;
 import com.bugsnag.Bugsnag;
 import com.bugsnag.Severity;
 import java.lang.reflect.Field;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.handler.Handler;
@@ -18,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
@@ -245,5 +248,13 @@ public class ErrorHandler implements Handler {
     bugsnag.notify(ex, severity);
     log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
         "Caught exception with level " + severity.getValue(), ex);
+  }
+
+  public void handle(CommandIssuer sender, List<String> args, Exception e) {
+    bugsnag.notify(e, Severity.ERROR, (report) -> {
+      report.addToTab(COMMAND_INFO_TAB, "sender", ((CommandSender) sender.getIssuer()).getName());
+      report.addToTab(COMMAND_INFO_TAB, "args", args.stream().collect(Collectors.joining(" ")));
+    });
+    log.info("Caught exception");
   }
 }
