@@ -34,6 +34,7 @@ import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.Locale;
+import me.minidigger.voxelgameslib.log.LoggingHandler;
 import me.minidigger.voxelgameslib.map.MapHandler;
 import me.minidigger.voxelgameslib.matchmaking.MatchmakingHandler;
 import me.minidigger.voxelgameslib.metrics.MetricHandler;
@@ -62,6 +63,7 @@ public final class VoxelGamesLib extends JavaPlugin {
   private BukkitCommandManager commandManager;
   private Injector injector;
   private ErrorHandler errorHandler;
+  private LoggingHandler loggingHandler;
 
   @Inject
   private ConfigHandler configHandler;
@@ -103,6 +105,9 @@ public final class VoxelGamesLib extends JavaPlugin {
   @Override
   public void onEnable() {
     try {
+      // logging first, only changes prefixes anyways
+      loggingHandler = new LoggingHandler();
+      loggingHandler.start();
       // start by enabling external stuff. they don't require any VGL stuff
 
       // timings
@@ -178,6 +183,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
         persistenceHandler.stop();
         errorHandler.stop();
+        loggingHandler.stop();
 
         injector = null;
       });

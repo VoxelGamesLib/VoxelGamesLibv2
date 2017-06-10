@@ -176,7 +176,6 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
   @Nonnull
   @Override
   public WorldConfig get() {
-    log.info("Called provider, config is " + config);
     return config;
   }
 
