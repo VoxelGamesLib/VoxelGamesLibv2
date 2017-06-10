@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.feature.features;
 
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.lang.LangKey;
@@ -40,6 +41,19 @@ public class DuelFeature extends AbstractFeature {
     throw new IllegalArgumentException(user.getRawDisplayName() + " is neither one nor two");
   }
 
+  /**
+   * @param uniqueId the user to not return
+   * @return the user that is not user
+   */
+  public User getOther(UUID uniqueId) {
+    if (one.getUuid().equals(uniqueId)) {
+      return two;
+    } else if (two.getUuid().equals(uniqueId)) {
+      return one;
+    }
+    throw new IllegalArgumentException(uniqueId + " is neither one nor two");
+  }
+
   @Override
   public void start() {
     if (getPhase().getGame().getPlayers().size() != 2) {
@@ -78,4 +92,5 @@ public class DuelFeature extends AbstractFeature {
   public Class[] getDependencies() {
     return new Class[0];
   }
+
 }

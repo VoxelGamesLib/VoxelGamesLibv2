@@ -1,0 +1,3 @@
+[submodule "1vs1"]
+	path = 1vs1
+	url = https://github.com/VoxelGamesLib/1vs1.git
