@@ -5,6 +5,7 @@ import me.minidigger.voxelgameslib.user.GamePlayer;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.ComponentSerializer;
+import org.bukkit.Bukkit;
 
 /**
  * Small util for chat related stuff
@@ -42,6 +43,6 @@ public class ChatUtil {
    */
   public static void sendMessage(GamePlayer gameUser, Component message) {
     String json = ComponentSerializer.serialize(message);
-    gameUser.getPlayer().sendRawMessage(json);
+    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + gameUser.getPlayer().getName() + " " + json);
   }
 }
