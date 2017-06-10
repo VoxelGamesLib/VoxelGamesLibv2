@@ -4,6 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.exception.MapException;
+import me.minidigger.voxelgameslib.utils.DirectionUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
+import org.bukkit.World;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Skull;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Scans the map for markers.
@@ -53,6 +64,65 @@ public class MapScanner {
    * @param range the range in where to scan
    */
   public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range) {
+    World world = Bukkit.getWorld(map.getWorldName());
+    if (world == null) {
+      throw new MapException("Could not find world " + map.getWorldName() + ". Is it loaded?");
+    }
 
+    List<Marker> markers = new ArrayList<>();
+    List<ChestMarker> chestMarkers = new ArrayList<>();
+
+    int startX = (int) center.getX();
+    int startY = (int) center.getZ();
+
+    int minX = Math.min(startX - range, startX + range);
+    int minZ = Math.min(startY - range, startY + range);
+
+    int maxX = Math.max(startX - range, startX + range);
+    int maxZ = Math.max(startY - range, startY + range);
+
+    for (int x = minX; x <= maxX; x += 16) {
+      for (int z = minZ; z <= maxZ; z += 16) {
+        Chunk chunk = world.getChunkAt(x >> 4, z >> 4);
+        for (BlockState te : chunk.getTileEntities()) {
+          if (te.getType() == Material.SKULL) {
+            Skull skull = (Skull) te;
+            if (skull.getSkullType() == SkullType.PLAYER) {
+              if (skull.getOwningPlayer() != null) {
+                String markerData = skull.getOwningPlayer().getName();
+                if (markerData == null) {
+                  log.warning("owning player name null?!");
+                  markerData = skull.getOwner();
+                }
+                markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
+                    DirectionUtil.directionToYaw(skull.getRotation()),
+                    markerData));
+              } else {
+                log.warning("unknown owner");
+              }
+            }
+          } else if (te.getType() == Material.CHEST) {
+            Chest chest = (Chest) te;
+            String name = chest.getBlockInventory().getName();
+            ItemStack[] items = new ItemStack[chest.getBlockInventory()
+                .getStorageContents().length];
+            for (int i = 0; i < items.length; i++) {
+              ItemStack is = chest.getBlockInventory().getItem(i);
+              if (is == null) {
+                items[i] = new ItemStack(Material.AIR);
+              } else {
+                items[i] = is;
+              }
+            }
+            chestMarkers
+                .add(new ChestMarker(new Vector3D(chest.getX(), chest.getY(), chest.getZ()), name,
+                    items));
+          }
+        }
+      }
+    }
+
+    map.setMarkers(markers);
+    map.setChestMarkers(chestMarkers);
   }
 }
