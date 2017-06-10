@@ -1,8 +1,9 @@
-package me.minidigger.voxelgameslib;
+package me.minidigger.voxelgameslib.metrics;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.handler.Handler;
 import org.bstats.Metrics;
 

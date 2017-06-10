@@ -12,7 +12,6 @@ import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.sun.corba.se.impl.activation.CommandHandler;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -37,6 +36,7 @@ import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.map.MapHandler;
 import me.minidigger.voxelgameslib.matchmaking.MatchmakingHandler;
+import me.minidigger.voxelgameslib.metrics.MetricHandler;
 import me.minidigger.voxelgameslib.module.ModuleHandler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Role;
@@ -92,6 +92,8 @@ public final class VoxelGamesLib extends JavaPlugin {
   private MatchmakingHandler matchmakingHandler;
   @Inject
   private SignHandler signHandler;
+  @Inject
+  private MetricHandler metricHandler;
 
   @Override
   public void onEnable() {
@@ -131,6 +133,7 @@ public final class VoxelGamesLib extends JavaPlugin {
       eloHandler.start();
       matchmakingHandler.start();
       signHandler.start();
+      metricHandler.start();
 
       gameHandler.start();
       moduleHandler.start();
@@ -161,6 +164,7 @@ public final class VoxelGamesLib extends JavaPlugin {
       eloHandler.stop();
       matchmakingHandler.stop();
       signHandler.stop();
+      metricHandler.stop();
 
       gameHandler.stop();
       moduleHandler.stop();
