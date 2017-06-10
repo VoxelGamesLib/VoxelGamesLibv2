@@ -14,20 +14,17 @@ config-version: 11
 settings:
   debug: false
   save-user-cache-on-stop-only: false
-  filter-creative-items: true
-  moved-wrongly-threshold: 0.0625
-  moved-too-quickly-multiplier: 10.0
-  user-cache-size: 1000
-  int-cache-limit: 1024
-  player-shuffle: 0
-  item-dirty-ticks: 20
   late-bind: false
+  sample-count: 12
+  player-shuffle: 0
   bungeecord: false
+  item-dirty-ticks: 20
+  int-cache-limit: 1024
+  user-cache-size: 1000
+  netty-threads: 4
   timeout-time: 60
   restart-on-crash: true
   restart-script: ./start.sh
-  netty-threads: 4
-  sample-count: 12
   attribute:
     maxHealth:
       max: 2048.0
@@ -35,6 +32,9 @@ settings:
       max: 2048.0
     attackDamage:
       max: 2048.0
+  moved-too-quickly-multiplier: 10.0
+  filter-creative-items: true
+  moved-wrongly-threshold: 0.0625
 messages:
   whitelist: You are not whitelisted on this server!
   unknown-command: Unknown command. Type "/help" for help.
@@ -44,7 +44,7 @@ messages:
   restart: Server is restarting
 commands:
   tab-complete: 0
-  silent-commandblock-console: false
+  log: true
   spam-exclusions:
   - /skill
   replace-commands:
@@ -52,7 +52,7 @@ commands:
   - summon
   - testforblock
   - tellraw
-  log: true
+  silent-commandblock-console: false
 stats:
   disable-saving: false
   forced-stats: {}
