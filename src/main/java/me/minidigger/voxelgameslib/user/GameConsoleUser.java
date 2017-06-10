@@ -20,6 +20,9 @@ import org.bukkit.entity.Player;
  */
 public class GameConsoleUser implements ConsoleUser {
 
+  public static final UUID UUID = java.util.UUID.nameUUIDFromBytes("ConsoleUser".getBytes());
+  public static final GameConsoleUser INSTANCE = new GameConsoleUser();
+
   @Override
   public String getRawDisplayName() {
     return "Console";
@@ -103,7 +106,7 @@ public class GameConsoleUser implements ConsoleUser {
   @Nonnull
   @Override
   public UUID getUuid() {
-    return UUID.nameUUIDFromBytes("ConsoleUser".getBytes());
+    return UUID;
   }
 
   @Override

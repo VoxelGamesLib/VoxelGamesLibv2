@@ -138,8 +138,12 @@ public class UserHandler implements Handler {
    * @return the user with that display name, if present
    */
   public Optional<User> getUser(String displayname) {
-    return users.values().stream()
-        .filter(u -> u.getPlayer().getName().equalsIgnoreCase(displayname)).findFirst();
+    if (displayname.equalsIgnoreCase("CONSOLE")) {
+      return Optional.of(GameConsoleUser.INSTANCE);
+    } else {
+      return users.values().stream()
+          .filter(u -> u.getPlayer().getName().equalsIgnoreCase(displayname)).findFirst();
+    }
   }
 
   /**
