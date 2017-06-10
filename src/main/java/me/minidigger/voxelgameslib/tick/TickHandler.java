@@ -3,9 +3,13 @@ package me.minidigger.voxelgameslib.tick;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.phase.Phase;
+import org.bukkit.Bukkit;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is
@@ -13,7 +17,11 @@ import me.minidigger.voxelgameslib.phase.Phase;
  * me.minidigger.voxelgameslib.game.Game} instance<br> Every server mod has it's own implementation
  * of the TickHandler
  */
+@Singleton
 public class TickHandler implements Handler {
+
+  @Inject
+  private VoxelGamesLib voxelGamesLib;
 
   private final List<Tickable> tickables = new ArrayList<>();
 
@@ -28,7 +36,7 @@ public class TickHandler implements Handler {
    * Starts the ticker
    */
   public void start() {
-    //
+    Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
   }
 
   /**
