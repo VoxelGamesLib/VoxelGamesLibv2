@@ -67,6 +67,10 @@ public class GameHandler implements Handler {
    * custom gamemode if needed
    */
   public void loadGameDefinitons() {
+    if(!gameDefinitionFolder.exists()){
+      gameDefinitionFolder.mkdirs();
+      log.warning("Gamedefinition folder doesn't exist, creating...");
+    }
     File[] files = gameDefinitionFolder.listFiles();
     if (files == null) {
       log.warning("Could not load game definitions: could not list files!");
