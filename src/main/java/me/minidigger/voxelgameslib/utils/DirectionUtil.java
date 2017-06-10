@@ -26,8 +26,8 @@ public class DirectionUtil {
   }
 
   /**
-   * Gets the Notch integer representation of a BlockFace<br>
-   * <b>These are the horizontal directions, which exclude up and down</b>
+   * Gets the Notch integer representation of a BlockFace<br> <b>These are the horizontal
+   * directions, which exclude up and down</b>
    *
    * @param face to get
    * @return Notch of the face
@@ -48,8 +48,8 @@ public class DirectionUtil {
   }
 
   /**
-   * Gets the horizontal BlockFace from a given yaw angle<br>
-   * This includes the NORTH_WEST directions
+   * Gets the horizontal BlockFace from a given yaw angle<br> This includes the NORTH_WEST
+   * directions
    *
    * @param yaw angle
    * @return The direction of the angle

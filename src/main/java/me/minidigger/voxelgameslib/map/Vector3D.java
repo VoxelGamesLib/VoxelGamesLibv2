@@ -24,8 +24,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
- * Represents an immutable vector in three dimensions. This class is not
- * final by design.
+ * Represents an immutable vector in three dimensions. This class is not final by design.
  */
 public class Vector3D implements Cloneable {
 
@@ -105,8 +104,8 @@ public class Vector3D implements Cloneable {
   }
 
   /**
-   * Tries to generate a string from a vector. The string should be in the format
-   * defined by {@link Vector3D#toString()}
+   * Tries to generate a string from a vector. The string should be in the format defined by {@link
+   * Vector3D#toString()}
    *
    * @param string The formatted string
    * @return A new vector, or null if the format is incorrect.
@@ -238,9 +237,8 @@ public class Vector3D implements Cloneable {
   }
 
   /**
-   * Gets the square of the magnitude of this vector. If at all possible,
-   * use this instead of {@link Vector3D#length()} as this is significantly
-   * faster.
+   * Gets the square of the magnitude of this vector. If at all possible, use this instead of {@link
+   * Vector3D#length()} as this is significantly faster.
    *
    * @return A double representing the square of the magnitude
    */

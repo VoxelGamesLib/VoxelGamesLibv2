@@ -20,7 +20,8 @@ public class GameEndEvent extends GameEvent {
    * @param winners the winners. can be 0, 1 or many
    * @param wasAborted if the game was aborted (server shutdown, all players leave, by command)
    */
-  public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, Duration duration, boolean wasAborted) {
+  public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, Duration duration,
+      boolean wasAborted) {
     super(game);
     this.winners = winners;
     this.duration = duration;

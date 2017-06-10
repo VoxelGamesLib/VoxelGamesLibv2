@@ -1,7 +1,6 @@
 package me.minidigger.voxelgameslib.phase;
 
 import com.google.gson.annotations.Expose;
-import javax.inject.Inject;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;

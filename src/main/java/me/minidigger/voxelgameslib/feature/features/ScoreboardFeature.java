@@ -5,7 +5,6 @@ import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "ScoreboardFeature", author = "MiniDigger", version = "1.0",

@@ -9,8 +9,9 @@ import me.minidigger.voxelgameslib.phase.Phase;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is
- * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link me.minidigger.voxelgameslib.game.Game} instance<br> Every server mod has it's own
- * implementation of the TickHandler
+ * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link
+ * me.minidigger.voxelgameslib.game.Game} instance<br> Every server mod has it's own implementation
+ * of the TickHandler
  */
 public class TickHandler implements Handler {
 

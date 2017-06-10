@@ -41,8 +41,7 @@ public class RandomUtil {
   }
 
   /**
-   * Generates a random string, length is random in range of 4-10.<br>
-   * Contains only 0-9 and a-z.
+   * Generates a random string, length is random in range of 4-10.<br> Contains only 0-9 and a-z.
    *
    * @return the random string
    */
@@ -51,8 +50,7 @@ public class RandomUtil {
   }
 
   /**
-   * Generates a random string with the given length.<br>
-   * Contains only 0-9 and a-z.
+   * Generates a random string with the given length.<br> Contains only 0-9 and a-z.
    *
    * @return the random string
    */

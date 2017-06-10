@@ -7,39 +7,40 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @FeatureInfo(name = "NoHungerLossFeature", author = "aphelion", version = "1.0",
-        description = "Stops hunger loss")
+    description = "Stops hunger loss")
 public class NoHungerLossFeature extends AbstractFeature {
-    @Override
-    public void start() {
-        getPhase().getGame().getPlayers().forEach(this::feed);
-    }
 
-    public void feed(User user) {
-        user.getPlayer().setFoodLevel(20);
-    }
+  @Override
+  public void start() {
+    getPhase().getGame().getPlayers().forEach(this::feed);
+  }
 
-    @EventHandler
-    public void onHungerDepletion(FoodLevelChangeEvent event) {
-        event.setCancelled(true);
-    }
+  public void feed(User user) {
+    user.getPlayer().setFoodLevel(20);
+  }
 
-    @Override
-    public void stop() {
+  @EventHandler
+  public void onHungerDepletion(FoodLevelChangeEvent event) {
+    event.setCancelled(true);
+  }
 
-    }
+  @Override
+  public void stop() {
 
-    @Override
-    public void tick() {
+  }
 
-    }
+  @Override
+  public void tick() {
 
-    @Override
-    public void init() {
+  }
 
-    }
+  @Override
+  public void init() {
 
-    @Override
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
+  }
+
+  @Override
+  public Class[] getDependencies() {
+    return new Class[0];
+  }
 }

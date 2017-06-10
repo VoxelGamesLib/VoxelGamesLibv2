@@ -19,8 +19,8 @@ import me.minidigger.voxelgameslib.signs.SignLocation;
 import me.minidigger.voxelgameslib.user.User;
 
 /**
- * Simple persistence provider which uses gson to save the stuff as json to a flat file<br>
- * <b>NOT RECOMMENDED FOR PRODUCTION</b>
+ * Simple persistence provider which uses gson to save the stuff as json to a flat file<br> <b>NOT
+ * RECOMMENDED FOR PRODUCTION</b>
  */
 public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 

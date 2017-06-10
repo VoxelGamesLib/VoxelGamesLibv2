@@ -31,7 +31,6 @@ import net.kyori.text.format.TextColor;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 /**
  * Handles creation of new worlds/maps
@@ -124,11 +123,13 @@ public class WorldCreator extends BaseCommand {
       return;
     }
 
-    center = new Vector3D(sender.getPlayer().getLocation().getX(), sender.getPlayer().getLocation().getY(), sender.getPlayer().getLocation().getZ());
+    center = new Vector3D(sender.getPlayer().getLocation().getX(),
+        sender.getPlayer().getLocation().getY(), sender.getPlayer().getLocation().getZ());
 
     sender.sendMessage(
         Lang.trans(LangKey.WORLD_CREATOR_ENTER_RADIUS, sender.getLocale())
-            .clickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator radius ")));
+            .clickEvent(
+                new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator radius ")));
 
     step = 3;
   }
@@ -163,7 +164,8 @@ public class WorldCreator extends BaseCommand {
     sender.sendMessage(
         Lang.trans(LangKey.WORLD_CREATOR_ENTER_AUTHOR, sender.getLocale(),
             displayName)
-            .clickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator author ")));
+            .clickEvent(
+                new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator author ")));
 
     step = 5;
   }
@@ -188,7 +190,8 @@ public class WorldCreator extends BaseCommand {
 
     sender.sendMessage(
         Lang.trans(LangKey.WORLD_CREATOR_DONE_QUERY, sender.getLocale())
-            .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator gamemode done")));
+            .clickEvent(
+                new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator gamemode done")));
 
     step = 6;
   }

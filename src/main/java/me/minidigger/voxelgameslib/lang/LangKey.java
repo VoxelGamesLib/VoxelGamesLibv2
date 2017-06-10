@@ -3,9 +3,7 @@ package me.minidigger.voxelgameslib.lang;
 import javax.annotation.Nonnull;
 
 /**
- * Created by Martin on 12.10.2016.
- * <p>
- * Style note: the members needs to be sorted alphabetical!
+ * Created by Martin on 12.10.2016. <p> Style note: the members needs to be sorted alphabetical!
  */
 public enum LangKey {
 

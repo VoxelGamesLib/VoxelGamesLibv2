@@ -127,8 +127,8 @@ public class LangStorage {
   }
 
   /**
-   * Gets the value for a key. it this storage does not have a translation for that key, the
-   * parent storage is used. If parent has no translation for that key, the default value is used.
+   * Gets the value for a key. it this storage does not have a translation for that key, the parent
+   * storage is used. If parent has no translation for that key, the default value is used.
    *
    * @param key the key that should be translated
    * @return the translation for that key
