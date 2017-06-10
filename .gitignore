@@ -9,4 +9,19 @@ target/
 *.jar
 
 # Test server
-testserver/
+/testserver/world
+/testserver/world_nether
+/testserver/world_the_end
+/testserver/logs
+/testserver/banned-ips.json
+/testserver/banned-players.json
+/testserver/ops.json
+/testserver/usercache.json
+/testserver/whitelist.json
+/testserver/plugins/PluginMetrics
+# order always changes...
+/testserver/spigot.yml
+/testserver/commands.yml
+/testserver/bukkit.yml
+/testserver/server.properties
+/testserver/permissions.yml
