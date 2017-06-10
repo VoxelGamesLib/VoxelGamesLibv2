@@ -190,6 +190,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     CommandContexts<BukkitCommandExecutionContext> con = commandManager.getCommandContexts();
     con.registerContext(User.class, c -> userHandler.getUser(c.getSender().getName())
         .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName())));
+    con.registerContext(int.class, c -> Integer.parseInt(c.getFirstArg()));
     con.registerContext(GameMode.class, c -> gameHandler.getGameModes().stream()
         .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
         .orElseThrow(() -> new VoxelGameLibException("Unknown gamemode " + c.getFirstArg())));
