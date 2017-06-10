@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.error;
 
+import co.aikar.commands.ACFUtil;
 import co.aikar.commands.CommandIssuer;
 import com.bugsnag.Bugsnag;
 import com.bugsnag.Severity;
@@ -138,6 +139,7 @@ public class ErrorHandler implements Handler {
                 }
               });
               log.info("Caught exception");
+              ACFUtil.sneaky(e); // let bukkit handle it
             }
           });
     } catch (Throwable e) {
@@ -172,6 +174,7 @@ public class ErrorHandler implements Handler {
         protected void customHandler(Throwable e) {
           bugsnag.notify(e.getCause(), Severity.ERROR);
           log.info("Caught exception");
+          ACFUtil.sneaky(e); // let bukkit handle it
         }
 
         @Override
@@ -213,6 +216,7 @@ public class ErrorHandler implements Handler {
             report.addToTab(EVENT_INFO_TAB, "Event Data", eventData);
           }));
           log.info("Caught exception");
+          ACFUtil.sneaky(e); // let bukkit handle it
         }
       });
     } catch (Throwable e) {
@@ -236,6 +240,7 @@ public class ErrorHandler implements Handler {
 //            report.addToTab(TASK_INFO_TAB, "Task ID", taskID);
 //          });
 //          log.info("Caught exception");
+//          ACFUtil.sneaky(e); // let bukkit handle it
 //        }
 //      });
 //    } catch (Throwable e) {
