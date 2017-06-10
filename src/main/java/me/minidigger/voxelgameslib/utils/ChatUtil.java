@@ -1,7 +1,7 @@
 package me.minidigger.voxelgameslib.utils;
 
 import javax.annotation.Nonnull;
-import me.minidigger.voxelgameslib.user.GameUser;
+import me.minidigger.voxelgameslib.user.GamePlayer;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.ComponentSerializer;
@@ -40,7 +40,7 @@ public class ChatUtil {
    * @param gameUser the user that should get the message
    * @param message the message to send to the user
    */
-  public static void sendMessage(GameUser gameUser, Component message) {
+  public static void sendMessage(GamePlayer gameUser, Component message) {
     gameUser.getPlayer().sendRawMessage(ComponentSerializer.serialize(message));
   }
 }

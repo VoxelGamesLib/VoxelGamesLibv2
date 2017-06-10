@@ -107,7 +107,7 @@ public class UserHandler implements Handler {
       injector.injectMembers(userDara);
       tempData.put(uniqueId, userDara);
     } else {
-      User user = new GameUser();
+      User user = new GamePlayer();
       user.setUuid(uniqueId);
       try {
         user.setDisplayName(MojangUtil.getDisplayName(uniqueId));

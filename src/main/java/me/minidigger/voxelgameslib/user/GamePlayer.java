@@ -21,9 +21,7 @@ import org.bukkit.entity.Player;
 /**
  * abstract implementation of the user interface that deals with some stuff
  */
-public class GameUser implements User {
-
-  // TODO this call is a mess, clean it up
+public class GamePlayer implements User {
 
   @Inject
   private GlobalConfig config;
