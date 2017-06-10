@@ -52,6 +52,9 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
   @Inject
   private Gson gson;
 
+  @Inject
+  private WorldRepository worldRepository;
+
   private WorldConfig config;
   private File configFile;
 
@@ -154,12 +157,15 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
   @Override
   public void start() {
-    configFile = new File(worldsFolder, "worlds.json");
+    //worldRepository.setURL();// TODO make url configurable
     if (!worldsFolder.exists()) {
       log.warning(
-          "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Creating...");
-      worldsFolder.mkdirs();
+          "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
+              + worldRepository.getURL() + "...");
+      worldRepository.cloneRepo();
     }
+
+    configFile = new File(worldsFolder, "worlds.json");
 
     if (!configFile.exists()) {
       log.warning("Did not found world config, saving default");

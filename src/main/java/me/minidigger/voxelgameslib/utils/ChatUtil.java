@@ -41,6 +41,7 @@ public class ChatUtil {
    * @param message the message to send to the user
    */
   public static void sendMessage(GamePlayer gameUser, Component message) {
-    gameUser.getPlayer().sendRawMessage(ComponentSerializer.serialize(message));
+    String json = ComponentSerializer.serialize(message);
+    gameUser.getPlayer().sendRawMessage(json);
   }
 }

@@ -46,6 +46,19 @@
               <shadedPattern>me.minidigger.voxelgameslib.metrics</shadedPattern>
             </relocation>
           </relocations>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <!-- exclude jgit sign stuff -->
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+                <exclude>about.html</exclude>
+                <exclude>plugin.properties</exclude>
+              </excludes>
+            </filter>
+          </filters>
         </configuration>
         <executions>
           <execution>
@@ -155,36 +168,42 @@
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>jsr305</artifactId>
       <version>2.0.1</version>
+      <scope>compile</scope>
     </dependency>
     <!-- annotation based code generation -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.0</version>
+      <scope>provided</scope>
     </dependency>
     <!-- jkill - true skill for java -->
     <dependency>
       <groupId>de.davidbilge</groupId>
       <artifactId>jskill</artifactId>
       <version>1.1-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
     <!-- zip stuff -->
     <dependency>
       <groupId>net.lingala.zip4j</groupId>
       <artifactId>zip4j</artifactId>
       <version>1.3.2</version>
+      <scope>compile</scope>
     </dependency>
     <!-- ordered property files-->
     <dependency>
       <groupId>nu.studer</groupId>
       <artifactId>java-ordered-properties</artifactId>
       <version>1.0.1</version>
+      <scope>compile</scope>
     </dependency>
     <!-- taskchain -->
     <dependency>
       <groupId>co.aikar</groupId>
       <artifactId>taskchain-bukkit</artifactId>
       <version>3.6.0</version>
+      <scope>compile</scope>
     </dependency>
     <!-- text -->
     <dependency>
@@ -198,12 +217,21 @@
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
       <version>1.1</version>
+      <scope>compile</scope>
     </dependency>
     <!-- easy bug tracking -->
     <dependency>
       <groupId>com.bugsnag</groupId>
       <artifactId>bugsnag</artifactId>
       <version>[3.0,4.0)</version>
+      <scope>compile</scope>
+    </dependency>
+    <!-- jgit -->
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>4.8.0.201705170830-rc1</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
