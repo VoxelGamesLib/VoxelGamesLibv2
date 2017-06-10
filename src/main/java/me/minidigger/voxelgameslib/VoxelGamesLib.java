@@ -11,31 +11,49 @@ import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.sun.corba.se.impl.activation.CommandHandler;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.command.commands.FunCommands;
 import me.minidigger.voxelgameslib.command.commands.GameCommands;
 import me.minidigger.voxelgameslib.command.commands.LangCommands;
 import me.minidigger.voxelgameslib.command.commands.RoleCommands;
 import me.minidigger.voxelgameslib.command.commands.VGLCommands;
 import me.minidigger.voxelgameslib.command.commands.WorldCommands;
+import me.minidigger.voxelgameslib.config.ConfigHandler;
+import me.minidigger.voxelgameslib.elo.EloHandler;
+import me.minidigger.voxelgameslib.error.ErrorHandler;
+import me.minidigger.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
+import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.Locale;
+import me.minidigger.voxelgameslib.map.MapHandler;
+import me.minidigger.voxelgameslib.matchmaking.MatchmakingHandler;
+import me.minidigger.voxelgameslib.module.ModuleHandler;
+import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Role;
+import me.minidigger.voxelgameslib.role.RoleHandler;
+import me.minidigger.voxelgameslib.signs.SignHandler;
+import me.minidigger.voxelgameslib.team.TeamHandler;
+import me.minidigger.voxelgameslib.tick.TickHandler;
+import me.minidigger.voxelgameslib.timings.Timings;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.world.EditMode;
 import me.minidigger.voxelgameslib.world.WorldCreator;
+import me.minidigger.voxelgameslib.world.WorldHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Log
 public final class VoxelGamesLib extends JavaPlugin {
 
   private static TaskChainFactory taskChainFactory;
@@ -45,13 +63,39 @@ public final class VoxelGamesLib extends JavaPlugin {
   private Injector injector;
 
   @Inject
-  private UserHandler userHandler;
+  private ConfigHandler configHandler;
+  @Inject
+  private TickHandler tickHandler;
   @Inject
   private GameHandler gameHandler;
+  @Inject
+  private UserHandler userHandler;
+  @Inject
+  private RoleHandler roleHandler;
+  @Inject
+  private ErrorHandler errorHandler;
+  @Inject
+  private MapHandler mapHandler;
+  @Inject
+  private WorldHandler worldHandler;
+  @Inject
+  private LangHandler langHandler;
+  @Inject
+  private ModuleHandler moduleHandler;
+  @Inject
+  private EloHandler eloHandler;
+  @Inject
+  private TeamHandler teamHandler;
+  @Inject
+  private PersistenceHandler persistenceHandler;
+  @Inject
+  private MatchmakingHandler matchmakingHandler;
+  @Inject
+  private SignHandler signHandler;
 
   @Override
   public void onEnable() {
-    // Plugin startup logic
+    // start by enabling external stuff. they don't require any VGL stuff
 
     // timings
     timingManager = TimingManager.of(this);
@@ -61,6 +105,10 @@ public final class VoxelGamesLib extends JavaPlugin {
 
     // task chain
     taskChainFactory = BukkitTaskChainFactory.create(this);
+    taskChainFactory.setDefaultErrorHandler((e, t) -> {
+      log.severe("Task " + t.hashCode() + " generated an exception:");
+      e.printStackTrace();
+    });
 
     // guice
     VoxelGamesLibModule voxelGamesLibModule = new VoxelGamesLibModule(this, timingManager,
@@ -68,20 +116,59 @@ public final class VoxelGamesLib extends JavaPlugin {
     injector = Guice.createInjector(voxelGamesLibModule);
     injector.injectMembers(this);
 
+    // then enable all VGL stuff
+    Timings.time("EnableAllHandler", () -> {
+      configHandler.start();
+      persistenceHandler.start();
+      langHandler.start();
+      tickHandler.start();
+      userHandler.start();
+      roleHandler.start();
+      errorHandler.start();
+      mapHandler.start();
+      worldHandler.start();
+      teamHandler.start();
+      eloHandler.start();
+      matchmakingHandler.start();
+      signHandler.start();
+
+      gameHandler.start();
+      moduleHandler.start();
+    });
+
     // register commands
     registerCommandContexts();
     registerCommandReplacements();
     registerCommands();
     registerCommandCompletions();
+
+    registerListeners();
   }
 
   @Override
   public void onDisable() {
-    // Plugin shutdown logic
+    getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
+    Timings.time("DisableAllHandler", () -> {
+      configHandler.stop();
+      langHandler.stop();
+      tickHandler.stop();
+      userHandler.stop();
+      roleHandler.stop();
+      errorHandler.stop();
+      mapHandler.stop();
+      worldHandler.stop();
+      teamHandler.stop();
+      eloHandler.stop();
+      matchmakingHandler.stop();
+      signHandler.stop();
 
-    timingManager = null;
-    commandManager = null;
-    injector = null;
+      gameHandler.stop();
+      moduleHandler.stop();
+
+      persistenceHandler.stop();
+
+      injector = null;
+    });
   }
 
   private void registerCommandContexts() {
@@ -130,6 +217,10 @@ public final class VoxelGamesLib extends JavaPlugin {
     commandManager.registerCommand(injector.getInstance(WorldCreator.class));
     commandManager.registerCommand(injector.getInstance(WorldCommands.class));
     commandManager.registerCommand(injector.getInstance(EditMode.class));
+  }
+
+  private void registerListeners() {
+    //TODO register event listeners
   }
 
 
