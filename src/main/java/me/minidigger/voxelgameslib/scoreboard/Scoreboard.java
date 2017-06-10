@@ -126,7 +126,7 @@ public interface Scoreboard {
    *
    * @param object the servers implementation of
    */
-  void setImplObject(Object object);
+  void setImplObject(org.bukkit.scoreboard.Scoreboard object);
 
   /**
    * Creates a new simple scoreboard line and adds it automatically
