@@ -61,7 +61,7 @@ public class UserHandler implements Handler {
     users.put(user.getUuid(), user);
     log.info(
         "Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " "
-            + user.getDisplayName() + ")");
+            + user.getRawDisplayName() + ")");
   }
 
   /**
