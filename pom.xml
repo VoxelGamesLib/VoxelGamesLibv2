@@ -41,6 +41,10 @@
               <pattern>co.aikar.commands</pattern>
               <shadedPattern>me.minidigger.voxelgameslib.command</shadedPattern>
             </relocation>
+            <relocation>
+              <pattern>org.bstats</pattern>
+              <shadedPattern>me.minidigger.voxelgameslib.metrics</shadedPattern>
+            </relocation>
           </relocations>
         </configuration>
         <executions>
@@ -110,6 +114,10 @@
     <repository>
       <id>java-utilities</id>
       <url>http://dl.bintray.com/etienne/java-utilities</url>
+    </repository>
+    <repository>
+      <id>bstats-repo</id>
+      <url>http://repo.bstats.org/content/repositories/releases/</url>
     </repository>
   </repositories>
 
@@ -184,6 +192,12 @@
       <artifactId>text</artifactId>
       <version>1.12-SNAPSHOT</version>
       <scope>compile</scope>
+    </dependency>
+    <!-- metrics -->
+    <dependency>
+      <groupId>org.bstats</groupId>
+      <artifactId>bstats-bukkit</artifactId>
+      <version>1.1</version>
     </dependency>
   </dependencies>
 </project>
