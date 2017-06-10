@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.utils;
 
+import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.user.GamePlayer;
 import net.kyori.text.Component;
@@ -11,6 +12,27 @@ import org.bukkit.Bukkit;
  * Small util for chat related stuff
  */
 public class ChatUtil {
+
+  private static String NMS_PREFIX = Bukkit.getServer().getClass().getPackage().getName()
+      .replace("org.bukkit.craftbukkit", "net.minecraft.server").concat(".");
+  private static final Method CRAFTPLAYER_GETHANDLE_METHOD;
+  private static final Method CHATSERIALIZER_A_METHOD;
+  private static final Method ENTITYPLAYER_SENDMESSAGE_METHOD;
+
+  static {
+    try {
+      CRAFTPLAYER_GETHANDLE_METHOD = Class.forName(
+          Bukkit.getServer().getClass().getPackage().getName().concat(".entity.CraftPlayer"))
+          .getDeclaredMethod("getHandle");
+      CHATSERIALIZER_A_METHOD = Class
+          .forName(NMS_PREFIX.concat("IChatBaseComponent$ChatSerializer"))
+          .getDeclaredMethod("a", String.class);
+      ENTITYPLAYER_SENDMESSAGE_METHOD = Class.forName(NMS_PREFIX.concat("EntityPlayer"))
+          .getDeclaredMethod("sendMessage", Class.forName(NMS_PREFIX.concat("IChatBaseComponent")));
+    } catch (final Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   /**
    * Serialises a array of base components into a single string (by calling #toPlainText on them)
@@ -42,7 +64,12 @@ public class ChatUtil {
    * @param message the message to send to the user
    */
   public static void sendMessage(GamePlayer gameUser, Component message) {
-    String json = ComponentSerializer.serialize(message);
-    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + gameUser.getPlayer().getName() + " " + json);
+    try {
+      ENTITYPLAYER_SENDMESSAGE_METHOD
+          .invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
+              CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializer.serialize(message)));
+    } catch (Exception e) {
+      throw new RuntimeException("wut", e);
+    }
   }
 }
