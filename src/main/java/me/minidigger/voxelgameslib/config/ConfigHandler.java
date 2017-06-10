@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -45,8 +44,6 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
     } else {
       log.info("Loading global config");
       globalConfig = loadConfig(globalConfigFile, GlobalConfig.class);
-
-      System.out.println(globalConfig.getConfigVersion() + " " + globalConfig.getCurrentVersion());
 
       if (checkMigrate(globalConfig)) {
         migrate(globalConfigFile, globalConfig);

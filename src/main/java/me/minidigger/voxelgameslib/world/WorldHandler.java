@@ -134,8 +134,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
   /**
    * Unloads a world. Needs to lets the implementation unload the world and delete the folder
-   * <br><b>Always needs to call super! Super needs to be called last (because it deletes the
-   * world folder)</b>
+   * <br><b>Always needs to call super! Super needs to be called last (because it deletes the world
+   * folder)</b>
    *
    * @param map the map that should be unloaded.
    */
@@ -161,7 +161,6 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     } else {
       log.info("Loading world config");
       config = configHandler.loadConfig(configFile, WorldConfig.class);
-      System.out.println(config.getConfigVersion());
 
       if (configHandler.checkMigrate(config)) {
         configHandler.migrate(configFile, config);
