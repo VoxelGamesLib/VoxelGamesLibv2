@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import me.minidigger.voxelgameslib.exception.LangException;
+import me.minidigger.voxelgameslib.user.GameConsoleUser;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
@@ -257,5 +258,6 @@ public class Lang {
    */
   public static void broadcast(BaseComponent message) {
     userHandler.getUsers().forEach(user -> user.sendMessage(message));
+    GameConsoleUser.INSTANCE.sendMessage(message);
   }
 }
