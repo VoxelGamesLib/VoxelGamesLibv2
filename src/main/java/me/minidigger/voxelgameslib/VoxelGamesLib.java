@@ -119,8 +119,9 @@ public final class VoxelGamesLib extends JavaPlugin {
 
       // commands
       commandManager = new BukkitCommandManager(this);
-      commandManager.registerExceptionHandler((sender, args, e) -> {
-        errorHandler.handle(sender, args, e);
+      commandManager.registerExceptionHandler((scope, registeredCommand, sender, args, t) -> {
+        errorHandler.handle(sender, args, t);
+        return false;
       });
 
       // task chain
@@ -249,10 +250,10 @@ public final class VoxelGamesLib extends JavaPlugin {
   }
 
   private void registerListeners() {
-    PluginManager pm  = getServer().getPluginManager();
-    pm.registerEvents(injector.getInstance(GameListener.class),this);
-    pm.registerEvents(injector.getInstance(SignListener.class),this);
-    pm.registerEvents(injector.getInstance(UserListener.class),this);
+    PluginManager pm = getServer().getPluginManager();
+    pm.registerEvents(injector.getInstance(GameListener.class), this);
+    pm.registerEvents(injector.getInstance(SignListener.class), this);
+    pm.registerEvents(injector.getInstance(UserListener.class), this);
   }
 
 

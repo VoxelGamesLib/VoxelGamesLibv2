@@ -250,7 +250,7 @@ public class ErrorHandler implements Handler {
         "Caught exception with level " + severity.getValue(), ex);
   }
 
-  public void handle(CommandIssuer sender, List<String> args, Exception e) {
+  public void handle(CommandIssuer sender, List<String> args, Throwable e) {
     bugsnag.notify(e, Severity.ERROR, (report) -> {
       report.addToTab(COMMAND_INFO_TAB, "sender", ((CommandSender) sender.getIssuer()).getName());
       report.addToTab(COMMAND_INFO_TAB, "args", args.stream().collect(Collectors.joining(" ")));
