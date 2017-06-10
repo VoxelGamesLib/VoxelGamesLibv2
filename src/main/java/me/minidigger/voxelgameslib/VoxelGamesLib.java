@@ -31,6 +31,7 @@ import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.game.GameHandler;
+import me.minidigger.voxelgameslib.game.GameListener;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.LangHandler;
 import me.minidigger.voxelgameslib.lang.Locale;
@@ -43,15 +44,18 @@ import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.role.RoleHandler;
 import me.minidigger.voxelgameslib.signs.SignHandler;
+import me.minidigger.voxelgameslib.signs.SignListener;
 import me.minidigger.voxelgameslib.team.TeamHandler;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.timings.Timings;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
+import me.minidigger.voxelgameslib.user.UserListener;
 import me.minidigger.voxelgameslib.world.EditMode;
 import me.minidigger.voxelgameslib.world.WorldCreator;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Log
@@ -245,7 +249,10 @@ public final class VoxelGamesLib extends JavaPlugin {
   }
 
   private void registerListeners() {
-    //TODO register event listeners
+    PluginManager pm  = getServer().getPluginManager();
+    pm.registerEvents(injector.getInstance(GameListener.class),this);
+    pm.registerEvents(injector.getInstance(SignListener.class),this);
+    pm.registerEvents(injector.getInstance(UserListener.class),this);
   }
 
 

@@ -14,5 +14,8 @@ public class VoxelGamesLibEvent extends Event {
   public HandlerList getHandlers() {
     return handlers;
   }
-  //TODO integrade events back into bukkit
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

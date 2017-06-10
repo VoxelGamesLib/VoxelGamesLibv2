@@ -146,8 +146,6 @@ public abstract class AbstractPhase implements Phase {
         Bukkit.getPluginManager().registerEvents((Listener) feature, main);
       }
 
-      // todo: implement command stuffs
-
       if (feature instanceof FeatureImplementor) {
         commandManager.registerCommand(((FeatureImplementor) feature).getCommandClass());
       }

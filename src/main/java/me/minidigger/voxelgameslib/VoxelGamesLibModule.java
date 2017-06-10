@@ -17,6 +17,7 @@ import me.minidigger.voxelgameslib.feature.FeatureTypeAdapter;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.phase.PhaseTypeAdapter;
+import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.world.WorldConfig;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 import org.bukkit.Bukkit;
@@ -67,6 +68,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
     bind(GlobalConfig.class).toProvider(ConfigHandler.class);
 
     requestStaticInjection(Lang.class);
+    requestStaticInjection(Permission.class);
   }
 
   @Provides
