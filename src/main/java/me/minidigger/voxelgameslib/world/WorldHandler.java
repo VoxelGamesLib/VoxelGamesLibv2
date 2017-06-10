@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
@@ -29,6 +30,7 @@ import net.lingala.zip4j.model.FileHeader;
  * Handles the worlds (loading, unloading etc)
  */
 @Log
+@Singleton
 public class WorldHandler implements Handler, Provider<WorldConfig> {
 
   @Inject
@@ -159,6 +161,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     } else {
       log.info("Loading world config");
       config = configHandler.loadConfig(configFile, WorldConfig.class);
+      System.out.println(config.getConfigVersion());
 
       if (configHandler.checkMigrate(config)) {
         configHandler.migrate(configFile, config);
@@ -174,6 +177,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
   @Nonnull
   @Override
   public WorldConfig get() {
+    log.info("Called provider, config is " + config);
     return config;
   }
 
