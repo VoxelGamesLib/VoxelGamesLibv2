@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -90,16 +91,23 @@ public class GameCommands extends BaseCommand {
 
   @Subcommand("skip-phase")
   @CommandPermission("%admin")
-  public void skipPhase(User sender) {
+  public void skipPhase(User sender, @co.aikar.commands.annotation.Optional Integer id) {
     // todo skip phase command
-    // need to access the User's game via object
-
-    /*
-    if (getGame().isPlaying(arguments.getSender()) || getGame()
-        .isSpectating(arguments.getSender())) {
-      log.finer("skip " + getName());
-      getGame().endPhase();
+    List<Game> games = gameHandler.getGames(sender.getUuid(), true);
+    if (id == null) {
+      if (games.size() > 1) {
+        //TODO msg
+      } else {
+        log.finer("skip " + getName());
+        games.get(0).endPhase();
+      }
+    } else {
+      if (games.size() > id || id < 0) {
+        //TODO msg
+      } else {
+        log.finer("skip " + getName());
+        games.get(id).endPhase();
+      }
     }
-    */
   }
 }
