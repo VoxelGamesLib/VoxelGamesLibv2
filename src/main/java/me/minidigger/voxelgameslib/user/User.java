@@ -12,6 +12,7 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import net.kyori.text.Component;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,7 +20,7 @@ import org.bukkit.entity.Player;
  * available.<br>
  */
 public interface User extends IPlayer, ISupportPartialPlay,
-    ISupportPartialUpdate {
+    ISupportPartialUpdate, CommandSender {
 
   /**
    * @return a unique identifier for that user.

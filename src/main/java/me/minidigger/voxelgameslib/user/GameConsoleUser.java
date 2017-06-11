@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 /**
  * Abstract implementation of the console user interface that deals with most stuff
  */
-public class GameConsoleUser implements ConsoleUser {
+public class GameConsoleUser extends UnsupportedCommandSender implements ConsoleUser {
 
   public static final UUID UUID = java.util.UUID.nameUUIDFromBytes("ConsoleUser".getBytes());
   public static final GameConsoleUser INSTANCE = new GameConsoleUser();
