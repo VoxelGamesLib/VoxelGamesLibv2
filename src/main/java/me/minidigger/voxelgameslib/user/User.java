@@ -12,15 +12,13 @@ import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import net.kyori.text.Component;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
  * A Users represents an abstract player of the game. There are implementations for every server mod
  * available.<br>
  */
-public interface User extends IPlayer, ISupportPartialPlay,
-    ISupportPartialUpdate, CommandSender {
+public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdate {
 
   /**
    * @return a unique identifier for that user.

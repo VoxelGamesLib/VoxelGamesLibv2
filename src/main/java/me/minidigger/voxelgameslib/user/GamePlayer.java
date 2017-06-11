@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 /**
  * abstract implementation of the user interface that deals with some stuff
  */
-public class GamePlayer extends UnsupportedCommandSender implements User {
+public class GamePlayer implements User {
 
   @Inject
   private GlobalConfig config;

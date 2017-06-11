@@ -205,6 +205,9 @@ public final class VoxelGamesLib extends JavaPlugin {
 
   private void registerCommandContexts() {
     CommandContexts<BukkitCommandExecutionContext> con = commandManager.getCommandContexts();
+    con.registerSenderAwareContext(User.class,
+        c -> userHandler.getUser(c.getSender().getName())
+            .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName())));
     con.registerContext(User.class, c -> userHandler.getUser(c.getSender().getName())
         .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName())));
     con.registerContext(int.class, c -> Integer.parseInt(c.getFirstArg()));
@@ -238,7 +241,15 @@ public final class VoxelGamesLib extends JavaPlugin {
     CommandCompletions<CommandSender, BukkitCommandCompletionContext> comp = commandManager
         .getCommandCompletions();
 
-    //TODO add tab completion everywhere
+    comp.registerCompletion("gamemodes",
+        (sender, config, input, context) -> gameHandler.getGameModes().stream()
+            .map(GameMode::getName).collect(Collectors.toList()));
+    comp.registerCompletion("locales",
+        (sender, config, input, context) -> Arrays.stream(Locale.values())
+            .map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
+    comp.registerCompletion("roles",
+        (sender, config, input, context) -> Arrays.stream(Role.values()).map(Role::getName)
+            .collect(Collectors.toList()));
   }
 
   private void registerCommands() {
