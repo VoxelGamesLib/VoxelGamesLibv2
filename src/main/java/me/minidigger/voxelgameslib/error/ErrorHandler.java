@@ -108,45 +108,6 @@ public class ErrorHandler implements Handler {
   }
 
   private void injectErrorHandlers() {
-    // command map
-    try {
-      Field commandMapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-      commandMapField.setAccessible(true);
-      if (Modifier.isFinal(commandMapField.getModifiers())) {
-        Field modifierField = Field.class.getDeclaredField("modifiers");
-        modifierField.setAccessible(true);
-        modifierField.set(commandMapField, commandMapField.getModifiers() & ~Modifier.FINAL);
-      }
-      commandMapField.set(Bukkit.getServer(),
-          new LoggedCommandMap((SimpleCommandMap) commandMapField.get(Bukkit.getServer())) {
-            @SuppressWarnings("unused")
-            private Map<String, Command> knownCommands; //Hack for original knownCommands reflection.
-
-            @Override
-            protected void setKnownCommands(Map<String, Command> knownCommands) {
-              this.knownCommands = knownCommands;
-            }
-
-            @Override
-            protected void customHandler(Command command, String commandLine, Throwable e) {
-              bugsnag.notify(e.getCause(), Severity.ERROR, (report) -> {
-                report.addToTab(COMMAND_INFO_TAB, "Command", command.getName());
-                report.addToTab(COMMAND_INFO_TAB, "Full Command", commandLine);
-                if (command instanceof PluginCommand) {
-                  PluginCommand pluginCommand = (PluginCommand) command;
-                  report.addToTab(COMMAND_INFO_TAB, "Owning Plugin",
-                      pluginCommand.getPlugin().getName());
-                }
-              });
-              log.info("Caught exception");
-              ACFUtil.sneaky(e); // let bukkit handle it
-            }
-          });
-    } catch (Throwable e) {
-      log.severe("Could not register proxy commandMap");
-      e.printStackTrace();
-    }
-
     // plugin manager
     try {
       Field pluginManagerField = Bukkit.getServer().getClass().getDeclaredField("pluginManager");
