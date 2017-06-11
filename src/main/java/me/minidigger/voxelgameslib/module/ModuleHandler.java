@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.timings.Timings;
 import org.reflections.Reflections;
@@ -19,6 +20,9 @@ import org.reflections.Reflections;
 @Log
 @Singleton
 public class ModuleHandler implements Handler {
+
+  private static List<Class<? extends Module>> offeredModules = new ArrayList<>();
+  private static boolean isAcceptingOffers = true;
 
   @Nonnull
   private List<Module> modules = new ArrayList<>();
@@ -42,9 +46,7 @@ public class ModuleHandler implements Handler {
 
   private void findModules() {
     Timings.time("RegisterModules", () -> {
-      Set<Class<?>> modules = new Reflections().getTypesAnnotatedWith(ModuleInfo.class);
-
-      for (Class<?> clazz : modules) {
+      for (Class<?> clazz : offeredModules) {
         ModuleInfo info = clazz.getAnnotation(ModuleInfo.class);
         if (info == null) {
           continue; // should not occur
@@ -60,7 +62,16 @@ public class ModuleHandler implements Handler {
         }
       }
 
-      log.info("Loaded " + modules.size() + " modules!");
+      log.info("Loaded " + this.modules.size() + " modules!");
     });
+  }
+
+  public static void offerModule(Class<? extends Module> clazz) {
+    if (isAcceptingOffers) {
+      offeredModules.add(clazz);
+    } else {
+      throw new VoxelGameLibException(
+          "Module offers closed! Add 'loadbefore: VoxelGamesLib' to your plugin.yml!");
+    }
   }
 }
