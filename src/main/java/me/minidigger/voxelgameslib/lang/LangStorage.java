@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
 import me.minidigger.voxelgameslib.exception.LangException;
-import nu.studer.java.util.OrderedProperties;
+import me.minidigger.voxelgameslib.utils.OrderedProperties;
 
 /**
  * A lang storage holds all lang keys (and their translations) that are translated into one locale

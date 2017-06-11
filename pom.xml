@@ -53,70 +53,6 @@
               <pattern>co.aikar.taskchain</pattern>
               <shadedPattern>me.minidigger.voxelgameslib.zlib.taskchain</shadedPattern>
             </relocation>
-            <relocation>
-              <pattern>jskills</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.jskills</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>net.kyori.text</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.text</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.eclipse.jgit</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.git</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.ejml</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.matrix</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.reflections</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.reflections</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>net.lingala.zip4j</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.zip</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>com.fasterxml.jackson</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.jackson</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>com.bugsnag</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.bugsnag</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.slf4j</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.log</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>com.google</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.google</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.aopalliance</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.aopalliance</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.apache</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.apache</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>javax</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.javax</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>javassist</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.javaassist</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>org.jetbrains.annotations</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.annotations</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>com.jcraft.jsch</pattern>
-              <shadedPattern>me.minidigger.voxelgameslib.zlib.jsch</shadedPattern>
-            </relocation>
           </relocations>
           <filters>
             <filter>
@@ -131,6 +67,12 @@
               </excludes>
             </filter>
           </filters>
+          <artifactSet>
+            <excludes>
+              <!-- text shades gson, we have that via spigot already -->
+              <exclude>com.google.code.gson:gson</exclude>
+            </excludes>
+          </artifactSet>
         </configuration>
         <executions>
           <execution>
