@@ -17,8 +17,8 @@ public class ScoreboardHandler implements Handler {
 
   public Scoreboard createScoreboard(String name) {
     BukkitScoreboard scoreboard = new BukkitScoreboard();
-    scoreboard.setTitle(name);
     scoreboard.setImplObject(Bukkit.getScoreboardManager().getNewScoreboard());
+    scoreboard.setTitle(name);
     return scoreboard;
   }
 }
