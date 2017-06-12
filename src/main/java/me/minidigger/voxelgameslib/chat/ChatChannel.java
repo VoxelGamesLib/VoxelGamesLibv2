@@ -3,6 +3,7 @@ package me.minidigger.voxelgameslib.chat;
 import lombok.Getter;
 import lombok.Setter;
 import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.utils.ChatUtil;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import org.bukkit.ChatColor;
@@ -46,16 +47,16 @@ public class ChatChannel {
      * @param message message
      */
     public void sendMessage(User byUser, String message) {
-        listeners.forEach(listener -> listener.sendMessage(new TextComponent(byUser.getDisplayName() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> " + message)));
+        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getRawDisplayName(), new TextComponent(message))));
     }
 
     /**
      * Sends a component message to the channel's users
      *
      * @param byUser sender
-     * @param component message
+     * @param message
      */
-    public void sendMessage(User byUser, Component component) {
-        listeners.forEach(listener -> listener.sendMessage(new TextComponent(byUser.getDisplayName() + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> ").append(component)));
+    public void sendMessage(User byUser, Component message) {
+        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getRawDisplayName(), message)));
     }
 }

@@ -7,6 +7,7 @@ import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.ComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 /**
  * Small util for chat related stuff
@@ -71,5 +72,9 @@ public class ChatUtil {
     } catch (Exception e) {
       throw new RuntimeException("wut", e);
     }
+  }
+
+  public static Component formatChannelMessage(String displayName, Component message) {
+    return new TextComponent(displayName + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> ").append(message);
   }
 }
