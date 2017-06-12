@@ -58,6 +58,10 @@ public class UserHandler implements Handler {
 
     User user = tempData.remove(player.getUniqueId());
     user.setPlayer(player);
+
+    user.addListeningChannel("default");
+    user.setActiveChannel("default");
+
     users.put(user.getUuid(), user);
     log.info(
         "Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " "

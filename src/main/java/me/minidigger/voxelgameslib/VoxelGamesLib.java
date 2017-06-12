@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.java.Log;
+import me.minidigger.voxelgameslib.chat.ChatHandler;
+import me.minidigger.voxelgameslib.chat.ChatListener;
 import me.minidigger.voxelgameslib.commands.FunCommands;
 import me.minidigger.voxelgameslib.commands.GameCommands;
 import me.minidigger.voxelgameslib.commands.LangCommands;
@@ -98,6 +100,8 @@ public final class VoxelGamesLib extends JavaPlugin {
   @Inject
   private SignHandler signHandler;
   @Inject
+  private ChatHandler chatHandler;
+  @Inject
   private MetricHandler metricHandler;
 
   @Override
@@ -142,6 +146,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         persistenceHandler.start();
         langHandler.start();
         tickHandler.start();
+        chatHandler.start();
         userHandler.start();
         roleHandler.start();
         mapHandler.start();
@@ -179,6 +184,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         configHandler.stop();
         langHandler.stop();
         tickHandler.stop();
+        chatHandler.stop();
         userHandler.stop();
         roleHandler.stop();
         mapHandler.stop();
@@ -268,6 +274,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     pm.registerEvents(injector.getInstance(GameListener.class), this);
     pm.registerEvents(injector.getInstance(SignListener.class), this);
     pm.registerEvents(injector.getInstance(UserListener.class), this);
+    pm.registerEvents(injector.getInstance(ChatListener.class), this);
   }
 
 

@@ -1,10 +1,15 @@
 package me.minidigger.voxelgameslib.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import jskills.Rating;
+import me.minidigger.voxelgameslib.chat.ChatChannel;
+import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
@@ -20,8 +25,14 @@ import org.bukkit.entity.Player;
  */
 public class GameConsoleUser implements ConsoleUser {
 
+  @Inject
+  private ChatHandler chatHandler;
+
   public static final UUID UUID = java.util.UUID.nameUUIDFromBytes("ConsoleUser".getBytes());
   public static final GameConsoleUser INSTANCE = new GameConsoleUser();
+
+  private List<ChatChannel> channels;
+  private ChatChannel activeChannel;
 
   @Override
   public String getRawDisplayName() {
@@ -133,5 +144,44 @@ public class GameConsoleUser implements ConsoleUser {
   @Override
   public double getPartialUpdatePercentage() {
     return 1.0;
+  }
+
+  @Override
+  public List<ChatChannel> getChannels() {
+    return channels;
+  }
+
+  @Override
+  public void addListeningChannel(String identifier) {
+    ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
+
+    if (channel != null) {
+      channels.add(channel);
+      channel.addListener(this);
+    }
+  }
+
+  @Override
+  public void removeListeningChannel(String identifier) {
+    ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
+
+    if (channel != null) {
+      channels.remove(channel);
+      channel.removeListener(this);
+    }
+  }
+
+  @Override
+  public ChatChannel getActiveChannel() {
+    return activeChannel;
+  }
+
+  @Override
+  public void setActiveChannel(String identifier) {
+    ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
+
+    if (channel != null) {
+      activeChannel = channel;
+    }
   }
 }

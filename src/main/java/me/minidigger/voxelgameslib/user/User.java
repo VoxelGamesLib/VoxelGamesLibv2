@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.user;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -7,6 +8,7 @@ import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
 import jskills.Rating;
+import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
@@ -148,4 +150,37 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
    * @param uuid the new uuid
    */
   void setUuid(UUID uuid);
+
+  /**
+   * Channels a user is listening to
+   */
+  List<ChatChannel> getChannels();
+
+  /**
+   * Add the user to a new channel
+   *
+   * @param channel string identifier for the channel
+   */
+  void addListeningChannel(String channel);
+
+  /**
+   * Remove the user from a channel
+   *
+   * @param channel string identifier for the channel
+   */
+  void removeListeningChannel(String channel);
+
+  /**
+   * Get the user's active channel
+   *
+   * @return ChatChannel the channel the user is speaking to
+   */
+  ChatChannel getActiveChannel();
+
+  /**
+   * Set a user's active channel
+   *
+   * @param channel string identifier for the channel
+   */
+  void setActiveChannel(String channel);
 }
