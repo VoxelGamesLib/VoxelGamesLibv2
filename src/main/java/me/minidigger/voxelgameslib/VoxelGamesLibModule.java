@@ -14,6 +14,7 @@ import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureTypeAdapter;
+import me.minidigger.voxelgameslib.game.ClassTypeAdapter;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.phase.PhaseTypeAdapter;
@@ -80,6 +81,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
         builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
+        builder.registerTypeAdapter(Feature.class, injector.getInstance(ClassTypeAdapter.class));
         builder.setPrettyPrinting();
         builder.excludeFieldsWithoutExposeAnnotation();
         return builder.create();

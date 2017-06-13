@@ -23,7 +23,7 @@ import lombok.extern.java.Log;
 @Singleton
 public class FeatureTypeAdapter implements JsonDeserializer<Feature>, JsonSerializer<Feature> {
 
-    public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.api.feature.features";
+    public static final String DEFAULT_PATH = "me.minidigger.voxelgameslib.feature.features";
 
     @Inject
     private Injector injector;

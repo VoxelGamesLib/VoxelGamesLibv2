@@ -11,6 +11,7 @@ import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
+import net.kyori.text.TextComponent;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -62,6 +63,12 @@ public class GameCommands extends BaseCommand {
     @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%premium")
     public void gameStart(User sender, GameMode mode) {
+        if(gameHandler.getGames(sender.getUuid(),true).size() != 0){
+            //TODO msg
+            sender.sendMessage(new TextComponent("not another one"));
+            return;
+        }
+
         Game game = gameHandler.startGame(mode);
 
         if (game.getActivePhase().isRunning()) {
