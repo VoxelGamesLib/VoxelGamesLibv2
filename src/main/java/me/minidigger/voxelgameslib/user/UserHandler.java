@@ -62,7 +62,7 @@ public class UserHandler implements Handler {
         User user = tempData.remove(player.getUniqueId());
         user.setPlayer(player);
 
-        if (user.getDisplayName() == null) {
+        if (user.getDisplayName() == null || user.getRawDisplayName() == null) {
             user.setDisplayName(user.getPlayer().getDisplayName());
         }
 
