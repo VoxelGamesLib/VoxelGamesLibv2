@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.event.events.game;
 
 import javax.annotation.Nonnull;
+
 import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
 import me.minidigger.voxelgameslib.game.Game;
 
@@ -9,17 +10,17 @@ import me.minidigger.voxelgameslib.game.Game;
  */
 public class GameEvent extends VoxelGamesLibEvent {
 
-  private Game game;
+    private Game game;
 
-  GameEvent(@Nonnull Game game) {
-    this.game = game;
-  }
+    GameEvent(@Nonnull Game game) {
+        this.game = game;
+    }
 
-  /**
-   * @return the game involved with this event
-   */
-  @Nonnull
-  public Game getGame() {
-    return game;
-  }
+    /**
+     * @return the game involved with this event
+     */
+    @Nonnull
+    public Game getGame() {
+        return game;
+    }
 }

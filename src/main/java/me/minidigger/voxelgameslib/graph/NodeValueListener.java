@@ -8,11 +8,11 @@ package me.minidigger.voxelgameslib.graph;
  */
 public interface NodeValueListener<T> {
 
-  /**
-   * The callback method used to notify the fact that a node that has assigned the nodeValue value
-   * just got its evaluation
-   *
-   * @param nodeValue The user set value of the node that just got the evaluation
-   */
-  void evaluating(T nodeValue);
+    /**
+     * The callback method used to notify the fact that a node that has assigned the nodeValue value
+     * just got its evaluation
+     *
+     * @param nodeValue The user set value of the node that just got the evaluation
+     */
+    void evaluating(T nodeValue);
 }

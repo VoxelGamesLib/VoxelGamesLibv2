@@ -5,5 +5,5 @@ package me.minidigger.voxelgameslib.timings;
  */
 public interface TimingsExecutor {
 
-  void execute();
+    void execute();
 }

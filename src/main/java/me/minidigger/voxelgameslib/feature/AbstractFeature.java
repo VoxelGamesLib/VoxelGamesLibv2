@@ -1,8 +1,11 @@
 package me.minidigger.voxelgameslib.feature;
 
 import com.google.gson.annotations.Expose;
+
 import javax.annotation.Nonnull;
+
 import me.minidigger.voxelgameslib.phase.Phase;
+
 import org.bukkit.event.Listener;
 
 /**
@@ -10,32 +13,32 @@ import org.bukkit.event.Listener;
  */
 public abstract class AbstractFeature implements Feature, Listener {
 
-  @Expose
-  private String name;
+    @Expose
+    private String name;
 
-  private Phase phase;
+    private Phase phase;
 
-  /**
-   * Sets the name of this feature to the name of the class
-   */
-  public AbstractFeature() {
-    name = getClass().getName().replace(FeatureTypeAdapter.DEFAULT_PATH + ".", "");
-  }
+    /**
+     * Sets the name of this feature to the name of the class
+     */
+    public AbstractFeature() {
+        name = getClass().getName().replace(FeatureTypeAdapter.DEFAULT_PATH + ".", "");
+    }
 
-  @Nonnull
-  @Override
-  public Phase getPhase() {
-    return phase;
-  }
+    @Nonnull
+    @Override
+    public Phase getPhase() {
+        return phase;
+    }
 
-  @Override
-  public void setPhase(@Nonnull Phase phase) {
-    this.phase = phase;
-  }
+    @Override
+    public void setPhase(@Nonnull Phase phase) {
+        this.phase = phase;
+    }
 
-  @Nonnull
-  @Override
-  public String getName() {
-    return name;
-  }
+    @Nonnull
+    @Override
+    public String getName() {
+        return name;
+    }
 }

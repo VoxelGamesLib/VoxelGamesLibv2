@@ -6,18 +6,18 @@ package me.minidigger.voxelgameslib.tick;
  */
 public interface Tickable {
 
-  /**
-   * called before the first tick
-   */
-  void start();
+    /**
+     * called before the first tick
+     */
+    void start();
 
-  /**
-   * called when it stops ticking
-   */
-  void stop();
+    /**
+     * called when it stops ticking
+     */
+    void stop();
 
-  /**
-   * called on every tick
-   */
-  void tick();
+    /**
+     * called on every tick
+     */
+    void tick();
 }

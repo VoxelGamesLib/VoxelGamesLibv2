@@ -13,6 +13,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Pair<S, T> {
 
-  S first;
-  T second;
+    S first;
+    T second;
 }

@@ -6,5 +6,5 @@ package me.minidigger.voxelgameslib;
  */
 public class GameConstants {
 
-  public static int TPS = 20;
+    public static int TPS = 20;
 }

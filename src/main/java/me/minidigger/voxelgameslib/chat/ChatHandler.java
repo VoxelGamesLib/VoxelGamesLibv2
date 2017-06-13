@@ -1,12 +1,13 @@
 package me.minidigger.voxelgameslib.chat;
 
-import me.minidigger.voxelgameslib.handler.Handler;
-import me.minidigger.voxelgameslib.user.User;
 import net.kyori.text.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import me.minidigger.voxelgameslib.handler.Handler;
+import me.minidigger.voxelgameslib.user.User;
 
 public class ChatHandler implements Handler {
     public ChatChannel defaultChannel;
@@ -44,7 +45,7 @@ public class ChatHandler implements Handler {
     /**
      * Broadcast a message to all channels
      *
-     * @param user sender
+     * @param user    sender
      * @param message message
      */
     public void broadcastMessage(User user, String message) {
@@ -56,7 +57,7 @@ public class ChatHandler implements Handler {
     /**
      * Broadcast a message to all channels
      *
-     * @param user sender
+     * @param user      sender
      * @param component message
      */
     public void broadcastMessage(User user, Component component) {

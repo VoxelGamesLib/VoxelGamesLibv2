@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.exception;
 
 import javax.annotation.Nonnull;
+
 import me.minidigger.voxelgameslib.game.GameMode;
 
 /**
@@ -8,12 +9,12 @@ import me.minidigger.voxelgameslib.game.GameMode;
  */
 public class GameModeNotAvailableException extends VoxelGameLibException {
 
-  /**
-   * @param mode the gamemode that was tried to access
-   */
-  public GameModeNotAvailableException(@Nonnull GameMode mode) {
-    super(
-        "Gamemode " + mode.getName() + " is not available. Was it correctly installed and loaded?");
-  }
+    /**
+     * @param mode the gamemode that was tried to access
+     */
+    public GameModeNotAvailableException(@Nonnull GameMode mode) {
+        super(
+                "Gamemode " + mode.getName() + " is not available. Was it correctly installed and loaded?");
+    }
 
 }

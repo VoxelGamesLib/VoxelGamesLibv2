@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.signs;
 
 import me.minidigger.voxelgameslib.user.User;
+
 import org.bukkit.block.Block;
 
 /**
@@ -8,11 +9,11 @@ import org.bukkit.block.Block;
  */
 public interface SignButton {
 
-  /**
-   * Executes the action associated with this button
-   *
-   * @param user the user that pressed this sign
-   * @param block the block of this sign
-   */
-  void execute(User user, Block block);
+    /**
+     * Executes the action associated with this button
+     *
+     * @param user  the user that pressed this sign
+     * @param block the block of this sign
+     */
+    void execute(User user, Block block);
 }

@@ -8,20 +8,20 @@ import javax.annotation.Nonnull;
  */
 public interface Module {
 
-  /**
-   * Called when this module is enabled
-   */
-  void enable();
+    /**
+     * Called when this module is enabled
+     */
+    void enable();
 
-  /**
-   * Called when this module is disabled
-   */
-  void disable();
+    /**
+     * Called when this module is disabled
+     */
+    void disable();
 
-  /**
-   * @return the info annotation for this module, which contains additional info like the name or
-   * the author
-   */
-  @Nonnull
-  ModuleInfo getModuleInfo();
+    /**
+     * @return the info annotation for this module, which contains additional info like the name or
+     * the author
+     */
+    @Nonnull
+    ModuleInfo getModuleInfo();
 }

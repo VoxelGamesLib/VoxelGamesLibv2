@@ -6,9 +6,9 @@ package me.minidigger.voxelgameslib.feature;
  */
 public interface FeatureImplementor {
 
-  /**
-   * @return an implementation of {@link AbstractFeatureCommand} that houses the commands for a
-   * feature
-   */
-  AbstractFeatureCommand getCommandClass();
+    /**
+     * @return an implementation of {@link AbstractFeatureCommand} that houses the commands for a
+     * feature
+     */
+    AbstractFeatureCommand getCommandClass();
 }

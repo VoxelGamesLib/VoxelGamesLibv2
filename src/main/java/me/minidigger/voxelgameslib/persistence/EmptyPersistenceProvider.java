@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.signs.SignLocation;
 import me.minidigger.voxelgameslib.user.User;
@@ -13,48 +14,48 @@ import me.minidigger.voxelgameslib.user.User;
  */
 public class EmptyPersistenceProvider implements PersistenceProvider {
 
-  @Override
-  public void start() {
-    // ignore
-  }
+    @Override
+    public void start() {
+        // ignore
+    }
 
-  @Override
-  public void stop() {
-    // ignore
-  }
+    @Override
+    public void stop() {
+        // ignore
+    }
 
-  @Override
-  public void saveUser(User user) {
-    // ignore
-  }
+    @Override
+    public void saveUser(User user) {
+        // ignore
+    }
 
-  @Override
-  public Optional<User> loadUser(UUID id) {
-    return Optional.empty();
-  }
+    @Override
+    public Optional<User> loadUser(UUID id) {
+        return Optional.empty();
+    }
 
-  @Override
-  public void saveLocale(Locale locale) {
-    // ignore
-  }
+    @Override
+    public void saveLocale(Locale locale) {
+        // ignore
+    }
 
-  @Override
-  public List<Locale> loadLocales() {
-    return new ArrayList<>();
-  }
+    @Override
+    public List<Locale> loadLocales() {
+        return new ArrayList<>();
+    }
 
-  @Override
-  public List<SignLocation> loadSigns() {
-    return new ArrayList<>();
-  }
+    @Override
+    public List<SignLocation> loadSigns() {
+        return new ArrayList<>();
+    }
 
-  @Override
-  public void saveSigns(List<SignLocation> signs) {
-    // ignore
-  }
+    @Override
+    public void saveSigns(List<SignLocation> signs) {
+        // ignore
+    }
 
-  @Override
-  public void deleteSigns(List<SignLocation> signs) {
-    // ignore
-  }
+    @Override
+    public void deleteSigns(List<SignLocation> signs) {
+        // ignore
+    }
 }

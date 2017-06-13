@@ -13,18 +13,18 @@ import javax.annotation.Nonnull;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ModuleInfo {
 
-  /**
-   * @return the name of the module
-   */
-  @Nonnull String name();
+    /**
+     * @return the name of the module
+     */
+    @Nonnull String name();
 
-  /**
-   * @return the authors of the module
-   */
-  @Nonnull String[] authors();
+    /**
+     * @return the authors of the module
+     */
+    @Nonnull String[] authors();
 
-  /**
-   * @return the version of the module
-   */
-  @Nonnull String version();
+    /**
+     * @return the version of the module
+     */
+    @Nonnull String version();
 }

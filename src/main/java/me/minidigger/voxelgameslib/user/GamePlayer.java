@@ -1,7 +1,17 @@
 package me.minidigger.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
-import jskills.Rating;
+
+import net.kyori.text.Component;
+import net.kyori.text.TextComponent;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
@@ -11,16 +21,10 @@ import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
-import net.kyori.text.Component;
-import net.kyori.text.TextComponent;
+
 import org.bukkit.entity.Player;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import jskills.Rating;
 
 /**
  * abstract implementation of the user interface that deals with some stuff

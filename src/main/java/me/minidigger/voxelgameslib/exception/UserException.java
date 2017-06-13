@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
  */
 public class UserException extends VoxelGameLibException {
 
-  /**
-   * @param message the message that explains the issue
-   */
-  public UserException(@Nonnull String message) {
-    super(message);
-  }
+    /**
+     * @param message the message that explains the issue
+     */
+    public UserException(@Nonnull String message) {
+        super(message);
+    }
 }

@@ -8,17 +8,17 @@ import javax.annotation.Nonnull;
  */
 public class CustomGame extends AbstractGame {
 
-  /**
-   * Constructs a new {@link AbstractGame}
-   *
-   * @param mode the mode this {@link Game} is an instance of.
-   */
-  public CustomGame(@Nonnull GameMode mode) {
-    super(mode);
-  }
+    /**
+     * Constructs a new {@link AbstractGame}
+     *
+     * @param mode the mode this {@link Game} is an instance of.
+     */
+    public CustomGame(@Nonnull GameMode mode) {
+        super(mode);
+    }
 
-  @Override
-  public void initGameFromModule() {
+    @Override
+    public void initGameFromModule() {
 
-  }
+    }
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
 import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.phase.Phase;
+
 import org.bukkit.Bukkit;
 
 /**
@@ -20,50 +22,50 @@ import org.bukkit.Bukkit;
 @Singleton
 public class TickHandler implements Handler {
 
-  @Inject
-  private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private VoxelGamesLib voxelGamesLib;
 
-  private final List<Tickable> tickables = new ArrayList<>();
+    private final List<Tickable> tickables = new ArrayList<>();
 
-  /**
-   * Called when the underlying server mod calls a tick. Causes all {@link Tickable}s to tick
-   */
-  public void tick() {
-    tickables.forEach(Tickable::tick);
-  }
+    /**
+     * Called when the underlying server mod calls a tick. Causes all {@link Tickable}s to tick
+     */
+    public void tick() {
+        tickables.forEach(Tickable::tick);
+    }
 
-  /**
-   * Starts the ticker
-   */
-  public void start() {
-    Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
-  }
+    /**
+     * Starts the ticker
+     */
+    public void start() {
+        Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
+    }
 
-  /**
-   * Stops every {@link Tickable} from ticking and does some cleanup
-   */
-  @Override
-  public void stop() {
-    tickables.forEach(Tickable::stop);
-    tickables.clear();
-  }
+    /**
+     * Stops every {@link Tickable} from ticking and does some cleanup
+     */
+    @Override
+    public void stop() {
+        tickables.forEach(Tickable::stop);
+        tickables.clear();
+    }
 
-  /**
-   * Registers a new {@link Tickable}. Calls the {@link Tickable#start()} method.
-   *
-   * @param tickable the new {@link Tickable} that should now receive server ticks
-   */
-  public void registerTickable(@Nonnull Tickable tickable) {
-    tickables.add(tickable);
-    tickable.start();
-  }
+    /**
+     * Registers a new {@link Tickable}. Calls the {@link Tickable#start()} method.
+     *
+     * @param tickable the new {@link Tickable} that should now receive server ticks
+     */
+    public void registerTickable(@Nonnull Tickable tickable) {
+        tickables.add(tickable);
+        tickable.start();
+    }
 
-  /**
-   * Remove the tickable form the tickloop
-   *
-   * @param tickable the tickable which should no longer receive ticks
-   */
-  public void end(Tickable tickable) {
-    tickables.remove(tickable);
-  }
+    /**
+     * Remove the tickable form the tickloop
+     *
+     * @param tickable the tickable which should no longer receive ticks
+     */
+    public void end(Tickable tickable) {
+        tickables.remove(tickable);
+    }
 }

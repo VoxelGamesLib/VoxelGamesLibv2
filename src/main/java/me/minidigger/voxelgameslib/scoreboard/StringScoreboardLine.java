@@ -5,23 +5,23 @@ package me.minidigger.voxelgameslib.scoreboard;
  */
 public abstract class StringScoreboardLine implements ScoreboardLine {
 
-  private String value;
+    private String value;
 
-  /**
-   * Constructs a new line
-   *
-   * @param value the initial value
-   */
-  public StringScoreboardLine(String value) {
-    this.value = value;
-  }
+    /**
+     * Constructs a new line
+     *
+     * @param value the initial value
+     */
+    public StringScoreboardLine(String value) {
+        this.value = value;
+    }
 
-  @Override
-  public String getValue() {
-    return value;
-  }
+    @Override
+    public String getValue() {
+        return value;
+    }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

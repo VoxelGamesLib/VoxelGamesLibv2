@@ -14,23 +14,23 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FeatureInfo {
 
-  /**
-   * @return the name of the feature
-   */
-  String name();
+    /**
+     * @return the name of the feature
+     */
+    String name();
 
-  /**
-   * @return the author of the feature
-   */
-  String author();
+    /**
+     * @return the author of the feature
+     */
+    String author();
 
-  /**
-   * @return the version of the feature
-   */
-  String version();
+    /**
+     * @return the version of the feature
+     */
+    String version();
 
-  /**
-   * @return the description of the feature
-   */
-  String description();
+    /**
+     * @return the description of the feature
+     */
+    String description();
 }

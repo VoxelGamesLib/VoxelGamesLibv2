@@ -11,49 +11,49 @@ import java.util.List;
  */
 final class GraphNode<T> {
 
-  T value;
-  private List<GraphNode<T>> comingInNodes;
-  private List<GraphNode<T>> goingOutNodes;
+    T value;
+    private List<GraphNode<T>> comingInNodes;
+    private List<GraphNode<T>> goingOutNodes;
 
-  /**
-   * Adds an incoming node to the current node
-   *
-   * @param node The incoming node
-   */
-  void addComingInNode(GraphNode<T> node) {
-    if (comingInNodes == null) {
-      comingInNodes = new ArrayList<>();
+    /**
+     * Adds an incoming node to the current node
+     *
+     * @param node The incoming node
+     */
+    void addComingInNode(GraphNode<T> node) {
+        if (comingInNodes == null) {
+            comingInNodes = new ArrayList<>();
+        }
+        comingInNodes.add(node);
     }
-    comingInNodes.add(node);
-  }
 
-  /**
-   * Adds an outgoing node from the current node
-   *
-   * @param node The outgoing node
-   */
-  void addGoingOutNode(GraphNode<T> node) {
-    if (goingOutNodes == null) {
-      goingOutNodes = new ArrayList<>();
+    /**
+     * Adds an outgoing node from the current node
+     *
+     * @param node The outgoing node
+     */
+    void addGoingOutNode(GraphNode<T> node) {
+        if (goingOutNodes == null) {
+            goingOutNodes = new ArrayList<>();
+        }
+        goingOutNodes.add(node);
     }
-    goingOutNodes.add(node);
-  }
 
-  /**
-   * Provides all the coming in nodes
-   *
-   * @return The coming in nodes
-   */
-  List<GraphNode<T>> getComingInNodes() {
-    return comingInNodes;
-  }
+    /**
+     * Provides all the coming in nodes
+     *
+     * @return The coming in nodes
+     */
+    List<GraphNode<T>> getComingInNodes() {
+        return comingInNodes;
+    }
 
-  /**
-   * Provides all the going out nodes
-   *
-   * @return The going out nodes
-   */
-  List<GraphNode<T>> getGoingOutNodes() {
-    return goingOutNodes;
-  }
+    /**
+     * Provides all the going out nodes
+     *
+     * @return The going out nodes
+     */
+    List<GraphNode<T>> getGoingOutNodes() {
+        return goingOutNodes;
+    }
 }

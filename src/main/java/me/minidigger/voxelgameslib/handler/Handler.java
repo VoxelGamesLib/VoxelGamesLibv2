@@ -6,13 +6,13 @@ package me.minidigger.voxelgameslib.handler;
  */
 public interface Handler {
 
-  /**
-   * Called on server start
-   */
-  void start();
+    /**
+     * Called on server start
+     */
+    void start();
 
-  /**
-   * Called on server stop. used to cleanup things.
-   */
-  void stop();
+    /**
+     * Called on server stop. used to cleanup things.
+     */
+    void stop();
 }

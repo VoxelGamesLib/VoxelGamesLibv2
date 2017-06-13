@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
  */
 public class DependencyGraphException extends VoxelGameLibException {
 
-  /**
-   * @param message the message
-   */
-  public DependencyGraphException(@Nonnull String message) {
-    super(message);
-  }
+    /**
+     * @param message the message
+     */
+    public DependencyGraphException(@Nonnull String message) {
+        super(message);
+    }
 }

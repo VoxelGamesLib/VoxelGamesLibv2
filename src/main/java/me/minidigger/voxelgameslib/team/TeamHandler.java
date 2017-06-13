@@ -7,13 +7,13 @@ import me.minidigger.voxelgameslib.handler.Handler;
  */
 public class TeamHandler implements Handler {
 
-  @Override
-  public void start() {
+    @Override
+    public void start() {
 
-  }
+    }
 
-  @Override
-  public void stop() {
+    @Override
+    public void stop() {
 
-  }
+    }
 }

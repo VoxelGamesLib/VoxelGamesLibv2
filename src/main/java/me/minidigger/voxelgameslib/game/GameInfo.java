@@ -14,23 +14,23 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GameInfo {
 
-  /**
-   * @return the name of the game
-   */
-  String name();
+    /**
+     * @return the name of the game
+     */
+    String name();
 
-  /**
-   * @return the author of the game
-   */
-  String author();
+    /**
+     * @return the author of the game
+     */
+    String author();
 
-  /**
-   * @return the version of the game
-   */
-  String version();
+    /**
+     * @return the version of the game
+     */
+    String version();
 
-  /**
-   * @return a short description of the game
-   */
-  String description();
+    /**
+     * @return a short description of the game
+     */
+    String description();
 }

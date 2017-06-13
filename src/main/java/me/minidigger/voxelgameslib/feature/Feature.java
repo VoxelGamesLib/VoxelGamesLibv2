@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.feature;
 
 import javax.annotation.Nonnull;
+
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.tick.Tickable;
@@ -12,32 +13,32 @@ import me.minidigger.voxelgameslib.tick.Tickable;
  */
 public interface Feature extends Tickable {
 
-  /**
-   * @return the {@link Phase} this {@link Feature} is attached too.
-   */
-  @Nonnull
-  Phase getPhase();
+    /**
+     * @return the {@link Phase} this {@link Feature} is attached too.
+     */
+    @Nonnull
+    Phase getPhase();
 
-  /**
-   * sets the face that this feature is attached to
-   *
-   * @param phase the phase that this feature is attached to
-   */
-  void setPhase(@Nonnull Phase phase);
+    /**
+     * sets the face that this feature is attached to
+     *
+     * @param phase the phase that this feature is attached to
+     */
+    void setPhase(@Nonnull Phase phase);
 
-  /**
-   * initialises this feature
-   */
-  void init();
+    /**
+     * initialises this feature
+     */
+    void init();
 
-  /**
-   * @return the name of this feature
-   */
-  @Nonnull
-  String getName();
+    /**
+     * @return the name of this feature
+     */
+    @Nonnull
+    String getName();
 
-  /**
-   * @return all features this feature depends on
-   */
-  Class[] getDependencies();
+    /**
+     * @return all features this feature depends on
+     */
+    Class[] getDependencies();
 }

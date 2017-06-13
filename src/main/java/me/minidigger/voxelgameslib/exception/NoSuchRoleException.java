@@ -8,10 +8,10 @@ import javax.annotation.Nonnull;
  */
 public class NoSuchRoleException extends VoxelGameLibException {
 
-  /**
-   * @param role the name of the role that was tried to access
-   */
-  public NoSuchRoleException(@Nonnull String role) {
-    super("Could not find role " + role);
-  }
+    /**
+     * @param role the name of the role that was tried to access
+     */
+    public NoSuchRoleException(@Nonnull String role) {
+        super("Could not find role " + role);
+    }
 }

@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.event.events.game;
 
 import javax.annotation.Nonnull;
+
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.user.User;
 
@@ -9,22 +10,22 @@ import me.minidigger.voxelgameslib.user.User;
  */
 public class GameJoinEvent extends GameEvent {
 
-  private User user;
+    private User user;
 
-  /**
-   * @param game the game the user joined
-   * @param user the user that joined the game
-   */
-  public GameJoinEvent(@Nonnull Game game, @Nonnull User user) {
-    super(game);
-    this.user = user;
-  }
+    /**
+     * @param game the game the user joined
+     * @param user the user that joined the game
+     */
+    public GameJoinEvent(@Nonnull Game game, @Nonnull User user) {
+        super(game);
+        this.user = user;
+    }
 
-  /**
-   * @return the user that joined the game
-   */
-  @Nonnull
-  public User getUser() {
-    return user;
-  }
+    /**
+     * @return the user that joined the game
+     */
+    @Nonnull
+    public User getUser() {
+        return user;
+    }
 }

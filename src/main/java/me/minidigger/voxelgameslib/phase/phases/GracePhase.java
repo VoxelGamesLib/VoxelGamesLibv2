@@ -12,6 +12,7 @@ import me.minidigger.voxelgameslib.feature.features.NoDamageFeature;
 import me.minidigger.voxelgameslib.feature.features.ScoreboardFeature;
 import me.minidigger.voxelgameslib.feature.features.SpawnFeature;
 import me.minidigger.voxelgameslib.phase.TimedPhase;
+
 import org.bukkit.GameMode;
 
 /**
@@ -20,47 +21,47 @@ import org.bukkit.GameMode;
  */
 public class GracePhase extends TimedPhase {
 
-  @Override
-  public void init() {
-    setName("GracePhase");
-    super.init();
-    setAllowJoin(false);
-    setAllowSpectate(true);
-    setTicks(60 * GameConstants.TPS);
+    @Override
+    public void init() {
+        setName("GracePhase");
+        super.init();
+        setAllowJoin(false);
+        setAllowSpectate(true);
+        setTicks(60 * GameConstants.TPS);
 
-    MapFeature mapFeature = getGame().createFeature(MapFeature.class, this);
-    mapFeature.setShouldUnload(false);
-    addFeature(mapFeature);
+        MapFeature mapFeature = getGame().createFeature(MapFeature.class, this);
+        mapFeature.setShouldUnload(false);
+        addFeature(mapFeature);
 
-    SpawnFeature spawnFeature = getGame().createFeature(SpawnFeature.class, this);
-    addFeature(spawnFeature);
+        SpawnFeature spawnFeature = getGame().createFeature(SpawnFeature.class, this);
+        addFeature(spawnFeature);
 
-    MapInfoFeature mapInfoFeature = getGame().createFeature(MapInfoFeature.class, this);
-    addFeature(mapInfoFeature);
+        MapInfoFeature mapInfoFeature = getGame().createFeature(MapInfoFeature.class, this);
+        addFeature(mapInfoFeature);
 
-    ScoreboardFeature scoreboardFeature = getGame().createFeature(ScoreboardFeature.class, this);
-    addFeature(scoreboardFeature);
+        ScoreboardFeature scoreboardFeature = getGame().createFeature(ScoreboardFeature.class, this);
+        addFeature(scoreboardFeature);
 
-    NoBlockBreakFeature noBlockBreakFeature = getGame()
-        .createFeature(NoBlockBreakFeature.class, this);
-    addFeature(noBlockBreakFeature);
+        NoBlockBreakFeature noBlockBreakFeature = getGame()
+                .createFeature(NoBlockBreakFeature.class, this);
+        addFeature(noBlockBreakFeature);
 
-    NoBlockPlaceFeature noBlockPlaceFeature = getGame()
-        .createFeature(NoBlockPlaceFeature.class, this);
-    addFeature(noBlockPlaceFeature);
+        NoBlockPlaceFeature noBlockPlaceFeature = getGame()
+                .createFeature(NoBlockPlaceFeature.class, this);
+        addFeature(noBlockPlaceFeature);
 
-    ClearInventoryFeature clearInventoryFeature = getGame()
-        .createFeature(ClearInventoryFeature.class, this);
-    addFeature(clearInventoryFeature);
+        ClearInventoryFeature clearInventoryFeature = getGame()
+                .createFeature(ClearInventoryFeature.class, this);
+        addFeature(clearInventoryFeature);
 
-    NoDamageFeature noDamageFeature = getGame().createFeature(NoDamageFeature.class, this);
-    addFeature(noDamageFeature);
+        NoDamageFeature noDamageFeature = getGame().createFeature(NoDamageFeature.class, this);
+        addFeature(noDamageFeature);
 
-    HealFeature healFeature = getGame().createFeature(HealFeature.class, this);
-    addFeature(healFeature);
+        HealFeature healFeature = getGame().createFeature(HealFeature.class, this);
+        addFeature(healFeature);
 
-    GameModeFeature gameModeFeature = getGame().createFeature(GameModeFeature.class, this);
-    gameModeFeature.setGameMode(GameMode.SURVIVAL);
-    addFeature(gameModeFeature);
-  }
+        GameModeFeature gameModeFeature = getGame().createFeature(GameModeFeature.class, this);
+        gameModeFeature.setGameMode(GameMode.SURVIVAL);
+        addFeature(gameModeFeature);
+    }
 }
