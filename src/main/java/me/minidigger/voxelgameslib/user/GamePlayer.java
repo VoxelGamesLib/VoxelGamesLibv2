@@ -5,9 +5,11 @@ import com.google.gson.annotations.Expose;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -64,7 +66,7 @@ public class GamePlayer implements User {
     private Component suffix = new TextComponent("");
 
     @Expose
-    private List<ChatChannel> channels;
+    private List<ChatChannel> channels = new ArrayList<>();
     @Expose
     private ChatChannel activeChannel;
 
@@ -199,11 +201,11 @@ public class GamePlayer implements User {
 
     @Override
     public void addListeningChannel(String identifier) {
-        ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
+        Optional<ChatChannel> channel = chatHandler.getChannel(identifier);
 
-        if (channel != null) {
-            channels.add(channel);
-            channel.addListener(this);
+        if (channel.isPresent()) {
+            channels.add(channel.get());
+            channel.get().addListener(this);
         }
     }
 
