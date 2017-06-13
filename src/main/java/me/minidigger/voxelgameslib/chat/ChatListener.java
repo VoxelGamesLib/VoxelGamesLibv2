@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.chat;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+@Singleton
 public class ChatListener implements Listener {
     @Inject
     private ChatHandler chatHandler;

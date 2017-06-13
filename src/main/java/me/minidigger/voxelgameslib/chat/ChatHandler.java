@@ -5,10 +5,12 @@ import net.kyori.text.Component;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.inject.Singleton;
 
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.user.User;
 
+@Singleton
 public class ChatHandler implements Handler {
     public ChatChannel defaultChannel;
     public Map<String, ChatChannel> activeChannels;
