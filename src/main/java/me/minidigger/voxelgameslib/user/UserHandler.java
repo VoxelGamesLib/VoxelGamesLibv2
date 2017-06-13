@@ -16,7 +16,6 @@ import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
-import me.minidigger.voxelgameslib.utils.MojangUtil;
 
 import org.bukkit.entity.Player;
 
@@ -62,6 +61,10 @@ public class UserHandler implements Handler {
 
         User user = tempData.remove(player.getUniqueId());
         user.setPlayer(player);
+
+        if (user.getDisplayName() == null) {
+            user.setDisplayName(user.getPlayer().getDisplayName());
+        }
 
         user.addListeningChannel("default");
         user.setActiveChannel("default");
@@ -118,7 +121,8 @@ public class UserHandler implements Handler {
             User user = new GamePlayer();
             user.setUuid(uniqueId);
             try {
-                user.setDisplayName(MojangUtil.getDisplayName(uniqueId));
+                // lets not load the name here for now
+                //user.setDisplayName(MojangUtil.getDisplayName(uniqueId));
             } catch (Exception ignore) {
                 // offline users don't have a real name
             }
