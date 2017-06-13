@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.chat;
 
+import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -19,11 +20,9 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-        User user = userHandler.getUser(event.getPlayer().getUniqueId()).isPresent() ? userHandler.getUser(event.getPlayer().getUniqueId()).get() : null;
+        Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
 
-        if (user != null) {
-            user.getActiveChannel().sendMessage(user, event.getMessage());
-        }
+        user.ifPresent(user1 -> user1.getActiveChannel().sendMessage(user1, event.getMessage()));
 
         event.setCancelled(true);
     }
