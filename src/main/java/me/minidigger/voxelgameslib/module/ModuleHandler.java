@@ -3,6 +3,7 @@ package me.minidigger.voxelgameslib.module;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ModuleHandler implements Handler {
 
     private void findModules() {
         Timings.time("RegisterModules", () -> {
-            for (Class<?> clazz : offeredModules) {
+            for (Class<? extends Module> clazz : offeredModules) {
                 ModuleInfo info = clazz.getAnnotation(ModuleInfo.class);
                 if (info == null) {
                     continue; // should not occur
