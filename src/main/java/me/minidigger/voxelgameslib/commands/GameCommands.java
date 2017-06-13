@@ -119,4 +119,10 @@ public class GameCommands extends BaseCommand {
             }
         }
     }
+
+    @Subcommand("shout")
+    @CommandAlias("shout|s")
+    public void shout(User sender) {
+        // send msg to entire game
+    }
 }

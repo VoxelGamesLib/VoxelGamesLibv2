@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.event.events.game.GameEndEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
@@ -69,6 +70,8 @@ public abstract class AbstractGame implements Game {
     private LocalDateTime startTime;
     private Duration duration;
 
+    private ChatChannel chatChannel;
+
     /**
      * Constructs a new {@link AbstractGame}
      *
@@ -106,6 +109,8 @@ public abstract class AbstractGame implements Game {
     @Override
     public void start() {
         startTime = LocalDateTime.now();
+        chatChannel = new ChatChannel("game." + getUuid().toString());
+
         activePhase.setRunning(true);
         activePhase.start();
     }
@@ -223,6 +228,8 @@ public abstract class AbstractGame implements Game {
 
         activePhase.setRunning(false);
         activePhase.stop();
+
+        chatChannel = null;
         tickHandler.end(this);
         gameHandler.removeGame(this);
     }
@@ -290,6 +297,10 @@ public abstract class AbstractGame implements Game {
             Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }
+
+        user.removeListeningChannel("default");
+        user.addListeningChannel(chatChannel.getIdentifier());
+        user.setActiveChannel(chatChannel.getIdentifier());
     }
 
     @Override
@@ -311,6 +322,10 @@ public abstract class AbstractGame implements Game {
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
         user.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+
+        user.removeListeningChannel(chatChannel.getIdentifier());
+        user.addListeningChannel("default");
+        user.setActiveChannel("default");
     }
 
     @Override
