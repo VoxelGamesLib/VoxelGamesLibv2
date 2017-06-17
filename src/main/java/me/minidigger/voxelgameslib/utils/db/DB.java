@@ -15,7 +15,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import co.aikar.timings.lib.TimingManager;
+import lombok.extern.java.Log;
 
+@Log
 public final class DB {
     private static HikariDataSource pooledDataSource;
     static TimingManager timingManager;
@@ -43,7 +45,7 @@ public final class DB {
             config.setPoolName("VGL-Client");
 
             String jdbc = plugin.getConfig().getString("db.jdbc");
-            plugin.getLogger().info("Connecting to Database: " + jdbc);
+            log.info("Connecting to Database: " + jdbc);
             config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
             config.addDataSourceProperty("url", "jdbc:mysql://" + jdbc + "/" + plugin.getConfig().getString("db.name"));
             config.addDataSourceProperty("user", plugin.getConfig().getString("db.username"));
@@ -70,7 +72,7 @@ public final class DB {
             Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new AsyncDbQueue(), 0, 1);
         } catch (Exception ex) {
             pooledDataSource = null;
-            Bukkit.getLogger().severe("Error creating database pool");
+            log.severe("Error creating database pool");
             ex.printStackTrace();
             //Bukkit.getServer().shutdown(); // let's not...
         }

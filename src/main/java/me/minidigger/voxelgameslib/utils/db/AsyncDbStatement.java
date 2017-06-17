@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
 
+import lombok.extern.java.Log;
+
 /**
  * Template class for user to override. Will run on a different thread so
  * you can run SQL queries safely without impacting main thread.
@@ -14,6 +16,7 @@ import org.bukkit.Bukkit;
  * an onResultsSync method to be overridden to receive all DB Results back on main thread,
  * by calling getResultsSync() on the Async run(DbStatement) call.
  */
+@Log
 public abstract class AsyncDbStatement {
     protected String query;
     private boolean done = false;
@@ -51,7 +54,7 @@ public abstract class AsyncDbStatement {
      * @param e
      */
     public void onError(SQLException e) {
-        Bukkit.getLogger().severe("Exception in AsyncDbStatement" + query);
+        log.severe("Exception in AsyncDbStatement" + query);
         e.printStackTrace();
     }
 

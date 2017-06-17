@@ -8,6 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.bukkit.Bukkit;
 
+import lombok.extern.java.Log;
+
+@Log
 public class AsyncDbQueue implements Runnable {
     private static final Queue<AsyncDbStatement> queue = new ConcurrentLinkedQueue<>();
     private static final Lock lock = new ReentrantLock();
@@ -29,7 +32,7 @@ public class AsyncDbQueue implements Runnable {
             dbStatement = new DbStatement();
         } catch (Exception e) {
             lock.unlock();
-            Bukkit.getLogger().severe("Exception getting DBStatement in AsyncDbQueue");
+            log.severe("Exception getting DBStatement in AsyncDbQueue");
             e.printStackTrace();
             return;
         }
