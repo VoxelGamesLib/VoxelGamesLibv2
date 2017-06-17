@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,6 +25,7 @@ import me.minidigger.voxelgameslib.timings.Timings;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import lombok.extern.java.Log;
 
@@ -43,6 +43,8 @@ public class SignHandler implements Handler {
     private GlobalConfig config;
     @Inject
     private Injector injector;
+    @Inject
+    private VoxelGamesLib voxelGamesLib;
 
     private Map<String, SignButton> buttons;
     private Map<String, SignPlaceHolder> placeHolders;
@@ -119,21 +121,27 @@ public class SignHandler implements Handler {
      * Starts the task to update signs
      */
     public void startUpdateTask() {
-        VoxelGamesLib.newChain().delay(config.signUpdateInterval, TimeUnit.SECONDS)
-                .sync(this::updateSigns).execute(this::startUpdateTask, (e, t) -> {
-            log.warning("Error while updating signs, trying again...");
-            e.printStackTrace();
-            startUpdateTask();
-        });
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    updateSigns();
+                } catch (Exception ex) {
+                    log.warning("Error while updating signs, trying again...");
+                    ex.printStackTrace();
+                    startUpdateTask();
+                }
 
-        if (dirty) {
-            persistenceHandler.getProvider().saveSigns(signLocations);
-            if (markedForRemoval != null && markedForRemoval.size() > 0) {
-                persistenceHandler.getProvider().deleteSigns(markedForRemoval);
-                markedForRemoval.clear();
+                if (dirty) {
+                    persistenceHandler.getProvider().saveSigns(signLocations);
+                    if (markedForRemoval != null && markedForRemoval.size() > 0) {
+                        persistenceHandler.getProvider().deleteSigns(markedForRemoval);
+                        markedForRemoval.clear();
+                    }
+                    dirty = false;
+                }
             }
-            dirty = false;
-        }
+        }.runTaskTimer(voxelGamesLib, config.signUpdateInterval * 20, config.signUpdateInterval * 20);
     }
 
     private void updateSigns() {
