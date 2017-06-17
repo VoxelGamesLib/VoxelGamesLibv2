@@ -15,6 +15,16 @@ import me.minidigger.voxelgameslib.user.User;
 public interface PersistenceProvider extends Handler {
 
     /**
+     * Called when a provider is started
+     */
+    void start();
+
+    /**
+     * Called when a provider is stopped
+     */
+    void stop();
+
+    /**
      * Persists the data of a user
      *
      * @param user the user data to persist
@@ -28,33 +38,4 @@ public interface PersistenceProvider extends Handler {
      * @return the User, if present
      */
     Optional<User> loadUser(UUID id);
-
-    /**
-     * Persists a locale
-     *
-     * @param locale the locale to persist
-     */
-    void saveLocale(Locale locale);
-
-    /**
-     * @return all persisted locales
-     */
-    List<Locale> loadLocales();
-
-    /**
-     * @return all saved sign locations
-     */
-    List<SignLocation> loadSigns();
-
-    /**
-     * Saves all sign locations
-     *
-     * @param signs the locs to save
-     */
-    void saveSigns(List<SignLocation> signs);
-
-    /**
-     * Empties the sign table
-     */
-    void deleteSigns(List<SignLocation> signs);
 }

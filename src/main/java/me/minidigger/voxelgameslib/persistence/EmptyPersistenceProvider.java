@@ -33,29 +33,4 @@ public class EmptyPersistenceProvider implements PersistenceProvider {
     public Optional<User> loadUser(UUID id) {
         return Optional.empty();
     }
-
-    @Override
-    public void saveLocale(Locale locale) {
-        // ignore
-    }
-
-    @Override
-    public List<Locale> loadLocales() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public List<SignLocation> loadSigns() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public void saveSigns(List<SignLocation> signs) {
-        // ignore
-    }
-
-    @Override
-    public void deleteSigns(List<SignLocation> signs) {
-        // ignore
-    }
 }

@@ -36,12 +36,6 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     private File UserFile;
     private Map<UUID, User> UserMap;
 
-    private File localeFile;
-    private List<Locale> localeList;
-
-    private File signFile;
-    private List<SignLocation> signList;
-
     @SuppressWarnings("Duplicates")
     @Override
     public void start() {
@@ -68,51 +62,11 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // locale
-        localeFile = new File(folder, "locales.json");
-        localeList = new ArrayList<>();
-
-        if (!localeFile.exists()) {
-            saveLocales();
-        }
-
-        try {
-            String json = Files.readAllLines(localeFile.toPath()).stream().collect(Collectors.joining());
-            //noinspection unchecked
-            localeList = gson.fromJson(json, List.class);
-            if (localeList == null) {
-                localeList = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // signs
-        signFile = new File(folder, "signs.json");
-        signList = new ArrayList<>();
-
-        if (!signFile.exists()) {
-            saveSigns();
-        }
-
-        try {
-            String json = Files.readAllLines(signFile.toPath()).stream().collect(Collectors.joining());
-            //noinspection unchecked
-            signList = gson.fromJson(json, List.class);
-            if (signList == null) {
-                signList = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void stop() {
         UserMap.clear();
-        localeList.clear();
-        signList.clear();
     }
 
     @Override
@@ -132,49 +86,5 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     @Override
     public Optional<User> loadUser(UUID id) {
         return Optional.ofNullable(UserMap.get(id));
-    }
-
-    @Override
-    public void saveLocale(Locale locale) {
-        localeList.add(locale);
-        saveLocales();
-    }
-
-    private void saveLocales() {
-        try (FileWriter fw = new FileWriter(localeFile)) {
-            fw.write(gson.toJson(localeList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public List<Locale> loadLocales() {
-        return localeList;
-    }
-
-    @Override
-    public List<SignLocation> loadSigns() {
-        return signList;
-    }
-
-    @Override
-    public void saveSigns(List<SignLocation> signs) {
-        signList.addAll(signs);
-        saveSigns();
-    }
-
-    @Override
-    public void deleteSigns(List<SignLocation> signs) {
-        signList.removeAll(signs);
-        saveSigns();
-    }
-
-    private void saveSigns() {
-        try (FileWriter fw = new FileWriter(signFile)) {
-            fw.write(gson.toJson(signList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
