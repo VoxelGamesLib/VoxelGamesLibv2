@@ -109,7 +109,7 @@ public class VoteFeature extends AbstractFeature implements FeatureImplementor {
 
     @Override
     public AbstractFeatureCommand getCommandClass() {
-        return injector.getInstance(VoteFeatureCommand.class);
+        return new VoteFeatureCommand();
     }
 
     /**
