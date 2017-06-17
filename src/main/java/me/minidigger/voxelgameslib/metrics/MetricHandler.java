@@ -24,7 +24,7 @@ public class MetricHandler implements Handler {
         try {
             metrics = new Metrics(voxelGamesLib);
             //TODO add custom charts, like user/gamemode, installed gamesmodes, user/lang, installed langs etc
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.warning("Metrics failed to enabled. This is not a critical problem. You can ignore it.");
         }
     }

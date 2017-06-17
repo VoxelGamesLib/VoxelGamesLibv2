@@ -13,17 +13,21 @@ import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Commands related to worlds
  */
 @Singleton
+@CommandAlias("world")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class WorldCommands extends BaseCommand {
 
@@ -32,12 +36,14 @@ public class WorldCommands extends BaseCommand {
     @Inject
     private WorldHandler handler;
 
-    @CommandAlias("world")
+
+    @Default
+    @UnknownHandler
+    @Subcommand("help")
     @CommandPermission("%admin")
     public void world(User sender) {
-//TODO remove me once GH-17 is implemented
-        sender.sendMessage(
-                new TextComponent("It works! You are on " + sender.getPlayer().getLocation().getWorld()));
+        //TODO remove me once GH-17 is implemented
+        sender.sendMessage(new TextComponent("It works! You are on " + sender.getPlayer().getLocation().getWorld()));
     }
 
     @Subcommand("load")
@@ -85,7 +91,10 @@ public class WorldCommands extends BaseCommand {
             Map map = o.get();
             sender.getPlayer().teleport(map.getCenter().toLocation(map.getWorldName()));
         } else {
-            sender.getPlayer().teleport(Bukkit.getWorld(world).getSpawnLocation());
+            World w = Bukkit.getWorld(world);
+            if (w != null) {
+                sender.getPlayer().teleport(Bukkit.getWorld(world).getSpawnLocation());
+            }
             Lang.msg(sender, LangKey.WORLD_UNKNOWN_MAP, world);
         }
     }

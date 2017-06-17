@@ -19,6 +19,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import lombok.extern.java.Log;
@@ -55,13 +56,13 @@ public class FunCommands extends BaseCommand {
     @Syntax("<recipent> - whoever should receive the taco")
     @CommandCompletion("@players")
     @CommandPermission("%user")
-    public void tacoCommand(User user, String recipent) {
+    public void tacoCommand(User user, @Flags("other") User recipent) {
         if (tacoStuff == null) {
             user.sendMessage(new TextComponent("No tacos loaded :("));
             return;
         }
 
-        String message = taco(recipent);
+        String message = taco(recipent.getRawDisplayName());
         Lang.broadcast(new TextComponent("The server " + message));
     }
 
