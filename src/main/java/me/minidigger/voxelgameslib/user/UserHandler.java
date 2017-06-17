@@ -70,9 +70,7 @@ public class UserHandler implements Handler {
         user.setActiveChannel("default");
 
         users.put(user.getUuid(), user);
-        log.info(
-                "Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " "
-                        + user.getRawDisplayName() + ")");
+        log.info("Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " " + user.getRawDisplayName() + ")");
     }
 
     /**
@@ -153,8 +151,7 @@ public class UserHandler implements Handler {
         if (displayname.equalsIgnoreCase("CONSOLE")) {
             return Optional.of(GameConsoleUser.INSTANCE);
         } else {
-            return users.values().stream()
-                    .filter(u -> u.getPlayer().getName().equalsIgnoreCase(displayname)).findFirst();
+            return users.values().stream().filter(u -> u.getPlayer().getName().equalsIgnoreCase(displayname)).findFirst();
         }
     }
 

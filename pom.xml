@@ -159,6 +159,13 @@
       <version>1.12-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <!-- temporary server impl for debugging, uncomment if needed -->
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot</artifactId>
+      <version>1.12-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- Command Framework (also timings) -->
     <dependency>
       <groupId>co.aikar</groupId>

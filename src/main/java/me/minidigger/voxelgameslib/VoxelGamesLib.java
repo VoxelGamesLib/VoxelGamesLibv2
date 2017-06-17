@@ -49,7 +49,6 @@ import me.minidigger.voxelgameslib.world.EditMode;
 import me.minidigger.voxelgameslib.world.WorldCreator;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -128,7 +127,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // commands
             commandManager = new BukkitCommandManager(this);
-            commandManager.registerExceptionHandler((scope, registeredCommand, sender, args, t) -> {
+            commandManager.setDefaultExceptionHandler((scope, registeredCommand, sender, args, t) -> {
                 errorHandler.handle(sender, args, t);
                 return false;
             });
@@ -183,6 +182,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        System.out.println("stopping");
         try {
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
             Timings.time("DisableAllHandler", () -> {
@@ -233,14 +233,9 @@ public final class VoxelGamesLib extends JavaPlugin {
 
     private void registerCommandReplacements() {
         CommandReplacements rep = commandManager.getCommandReplacements();
-        rep.addReplacement("@gamemodes",
-                gameHandler.getGameModes().stream().map(GameMode::getName).collect(
-                        Collectors.joining("|")));
-        rep.addReplacement("@locales",
-                Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag())
-                        .collect(Collectors.joining("|")));
-        rep.addReplacement("@roles",
-                Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
+        rep.addReplacement("@gamemodes", gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.joining("|")));
+        rep.addReplacement("@locales", Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.joining("|")));
+        rep.addReplacement("@roles", Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
 
         rep.addReplacement("%user", "voxelgameslib.role.user");
         rep.addReplacement("%premium", "voxelgameslib.role.premium");
@@ -249,18 +244,11 @@ public final class VoxelGamesLib extends JavaPlugin {
     }
 
     private void registerCommandCompletions() {
-        CommandCompletions<CommandSender, BukkitCommandCompletionContext> comp = commandManager
-                .getCommandCompletions();
+        CommandCompletions<BukkitCommandCompletionContext> comp = commandManager.getCommandCompletions();
 
-        comp.registerCompletion("gamemodes",
-                (sender, config, input, context) -> gameHandler.getGameModes().stream()
-                        .map(GameMode::getName).collect(Collectors.toList()));
-        comp.registerCompletion("locales",
-                (sender, config, input, context) -> Arrays.stream(Locale.values())
-                        .map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
-        comp.registerCompletion("roles",
-                (sender, config, input, context) -> Arrays.stream(Role.values()).map(Role::getName)
-                        .collect(Collectors.toList()));
+        comp.registerCompletion("gamemodes", (c) -> gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.toList()));
+        comp.registerCompletion("locales", (c) -> Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
+        comp.registerCompletion("roles", (c) -> Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.toList()));
     }
 
     private void registerCommands() {
