@@ -60,7 +60,9 @@ public class SignHandler implements Handler {
         buttons = new HashMap<>();
         config = injector.getInstance(GlobalConfig.class);
 
-        signLocations = persistenceHandler.getProvider().loadSigns();
+        //TODO sign persistence
+        // signLocations = persistenceHandler.getProvider().loadSigns();
+        signLocations = new ArrayList<>();
 
         placeHolders.put("world",
                 (SimpleSignPlaceHolder) (event, key) -> event.getBlock().getLocation().getWorld()
@@ -133,9 +135,10 @@ public class SignHandler implements Handler {
                 }
 
                 if (dirty) {
-                    persistenceHandler.getProvider().saveSigns(signLocations);
+                    //TODO sign persistence
+                    //persistenceHandler.getProvider().saveSigns(signLocations);
                     if (markedForRemoval != null && markedForRemoval.size() > 0) {
-                        persistenceHandler.getProvider().deleteSigns(markedForRemoval);
+                        //persistenceHandler.getProvider().deleteSigns(markedForRemoval);
                         markedForRemoval.clear();
                     }
                     dirty = false;

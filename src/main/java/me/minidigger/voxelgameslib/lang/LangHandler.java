@@ -53,7 +53,6 @@ public class LangHandler implements Handler {
             Optional<Locale> opt = Locale.fromTag(tag);
             if (opt.isPresent()) {
                 registerLocale(opt.get());
-                persistenceHandler.getProvider().saveLocale(opt.get());
             } else {
                 log.warning("Unknown lang tag " + tag);
             }
