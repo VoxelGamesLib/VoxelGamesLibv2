@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 import me.minidigger.voxelgameslib.handler.Handler;
 
+import org.bukkit.Bukkit;
+
 /**
  * Handles saving and loading of data into numerous formats
  */
@@ -21,10 +23,12 @@ public class PersistenceHandler implements Handler {
 
     @Override
     public void start() {
-//        activeProvider = injector.getInstance(HibernatePersistenceProvider.class);//TODO bind this?
-//        activeProvider.start(); //TODO fix persistence
+        // todo: dynamically choose persistence provider, named injection perhaps
+        
         activeProvider = injector.getInstance(FlatFileJsonPersistenceProvider.class);
         activeProvider.start();
+
+        Bukkit.getLogger().info("Loaded persistence provider: " + FlatFileJsonPersistenceProvider.class.getSimpleName());
     }
 
     @Override
