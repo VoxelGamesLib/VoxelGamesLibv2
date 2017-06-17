@@ -69,6 +69,13 @@ public class GameMode extends jskills.GameInfo {
      */
     @Nonnull
     public Class<? extends Game> getGameClass() {
+        if (gameClass == null) {
+            try {
+                gameClass = (Class<? extends Game>) Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         return gameClass;
     }
 
