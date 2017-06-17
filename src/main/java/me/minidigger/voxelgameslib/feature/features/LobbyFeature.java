@@ -75,6 +75,7 @@ public class LobbyFeature extends AbstractFeature {
                     && !starting) {
                 starting = true;
                 curr = startDelay;
+                //TODO also update scoreboard
                 getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING);
                 bossBar.setTitle(Lang.parseLegacyFormat(Lang.string(LangKey.GAME_STARTING)));
                 bossBar.setVisible(true);
@@ -90,6 +91,7 @@ public class LobbyFeature extends AbstractFeature {
             if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()
                     && starting) {
                 starting = false;
+                // TODO also update scoreboard
                 getPhase().getGame().broadcastMessage(LangKey.GAME_START_ABORTED);
                 bossBar.setTitle("");
                 bossBar.setVisible(false);

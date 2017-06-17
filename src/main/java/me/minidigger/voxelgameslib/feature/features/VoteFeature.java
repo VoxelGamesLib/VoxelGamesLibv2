@@ -34,7 +34,7 @@ import lombok.Setter;
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
 public class VoteFeature extends AbstractFeature implements FeatureImplementor {
-
+    //TODO add scoreboard
     @Getter
     @Setter
     @Expose
