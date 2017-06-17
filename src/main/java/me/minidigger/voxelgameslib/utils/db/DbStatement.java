@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 
+import lombok.extern.java.Log;
+
 import static org.bukkit.Bukkit.getServer;
 
 /**
@@ -31,6 +33,7 @@ import static org.bukkit.Bukkit.getServer;
  * }
  * }
  */
+@Log
 public class DbStatement implements AutoCloseable {
     private Connection dbConn;
     private PreparedStatement preparedStatement;
@@ -44,7 +47,7 @@ public class DbStatement implements AutoCloseable {
     public DbStatement() throws SQLException {
         dbConn = DB.getConnection();
         if (dbConn == null) {
-            Bukkit.getLogger().severe("No database connection, shutting down");
+            log.severe("No database connection, shutting down");
             getServer().shutdown();
         }
     }
@@ -291,14 +294,14 @@ public class DbStatement implements AutoCloseable {
             closeStatement();
             if (dbConn != null) {
                 if (isDirty && !dbConn.getAutoCommit()) {
-                    Bukkit.getLogger().severe("Statement was not finalised: " + query);
+                    log.severe("Statement was not finalised: " + query);
                     rollback();
                 }
                 dbConn.close();
                 dbConn = null;
             }
         } catch (SQLException ex) {
-            Bukkit.getLogger().severe("Failed to close DB connection: " + query);
+            log.severe("Failed to close DB connection: " + query);
             ex.printStackTrace();
         }
     }

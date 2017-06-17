@@ -14,6 +14,9 @@ import me.minidigger.voxelgameslib.utils.db.DbRow;
 
 import org.bukkit.Bukkit;
 
+import lombok.extern.java.Log;
+
+@Log
 public class MysqlPersistenceProvider implements PersistenceProvider {
     @Inject
     private VoxelGamesLib voxelGamesLib;
@@ -43,7 +46,7 @@ public class MysqlPersistenceProvider implements PersistenceProvider {
         try {
             userData = DB.getFirstRow("SELECT * FROM vgl_user WHERE uuid = ?", id);
         } catch (SQLException e) {
-            Bukkit.getLogger().severe("Error loading player data for UUID: " + id);
+            log.severe("Error loading player data for UUID: " + id);
             e.printStackTrace();
             return Optional.empty();
         }
