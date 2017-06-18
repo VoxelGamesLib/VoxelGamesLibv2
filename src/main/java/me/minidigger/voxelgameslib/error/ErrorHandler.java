@@ -48,6 +48,8 @@ public class ErrorHandler implements Handler {
     private boolean sendBukkitInfo = true;
     private boolean sendWorldInfo = true;
 
+    private boolean enableBugsnag = false;
+
     // No guice since we enable on Load
     public ErrorHandler(VoxelGamesLib voxelGamesLib) {
         this.voxelGamesLib = voxelGamesLib;
@@ -55,21 +57,28 @@ public class ErrorHandler implements Handler {
 
     @Override
     public void start() {
-        bugsnag = new Bugsnag("243a3b372720a3695802208b2c46283a", false);
-        //TODO configure bugsnag release stage
-        bugsnag.setReleaseStage("development");
-        bugsnag.setSendThreads(true);
-        bugsnag.setAppVersion(voxelGamesLib.getDescription().getVersion());
+        if (enableBugsnag) {
+            bugsnag = new Bugsnag("243a3b372720a3695802208b2c46283a", false);
+            //TODO configure bugsnag release stage
+            bugsnag.setReleaseStage("development");
+            bugsnag.setSendThreads(true);
+            bugsnag.setAppVersion(voxelGamesLib.getDescription().getVersion());
 
-        LoggedUncaughtExceptionHandler.enable(bugsnag);
+            LoggedUncaughtExceptionHandler.enable(bugsnag);
 
-        setupCallbacks();
+            setupCallbacks();
+        } else {
+            log.warning("Bugsnag is disabled, will not report errors");
+        }
+
         injectErrorHandlers();
     }
 
     @Override
     public void stop() {
-        LoggedUncaughtExceptionHandler.disable(bugsnag);
+        if (enableBugsnag) {
+            LoggedUncaughtExceptionHandler.disable(bugsnag);
+        }
     }
 
     private void setupCallbacks() {
@@ -134,49 +143,53 @@ public class ErrorHandler implements Handler {
 
                 @Override
                 protected void customHandler(Throwable e) {
-                    bugsnag.notify(e.getCause(), Severity.ERROR);
+                    if (enableBugsnag) {
+                        bugsnag.notify(e.getCause(), Severity.ERROR);
+                    }
                     log.info("Caught exception");
                     ACFUtil.sneaky(e); // let bukkit handle it
                 }
 
                 @Override
                 protected void customHandler(Event event, Throwable e) {
-                    bugsnag.notify(e.getCause(), Severity.ERROR, (report -> {
-                        report.addToTab(EVENT_INFO_TAB, "Event Name", event.getEventName());
-                        report.addToTab(EVENT_INFO_TAB, "Is Async", event.isAsynchronous());
-                        Map<String, Object> eventData = new HashMap<>();
-                        Class eventClass = event.getClass();
-                        do {
-                            if (eventClass != Event.class) { // Info already provided ^
-                                for (Field field : eventClass.getDeclaredFields()) {
-                                    if (field.getType() == HandlerList.class) {
-                                        continue; // Unneeded Data
-                                    }
-                                    field.setAccessible(true);
-                                    try {
-                                        Object value = field.get(event);
-                                        if (value instanceof EntityDamageEvent.DamageModifier) {
-                                            value = value.getClass().getCanonicalName() + "."
-                                                    + ((EntityDamageEvent.DamageModifier) value).name();
+                    if (enableBugsnag) {
+                        bugsnag.notify(e.getCause(), Severity.ERROR, (report -> {
+                            report.addToTab(EVENT_INFO_TAB, "Event Name", event.getEventName());
+                            report.addToTab(EVENT_INFO_TAB, "Is Async", event.isAsynchronous());
+                            Map<String, Object> eventData = new HashMap<>();
+                            Class eventClass = event.getClass();
+                            do {
+                                if (eventClass != Event.class) { // Info already provided ^
+                                    for (Field field : eventClass.getDeclaredFields()) {
+                                        if (field.getType() == HandlerList.class) {
+                                            continue; // Unneeded Data
                                         }
-                                        if (value instanceof Enum) {
-                                            value = value.getClass().getCanonicalName() + "." + ((Enum) value).name();
+                                        field.setAccessible(true);
+                                        try {
+                                            Object value = field.get(event);
+                                            if (value instanceof EntityDamageEvent.DamageModifier) {
+                                                value = value.getClass().getCanonicalName() + "."
+                                                        + ((EntityDamageEvent.DamageModifier) value).name();
+                                            }
+                                            if (value instanceof Enum) {
+                                                value = value.getClass().getCanonicalName() + "." + ((Enum) value).name();
+                                            }
+                                            eventData.put(field.getName(), value);
+                                        } catch (IllegalAccessException ignored) {
+                                        } catch (Throwable internalE) {
+                                            eventData.put(field.getName(),
+                                                    "Error getting field data: " + internalE.getClass().getCanonicalName() + (
+                                                            internalE.getMessage() != null
+                                                                    && internalE.getMessage().trim().length() > 0 ? ": " + internalE
+                                                                    .getMessage() : ""));
                                         }
-                                        eventData.put(field.getName(), value);
-                                    } catch (IllegalAccessException ignored) {
-                                    } catch (Throwable internalE) {
-                                        eventData.put(field.getName(),
-                                                "Error getting field data: " + internalE.getClass().getCanonicalName() + (
-                                                        internalE.getMessage() != null
-                                                                && internalE.getMessage().trim().length() > 0 ? ": " + internalE
-                                                                .getMessage() : ""));
                                     }
                                 }
-                            }
-                            eventClass = eventClass.getSuperclass();
-                        } while (eventClass != null);
-                        report.addToTab(EVENT_INFO_TAB, "Event Data", eventData);
-                    }));
+                                eventClass = eventClass.getSuperclass();
+                            } while (eventClass != null);
+                            report.addToTab(EVENT_INFO_TAB, "Event Data", eventData);
+                        }));
+                    }
                     log.info("Caught exception");
                     ACFUtil.sneaky(e); // let bukkit handle it
                 }
@@ -198,7 +211,7 @@ public class ErrorHandler implements Handler {
 //      schedulerField.set(Bukkit.getServer(), new LoggedScheduler(voxelGamesLib) {
 //        @Override
 //        protected void customHandler(int taskID, Throwable e) {
-//          bugsnag.notify(e.getCause(), Severity.ERROR, (report) -> {
+//          if(enableNi)bugsnag.notify(e.getCause(), Severity.ERROR, (report) -> {
 //            report.addToTab(TASK_INFO_TAB, "Task ID", taskID);
 //          });
 //          log.info("Caught exception");
@@ -212,16 +225,20 @@ public class ErrorHandler implements Handler {
     }
 
     public void handle(Exception ex, Severity severity) {
-        bugsnag.notify(ex, severity);
+        if (enableBugsnag) {
+            bugsnag.notify(ex, severity);
+        }
         log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
                 "Caught exception with level " + severity.getValue(), ex);
     }
 
     public void handle(CommandIssuer sender, List<String> args, Throwable e) {
-        bugsnag.notify(e, Severity.ERROR, (report) -> {
-            report.addToTab(COMMAND_INFO_TAB, "sender", ((CommandSender) sender.getIssuer()).getName());
-            report.addToTab(COMMAND_INFO_TAB, "args", args.stream().collect(Collectors.joining(" ")));
-        });
+        if (enableBugsnag) {
+            bugsnag.notify(e, Severity.ERROR, (report) -> {
+                report.addToTab(COMMAND_INFO_TAB, "sender", ((CommandSender) sender.getIssuer()).getName());
+                report.addToTab(COMMAND_INFO_TAB, "args", args.stream().collect(Collectors.joining(" ")));
+            });
+        }
         log.info("Caught exception");
     }
 }

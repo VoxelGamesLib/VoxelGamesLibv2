@@ -4,3 +4,6 @@
 [submodule "testserver"]
 	path = testserver
 	url = https://github.com/VoxelGamesLib/testserver.git
+[submodule "Deathmatch"]
+	path = Deathmatch
+	url = https://github.com/VoxelGamesLib/Deathmatch.git
