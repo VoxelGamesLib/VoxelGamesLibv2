@@ -3,10 +3,12 @@ package me.minidigger.voxelgameslib.module;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -23,7 +25,7 @@ import lombok.extern.java.Log;
 @Singleton
 public class ModuleHandler implements Handler {
 
-    private static List<Class<? extends Module>> offeredModules = new ArrayList<>();
+    private static Map<Class<? extends Module>, Module> offeredModules = new HashMap<>();
     private static boolean isAcceptingOffers = true;
 
     @Nonnull
@@ -48,32 +50,39 @@ public class ModuleHandler implements Handler {
 
     private void findModules() {
         Timings.time("RegisterModules", () -> {
-            for (Class<? extends Module> clazz : offeredModules) {
+            isAcceptingOffers = false;
+            for (Class<? extends Module> clazz : offeredModules.keySet()) {
                 ModuleInfo info = clazz.getAnnotation(ModuleInfo.class);
                 if (info == null) {
-                    continue; // should not occur
+                    log.warning("Class " + clazz.getSimpleName() + " has no module info!");
+                    continue;
                 }
                 log.info("Loading module " + info.name() + " v" + info.version() + " by " + Arrays
                         .toString(info.authors()));
                 if (Module.class.isAssignableFrom(clazz)) {
-                    Module module = injector.getInstance(clazz);
+                    Module module = offeredModules.get(clazz);
+                    injector.injectMembers(module);
                     this.modules.add(module);
                 } else {
-                    log.warning("Class " + clazz.getSimpleName()
-                            + " has the ModuleInfo annotation but does not implement Module!");
+                    log.warning("Class " + clazz.getSimpleName() + " has the ModuleInfo annotation but does not implement Module!");
                 }
             }
 
+            offeredModules.clear();
             log.info("Loaded " + this.modules.size() + " modules!");
         });
     }
 
-    public static void offerModule(Class<? extends Module> clazz) {
+    /**
+     * Adds a module to this handler, will be injected and then added to the loading queue
+     *
+     * @param module the module to add
+     */
+    public static void offerModule(Module module) {
         if (isAcceptingOffers) {
-            offeredModules.add(clazz);
+            offeredModules.put(module.getClass(), module);
         } else {
-            throw new VoxelGameLibException(
-                    "Module offers closed! Add 'loadbefore: VoxelGamesLib' to your plugin.yml!");
+            throw new VoxelGameLibException("Module offers closed! Make sure you offer the module onLoad!");
         }
     }
 }
