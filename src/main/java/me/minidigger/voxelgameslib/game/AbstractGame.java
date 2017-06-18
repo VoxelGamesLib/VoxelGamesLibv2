@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,11 +27,13 @@ import me.minidigger.voxelgameslib.feature.features.DuelFeature;
 import me.minidigger.voxelgameslib.feature.features.TeamFeature;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
+import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
+import me.minidigger.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
 
@@ -50,6 +53,8 @@ public abstract class AbstractGame implements Game {
     private GameHandler gameHandler;
     @Inject
     private EloHandler eloHandler;
+    @Inject
+    private WorldHandler worldHandler;
 
     @Nonnull
     private final GameMode gameMode;
@@ -270,6 +275,16 @@ public abstract class AbstractGame implements Game {
             } else {
                 log.warning("Could not distribute any elo!");
             }
+        }
+    }
+
+    protected void loadMap() {
+        // TODO this doesn't respect if a user changed the lobby in the config
+        Optional<MapInfo> info = worldHandler.getMapInfo("Lobby");
+        if (info.isPresent()) {
+            putGameData("lobbymap", info.get());
+        } else {
+            abortGame();
         }
     }
 
