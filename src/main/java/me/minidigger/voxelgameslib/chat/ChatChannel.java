@@ -49,7 +49,7 @@ public class ChatChannel {
      * @param message message
      */
     public void sendMessage(User byUser, String message) {
-        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getRawDisplayName(), new TextComponent(message))));
+        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getRawDisplayName(), TextComponent.of(message))));
     }
 
     /**

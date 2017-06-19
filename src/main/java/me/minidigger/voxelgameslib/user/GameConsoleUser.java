@@ -94,12 +94,12 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public Component getPrefix() {
-        return new TextComponent("");
+        return TextComponent.of("");
     }
 
     @Override
     public Component getSuffix() {
-        return new TextComponent("");
+        return TextComponent.of("");
     }
 
     @Override
@@ -135,7 +135,7 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent("Console");
+        return TextComponent.of("Console");
     }
 
     /* elo stuff */

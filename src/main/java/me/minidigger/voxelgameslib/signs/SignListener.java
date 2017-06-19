@@ -54,7 +54,7 @@ public class SignListener implements Listener {
         }
         for (int i = 0; i < sign.get().getLines().length; i++) {
             String line = sign.get().getLines()[i];
-            for (String key : signHandler.getPlaceHolders().keySet()) {
+            for (String key : signHandler.getSignPlaceholders().getPlaceHolders().keySet()) {
                 if (line.contains("%" + key + "%")) {
                     // we got a sign with a placeholder, first check if a user placed it and if he is allowed to do that
                     if (event.getPlayer() != null) {
@@ -69,7 +69,7 @@ public class SignListener implements Listener {
                         }
                     }
 
-                    SignPlaceHolder placeHolder = signHandler.getPlaceHolders().get(key);
+                    SignPlaceHolder placeHolder = signHandler.getSignPlaceholders().getPlaceHolders().get(key);
                     if (placeHolder instanceof SimpleSignPlaceHolder) {
                         line = line
                                 .replace("%" + key + "%", ((SimpleSignPlaceHolder) placeHolder).apply(event, key));
@@ -90,7 +90,7 @@ public class SignListener implements Listener {
 
             // this is a new sign, has it a sign button?
             if (event.getPlayer() != null) {
-                for (String key : signHandler.getButtons().keySet()) {
+                for (String key : signHandler.getSignButtons().getButtons().keySet()) {
                     if (line.contains("%" + key + "%")) {
                         if (!user.hasPermission(buttonSignPlace)) {
                             Lang.msg(user, LangKey.SIGNS_PLACE_NO_PERM, key, buttonSignBreak.getRole().getName());
@@ -128,7 +128,7 @@ public class SignListener implements Listener {
 
             for (int i = 0; i < sign.get().getLines().length; i++) {
                 String line = sign.get().getLines()[i];
-                for (String key : signHandler.getPlaceHolders().keySet()) {
+                for (String key : signHandler.getSignPlaceholders().getPlaceHolders().keySet()) {
                     if (line.contains("%" + key + "%")) {
                         // has user permission for that?
                         if (user.hasPermission(placeHolderSignBreak)) {
@@ -145,7 +145,7 @@ public class SignListener implements Listener {
                     }
                 }
 
-                for (String key : signHandler.getButtons().keySet()) {
+                for (String key : signHandler.getSignButtons().getButtons().keySet()) {
                     if (line.contains("%" + key + "%")) {
                         // has user permission for that?
                         if (user.hasPermission(buttonSignBreak)) {
@@ -182,10 +182,10 @@ public class SignListener implements Listener {
                                     .getUniqueId() + ")"));
             for (int i = 0; i < sign.get().getLines().length; i++) {
                 String line = sign.get().getLines()[i];
-                for (String key : signHandler.getButtons().keySet()) {
+                for (String key : signHandler.getSignButtons().getButtons().keySet()) {
                     if (line.contains("%" + key + "%")) {
                         //TODO implement perm check
-                        signHandler.getButtons().get(key).execute(user, event.getClickedBlock());
+                        signHandler.getSignButtons().getButtons().get(key).execute(user, event.getClickedBlock());
                     }
                 }
             }

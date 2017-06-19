@@ -78,6 +78,7 @@ public class ChatUtil {
     }
 
     public static Component formatChannelMessage(String displayName, Component message) {
-        return new TextComponent(displayName + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> ").append(message);
+        //TODO uuhhm, thats now how you use this api ^^
+        return TextComponent.of(displayName + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> ").append(message);
     }
 }

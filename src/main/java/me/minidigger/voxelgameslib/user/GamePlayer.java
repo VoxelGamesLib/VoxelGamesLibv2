@@ -61,9 +61,9 @@ public class GamePlayer implements User {
     private String rawDisplayName;
 
     @Expose
-    private Component prefix = new TextComponent("");
+    private Component prefix = TextComponent.of("");
     @Expose
-    private Component suffix = new TextComponent("");
+    private Component suffix = TextComponent.of("");
 
     @Expose
     private List<ChatChannel> channels = new ArrayList<>();
@@ -91,8 +91,8 @@ public class GamePlayer implements User {
 
     @Override
     public Component getDisplayName() {
-        if (displayName == null) {
-            displayName = prefix.copy().append(new TextComponent(rawDisplayName)).append(suffix);
+        if (displayName == null && rawDisplayName != null) {
+            displayName = prefix.copy().append(TextComponent.of(rawDisplayName)).append(suffix);
         }
         return displayName;
     }

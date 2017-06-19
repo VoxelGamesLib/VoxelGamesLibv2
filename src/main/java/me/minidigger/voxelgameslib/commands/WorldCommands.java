@@ -43,7 +43,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     public void world(User sender) {
         //TODO remove me once GH-17 is implemented
-        sender.sendMessage(new TextComponent("It works! You are on " + sender.getPlayer().getLocation().getWorld()));
+        sender.sendMessage(TextComponent.of("It works! You are on " + sender.getPlayer().getLocation().getWorld()));
     }
 
     @Subcommand("load")

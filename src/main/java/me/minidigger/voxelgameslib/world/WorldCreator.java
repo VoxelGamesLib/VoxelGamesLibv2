@@ -188,7 +188,7 @@ public class WorldCreator extends BaseCommand {
         Lang.msg(sender, LangKey.WORLD_CREATOR_AUTHOR_SET, author);
         for (GameMode mode : gameHandler.getGameModes()) {
             sender
-                    .sendMessage(new TextComponent(mode.getName() + " ").color(TextColor.YELLOW)
+                    .sendMessage(TextComponent.of(mode.getName() + " ").color(TextColor.YELLOW)
                             .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
                                     "/worldcreator gamemode " + mode.getName())));
         }

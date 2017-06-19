@@ -1,6 +1,6 @@
 package me.minidigger.voxelgameslib.game;
 
-import net.kyori.text.BaseComponent;
+import net.kyori.text.Component;
 
 import java.time.Duration;
 import java.util.List;
@@ -56,7 +56,7 @@ public interface Game extends Tickable {
      *
      * @param message the message to be send
      */
-    void broadcastMessage(@Nonnull BaseComponent message);
+    void broadcastMessage(@Nonnull Component message);
 
     /**
      * Sends a message to everr User that is related to this game. This could be a participant in

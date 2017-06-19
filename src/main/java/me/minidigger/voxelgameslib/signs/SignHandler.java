@@ -2,16 +2,10 @@ package me.minidigger.voxelgameslib.signs;
 
 import com.google.inject.Injector;
 
-import net.kyori.text.TextComponent;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -46,62 +40,38 @@ public class SignHandler implements Handler {
     @Inject
     private VoxelGamesLib voxelGamesLib;
 
-    private Map<String, SignButton> buttons;
-    private Map<String, SignPlaceHolder> placeHolders;
     private List<SignLocation> signLocations;
     private List<SignLocation> markedForRemoval;
 
     private boolean dirty = false;
 
+    @Inject
+    private SignButtons signButtons;
+    @Inject
+    private SignPlaceholders signPlaceholders;
+
     @Override
     public void start() {
-        placeHolders = new HashMap<>();
+        signButtons.registerButtons();
+
+        signPlaceholders.init();
+
         markedForRemoval = new ArrayList<>();
-        buttons = new HashMap<>();
         config = injector.getInstance(GlobalConfig.class);
 
         //TODO sign persistence
         // signLocations = persistenceHandler.getProvider().loadSigns();
         signLocations = new ArrayList<>();
 
-        placeHolders.put("world",
-                (SimpleSignPlaceHolder) (event, key) -> event.getBlock().getLocation().getWorld()
-                        .getName());
-        placeHolders.put("time",
-                (SimpleSignPlaceHolder) (event, key) -> DateTimeFormatter.ISO_TIME.format(LocalTime.now()));
-        placeHolders.put("location",
-                (SimpleSignPlaceHolder) (event, key) -> {
-                    Location loc = event.getBlock().getLocation();
-                    return "X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ();
-                });
 
-        buttons.put("test", (user, block) -> user.sendMessage(new TextComponent("WOW")));
+
 
         startUpdateTask();
     }
 
     @Override
     public void stop() {
-        placeHolders.clear();
-        placeHolders = null;
-    }
 
-    /**
-     * gets map with all registered sign placeholders
-     *
-     * @return all sign placeholders
-     */
-    public Map<String, SignPlaceHolder> getPlaceHolders() {
-        return placeHolders;
-    }
-
-    /**
-     * gets map with all registered sign buttons
-     *
-     * @return all sign buttons
-     */
-    public Map<String, SignButton> getButtons() {
-        return buttons;
     }
 
     /**
@@ -192,5 +162,13 @@ public class SignHandler implements Handler {
         if (!getSignAt(location).isPresent()) {
             signLocations.add(new SignLocation(location, lines));
         }
+    }
+
+    public SignPlaceholders getSignPlaceholders() {
+        return signPlaceholders;
+    }
+
+    public SignButtons getSignButtons() {
+        return signButtons;
     }
 }

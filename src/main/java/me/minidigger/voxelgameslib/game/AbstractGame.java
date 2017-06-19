@@ -2,7 +2,7 @@ package me.minidigger.voxelgameslib.game;
 
 import com.google.inject.Injector;
 
-import net.kyori.text.BaseComponent;
+import net.kyori.text.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -97,7 +97,7 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void broadcastMessage(@Nonnull BaseComponent message) {
+    public void broadcastMessage(@Nonnull Component message) {
         players.forEach(u -> u.sendMessage(message));
         spectators.forEach(u -> u.sendMessage(message));
 

@@ -58,12 +58,12 @@ public class FunCommands extends BaseCommand {
     @CommandPermission("%user")
     public void tacoCommand(User user, @Flags("other") User recipent) {
         if (tacoStuff == null) {
-            user.sendMessage(new TextComponent("No tacos loaded :("));
+            user.sendMessage(TextComponent.of("No tacos loaded :("));
             return;
         }
 
         String message = taco(recipent.getRawDisplayName());
-        Lang.broadcast(new TextComponent("The server " + message));
+        Lang.broadcast(TextComponent.of("The server " + message));
     }
 
     private String taco(String user) {

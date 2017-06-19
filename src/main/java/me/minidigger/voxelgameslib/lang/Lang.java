@@ -1,6 +1,6 @@
 package me.minidigger.voxelgameslib.lang;
 
-import net.kyori.text.BaseComponent;
+import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
@@ -90,7 +90,7 @@ public class Lang {
      */
     @Nonnull
     public static TextComponent parseFormat(@Nonnull String string) {
-        TextComponent componentBuilder = new TextComponent("");
+        TextComponent componentBuilder = TextComponent.of("");
         String[] tokens = string.split("\\{|}");
         TextColor savedColor = TextColor.WHITE;
         outer:
@@ -101,7 +101,7 @@ public class Lang {
                     continue outer;
                 }
             }
-            componentBuilder.append(new TextComponent(token));
+            componentBuilder.append(TextComponent.of(token));
             componentBuilder.color(savedColor);
         }
 
@@ -221,10 +221,10 @@ public class Lang {
             String replacement;
             if (args[i] instanceof String) {
                 replacement = (String) args[i];
-            } else if (args[i] instanceof BaseComponent) {
-                replacement = ChatUtil.toPlainText((BaseComponent) args[i]);
-            } else if (args[i] instanceof BaseComponent[]) {
-                replacement = ChatUtil.toPlainText((BaseComponent[]) args[i]);
+            } else if (args[i] instanceof Component) {
+                replacement = ChatUtil.toPlainText((Component) args[i]);
+            } else if (args[i] instanceof Component[]) {
+                replacement = ChatUtil.toPlainText((Component[]) args[i]);
             } else {
                 replacement = String.valueOf(args[i]);
             }
@@ -259,7 +259,7 @@ public class Lang {
      *
      * @param message the message to send
      */
-    public static void broadcast(BaseComponent message) {
+    public static void broadcast(Component message) {
         userHandler.getUsers().forEach(user -> user.sendMessage(message));
         GameConsoleUser.INSTANCE.sendMessage(message);
     }
