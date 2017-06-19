@@ -20,7 +20,14 @@ See [README.md](README.md)
 
 ## Dev Setup
 
-An optimised test server is packaged with VoxelGamesLib.
+### Submodules
+
+This project includes some games as submodules. to work with them run 
+`git submodule update --init --recursive`
+
+### Test Server
+
+An optimised test server submodule is packaged with VoxelGamesLib.
 
 You will need to grab a Spigot jar to run. You can set up the server as such, in IntelliJ IDEA:
 
