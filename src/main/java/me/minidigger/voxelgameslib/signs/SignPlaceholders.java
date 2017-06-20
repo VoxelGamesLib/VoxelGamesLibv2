@@ -13,7 +13,9 @@ import net.kyori.text.serializer.ComponentSerializer;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.inject.Inject;
@@ -25,12 +27,19 @@ import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import lombok.extern.java.Log;
 
 @Log
 @Singleton
-public class SignPlaceholders {
+public class SignPlaceholders implements Listener {
 
     @Inject
     private VoxelGamesLib voxelGamesLib;
@@ -40,6 +49,8 @@ public class SignPlaceholders {
     private ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
     private Map<String, SignPlaceHolder> placeHolders = new HashMap<>();
+
+    private List<Sign> lastSeenSigns = new ArrayList<>();
 
     /**
      * registers the default sign placeholders
@@ -103,9 +114,34 @@ public class SignPlaceholders {
                     rawLines[i] = ChatUtil.toPlainText(lines[i]);
                 }
 
-                int x = data.getInteger("x");
-                int y = data.getInteger("y");
-                int z = data.getInteger("z");
+                // sometimes its a double, sometimes its an int...
+                double x;
+                double y;
+                double z;
+                try {
+                    x = data.getDouble("x");
+                    y = data.getDouble("y");
+                    z = data.getDouble("z");
+                } catch (ClassCastException ex) {
+                    x = data.getInteger("x");
+                    y = data.getInteger("y");
+                    z = data.getInteger("z");
+                }
+
+                Location loc = new Location(event.getPlayer().getWorld(), x, y, z);
+
+                Block block = loc.getBlock();
+                if (block.getState() instanceof Sign) {
+                    Sign sign = (Sign) block.getState();
+                    if (!block.hasMetadata("LastSeen")) {
+                        System.out.println("add new sign");
+                        lastSeenSigns.add(sign);//TODO for some reason we always add a new one here
+                    }
+                    block.setMetadata("LastSeen", new FixedMetadataValue(voxelGamesLib, System.currentTimeMillis()));
+                } else {
+                    log.severe("wat");
+                    return;
+                }
 
                 Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
                 if (!user.isPresent()) {
@@ -113,7 +149,7 @@ public class SignPlaceholders {
                 }
 
                 // call sign placeholders
-                update(user.get(), new Location(event.getPlayer().getWorld(), x, y, z), rawLines, lines);
+                modifySign(user.get(), loc, rawLines, lines);
 
                 // modify packet
                 for (int i = 0; i < lines.length; i++) {
@@ -125,9 +161,48 @@ public class SignPlaceholders {
             public void onPacketReceiving(PacketEvent event) {
             }
         });
+
+        // update task
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                System.out.println("update");
+                List<Sign> toRemove = new ArrayList<>();
+                lastSeenSigns.forEach(sign -> {
+                    if (sign.getBlock().hasMetadata("LastSeen")) {
+                        long lastSeen = sign.getBlock().getMetadata("LastSeen").get(0).asLong();
+                        if (lastSeen > System.currentTimeMillis() - 10 * 60 * 1000) {
+                            // mark for removal
+                            toRemove.add(sign);
+                            System.out.println("mark for removal");
+                            sign.getBlock().removeMetadata("LastSeen", voxelGamesLib);
+                        }
+                    }
+                    System.out.println("real update");
+                    sign.update();
+                });
+
+                // give packets a bit to send out
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("check remove");
+                        toRemove.forEach(sign -> {
+                            System.out.println("check real remove");
+                            // check if they now have been seen
+                            if (!sign.getBlock().hasMetadata("LastSeen")) {
+                                // bye
+                                System.out.println("remove");
+                                lastSeenSigns.remove(sign);
+                            }
+                        });
+                    }
+                }.runTaskLater(voxelGamesLib, 15);
+            }
+        }.runTaskTimer(voxelGamesLib, 20, 20);
     }
 
-    public void update(User user, Location location, String[] rawLines, Component[] lines) {
+    private void modifySign(User user, Location location, String[] rawLines, Component[] lines) {
         for (Map.Entry<String, SignPlaceHolder> entry : placeHolders.entrySet()) {
             for (int i = 0; i < lines.length; i++) {
                 String line = ChatUtil.toPlainText(lines[i]);
@@ -159,6 +234,23 @@ public class SignPlaceholders {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void handleInteract(PlayerInteractEvent event) {
+        if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
+            if (event.getClickedBlock().getState() instanceof Sign) {
+                Sign sign = (Sign) event.getClickedBlock().getState();
+                if (sign.hasMetadata("UpdateCooldown")) {
+                    long cooldown = sign.getMetadata("UpdateCooldown").get(0).asLong();
+                    if (cooldown > System.currentTimeMillis() - 1 * 1000) {
+                        return;
+                    }
+                }
+                sign.update();
+                sign.setMetadata("UpdateCooldown", new FixedMetadataValue(voxelGamesLib, System.currentTimeMillis()));
             }
         }
     }
