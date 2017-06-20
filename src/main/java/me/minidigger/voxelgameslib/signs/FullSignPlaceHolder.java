@@ -1,6 +1,10 @@
 package me.minidigger.voxelgameslib.signs;
 
-import org.bukkit.event.block.SignChangeEvent;
+import net.kyori.text.Component;
+
+import me.minidigger.voxelgameslib.user.User;
+
+import org.bukkit.Location;
 
 /**
  * Sign placeholder that replaces the whole sign
@@ -8,11 +12,14 @@ import org.bukkit.event.block.SignChangeEvent;
 public interface FullSignPlaceHolder extends SignPlaceHolder {
 
     /**
-     * Applies this placeholder
+     * Applies this placeholder to the lines, can replace every line
      *
-     * @param event the update event that caused this update
-     * @param key   the key of the placeholder
-     * @return the replaced sign lines
+     * @param user     the user that will receive the updated sign
+     * @param location the location of the sign
+     * @param rawLines the plain text content of the lines
+     * @param lines    the parsed lines
+     * @param key      the key of this placeholder
+     * @return the replaced lines
      */
-    String[] apply(SignChangeEvent event, String key);
+    Component[] apply(User user, Location location, String[] rawLines, Component[] lines, String key);
 }
