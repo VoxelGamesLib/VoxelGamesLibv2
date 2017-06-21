@@ -270,5 +270,12 @@
             <version>4.2.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- hibernate, jpa -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.7.Final</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

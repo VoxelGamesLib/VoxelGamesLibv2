@@ -28,10 +28,11 @@ public class PersistenceHandler implements Handler {
     public void start() {
         // todo: dynamically choose persistence provider, named injection perhaps
 
-        activeProvider = injector.getInstance(FlatFileJsonPersistenceProvider.class);
+        activeProvider = injector.getInstance(HibernatePersistenceProvider.class);
+        //activeProvider = injector.getInstance(FlatFileJsonPersistenceProvider.class);
         activeProvider.start();
 
-        log.info("Loaded persistence provider: " + FlatFileJsonPersistenceProvider.class.getSimpleName());
+        log.info("Loaded persistence provider: " + activeProvider.getClass().getSimpleName());
     }
 
     @Override
