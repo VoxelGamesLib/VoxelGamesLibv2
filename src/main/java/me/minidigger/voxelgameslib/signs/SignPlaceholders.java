@@ -13,9 +13,8 @@ import net.kyori.text.serializer.ComponentSerializer;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.inject.Inject;
@@ -26,12 +25,15 @@ import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -50,7 +52,7 @@ public class SignPlaceholders implements Listener {
 
     private Map<String, SignPlaceHolder> placeHolders = new HashMap<>();
 
-    private List<Sign> lastSeenSigns = new ArrayList<>();
+    private Map<Location, Sign> lastSeenSigns = new HashMap<>();
 
     /**
      * registers the default sign placeholders
@@ -96,6 +98,14 @@ public class SignPlaceholders implements Listener {
     public void init() {
         registerPlaceholders();
 
+        Bukkit.getWorlds().stream()
+                .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
+                .flatMap(s -> Arrays.stream(s.getTileEntities()))
+                .filter(s -> s instanceof Sign)
+                .map(s -> (Sign) s)
+                .forEach(s -> lastSeenSigns.put(s.getLocation(), s));
+
+        // modify update packets
         protocolManager.addPacketListener(new PacketAdapter(voxelGamesLib, PacketType.Play.Server.TILE_ENTITY_DATA) {
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -129,19 +139,16 @@ public class SignPlaceholders implements Listener {
                 }
 
                 Location loc = new Location(event.getPlayer().getWorld(), x, y, z);
-
-                Block block = loc.getBlock();
-                if (block.getState() instanceof Sign) {
-                    Sign sign = (Sign) block.getState();
-                    if (!block.hasMetadata("LastSeen")) {
-                        System.out.println("add new sign");
-                        lastSeenSigns.add(sign);//TODO for some reason we always add a new one here
-                    }
-                    block.setMetadata("LastSeen", new FixedMetadataValue(voxelGamesLib, System.currentTimeMillis()));
-                } else {
-                    log.severe("wat");
+                if (event.getPlayer().getLocation().distanceSquared(loc) > 200 * 200) {
                     return;
                 }
+
+                Block b = loc.getBlock();
+                if (!(b.getState() instanceof Sign)) {
+                    return;
+                }
+                Sign sign = (Sign) b.getState();
+                lastSeenSigns.put(loc, sign);
 
                 Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
                 if (!user.isPresent()) {
@@ -156,48 +163,13 @@ public class SignPlaceholders implements Listener {
                     data.put("Text" + (i + 1), ComponentSerializer.serialize(lines[i]));
                 }
             }
-
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-            }
         });
 
         // update task
         new BukkitRunnable() {
             @Override
             public void run() {
-                System.out.println("update");
-                List<Sign> toRemove = new ArrayList<>();
-                lastSeenSigns.forEach(sign -> {
-                    if (sign.getBlock().hasMetadata("LastSeen")) {
-                        long lastSeen = sign.getBlock().getMetadata("LastSeen").get(0).asLong();
-                        if (lastSeen > System.currentTimeMillis() - 10 * 60 * 1000) {
-                            // mark for removal
-                            toRemove.add(sign);
-                            System.out.println("mark for removal");
-                            sign.getBlock().removeMetadata("LastSeen", voxelGamesLib);
-                        }
-                    }
-                    System.out.println("real update");
-                    sign.update();
-                });
-
-                // give packets a bit to send out
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("check remove");
-                        toRemove.forEach(sign -> {
-                            System.out.println("check real remove");
-                            // check if they now have been seen
-                            if (!sign.getBlock().hasMetadata("LastSeen")) {
-                                // bye
-                                System.out.println("remove");
-                                lastSeenSigns.remove(sign);
-                            }
-                        });
-                    }
-                }.runTaskLater(voxelGamesLib, 15);
+                lastSeenSigns.forEach((loc, sign) -> sign.update());
             }
         }.runTaskTimer(voxelGamesLib, 20, 20);
     }
@@ -226,7 +198,7 @@ public class SignPlaceholders implements Listener {
                             }// only that one thing, just replace stuff
                             else {
                                 lines[i] = replacement;
-                                log.info("single replace");
+                                //log.info("single replace");
                             }
                         }// TODO need to check childs and stuff...
                         else {
@@ -253,5 +225,20 @@ public class SignPlaceholders implements Listener {
                 sign.setMetadata("UpdateCooldown", new FixedMetadataValue(voxelGamesLib, System.currentTimeMillis()));
             }
         }
+    }
+
+    @EventHandler
+    public void chunkLoad(ChunkLoadEvent event) {
+        Arrays.stream(event.getChunk().getTileEntities())
+                .filter(blockState -> blockState instanceof Sign)
+                .map(blockState -> (Sign) blockState)
+                .forEach(sign -> lastSeenSigns.put(sign.getLocation(), sign));
+    }
+
+    @EventHandler
+    public void chunkUnload(ChunkUnloadEvent event) {
+        Arrays.stream(event.getChunk().getTileEntities())
+                .filter(blockState -> blockState instanceof Sign)
+                .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));
     }
 }

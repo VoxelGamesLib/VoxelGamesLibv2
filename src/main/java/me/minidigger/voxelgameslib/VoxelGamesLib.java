@@ -37,6 +37,7 @@ import me.minidigger.voxelgameslib.module.ModuleHandler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.role.RoleHandler;
+import me.minidigger.voxelgameslib.signs.SignButtons;
 import me.minidigger.voxelgameslib.signs.SignHandler;
 import me.minidigger.voxelgameslib.signs.SignListener;
 import me.minidigger.voxelgameslib.signs.SignPlaceholders;
@@ -274,6 +275,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         pm.registerEvents(injector.getInstance(UserListener.class), this);
         pm.registerEvents(injector.getInstance(ChatListener.class), this);
         pm.registerEvents(injector.getInstance(SignPlaceholders.class), this);
+        pm.registerEvents(injector.getInstance(SignButtons.class), this);
     }
 
 
