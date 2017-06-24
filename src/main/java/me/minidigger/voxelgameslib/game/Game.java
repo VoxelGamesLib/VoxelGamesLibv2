@@ -209,4 +209,9 @@ public interface Game extends Tickable {
      * @return the duration
      */
     Duration getDuration();
+
+    /**
+     * @return if this game is currently in the process of being aborted
+     */
+    boolean isAborting();
 }

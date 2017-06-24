@@ -422,4 +422,9 @@ public abstract class AbstractGame implements Game {
             return duration;
         }
     }
+
+    @Override
+    public boolean isAborting() {
+        return aborted;
+    }
 }

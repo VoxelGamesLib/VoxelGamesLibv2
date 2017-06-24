@@ -136,6 +136,9 @@ public abstract class AbstractPhase implements Phase {
 
         log.finer("start phase" + getName());
         for (Feature feature : features) {
+            if (game.isAborting()) {
+                return;
+            }
             log.finer("start " + feature.getName());
             try {
                 feature.start();
@@ -181,9 +184,6 @@ public abstract class AbstractPhase implements Phase {
 
             if (features instanceof BukkitRootCommand) {
                 commandManager.unregisterCommand((BukkitRootCommand) feature);
-            } else {
-                log.warning(
-                        "Something went wrong while unregistering commands for feature " + feature.getName());
             }
         }
         startedFeatures.clear();
