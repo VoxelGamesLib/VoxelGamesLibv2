@@ -38,7 +38,7 @@ import jskills.Rating;
  * abstract implementation of the user interface that deals with some stuff
  */
 @Entity
-@Table(name = "player")
+@Table(name = "players")
 public class GamePlayer implements User {
 
     @Transient
