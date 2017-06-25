@@ -15,6 +15,11 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.elo.EloHandler;
@@ -43,38 +48,56 @@ import lombok.extern.java.Log;
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
  */
 @Log
+@Entity(name = "Game")
+@Table(name = "games")
 public abstract class AbstractGame implements Game {
 
     @Inject
+    @Transient
     private Injector injector;
     @Inject
+    @Transient
     private TickHandler tickHandler;
     @Inject
+    @Transient
     private GameHandler gameHandler;
     @Inject
+    @Transient
     private EloHandler eloHandler;
     @Inject
+    @Transient
     private WorldHandler worldHandler;
 
     @Nonnull
+    @Transient // todo: save this in the entity
     private final GameMode gameMode;
+
+    @Transient
     protected Phase activePhase;
 
+    @Id
     private UUID uuid;
 
+    @Column(name = "min_players")
     private int minPlayers;
+    @Column(name = "max_players")
     private int maxPlayers;
 
+    @Transient // todo: save this in the entity, relation to User as well
     private final List<User> players = new ArrayList<>();
+    @Transient // todo: save this in the entity, relation to User as well
     private final List<User> spectators = new ArrayList<>();
 
+    @Transient // todo: save this in the entity, see: @Convert annotation (https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object)
     private Map<String, Object> gameData = new HashMap<>();
 
     private boolean aborted = false;
 
+    @Column(name = "start_time")
     private LocalDateTime startTime;
     private Duration duration;
 
+    @Transient
     private ChatChannel chatChannel;
 
     /**
@@ -206,7 +229,7 @@ public abstract class AbstractGame implements Game {
             Bukkit.getPluginManager()
                     .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
         } else if (winnerUser != null) {
-            List<User> winningUsers = new ArrayList<User>();
+            List<User> winningUsers = new ArrayList<>();
             winningUsers.add(winnerUser);
 
             Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winningUsers, duration, aborted));
