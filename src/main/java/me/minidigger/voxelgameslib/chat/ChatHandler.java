@@ -10,6 +10,9 @@ import javax.inject.Singleton;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.user.User;
 
+/**
+ * Handles everything related to chat
+ */
 @Singleton
 public class ChatHandler implements Handler {
     public ChatChannel defaultChannel;
@@ -38,7 +41,7 @@ public class ChatHandler implements Handler {
      * Get a channel by its identifier
      *
      * @param identifier string identifier of the channel
-     * @return ChatChannel
+     * @return the ChatChannel, if present
      */
     public Optional<ChatChannel> getChannel(String identifier) {
         return Optional.ofNullable(activeChannels.get(identifier));
@@ -47,8 +50,8 @@ public class ChatHandler implements Handler {
     /**
      * Broadcast a message to all channels
      *
-     * @param user    sender
-     * @param message message
+     * @param user    sender the sender of the message
+     * @param message message the message to broadcast
      */
     public void broadcastMessage(User user, String message) {
         for (ChatChannel channel : activeChannels.values()) {
@@ -59,8 +62,8 @@ public class ChatHandler implements Handler {
     /**
      * Broadcast a message to all channels
      *
-     * @param user      sender
-     * @param component message
+     * @param user      sender the sender of the message
+     * @param component message the message to broadcast
      */
     public void broadcastMessage(User user, Component component) {
         for (ChatChannel channel : activeChannels.values()) {

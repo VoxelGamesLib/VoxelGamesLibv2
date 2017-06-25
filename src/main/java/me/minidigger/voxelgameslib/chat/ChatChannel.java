@@ -12,6 +12,10 @@ import me.minidigger.voxelgameslib.utils.ChatUtil;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * A chat channel represents a collection of listeners who are able to receive messages send into
+ * this channel
+ */
 public class ChatChannel {
     @Getter
     @Setter
@@ -20,6 +24,11 @@ public class ChatChannel {
     @Setter
     private List<User> listeners;
 
+    /**
+     * Creates a new, empty channel
+     *
+     * @param identifier a unique identifier for this channel
+     */
     public ChatChannel(String identifier) {
         this.identifier = identifier;
         listeners = new ArrayList<>();
@@ -30,6 +39,8 @@ public class ChatChannel {
      *
      * Listeners can hear messages, but messages they send will not be sent to this channel unless
      * it is their active channel.
+     *
+     * @param user the new listener
      */
     public void addListener(User user) {
         listeners.add(user);
@@ -37,6 +48,8 @@ public class ChatChannel {
 
     /**
      * Removes a listener from the channel
+     *
+     * @param user the listener to remove
      */
     public void removeListener(User user) {
         listeners.remove(user);

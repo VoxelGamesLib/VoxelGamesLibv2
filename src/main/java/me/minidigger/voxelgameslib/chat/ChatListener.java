@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 @Singleton
+@SuppressWarnings("Javadoc")
 public class ChatListener implements Listener {
     @Inject
     private ChatHandler chatHandler;
@@ -22,7 +23,7 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
 
-        user.ifPresent(user1 -> user1.getActiveChannel().sendMessage(user1, event.getMessage()));
+        user.ifPresent(u -> u.getActiveChannel().sendMessage(u, event.getMessage()));
 
         event.setCancelled(true);
     }
