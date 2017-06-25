@@ -8,6 +8,9 @@ target/
 # Java
 *.jar
 
+# JRebel <3
+rebel.xml
+
 # Test server
 /testserver/world
 /testserver/world_nether
