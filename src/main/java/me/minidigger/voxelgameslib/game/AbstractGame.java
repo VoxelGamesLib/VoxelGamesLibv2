@@ -100,15 +100,12 @@ public abstract class AbstractGame implements Game {
     public void broadcastMessage(@Nonnull Component message) {
         players.forEach(u -> u.sendMessage(message));
         spectators.forEach(u -> u.sendMessage(message));
-
-        Bukkit.getConsoleSender().sendMessage(ChatUtil.toPlainText(message));
     }
 
     @Override
     public void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args) {
         players.forEach(user -> Lang.msg(user, key, args));
         spectators.forEach(user -> Lang.msg(user, key, args));
-        Bukkit.getConsoleSender().sendMessage(Lang.string(key, args));
     }
 
     @Override

@@ -132,7 +132,7 @@ public enum LangKey {
 
     WORLD_UNKNOWN_MAP("{red}Could not find a map named {yellow}{map}{red} :/", "map"),
 
-    DUEL_WRONG_PLAYER_COUNT("{red}You can't duel with {yellow}{players} players, you need 2!",
+    DUEL_WRONG_PLAYER_COUNT("{red}You can't duel with {yellow}{players} {red}players, you need {yellow}2{red}!",
             "players");
 
     @Nonnull

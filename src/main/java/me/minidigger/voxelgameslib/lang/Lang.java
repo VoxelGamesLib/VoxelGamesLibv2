@@ -101,8 +101,7 @@ public class Lang {
                     continue outer;
                 }
             }
-            componentBuilder.append(TextComponent.of(token));
-            componentBuilder.color(savedColor);
+            componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
         }
 
         return componentBuilder;
