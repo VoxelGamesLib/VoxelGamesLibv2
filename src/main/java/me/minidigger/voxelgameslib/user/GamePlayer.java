@@ -6,6 +6,8 @@ import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
+import org.hibernate.annotations.Type;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,8 @@ import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -56,11 +60,13 @@ public class GamePlayer implements User {
 
     @Expose
     @Id
+    @Type(type="uuid-char")
     private UUID uuid;
 
     @Expose
     private Role role = Role.DEFAULT;
 
+    @OneToOne
     @Expose
     private Locale locale = Locale.ENGLISH;
 
