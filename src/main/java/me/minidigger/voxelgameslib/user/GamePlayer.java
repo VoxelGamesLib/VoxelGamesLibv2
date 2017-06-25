@@ -13,6 +13,11 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
@@ -31,18 +36,25 @@ import jskills.Rating;
 /**
  * abstract implementation of the user interface that deals with some stuff
  */
+@Entity
+@Table(name = "player")
 public class GamePlayer implements User {
 
+    @Transient
     @Inject
     private GlobalConfig config;
+    @Transient
     @Inject
     private PersistenceHandler persistenceHandler;
+    @Transient
     @Inject
     private ChatHandler chatHandler;
 
+    @Transient
     private Player player;
 
     @Expose
+    @Id
     private UUID uuid;
 
     @Expose
@@ -51,24 +63,41 @@ public class GamePlayer implements User {
     @Expose
     private Locale locale = Locale.ENGLISH;
 
+    @Transient // we need to store this some other way. maybe serialise?
     @Expose
     private Map<String, Rating> ratings = new HashMap<>();
 
+    @Transient
     // combination of <prefix> <rawdisplayname> <suffix>
     private Component displayName;
 
     @Expose
+    @Column(name = "raw_display_name")
     private String rawDisplayName;
 
+    @Transient
     @Expose
     private Component prefix = TextComponent.of("");
+    @Transient
     @Expose
     private Component suffix = TextComponent.of("");
 
+    @Transient
     @Expose
     private List<ChatChannel> channels = new ArrayList<>();
+    @Transient
     @Expose
     private ChatChannel activeChannel;
+
+    /* Data to persist. Otherwise has no use */
+    @Expose
+    @Column(name = "username")
+    private String name;
+    @Expose
+    @Column(name = "ip_address")
+    private String ipAddress;
+    @Expose
+    private boolean banned;
 
     @Nonnull
     @Override
@@ -151,6 +180,13 @@ public class GamePlayer implements User {
     @Override
     public void setPlayer(Player player) {
         this.player = player;
+        setPlayerData(player);
+    }
+
+    private void setPlayerData(Player player) {
+        name = player.getName();
+        ipAddress = player.getAddress().toString();
+        banned = player.isBanned();
     }
 
     @Override
