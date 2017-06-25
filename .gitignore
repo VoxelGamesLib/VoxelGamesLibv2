@@ -28,3 +28,6 @@ target/
 /testserver/bukkit.yml
 /testserver/server.properties
 /testserver/permissions.yml
+
+# jRebel
+rebel.xml
