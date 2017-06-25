@@ -13,6 +13,10 @@ VoxelGamesLib uses [Maven 3](http://maven.apache.org/) for compilation. To compi
 * Install Git and clone the repository
 * Run `mvn install`
 
+# Contributing
+
+See [Contributing.md](CONTRIBUTING.md)
+
 # Licence
 
 MIT
