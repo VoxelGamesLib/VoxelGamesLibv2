@@ -79,12 +79,7 @@ public class UserHandler implements Handler {
      * @param id the uuid of the user that logged out
      */
     public void logout(@Nonnull UUID id) {
-        Optional<User> user = getUser(id);
-        if (user.isPresent()) {
-            //TODO go away, gamehandler, use the events!
-            gameHandler.getGames(user.get().getUuid(), true).forEach(game -> game.leave(user.get()));
-            persistenceHandler.getProvider().saveUser(user.get());
-        }
+        getUser(id).ifPresent(u -> persistenceHandler.getProvider().saveUser(u));
 
         users.remove(id);
         tempData.remove(id);

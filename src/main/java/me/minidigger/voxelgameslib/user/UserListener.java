@@ -1,9 +1,11 @@
 package me.minidigger.voxelgameslib.user;
 
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 
@@ -25,6 +27,8 @@ public class UserListener implements Listener {
 
     @Inject
     private UserHandler handler;
+    @Inject
+    private GameHandler gameHandler;
 
     @EventHandler
     public void onAsyncLogin(@Nonnull AsyncPlayerPreLoginEvent event) {
@@ -62,6 +66,9 @@ public class UserListener implements Listener {
 
     @EventHandler
     public void onLeave(@Nonnull PlayerQuitEvent event) {
+        Optional<User> user = handler.getUser(event.getPlayer().getUniqueId());
+        user.ifPresent(u -> gameHandler.getGames(u.getUuid(), true).forEach(game -> game.leave(u)));
+
         handler.logout(event.getPlayer().getUniqueId());
     }
 }

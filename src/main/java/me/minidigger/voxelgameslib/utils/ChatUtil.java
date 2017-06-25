@@ -2,6 +2,8 @@ package me.minidigger.voxelgameslib.utils;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
+import net.kyori.text.format.TextColor;
+import net.kyori.text.format.TextDecoration;
 import net.kyori.text.serializer.ComponentSerializer;
 
 import java.lang.reflect.Method;
@@ -10,7 +12,6 @@ import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.user.GamePlayer;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 /**
  * Small util for chat related stuff
@@ -77,8 +78,10 @@ public class ChatUtil {
         }
     }
 
-    public static Component formatChannelMessage(String displayName, Component message) {
-        //TODO uuhhm, thats now how you use this api ^^
-        return TextComponent.of(displayName + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "> ").append(message);
+    public static Component formatChannelMessage(Component displayName, Component message) {
+        //TODO wait till kashike comes alive and can take a look
+        return displayName.append(
+                TextComponent.of("> ").decoration(TextDecoration.BOLD, true).color(TextColor.WHITE)
+        ).append(message);
     }
 }

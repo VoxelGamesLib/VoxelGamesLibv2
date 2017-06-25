@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
+import net.kyori.text.format.TextColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class GamePlayer implements User {
 
     @Transient
     @Expose
-    private Component prefix = TextComponent.of("");
+    private Component prefix = TextComponent.of("[God]").color(TextColor.RED);
     @Transient
     @Expose
     private Component suffix = TextComponent.of("");
