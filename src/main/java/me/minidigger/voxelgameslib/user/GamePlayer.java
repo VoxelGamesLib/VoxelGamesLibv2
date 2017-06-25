@@ -6,7 +6,6 @@ import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -187,8 +186,7 @@ public class GamePlayer implements User {
 
     private void setPlayerData(Player player) {
         name = player.getName();
-        InetSocketAddress addr = player.getAddress();
-        if(addr != null) { ipAddress = addr.toString(); }
+        ipAddress = player.getAddress().toString();
         banned = player.isBanned();
     }
 

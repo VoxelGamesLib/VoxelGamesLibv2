@@ -40,7 +40,7 @@ public class UserListener implements Listener {
     }
 
     @EventHandler
-    public void onLogin(@Nonnull PlayerLoginEvent event) {
+    public void onJoin(@Nonnull PlayerJoinEvent event) {
         if (!handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
             // worst case: load data sync
             log.warning("Loading data for player " + event.getPlayer().getName() + "(" + event.getPlayer()
@@ -49,17 +49,13 @@ public class UserListener implements Listener {
             if (!login || !handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
                 // something went horribly wrong
                 // we don't have a locale here since the data was not loaded :/
-                event.disallow(PlayerLoginEvent.Result.KICK_OTHER,
-                        Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
+                event.getPlayer().kickPlayer(Lang.legacyColors(Lang.string(LangKey.DATA_NOT_LOADED)));
                 return;
             }
         }
 
         handler.join(event.getPlayer());
-    }
 
-    @EventHandler
-    public void onJoin(@Nonnull PlayerJoinEvent event) {
         // tp to spawn
         event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
     }
