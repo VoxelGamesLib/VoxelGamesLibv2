@@ -20,6 +20,9 @@ import jskills.SkillCalculator;
 import jskills.trueskill.FactorGraphTrueSkillCalculator;
 import lombok.extern.java.Log;
 
+/**
+ * Handles the calculation of "skill" for players
+ */
 @Log
 public class EloHandler implements Handler {
 

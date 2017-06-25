@@ -78,7 +78,7 @@ public class GamePlayer implements User {
 
     @Transient
     @Expose
-    private Component prefix = TextComponent.of("[God]").color(TextColor.RED);
+    private Component prefix = TextComponent.of("[Test] ").color(TextColor.RED);
     @Transient
     @Expose
     private Component suffix = TextComponent.of("");
@@ -122,7 +122,7 @@ public class GamePlayer implements User {
     @Override
     public Component getDisplayName() {
         if (displayName == null && rawDisplayName != null) {
-            displayName = prefix.copy().append(TextComponent.of(rawDisplayName)).append(suffix);
+            displayName = TextComponent.of("").append(prefix.append(TextComponent.of(rawDisplayName))).append(suffix);
         }
         return displayName;
     }
