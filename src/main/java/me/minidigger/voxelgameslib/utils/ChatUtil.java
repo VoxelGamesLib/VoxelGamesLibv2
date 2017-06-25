@@ -79,9 +79,9 @@ public class ChatUtil {
     }
 
     public static Component formatChannelMessage(Component displayName, Component message) {
-        //TODO wait till kashike comes alive and can take a look
-        return displayName.append(
-                TextComponent.of("> ").decoration(TextDecoration.BOLD, true).color(TextColor.WHITE)
-        ).append(message);
+        return TextComponent.of("")
+                .append(displayName)
+                .append(TextComponent.of("> ").decoration(TextDecoration.BOLD, true).color(TextColor.WHITE))
+                .append(message);
     }
 }
