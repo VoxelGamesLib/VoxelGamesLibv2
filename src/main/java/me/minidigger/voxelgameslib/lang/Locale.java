@@ -33,15 +33,15 @@ public class Locale implements Serializable {
     public static final Locale DUTCH = new Locale("dutch", "nl");
     public static final Locale BRAZILIAN_PORTUGESE = new Locale("brazilian portuguese", "pt-br");
 
+    private String name;
     @Expose
     @Id
     private String tag;
-    private String name;
 
     protected Locale(){
         // JPA
     }
-    
+
     /**
      * @return all known locales
      */
