@@ -14,7 +14,7 @@ import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
 import me.minidigger.voxelgameslib.feature.Feature;
-import me.minidigger.voxelgameslib.feature.FeatureImplementor;
+import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
@@ -33,7 +33,7 @@ import lombok.Setter;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
-public class VoteFeature extends AbstractFeature implements FeatureImplementor {
+public class VoteFeature extends AbstractFeature implements FeatureCommandImplementor {
     //TODO add scoreboard
     @Getter
     @Setter

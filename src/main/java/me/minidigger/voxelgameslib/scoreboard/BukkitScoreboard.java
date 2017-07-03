@@ -12,9 +12,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-/**
- * Created by Martin on 07.01.2017.
- */
 public class BukkitScoreboard extends AbstractScoreboard {
 
     private Scoreboard scoreboard;
@@ -23,7 +20,7 @@ public class BukkitScoreboard extends AbstractScoreboard {
     @Override
     public void setImplObject(Scoreboard object) {
         scoreboard = object;
-        objective = scoreboard.registerNewObjective("VoxelGamesLib", "dummy");
+        objective = scoreboard.registerNewObjective("VoxelGamesLib", "dummy"); // todo dont forget to remove dummy
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 

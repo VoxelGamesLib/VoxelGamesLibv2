@@ -16,7 +16,7 @@ import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.exception.DependencyGraphException;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
 import me.minidigger.voxelgameslib.feature.Feature;
-import me.minidigger.voxelgameslib.feature.FeatureImplementor;
+import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
 
@@ -153,8 +153,8 @@ public abstract class AbstractPhase implements Phase {
                 Bukkit.getPluginManager().registerEvents((Listener) feature, main);
             }
 
-            if (feature instanceof FeatureImplementor) {
-                commandManager.registerCommand(((FeatureImplementor) feature).getCommandClass());
+            if (feature instanceof FeatureCommandImplementor) {
+                commandManager.registerCommand(((FeatureCommandImplementor) feature).getCommandClass());
             }
 
             startedFeatures.add(feature);
@@ -182,9 +182,10 @@ public abstract class AbstractPhase implements Phase {
                 HandlerList.unregisterAll((Listener) feature);
             }
 
-            if (features instanceof BukkitRootCommand) {
+            // todo, fix unregistering... waiting for aikar to update acf to support this
+            /*if (features instanceof BukkitRootCommand) {
                 commandManager.unregisterCommand((BukkitRootCommand) feature);
-            }
+            }*/
         }
         startedFeatures.clear();
     }
