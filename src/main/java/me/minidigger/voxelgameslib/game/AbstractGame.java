@@ -333,8 +333,9 @@ public abstract class AbstractGame implements Game {
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }
 
-        user.removeListeningChannel("default");
-        user.addListeningChannel(chatChannel.getIdentifier());
+        // todo: perhaps consider having this handled by phases instead
+        user.removeListeningChannel("default"); // stop listening to global messages
+        user.addListeningChannel(chatChannel.getIdentifier()); // local channel
         user.setActiveChannel(chatChannel.getIdentifier());
     }
 

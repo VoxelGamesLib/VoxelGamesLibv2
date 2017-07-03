@@ -84,7 +84,7 @@ public class GamePlayer implements User {
 
     @Transient
     @Expose
-    private Component prefix = TextComponent.of("[Test] ").color(TextColor.RED);
+    private Component prefix = TextComponent.of("");
     @Transient
     @Expose
     private Component suffix = TextComponent.of("");
@@ -127,6 +127,11 @@ public class GamePlayer implements User {
 
     @Override
     public Component getDisplayName() {
+        if(rawDisplayName == null) {
+            // wat?
+            rawDisplayName = getPlayer().getDisplayName();
+        }
+
         if (displayName == null && rawDisplayName != null) {
             displayName = TextComponent.of("").append(prefix.append(TextComponent.of(rawDisplayName))).append(suffix);
         }
@@ -190,6 +195,11 @@ public class GamePlayer implements User {
         setPlayerData(player);
     }
 
+    @Override
+    public void refreshDisplayName() {
+        displayName = null; // regenerate full display name
+    }
+
     private void setPlayerData(Player player) {
         name = player.getName();
         ipAddress = player.getAddress().toString();
@@ -199,7 +209,7 @@ public class GamePlayer implements User {
     @Override
     public void setDisplayName(String displayName) {
         this.rawDisplayName = displayName;
-        this.displayName = null; // regenerate full display name
+        refreshDisplayName();
     }
 
     @Override
@@ -277,6 +287,20 @@ public class GamePlayer implements User {
 
         if (channel != null) {
             activeChannel = channel;
+        }
+    }
+
+    @Override
+    public void applyRolePrefix() {
+        if(getRole().getPrefix() != null) {
+            setPrefix(getRole().getPrefix());
+        }
+    }
+
+    @Override
+    public void applyRoleSuffix() {
+        if(getRole().getSuffix() != null) {
+            setSuffix(getRole().getSuffix());
         }
     }
 }

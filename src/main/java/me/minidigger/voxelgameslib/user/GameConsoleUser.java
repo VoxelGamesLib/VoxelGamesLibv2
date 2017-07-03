@@ -54,7 +54,7 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public void setLocale(Locale locale) {
-// ignore
+        // ignore
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public void saveRating(GameMode mode, Rating rating) {
-// ignore
+        // ignore
     }
 
     @Override
@@ -84,12 +84,17 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public void setPlayer(Player player) {
-// ignore
+        // ignore
+    }
+
+    @Override
+    public void refreshDisplayName() {
+        // ignore
     }
 
     @Override
     public void setDisplayName(String displayName) {
-// ignore
+        // ignore
     }
 
     @Override
@@ -104,17 +109,17 @@ public class GameConsoleUser implements ConsoleUser {
 
     @Override
     public void setPrefix(Component prefix) {
-// ignore
+        // ignore
     }
 
     @Override
     public void setSuffix(Component suffix) {
-// ignore
+        // ignore
     }
 
     @Override
     public void setUuid(UUID uuid) {
-// ignore
+        // ignore
     }
 
     @Nonnull
@@ -186,5 +191,15 @@ public class GameConsoleUser implements ConsoleUser {
         if (channel != null) {
             activeChannel = channel;
         }
+    }
+
+    @Override
+    public void applyRolePrefix() {
+        // ignore
+    }
+
+    @Override
+    public void applyRoleSuffix() {
+        // ignore
     }
 }

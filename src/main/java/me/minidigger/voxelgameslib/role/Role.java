@@ -1,7 +1,14 @@
 package me.minidigger.voxelgameslib.role;
 
+import net.kyori.text.Component;
+import net.kyori.text.TextComponent;
+import net.kyori.text.format.TextColor;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.soap.Text;
+
+import lombok.Getter;
 
 /**
  * A role is part of the simplified permission system. all permissions are assigned to roles by
@@ -9,19 +16,27 @@ import javax.annotation.Nullable;
  */
 public enum Role {
 
-    DEFAULT("default", null),
-    PREMIUM("premium", DEFAULT),
-    MODERATOR("moderator", PREMIUM),
-    ADMIN("admin", MODERATOR);
+    DEFAULT("default", null, null, null),
+    PREMIUM("premium", DEFAULT, TextComponent.of("[PREMIUM] ").color(TextColor.GREEN), null),
+    MODERATOR("moderator", PREMIUM, TextComponent.of("[MOD] ").color(TextColor.AQUA), null),
+    ADMIN("admin", MODERATOR, TextComponent.of("[ADMIN] ").color(TextColor.RED), null);
 
     @Nonnull
     private final String name;
     @Nullable
     private final Role parent;
+    @Nullable
+    @Getter
+    private final Component prefix;
+    @Nullable
+    @Getter
+    private final Component suffix;
 
-    Role(@Nonnull String name, @Nullable Role parent) {
+    Role(@Nonnull String name, @Nullable Role parent, @Nullable Component prefix, @Nullable Component suffix) {
         this.name = name;
         this.parent = parent;
+        this.prefix = prefix;
+        this.suffix = suffix;
     }
 
     /**

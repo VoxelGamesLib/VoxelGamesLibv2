@@ -6,6 +6,8 @@ import net.kyori.text.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
 
@@ -24,14 +26,28 @@ public class ChatChannel {
     @Setter
     private List<User> listeners;
 
+    @Nullable
+    @Getter
+    @Setter
+    private Component prefix;
+
+    /**
+     * Creates a new, empty channel with a prefix
+     *
+     * @param identifier a unique identifier for this channel
+     */
+    public ChatChannel(String identifier, @Nullable Component prefix) {
+        this.identifier = identifier;
+        listeners = new ArrayList<>();
+    }
+
     /**
      * Creates a new, empty channel
      *
      * @param identifier a unique identifier for this channel
      */
     public ChatChannel(String identifier) {
-        this.identifier = identifier;
-        listeners = new ArrayList<>();
+        this(identifier, null);
     }
 
     /**
@@ -62,15 +78,15 @@ public class ChatChannel {
      * @param message message
      */
     public void sendMessage(User byUser, String message) {
-        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getDisplayName(), TextComponent.of(message))));
+        sendMessage(byUser, TextComponent.of(message));
     }
 
     /**
-     * Sends a component message to the channel's users
+     * Sends a component message to the channel's listeners
      *
      * @param byUser sender
      */
     public void sendMessage(User byUser, Component message) {
-        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(byUser.getDisplayName(), message)));
+        listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(this, byUser.getDisplayName(), message)));
     }
 }

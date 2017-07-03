@@ -119,6 +119,11 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     void setPlayer(Player player);
 
     /**
+     * Causes a new display name to be generated, based on the raw display name, prefix and suffix
+     */
+    void refreshDisplayName();
+
+    /**
      * sets the raw display name for this user
      *
      * @param displayName the raw display name
@@ -188,4 +193,14 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      * @param channel string identifier for the channel
      */
     void setActiveChannel(String channel);
+
+    /**
+     * Applies the default prefix of the role, if there is one
+     */
+    void applyRolePrefix();
+
+    /**
+     * Applies the default suffix of the role, if there is one
+     */
+    void applyRoleSuffix();
 }

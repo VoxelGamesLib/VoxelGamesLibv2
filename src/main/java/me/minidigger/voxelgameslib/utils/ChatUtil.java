@@ -9,6 +9,7 @@ import net.kyori.text.serializer.ComponentSerializer;
 import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 
+import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.user.GamePlayer;
 
 import org.bukkit.Bukkit;
@@ -78,10 +79,17 @@ public class ChatUtil {
         }
     }
 
-    public static Component formatChannelMessage(Component displayName, Component message) {
+    public static Component formatChannelMessage(ChatChannel channel, Component displayName, Component message) {
+        Component prefix = TextComponent.of("");
+
+        if(channel.getPrefix() != null) {
+            prefix.append(channel.getPrefix());
+        }
+
         return TextComponent.of("")
+                .append(prefix)
                 .append(displayName)
-                .append(TextComponent.of("> ").decoration(TextDecoration.BOLD, true).color(TextColor.WHITE))
+                .append(TextComponent.of(": ").color(TextColor.WHITE))
                 .append(message);
     }
 }

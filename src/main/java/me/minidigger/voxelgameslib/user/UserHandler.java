@@ -16,7 +16,10 @@ import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
+import me.minidigger.voxelgameslib.role.Role;
+import me.minidigger.voxelgameslib.utils.ChatUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import lombok.extern.java.Log;
@@ -68,9 +71,15 @@ public class UserHandler implements Handler {
 
         user.addListeningChannel("default");
         user.setActiveChannel("default");
+        user.setRole(Role.ADMIN);
+
+        user.applyRolePrefix();
+        user.applyRoleSuffix();
+
+        user.refreshDisplayName();
 
         users.put(user.getUuid(), user);
-        log.info("Applied data for user " + user.getUuid() + "(" + user.getRole().getName() + " " + user.getRawDisplayName() + ")");
+        log.info("Applied data for user " + user.getUuid() + " (" + user.getRole().getName() + " " + user.getRawDisplayName() + ")");
     }
 
     /**
@@ -113,12 +122,6 @@ public class UserHandler implements Handler {
         } else {
             User user = new GamePlayer();
             user.setUuid(uniqueId);
-            try {
-                // lets not load the name here for now
-                //user.setDisplayName(MojangUtil.getDisplayName(uniqueId));
-            } catch (Exception ignore) {
-                // offline users don't have a real name
-            }
             injector.injectMembers(user);
             tempData.put(uniqueId, user);
         }
