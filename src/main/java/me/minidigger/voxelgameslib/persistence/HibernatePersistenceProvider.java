@@ -21,6 +21,7 @@ import javax.persistence.Entity;
 import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.timings.Timings;
+import me.minidigger.voxelgameslib.user.GamePlayer;
 import me.minidigger.voxelgameslib.user.User;
 
 import lombok.extern.java.Log;
@@ -83,16 +84,15 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @Override
     public void saveUser(User user) {
-        // TODO save user
+        session(session -> {
+            session.saveOrUpdate(user);
+            return null;
+        });
     }
 
     @Override
     public Optional<User> loadUser(UUID id) {
-        // TODO load user
-        session(session -> {
-            return null;
-        });
-        return Optional.empty();
+        return Optional.ofNullable(session(session -> session.get(GamePlayer.class, id)));
     }
 
     private <T> T session(SessionExecutor<T> executor) {
@@ -107,6 +107,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
         return t;
     }
 
+    @FunctionalInterface
     interface SessionExecutor<T> {
         T execute(Session session);
     }

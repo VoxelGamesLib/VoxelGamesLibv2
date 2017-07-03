@@ -5,6 +5,9 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +15,10 @@ import lombok.Data;
 /**
  * Represents a language a player can select to get all messages in that language
  */
+@Entity
 @Data
 @AllArgsConstructor
+@Table(name = "locales")
 public class Locale implements Serializable {
 
     public static final Locale ENGLISH = new Locale("english", "en");
@@ -27,6 +32,15 @@ public class Locale implements Serializable {
     public static final Locale TURKISH = new Locale("turkish", "tr");
     public static final Locale DUTCH = new Locale("dutch", "nl");
     public static final Locale BRAZILIAN_PORTUGESE = new Locale("brazilian portuguese", "pt-br");
+
+    private String name;
+    @Expose
+    @Id
+    private String tag;
+
+    protected Locale(){
+        // JPA
+    }
 
     /**
      * @return all known locales
@@ -70,8 +84,4 @@ public class Locale implements Serializable {
 
         return Optional.empty();
     }
-
-    private String name;
-    @Expose
-    private String tag;
 }
