@@ -292,14 +292,14 @@ public class GamePlayer implements User {
 
     @Override
     public void applyRolePrefix() {
-        if(getRole().getPrefix() != null) {
+        if(config.useRoleSystem && getRole().getPrefix() != null) {
             setPrefix(getRole().getPrefix());
         }
     }
 
     @Override
     public void applyRoleSuffix() {
-        if(getRole().getSuffix() != null) {
+        if(config.useRoleSystem && getRole().getSuffix() != null) {
             setSuffix(getRole().getSuffix());
         }
     }

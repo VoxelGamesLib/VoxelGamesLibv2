@@ -14,6 +14,7 @@ import me.minidigger.voxelgameslib.chat.ChatListener;
 import me.minidigger.voxelgameslib.commands.FunCommands;
 import me.minidigger.voxelgameslib.commands.GameCommands;
 import me.minidigger.voxelgameslib.commands.LangCommands;
+import me.minidigger.voxelgameslib.commands.OverrideCommands;
 import me.minidigger.voxelgameslib.commands.RoleCommands;
 import me.minidigger.voxelgameslib.commands.VGLCommands;
 import me.minidigger.voxelgameslib.commands.WorldCommands;
@@ -57,6 +58,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import co.aikar.commands.BukkitCommandCompletionContext;
 import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.BukkitRootCommand;
 import co.aikar.commands.CommandCompletions;
 import co.aikar.commands.CommandContexts;
 import co.aikar.commands.CommandReplacements;
@@ -258,7 +260,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     }
 
     private void registerCommands() {
-        commandManager.registerCommand(injector.getInstance(FunCommands.class));
+        commandManager.registerCommand(injector.getInstance(OverrideCommands.class), true);
         commandManager.registerCommand(injector.getInstance(GameCommands.class));
         commandManager.registerCommand(injector.getInstance(LangCommands.class));
         commandManager.registerCommand(injector.getInstance(VGLCommands.class));

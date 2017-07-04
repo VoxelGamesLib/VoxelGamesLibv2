@@ -182,10 +182,9 @@ public abstract class AbstractPhase implements Phase {
                 HandlerList.unregisterAll((Listener) feature);
             }
 
-            // todo, fix unregistering... waiting for aikar to update acf to support this
-            /*if (features instanceof BukkitRootCommand) {
-                commandManager.unregisterCommand((BukkitRootCommand) feature);
-            }*/
+            if (feature instanceof FeatureCommandImplementor) {
+                commandManager.unregisterCommand(((FeatureCommandImplementor) feature).getCommandClass());
+            }
         }
         startedFeatures.clear();
     }
