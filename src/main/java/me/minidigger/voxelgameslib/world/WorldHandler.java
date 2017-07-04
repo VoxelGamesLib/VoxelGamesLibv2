@@ -169,6 +169,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
                     "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
                             + worldRepository.getURL() + "...");
             worldRepository.cloneRepo();
+        }else{
+            worldRepository.updateRepo();
         }
 
         configFile = new File(worldsFolder, "worlds.json");
