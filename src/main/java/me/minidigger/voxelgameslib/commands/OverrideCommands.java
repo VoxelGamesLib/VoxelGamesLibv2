@@ -18,7 +18,7 @@ import lombok.extern.java.Log;
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class OverrideCommands extends BaseCommand {
 
-    @CommandAlias("reload")
+    @CommandAlias("reload|rl")
     @CommandPermission("bukkit.command.reload") // don't change the access for this command
     public void reload(CommandSender sender) {
         sender.sendMessage(ChatColor.RED + "This command has been disabled by VoxelGamesLib, as it will break the framework from functioning.");

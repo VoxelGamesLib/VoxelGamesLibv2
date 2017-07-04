@@ -12,14 +12,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.exception.UserException;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
-import me.minidigger.voxelgameslib.role.Role;
-import me.minidigger.voxelgameslib.utils.ChatUtil;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import lombok.extern.java.Log;
@@ -34,6 +32,8 @@ public class UserHandler implements Handler {
     private PersistenceHandler persistenceHandler;
     @Inject
     private Injector injector;
+    @Inject
+    private ChatHandler chatHandler;
 
     private Map<UUID, User> users;
     private Map<UUID, User> tempData;
@@ -69,9 +69,10 @@ public class UserHandler implements Handler {
             user.setDisplayName(user.getPlayer().getDisplayName());
         }
 
-        user.addListeningChannel("default");
-        user.setActiveChannel("default");
-        user.setRole(Role.ADMIN);
+        // todo load persisted data
+
+        user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
+        user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
 
         user.applyRolePrefix();
         user.applyRoleSuffix();

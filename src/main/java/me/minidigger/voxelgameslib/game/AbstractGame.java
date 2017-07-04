@@ -339,7 +339,7 @@ public abstract class AbstractGame implements Game {
         }
 
         // todo: perhaps consider having this handled by phases instead
-        user.removeListeningChannel("default"); // stop listening to global messages
+        user.removeListeningChannel(chatHandler.defaultChannel.getIdentifier()); // stop listening to global messages
         user.addListeningChannel(chatChannel.getIdentifier()); // local channel
         user.setActiveChannel(chatChannel.getIdentifier());
     }
@@ -365,8 +365,8 @@ public abstract class AbstractGame implements Game {
         user.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 
         user.removeListeningChannel(chatChannel.getIdentifier());
-        user.addListeningChannel("default");
-        user.setActiveChannel("default");
+        user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
+        user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
     }
 
     @Override

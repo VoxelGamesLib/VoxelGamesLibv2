@@ -89,6 +89,19 @@ public class ChatHandler implements Handler {
      * @param id the id of the channel that should be removed
      */
     public void removeChannel(String id) {
+        // remove any existing listeners from the channel, set them to the default channel.
+        // you should *really* handle this yourself if you're removing a channel
+
+        getChannel(id).ifPresent(chatChannel -> {
+            chatChannel.getListeners().forEach(user -> {
+                user.removeListeningChannel(id);
+
+                if (user.getActiveChannel().equals(chatChannel)) {
+                    user.setActiveChannel("default");
+                }
+            });
+        });
+
         activeChannels.remove(id);
     }
 }
