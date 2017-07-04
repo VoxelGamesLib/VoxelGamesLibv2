@@ -42,6 +42,7 @@ import lombok.extern.java.Log;
  */
 @Log
 @Singleton
+@CommandAlias("worldcreator|wc")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class WorldCreator extends BaseCommand {
 
@@ -75,7 +76,6 @@ public class WorldCreator extends BaseCommand {
 
     private Map map;
 
-    @CommandAlias("worldcreator|wc")
     @CommandPermission("%admin")
     public void worldcreator(User sender) {
         Lang.msg(sender, LangKey.WORLD_CREATOR_INFO);

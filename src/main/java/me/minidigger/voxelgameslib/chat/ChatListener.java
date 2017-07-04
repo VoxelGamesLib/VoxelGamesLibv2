@@ -14,8 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 @Singleton
 @SuppressWarnings("Javadoc")
 public class ChatListener implements Listener {
-    @Inject
-    private ChatHandler chatHandler;
+
     @Inject
     private UserHandler userHandler;
 

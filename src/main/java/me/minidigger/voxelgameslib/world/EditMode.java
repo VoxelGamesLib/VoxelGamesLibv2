@@ -25,6 +25,7 @@ import co.aikar.commands.annotation.Syntax;
  * Commands related to the edit mode
  */
 @Singleton
+@CommandAlias("editmode")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class EditMode extends BaseCommand {
 
