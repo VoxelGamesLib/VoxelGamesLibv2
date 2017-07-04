@@ -137,9 +137,12 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     public void loadWorld(@Nonnull Map map) {
         map.setLoaded(true);
 
+        File file = new File(worldContainer, map.getWorldName());
+        FileUtils.delete(file);
+
         try {
             ZipFile zip = new ZipFile(new File(worldsFolder, map.getWorldName() + ".zip"));
-            zip.extractAll(new File(worldContainer, map.getWorldName()).getAbsolutePath());
+            zip.extractAll(file.getAbsolutePath());
         } catch (ZipException e) {
             throw new WorldException("Could not unzip world " + map.getWorldName() + ".", e);
         }
@@ -169,7 +172,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
                     "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
                             + worldRepository.getURL() + "...");
             worldRepository.cloneRepo();
-        }else{
+        } else {
             worldRepository.updateRepo();
         }
 

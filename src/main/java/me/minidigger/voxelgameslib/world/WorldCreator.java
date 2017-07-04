@@ -303,5 +303,7 @@ public class WorldCreator extends BaseCommand {
 //        gameModes = new ArrayList<>();
 
         Lang.msg(sender, LangKey.WORLD_CREATOR_DONE);
+
+        worldHandler.getWorldRepository().commitRepo();
     }
 }
