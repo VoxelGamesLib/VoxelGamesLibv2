@@ -70,4 +70,25 @@ public class ChatHandler implements Handler {
             channel.sendMessage(user, component);
         }
     }
+
+    /**
+     * Creates a new chat channel with the given id
+     *
+     * @param id the id the channel should have
+     * @return the created channel
+     */
+    public ChatChannel createChannel(String id) {
+        ChatChannel chatChannel = new ChatChannel(id);
+        activeChannels.put(id, chatChannel);
+        return chatChannel;
+    }
+
+    /**
+     * Removes a channel
+     *
+     * @param id the id of the channel that should be removed
+     */
+    public void removeChannel(String id) {
+        activeChannels.remove(id);
+    }
 }

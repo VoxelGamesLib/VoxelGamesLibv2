@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -60,7 +59,7 @@ public class GamePlayer implements User {
 
     @Expose
     @Id
-    @Type(type="uuid-char")
+    @Type(type = "uuid-char")
     private UUID uuid;
 
     @Expose
@@ -283,11 +282,7 @@ public class GamePlayer implements User {
 
     @Override
     public void setActiveChannel(String identifier) {
-        ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
-
-        if (channel != null) {
-            activeChannel = channel;
-        }
+        chatHandler.getChannel(identifier).ifPresent((chatChannel -> activeChannel = chatChannel));
     }
 
     @Override

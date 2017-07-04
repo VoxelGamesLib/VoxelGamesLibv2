@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
+import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.event.events.game.GameEndEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
@@ -37,7 +38,6 @@ import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
-import me.minidigger.voxelgameslib.utils.ChatUtil;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
@@ -67,6 +67,9 @@ public abstract class AbstractGame implements Game {
     @Inject
     @Transient
     private WorldHandler worldHandler;
+    @Inject
+    @Transient
+    private ChatHandler chatHandler;
 
     @Nonnull
     @Transient // todo: save this in the entity
@@ -88,7 +91,8 @@ public abstract class AbstractGame implements Game {
     @Transient // todo: save this in the entity, relation to User as well
     private final List<User> spectators = new ArrayList<>();
 
-    @Transient // todo: save this in the entity, see: @Convert annotation (https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object)
+    @Transient
+    // todo: save this in the entity, see: @Convert annotation (https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object)
     private Map<String, Object> gameData = new HashMap<>();
 
     private boolean aborted = false;
@@ -134,7 +138,7 @@ public abstract class AbstractGame implements Game {
     @Override
     public void start() {
         startTime = LocalDateTime.now();
-        chatChannel = new ChatChannel("game." + getUuid().toString());
+        chatChannel = chatHandler.createChannel("game." + getUuid().toString());
 
         activePhase.setRunning(true);
         activePhase.start();
@@ -254,6 +258,7 @@ public abstract class AbstractGame implements Game {
         activePhase.setRunning(false);
         activePhase.stop();
 
+        chatHandler.removeChannel(chatChannel.getIdentifier());
         chatChannel = null;
         tickHandler.end(this);
         gameHandler.removeGame(this);

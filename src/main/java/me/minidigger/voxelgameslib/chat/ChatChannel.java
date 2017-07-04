@@ -18,17 +18,13 @@ import lombok.Setter;
  * A chat channel represents a collection of listeners who are able to receive messages send into
  * this channel
  */
+@Getter
+@Setter
 public class ChatChannel {
-    @Getter
-    @Setter
-    private String identifier;
-    @Getter
-    @Setter
-    private List<User> listeners;
 
+    private String identifier;
+    private List<User> listeners;
     @Nullable
-    @Getter
-    @Setter
     private Component prefix;
 
     /**
@@ -36,9 +32,10 @@ public class ChatChannel {
      *
      * @param identifier a unique identifier for this channel
      */
-    public ChatChannel(String identifier, @Nullable Component prefix) {
+    ChatChannel(String identifier, @Nullable Component prefix) {
         this.identifier = identifier;
-        listeners = new ArrayList<>();
+        this.listeners = new ArrayList<>();
+        this.prefix = prefix;
     }
 
     /**
