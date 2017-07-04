@@ -57,7 +57,7 @@ public class VotePhase extends TimedPhase {
         addFeature(healFeature);
 
         GameModeFeature gameModeFeature = getGame().createFeature(GameModeFeature.class, this);
-        gameModeFeature.setGameMode(GameMode.SURVIVAL);
+        gameModeFeature.setGameMode(GameMode.ADVENTURE);
         addFeature(gameModeFeature);
     }
 }

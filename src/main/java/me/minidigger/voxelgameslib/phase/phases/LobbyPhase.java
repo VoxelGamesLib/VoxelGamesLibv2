@@ -56,7 +56,7 @@ public class LobbyPhase extends AbstractPhase {
         addFeature(healFeature);
 
         GameModeFeature gameModeFeature = getGame().createFeature(GameModeFeature.class, this);
-        gameModeFeature.setGameMode(GameMode.SURVIVAL);
+        gameModeFeature.setGameMode(GameMode.ADVENTURE);
         addFeature(gameModeFeature);
 
         LobbyFeature lobbyFeature = getGame().createFeature(LobbyFeature.class, this);
