@@ -208,7 +208,7 @@ public class ItemBuilder {
      */
     public ItemBuilder meta(Consumer<ItemMeta> consumer) {
         ItemMeta meta = is.getItemMeta();
-        consumer.accept(is.getItemMeta());
+        consumer.accept(meta);
         is.setItemMeta(meta);
         return this;
     }
