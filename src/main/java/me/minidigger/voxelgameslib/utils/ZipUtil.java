@@ -5,8 +5,6 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 /**
@@ -25,16 +23,10 @@ public class ZipUtil {
     @Nonnull
     public static ZipFile createZip(@Nonnull File file) throws ZipException {
         ZipFile zip = new ZipFile(new File(file.getParent(), file.getName() + ".zip"));
-        ArrayList<File> fileList = new ArrayList<>();
 
-        File[] files = file.listFiles();
-        if (files == null) {
-            return zip;
-        }
-
-        fileList.addAll(Arrays.asList(files));
-
-        zip.createZipFile(fileList, new ZipParameters());
+        ZipParameters params = new ZipParameters();
+        params.setIncludeRootFolder(false);
+        zip.addFolder(file, params);
 
         return zip;
     }
