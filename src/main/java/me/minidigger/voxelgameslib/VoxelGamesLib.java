@@ -18,6 +18,7 @@ import me.minidigger.voxelgameslib.commands.OverrideCommands;
 import me.minidigger.voxelgameslib.commands.RoleCommands;
 import me.minidigger.voxelgameslib.commands.VGLCommands;
 import me.minidigger.voxelgameslib.commands.WorldCommands;
+import me.minidigger.voxelgameslib.commands.WorldRepositoryCommands;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.error.ErrorHandler;
@@ -58,7 +59,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import co.aikar.commands.BukkitCommandCompletionContext;
 import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.BukkitRootCommand;
 import co.aikar.commands.CommandCompletions;
 import co.aikar.commands.CommandContexts;
 import co.aikar.commands.CommandReplacements;
@@ -268,6 +268,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(WorldCreator.class));
         commandManager.registerCommand(injector.getInstance(WorldCommands.class));
         commandManager.registerCommand(injector.getInstance(EditMode.class));
+        commandManager.registerCommand(injector.getInstance(WorldRepositoryCommands.class));
     }
 
     private void registerListeners() {

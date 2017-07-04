@@ -57,6 +57,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Inject
     private Gson gson;
 
+    @Getter
     @Inject
     private WorldRepository worldRepository;
 
