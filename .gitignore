@@ -24,7 +24,6 @@ rebel.xml
 /testserver/plugins/PluginMetrics
 /testserver/plugins/bStats
 /testserver/crash-reports
-/testserver/worlds
 # order always changes...
 /testserver/spigot.yml
 /testserver/commands.yml
