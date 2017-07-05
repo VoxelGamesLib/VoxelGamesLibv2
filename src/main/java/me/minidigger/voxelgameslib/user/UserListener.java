@@ -11,6 +11,7 @@ import me.minidigger.voxelgameslib.lang.LangKey;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
@@ -66,5 +67,15 @@ public class UserListener implements Listener {
         user.ifPresent(u -> gameHandler.getGames(u.getUuid(), true).forEach(game -> game.leave(u)));
 
         handler.logout(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void suppressJoinMessages(@Nonnull PlayerJoinEvent event) {
+        event.setJoinMessage(null);
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void suppressQuitMessages(@Nonnull PlayerQuitEvent event) {
+        event.setQuitMessage(null);
     }
 }

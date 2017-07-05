@@ -13,20 +13,29 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Handles all commands related to roles
  */
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
+@CommandAlias("role")
 public class RoleCommands extends BaseCommand {
 
     @Inject
     private PersistenceHandler persistenceHandler;
 
-    @CommandAlias("role")
+    @Default
+    @CommandPermission("%user")
+    public void role(User sender) {
+        Lang.msg(sender, LangKey.ROLE_SELF, sender.getRole().getName());
+    }
+
+    @UnknownHandler
     @CommandPermission("%moderator")
     @Syntax("[user] - the user which role you wanna get")
     public void role(User sender, @co.aikar.commands.annotation.Optional User user) {
@@ -41,7 +50,7 @@ public class RoleCommands extends BaseCommand {
     @Subcommand("set")
     @Syntax("<user> - the user which role should be changed\n"
             + "<role> - the new role")
-    @CommandPermission("%moderator")
+    @CommandPermission("%admin")
     @CommandCompletion("@players @roles")
     public void set(User sender, User user, Role role) {
         user.setRole(role);

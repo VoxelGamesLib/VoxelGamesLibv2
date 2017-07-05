@@ -236,7 +236,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         con.registerContext(Locale.class, c -> Locale.fromName(c.getFirstArg()).orElse(Locale
                 .fromTag(c.getFirstArg())
                 .orElseThrow(() -> new LangException("Unknown locale " + c.getFirstArg()))));
-        con.registerContext(Role.class, c -> Role.fromName(c.getFirstArg()));
+        con.registerContext(Role.class, c -> Role.fromName(c.getArgs().get(1)));
     }
 
     private void registerCommandReplacements() {

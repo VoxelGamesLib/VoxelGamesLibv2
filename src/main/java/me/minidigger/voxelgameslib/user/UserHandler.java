@@ -117,9 +117,9 @@ public class UserHandler implements Handler {
 
         Optional<User> data = persistenceHandler.getProvider().loadUser(uniqueId);
         if (data.isPresent()) {
-            User userDara = data.get();
-            injector.injectMembers(userDara);
-            tempData.put(uniqueId, userDara);
+            User userData = data.get();
+            injector.injectMembers(userData);
+            tempData.put(uniqueId, userData);
         } else {
             User user = new GamePlayer();
             user.setUuid(uniqueId);
