@@ -9,6 +9,7 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
 import java.io.File;
+import java.util.Map;
 
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
@@ -17,6 +18,7 @@ import me.minidigger.voxelgameslib.feature.FeatureTypeAdapter;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.game.GameTypeAdapter;
 import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.module.Module;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.phase.PhaseTypeAdapter;
 import me.minidigger.voxelgameslib.role.Permission;
@@ -27,7 +29,9 @@ import org.bukkit.Bukkit;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public final class VoxelGamesLibModule extends AbstractModule {
 
     private VoxelGamesLib voxelGamesLib;
@@ -35,16 +39,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
     private BukkitCommandManager commandManager;
     private String pluginVersion;
     private File dataFolder;
-
-    public VoxelGamesLibModule(VoxelGamesLib voxelGamesLib,
-                               TimingManager timingManager, BukkitCommandManager commandManager,
-                               String pluginVersion, File dataFolder) {
-        this.voxelGamesLib = voxelGamesLib;
-        this.timingManager = timingManager;
-        this.commandManager = commandManager;
-        this.pluginVersion = pluginVersion;
-        this.dataFolder = dataFolder;
-    }
+    private Map<Class<Module>, Module> offeredModules;
 
     public Injector createInjector() {
         return Guice.createInjector(this);
@@ -75,6 +70,8 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
         requestStaticInjection(Lang.class);
         requestStaticInjection(Permission.class);
+
+        offeredModules.forEach((key, value) -> bind(key).toInstance(value));
     }
 
     @Provides

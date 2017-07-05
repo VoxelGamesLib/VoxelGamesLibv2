@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ import lombok.extern.java.Log;
 @Singleton
 public class ModuleHandler implements Handler {
 
-    private static Map<Class<? extends Module>, Module> offeredModules = new HashMap<>();
+    private static Map<Class<Module>, Module> offeredModules = new HashMap<>();
     private static boolean isAcceptingOffers = true;
 
     @Nonnull
@@ -33,6 +32,10 @@ public class ModuleHandler implements Handler {
 
     @Inject
     private Injector injector;
+
+    public static Map<Class<Module>, Module> getOfferedModules() {
+        return offeredModules;
+    }
 
     @Override
     public void start() {
@@ -60,6 +63,7 @@ public class ModuleHandler implements Handler {
                 log.info("Loading module " + info.name() + " v" + info.version() + " by " + Arrays
                         .toString(info.authors()));
                 if (Module.class.isAssignableFrom(clazz)) {
+                    //noinspection SuspiciousMethodCalls
                     Module module = offeredModules.get(clazz);
                     injector.injectMembers(module);
                     this.modules.add(module);
@@ -80,7 +84,8 @@ public class ModuleHandler implements Handler {
      */
     public static void offerModule(Module module) {
         if (isAcceptingOffers) {
-            offeredModules.put(module.getClass(), module);
+            //noinspection unchecked
+            offeredModules.put((Class<Module>) module.getClass(), module);
         } else {
             throw new VoxelGameLibException("Module offers closed! Make sure you offer the module onLoad!");
         }
