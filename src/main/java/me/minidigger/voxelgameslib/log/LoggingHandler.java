@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.handler.Handler;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
@@ -54,12 +55,6 @@ public class LoggingHandler extends BaseCommand implements Handler {
         global.addHandler(new TheFuckYouForwardHandler());
         System.setOut(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
         System.setErr(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
-
-        setLevel(Level.FINEST);
-        log.finer("TEST!!!");
-        System.out.println(log.getLevel());
-        logger.finer("efawfafa");
-        System.out.println(logger.getLevel());
     }
 
     @Subcommand("log")
