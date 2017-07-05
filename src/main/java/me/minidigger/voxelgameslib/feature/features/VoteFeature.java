@@ -66,6 +66,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         if (availableMaps.size() == 0) {
             getPhase().getGame().broadcastMessage(LangKey.VOTE_NO_MAPS_FOUND);
             getPhase().getGame().abortGame();
+            return;
         }
 
         getPhase().getGame().getPlayers().forEach(this::sendVoteMessage);
