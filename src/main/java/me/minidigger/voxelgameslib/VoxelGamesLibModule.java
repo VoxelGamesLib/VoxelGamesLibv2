@@ -18,6 +18,7 @@ import me.minidigger.voxelgameslib.feature.FeatureTypeAdapter;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.game.GameTypeAdapter;
 import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.log.LoggingHandler;
 import me.minidigger.voxelgameslib.module.Module;
 import me.minidigger.voxelgameslib.phase.Phase;
 import me.minidigger.voxelgameslib.phase.PhaseTypeAdapter;
@@ -35,6 +36,7 @@ import lombok.AllArgsConstructor;
 public final class VoxelGamesLibModule extends AbstractModule {
 
     private VoxelGamesLib voxelGamesLib;
+    private LoggingHandler loggingHandler;
     private TimingManager timingManager;
     private BukkitCommandManager commandManager;
     private String pluginVersion;
@@ -50,6 +52,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
         bind(VoxelGamesLib.class).toInstance(voxelGamesLib);
         bind(TimingManager.class).toInstance(timingManager);
         bind(BukkitCommandManager.class).toInstance(commandManager);
+        bind(LoggingHandler.class).toInstance(loggingHandler);
 
         bind(String.class).annotatedWith(Names.named("PluginVersion")).toInstance(pluginVersion);
 

@@ -144,7 +144,7 @@ public final class VoxelGamesLib extends JavaPlugin {
             });
 
             // guice
-            VoxelGamesLibModule module = new VoxelGamesLibModule(this, timingManager,
+            VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
                     commandManager, getDescription().getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
             injector = module.createInjector();
             injector.injectMembers(this);
@@ -270,6 +270,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(WorldCommands.class));
         commandManager.registerCommand(injector.getInstance(EditMode.class));
         commandManager.registerCommand(injector.getInstance(WorldRepositoryCommands.class));
+        commandManager.registerCommand(injector.getInstance(LoggingHandler.class));
     }
 
     private void registerListeners() {
