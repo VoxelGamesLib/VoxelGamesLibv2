@@ -144,8 +144,9 @@ public final class VoxelGamesLib extends JavaPlugin {
             });
 
             // guice
-            injector = new VoxelGamesLibModule(this, timingManager,
-                    commandManager, getDescription().getVersion(), getDataFolder()).createInjector();
+            VoxelGamesLibModule module = new VoxelGamesLibModule(this, timingManager,
+                    commandManager, getDescription().getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
+            injector = module.createInjector();
             injector.injectMembers(this);
 
             // then enable all VGL stuff
