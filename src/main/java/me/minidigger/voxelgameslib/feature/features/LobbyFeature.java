@@ -12,21 +12,31 @@ import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
 import org.bukkit.boss.BossBar;
 import org.bukkit.event.EventHandler;
 
+import lombok.extern.java.Log;
+
 /**
  * Small feature that handles stuff related to the lobby phase
  */
+@Log
 public class LobbyFeature extends AbstractFeature {
 
     private Scoreboard scoreboard;
     private boolean starting = false;
     @Expose
     private int startDelay = 120 * 20; // long start delay
+    @Expose
     private int fastStartDelay = 15 * 20; // short start delay
-    private double curr = startDelay;
+    private double curr;
     private BossBar bossBar;
+
+    public LobbyFeature(){
+        log.finer("creating lobby feature with starting " + starting + " curr " + curr);
+    }
 
     @Override
     public void start() {
+        curr = startDelay;
+        log.finer("Starting lobby feature with starting " + starting + " curr " + curr);
         // bossbar
         bossBar = getPhase().getFeature(BossBarFeature.class).getBossBar();
 
@@ -48,6 +58,7 @@ public class LobbyFeature extends AbstractFeature {
         if (starting) {
             curr--;
             if (curr <= 0) {
+                log.finer("Timer over, ending phase");
                 getPhase().getGame().endPhase();
                 return;
             }
@@ -73,7 +84,7 @@ public class LobbyFeature extends AbstractFeature {
                     getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers()));
 
             if (getPhase().getGame().getPlayers().size() >= getPhase().getGame().getMinPlayers()) {
-                if(!starting) {
+                if (!starting) {
                     starting = true;
                     curr = startDelay;
                     //TODO also update scoreboard
@@ -82,8 +93,8 @@ public class LobbyFeature extends AbstractFeature {
                     bossBar.setVisible(true);
                 }
 
-                if(starting && getPhase().getGame().getPlayers().size() == getPhase().getGame().getMaxPlayers()) {
-                    if(curr > fastStartDelay) {
+                if (starting && getPhase().getGame().getPlayers().size() == getPhase().getGame().getMaxPlayers()) {
+                    if (curr > fastStartDelay) {
                         curr = fastStartDelay;
                     }
 

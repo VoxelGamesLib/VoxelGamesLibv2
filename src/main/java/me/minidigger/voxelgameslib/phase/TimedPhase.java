@@ -7,9 +7,12 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 
+import lombok.extern.java.Log;
+
 /**
  * A special {@link Phase} that automatically ends after a specified amount of ticks.
  */
+@Log
 public abstract class TimedPhase extends AbstractPhase {
 
     @Expose
@@ -63,7 +66,7 @@ public abstract class TimedPhase extends AbstractPhase {
     public void tick() {
         super.tick();
         ticks--;
-
+        
         if (ticks <= 0) {
             getGame().endPhase();
         } else {
