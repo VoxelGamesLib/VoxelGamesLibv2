@@ -66,7 +66,7 @@ public abstract class TimedPhase extends AbstractPhase {
     public void tick() {
         super.tick();
         ticks--;
-        
+
         if (ticks <= 0) {
             getGame().endPhase();
         } else {

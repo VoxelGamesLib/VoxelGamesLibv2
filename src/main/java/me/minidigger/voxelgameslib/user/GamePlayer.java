@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
 
 import org.hibernate.annotations.Type;
 
@@ -17,9 +16,11 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,6 +30,8 @@ import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
+import me.minidigger.voxelgameslib.persistence.converter.ComponentConverter;
+import me.minidigger.voxelgameslib.persistence.converter.LocaleConverter;
 import me.minidigger.voxelgameslib.role.Permission;
 import me.minidigger.voxelgameslib.role.Role;
 import me.minidigger.voxelgameslib.utils.ChatUtil;
@@ -63,17 +66,20 @@ public class GamePlayer implements User {
     private UUID uuid;
 
     @Expose
+    @Enumerated(EnumType.STRING)
     private Role role = Role.DEFAULT;
 
-    @OneToOne
     @Expose
+    @Convert(converter = LocaleConverter.class)
     private Locale locale = Locale.ENGLISH;
 
-    @Transient // we need to store this some other way. maybe serialise?
+    @Transient // TODO we need to store this some other way. maybe serialise?
     @Expose
     private Map<String, Rating> ratings = new HashMap<>();
 
-    @Transient
+    @Expose
+    @Column(name = "display_name")
+    @Convert(converter = ComponentConverter.class)
     // combination of <prefix> <rawdisplayname> <suffix>
     private Component displayName;
 
@@ -81,15 +87,15 @@ public class GamePlayer implements User {
     @Column(name = "raw_display_name")
     private String rawDisplayName;
 
-    @Transient
     @Expose
+    @Convert(converter = ComponentConverter.class)
     private Component prefix = TextComponent.of("");
-    @Transient
     @Expose
+    @Convert(converter = ComponentConverter.class)
     private Component suffix = TextComponent.of("");
 
     @Transient
-    @Expose
+    @Expose//TODO figure out what to do with chat channels
     private List<ChatChannel> channels = new ArrayList<>();
     @Transient
     @Expose
@@ -126,12 +132,18 @@ public class GamePlayer implements User {
 
     @Override
     public Component getDisplayName() {
-        if(rawDisplayName == null) {
+        if (rawDisplayName == null) {
             // wat?
             rawDisplayName = getPlayer().getDisplayName();
         }
 
         if (displayName == null && rawDisplayName != null) {
+            if (prefix == null) {
+                prefix = TextComponent.of("");
+            }
+            if (suffix == null) {
+                suffix = TextComponent.of("");
+            }
             displayName = TextComponent.of("").append(prefix.append(TextComponent.of(rawDisplayName))).append(suffix);
         }
         return displayName;
@@ -287,14 +299,14 @@ public class GamePlayer implements User {
 
     @Override
     public void applyRolePrefix() {
-        if(config.useRoleSystem && getRole().getPrefix() != null) {
+        if (config.useRoleSystem && getRole().getPrefix() != null) {
             setPrefix(getRole().getPrefix());
         }
     }
 
     @Override
     public void applyRoleSuffix() {
-        if(config.useRoleSystem && getRole().getSuffix() != null) {
+        if (config.useRoleSystem && getRole().getSuffix() != null) {
             setSuffix(getRole().getSuffix());
         }
     }

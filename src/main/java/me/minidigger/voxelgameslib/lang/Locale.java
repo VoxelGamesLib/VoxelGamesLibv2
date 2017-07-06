@@ -15,10 +15,8 @@ import lombok.Data;
 /**
  * Represents a language a player can select to get all messages in that language
  */
-@Entity
 @Data
 @AllArgsConstructor
-@Table(name = "locales")
 public class Locale implements Serializable {
 
     public static final Locale ENGLISH = new Locale("english", "en");
