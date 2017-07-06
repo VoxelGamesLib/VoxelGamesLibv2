@@ -34,8 +34,9 @@ public enum LangKey {
     GAME_ABORT("{red}Game aborted"),
     GAME_COULD_NOT_START("{red}Could not start game!"),
     GAME_NO_GAME_FOUND("{red}No game to join found!"),
-    GAME_STARTING("{green}The game is about to start"), GAME_START_ABORTED(
-            "{red}Game start aborted!"),
+    GAME_STARTING("{green}The game is about to start"),
+    GAME_START_ABORTED("{red}Game start aborted!"),
+    GAME_STARTING_ACCELERATED("{green}We have reached the max amount of players. Speeding up countdown!"),
 
     GAME_GAMELIST_HEADER("{gold}##### Currently running games ####"),
     GAME_GAMELIST_ENTRY(
