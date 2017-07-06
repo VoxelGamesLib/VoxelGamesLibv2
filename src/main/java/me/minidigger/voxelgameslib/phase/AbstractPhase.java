@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
@@ -25,7 +26,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.BukkitRootCommand;
 import lombok.extern.java.Log;
 
 /**
@@ -56,6 +56,7 @@ public abstract class AbstractPhase implements Phase {
 
     private Game game;
 
+    @Nullable
     private Phase nextPhase;
     private boolean isRunning;
     private List<Feature> startedFeatures = new ArrayList<>();
@@ -114,7 +115,7 @@ public abstract class AbstractPhase implements Phase {
         return features;
     }
 
-    @Nonnull
+    @Nullable
     @Override
     public Phase getNextPhase() {
         return nextPhase;
