@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.tick;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -26,11 +27,17 @@ public class TickHandler implements Handler {
     private VoxelGamesLib voxelGamesLib;
 
     private final List<Tickable> tickables = new ArrayList<>();
+    private final List<Tickable> removeQueue = Collections.synchronizedList(new ArrayList<>());
 
     /**
      * Called when the underlying server mod calls a tick. Causes all {@link Tickable}s to tick
      */
     public void tick() {
+        // stop old stuff
+        removeQueue.forEach(Tickable::stop);
+        tickables.removeAll(removeQueue);
+        removeQueue.clear();
+
         tickables.forEach(Tickable::tick);
     }
 
@@ -66,6 +73,6 @@ public class TickHandler implements Handler {
      * @param tickable the tickable which should no longer receive ticks
      */
     public void end(Tickable tickable) {
-        tickables.remove(tickable);
+        removeQueue.add(tickable);
     }
 }
