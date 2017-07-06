@@ -73,7 +73,7 @@ public abstract class AbstractGame implements Game {
 
     @Nonnull
     @Transient // todo: save this in the entity
-    private final GameMode gameMode;
+    private GameMode gameMode;
 
     @Transient
     protected Phase activePhase;
@@ -111,6 +111,10 @@ public abstract class AbstractGame implements Game {
      */
     public AbstractGame(@Nonnull GameMode mode) {
         this.gameMode = mode;
+    }
+
+    protected AbstractGame() {
+        //JPA
     }
 
     @Override
@@ -242,7 +246,9 @@ public abstract class AbstractGame implements Game {
                     .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
         }
 
-        broadcastMessage(LangKey.GAME_END);
+        if (!aborted) {
+            broadcastMessage(LangKey.GAME_END);
+        }
 
         end();
     }
@@ -255,8 +261,10 @@ public abstract class AbstractGame implements Game {
             leave(spectators.get(0));
         }
 
-        activePhase.setRunning(false);
-        activePhase.stop();
+        if (activePhase.isRunning()) {
+            activePhase.setRunning(false);
+            activePhase.stop();
+        }
 
         chatHandler.removeChannel(chatChannel.getIdentifier());
         chatChannel = null;
@@ -271,7 +279,7 @@ public abstract class AbstractGame implements Game {
         aborted = true;
         broadcastMessage(LangKey.GAME_ABORT);
 
-        end();
+        endGame(null, null);
     }
 
     private void handleElo(@Nullable Team winnerTeam, @Nullable User winnerUser) {
