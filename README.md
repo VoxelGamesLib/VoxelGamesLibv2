@@ -6,6 +6,10 @@ Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
 
 This will be a large-scaled, fully-modular and well-documented minigames API.
 
+# Documentation
+
+Be sure to check out [the wiki!](https://github.com/VoxelGamesLib/VoxelGamesLibv2/wiki)
+
 # Building
 
 VoxelGamesLib uses [Maven 3](http://maven.apache.org/) for compilation. To compile:
@@ -17,6 +21,6 @@ VoxelGamesLib uses [Maven 3](http://maven.apache.org/) for compilation. To compi
 
 See [Contributing.md](CONTRIBUTING.md)
 
-# Licence
+# License
 
-MIT
+[MIT](LICENSE)
