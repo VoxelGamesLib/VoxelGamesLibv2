@@ -36,13 +36,13 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onL(@Nonnull GameLeaveEvent event) {
-        log.finer(event.getUser().getDisplayName() + " left the game " + event.getGame()
+        log.finer(event.getUser().getRawDisplayName() + " left the game " + event.getGame()
                 .getGameMode().getName());
     }
 
     @EventHandler
     public void onJ(@Nonnull GameJoinEvent event) {
-        log.finer(event.getUser().getDisplayName() + " joined the game " + event.getGame()
+        log.finer(event.getUser().getRawDisplayName() + " joined the game " + event.getGame()
                 .getGameMode().getName());
     }
 }

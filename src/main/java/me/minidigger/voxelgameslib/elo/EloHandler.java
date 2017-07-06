@@ -101,7 +101,7 @@ public class EloHandler implements Handler {
             User user = (User) iPlayer;
             user.saveRating(game.getGameMode(), newRatings.get(iPlayer));
             //TODO fixme
-            log.info("New Rating for " + user.getDisplayName() + " is "
+            log.info("New Rating for " + user.getRawDisplayName() + " is "
                     + newRatings.get(iPlayer).getMean() + "(" + newRatings.get(iPlayer).getStandardDeviation()
                     + ")");
         }
