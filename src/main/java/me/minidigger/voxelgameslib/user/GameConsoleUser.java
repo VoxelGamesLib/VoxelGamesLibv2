@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
+import me.minidigger.voxelgameslib.elo.RatingWrapper;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
@@ -78,7 +79,7 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
-    public Map<String, Rating> getRatings() {
+    public Map<String, RatingWrapper> getRatings() {
         return new HashMap<>();
     }
 

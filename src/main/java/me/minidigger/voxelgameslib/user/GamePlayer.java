@@ -15,18 +15,23 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
+import me.minidigger.voxelgameslib.elo.RatingWrapper;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.persistence.PersistenceHandler;
@@ -73,9 +78,11 @@ public class GamePlayer implements User {
     @Convert(converter = LocaleConverter.class)
     private Locale locale = Locale.ENGLISH;
 
-    @Transient // TODO we need to store this some other way. maybe serialise?
     @Expose
-    private Map<String, Rating> ratings = new HashMap<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @CollectionTable(name = "ratings")
+    @MapKeyColumn(name = "gamemode")
+    private Map<String, RatingWrapper> ratings = new HashMap<>();
 
     @Expose
     @Column(name = "display_name")
@@ -181,22 +188,25 @@ public class GamePlayer implements User {
 
     @Override
     public Rating getRating(GameMode mode) {
-        Rating rating = ratings.get(mode.getName());
+        RatingWrapper rating = getRatings().get(mode.getName());
         if (rating == null) {
-            rating = mode.getDefaultRating();
+            return mode.getDefaultRating();
             // no need to save here
         }
-        return rating;
+        return rating.toRating();
     }
 
     @Override
     public void saveRating(GameMode mode, Rating rating) {
-        ratings.put(mode.getName(), rating);
+        ratings.put(mode.getName(), new RatingWrapper(rating));
         persistenceHandler.getProvider().saveUser(this);
     }
 
     @Override
-    public Map<String, Rating> getRatings() {
+    public Map<String, RatingWrapper> getRatings() {
+        if (ratings == null) {
+            ratings = new HashMap<>();
+        }
         return ratings;
     }
 
