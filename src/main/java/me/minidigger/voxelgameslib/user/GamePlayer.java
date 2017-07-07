@@ -246,11 +246,13 @@ public class GamePlayer implements User {
     @Override
     public void setPrefix(Component prefix) {
         this.prefix = prefix;
+        refreshDisplayName();
     }
 
     @Override
     public void setSuffix(Component suffix) {
         this.suffix = suffix;
+        refreshDisplayName();
     }
 
     @Override
