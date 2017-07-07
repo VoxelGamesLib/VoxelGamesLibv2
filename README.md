@@ -6,6 +6,11 @@ Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
 
 This will be a large-scaled, fully-modular and well-documented minigames API.
 
+# Chat
+
+We can find the active contributors on irc. irc.spi.gt #minidigger  
+Webchat link: http://irc.spi.gt/iris/?nick=&channels=minidigger
+
 # Documentation
 
 Be sure to check out [the wiki!](https://github.com/VoxelGamesLib/VoxelGamesLibv2/wiki)
