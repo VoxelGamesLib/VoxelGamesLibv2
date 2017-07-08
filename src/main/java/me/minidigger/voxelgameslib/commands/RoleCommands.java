@@ -54,6 +54,8 @@ public class RoleCommands extends BaseCommand {
     @CommandCompletion("@players @roles")
     public void set(User sender, User user, Role role) {
         user.setRole(role);
+        user.applyRolePrefix();
+        user.applyRoleSuffix();
         Lang.msg(sender, LangKey.ROLE_UPDATED_OTHER,
                 user.getDisplayName(), role.getName());
         persistenceHandler.getProvider().saveUser(user);
