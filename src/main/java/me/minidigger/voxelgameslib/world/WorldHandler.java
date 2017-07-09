@@ -169,6 +169,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
     @Override
     public void start() {
+        cleanup();
+
         //worldRepository.setURL();// TODO make url configurable
         if (!worldsFolder.exists()) {
             log.warning(
@@ -197,7 +199,18 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
     @Override
     public void stop() {
+        cleanup();
+    }
 
+    private void cleanup() {
+        File[] files = worldContainer.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory() && file.getName().startsWith("TEMP_")) {
+                    FileUtils.delete(file);
+                }
+            }
+        }
     }
 
     @Nonnull
