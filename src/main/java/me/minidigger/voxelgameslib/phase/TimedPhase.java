@@ -45,6 +45,7 @@ public abstract class TimedPhase extends AbstractPhase {
 
         originalTicks = ticks;
 
+        log.finer("start timed phase with name " + getName());
         bossBar = Bukkit.createBossBar(getName(), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
         getGame().getPlayers().forEach(u -> bossBar.addPlayer(u.getPlayer()));

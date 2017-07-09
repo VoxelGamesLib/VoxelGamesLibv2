@@ -262,4 +262,15 @@ public class Lang {
         userHandler.getUsers().forEach(user -> user.sendMessage(message));
         GameConsoleUser.INSTANCE.sendMessage(message);
     }
+
+    /**
+     * Sends a message to all players
+     *
+     * @param key  the message to send
+     * @param args the args for the message
+     */
+    public static void broadcast(LangKey key, Object... args) {
+        userHandler.getUsers().forEach(user -> Lang.msg(user, key, args));
+        GameConsoleUser.INSTANCE.sendMessage(Lang.trans(key, args));
+    }
 }

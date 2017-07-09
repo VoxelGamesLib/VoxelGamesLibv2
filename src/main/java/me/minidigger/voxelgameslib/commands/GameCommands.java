@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
@@ -30,6 +31,8 @@ public class GameCommands extends BaseCommand {
 
     @Inject
     private GameHandler gameHandler;
+    @Inject
+    private GlobalConfig config;
 
     @Subcommand("help")
     @CommandAlias("game")
@@ -75,6 +78,10 @@ public class GameCommands extends BaseCommand {
         if (game.getActivePhase().isRunning()) {
             game.join(sender);
             Lang.msg(sender, LangKey.GAME_GAME_STARTED);
+            if (config.announceNewGame) {
+                //TODO make this actually clickable, lol
+                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, sender.getDisplayName(), mode.getName());
+            }
         } else {
             Lang.msg(sender, LangKey.GAME_COULD_NOT_START);
         }

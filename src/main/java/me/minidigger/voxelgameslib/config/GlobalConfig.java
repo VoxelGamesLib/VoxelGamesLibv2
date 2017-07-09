@@ -34,6 +34,8 @@ public class GlobalConfig extends Config {
     public PersistenceConfig persistence = new PersistenceConfig();
     @Expose
     public int signUpdateInterval = 60;
+    @Expose
+    public boolean announceNewGame = true;
 
     /**
      * @return the default config, with all default settings
