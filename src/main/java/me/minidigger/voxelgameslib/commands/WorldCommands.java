@@ -89,7 +89,7 @@ public class WorldCommands extends BaseCommand {
         Optional<Map> o = handler.getMap(world);
         if (o.isPresent()) {
             Map map = o.get();
-            sender.getPlayer().teleport(map.getCenter().toLocation(map.getWorldName()));
+            sender.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName()));
         } else {
             World w = Bukkit.getWorld(world);
             if (w != null) {

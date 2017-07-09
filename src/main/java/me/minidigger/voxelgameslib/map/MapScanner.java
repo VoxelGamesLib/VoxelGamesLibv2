@@ -67,9 +67,9 @@ public class MapScanner {
      * @param range  the range in where to scan
      */
     public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range) {
-        World world = Bukkit.getWorld(map.getWorldName());
+        World world = Bukkit.getWorld(map.getLoadedName());
         if (world == null) {
-            throw new MapException("Could not find world " + map.getWorldName() + ". Is it loaded?");
+            throw new MapException("Could not find world " + map.getLoadedName() + "(" + map.getInfo().getName() + ")" + ". Is it loaded?");
         }
 
         List<Marker> markers = new ArrayList<>();

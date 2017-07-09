@@ -11,10 +11,13 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
 
+import lombok.Data;
+
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a
  * world.
  */
+@Data
 public class Map {
 
     @Expose
@@ -29,6 +32,8 @@ public class Map {
     private List<Marker> markers = new ArrayList<>();
     @Expose
     private List<ChestMarker> chestMarkers = new ArrayList<>();
+
+    private String loadedName;
 
     private boolean loaded;
 
@@ -67,102 +72,7 @@ public class Map {
         //TODO print summery of map
     }
 
-    /**
-     * @return the info of this map
-     */
-    public MapInfo getInfo() {
-        return info;
-    }
-
-    /**
-     * @param info the info to set
-     */
-    public void setInfo(MapInfo info) {
-        this.info = info;
-    }
-
-    /**
-     * @return the center of this map
-     */
-    public Vector3D getCenter() {
-        return center;
-    }
-
-    /**
-     * @param center the center to set
-     */
-    public void setCenter(Vector3D center) {
-        this.center = center;
-    }
-
-    /**
-     * @return the radius of this map
-     */
-    public int getRadius() {
-        return radius;
-    }
-
-    /**
-     * @param radius the radius to set
-     */
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
-    /**
-     * @return the worldname of this map
-     */
     public String getWorldName() {
         return worldName;
-    }
-
-    /**
-     * @param worldName the worldname to set
-     */
-    public void setWorldName(String worldName) {
-        this.worldName = worldName;
-    }
-
-    /**
-     * @return the list of markers for this map
-     */
-    public List<Marker> getMarkers() {
-        return markers;
-    }
-
-    /**
-     * @param markers the list of markers to set
-     */
-    public void setMarkers(List<Marker> markers) {
-        this.markers = markers;
-
-    }
-
-    /**
-     * @return the list of chest markers for this map
-     */
-    public List<ChestMarker> getChestMarkers() {
-        return chestMarkers;
-    }
-
-    /**
-     * @param chestMarkers the chestmarkers to set
-     */
-    public void setChestMarkers(List<ChestMarker> chestMarkers) {
-        this.chestMarkers = chestMarkers;
-    }
-
-    /**
-     * @return if this map is loaded
-     */
-    public boolean isLoaded() {
-        return loaded;
-    }
-
-    /**
-     * @param loaded if this map is loaded
-     */
-    public void setLoaded(boolean loaded) {
-        this.loaded = loaded;
     }
 }
