@@ -3,8 +3,10 @@ package me.minidigger.voxelgameslib.map;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.lang.Lang;
@@ -12,11 +14,13 @@ import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
 
 import lombok.Data;
+import lombok.extern.java.Log;
 
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a
  * world.
  */
+@Log
 @Data
 public class Map {
 
@@ -33,9 +37,7 @@ public class Map {
     @Expose
     private List<ChestMarker> chestMarkers = new ArrayList<>();
 
-    private String loadedName;
-
-    private boolean loaded;
+    private HashMap<UUID, String> loadedNames = new HashMap<>();
 
     /**
      * @param mapInfo   the map info for this map
@@ -49,6 +51,7 @@ public class Map {
         this.worldName = worldName;
         this.center = center;
         this.radius = radius;
+        loadedNames = new HashMap<>();
     }
 
     /**
@@ -72,7 +75,33 @@ public class Map {
         //TODO print summery of map
     }
 
-    public String getWorldName() {
-        return worldName;
+    public String getLoadedName(UUID gameid) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        return loadedNames.get(gameid);
+    }
+
+    public void load(UUID gameid, String name) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        if (loadedNames.put(gameid, name) != null) {
+            log.warning("Loaded the same map for the same game instance twice?");
+        }
+    }
+
+    public boolean isLoaded(UUID gameid) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        return loadedNames.containsKey(gameid);
+    }
+
+    public void unload(UUID gameid){
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        loadedNames.remove(gameid);
     }
 }

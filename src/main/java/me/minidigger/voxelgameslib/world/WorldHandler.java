@@ -135,22 +135,21 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param map the map that should be loaded
      * @throws WorldException something goes wrong
      */
-    public void loadWorld(@Nonnull Map map) {
-        map.setLoaded(true);
+    public void loadWorld(@Nonnull Map map, UUID gameid) {
+        map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
+        log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
 
-        map.setLoadedName("TEMP_" + map.getWorldName() + "_" + UUID.randomUUID().toString().split("-")[0]);
-        log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName());
-
-        File file = new File(worldContainer, map.getLoadedName());
+        File file = new File(worldContainer, map.getLoadedName(gameid));
 
         try {
             ZipFile zip = new ZipFile(new File(worldsFolder, map.getWorldName() + ".zip"));
             zip.extractAll(file.getAbsolutePath());
+            FileUtils.delete(new File(file, "uid.dat"));
         } catch (ZipException e) {
             throw new WorldException("Could not unzip world " + map.getInfo().getName() + ".", e);
         }
 
-        loadLocalWorld(map.getLoadedName());
+        loadLocalWorld(map.getLoadedName(gameid));
     }
 
     /**
@@ -160,11 +159,10 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      *
      * @param map the map that should be unloaded.
      */
-    public void unloadWorld(@Nonnull Map map) {
-        unloadLocalWorld(map.getLoadedName());
-        map.setLoaded(false);
-
-        FileUtils.delete(new File(worldContainer, map.getLoadedName()));
+    public void unloadWorld(@Nonnull Map map, UUID gameid) {
+        unloadLocalWorld(map.getLoadedName(gameid));
+        FileUtils.delete(new File(worldContainer, map.getLoadedName(gameid)));
+        map.unload(gameid);
     }
 
     @Override
