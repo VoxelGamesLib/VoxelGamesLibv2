@@ -266,9 +266,9 @@ public abstract class AbstractGame implements Game {
             activePhase.stop();
         }
 
+        tickHandler.end(this);
         chatHandler.removeChannel(chatChannel.getIdentifier());
         chatChannel = null;
-        tickHandler.end(this);
         gameHandler.removeGame(this);
     }
 

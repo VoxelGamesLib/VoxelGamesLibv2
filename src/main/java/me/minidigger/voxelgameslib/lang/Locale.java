@@ -5,9 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

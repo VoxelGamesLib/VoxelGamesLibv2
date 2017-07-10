@@ -3,18 +3,25 @@ package me.minidigger.voxelgameslib.map;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
 
+import lombok.Data;
+import lombok.extern.java.Log;
+
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a
  * world.
  */
+@Log
+@Data
 public class Map {
 
     @Expose
@@ -30,7 +37,7 @@ public class Map {
     @Expose
     private List<ChestMarker> chestMarkers = new ArrayList<>();
 
-    private boolean loaded;
+    private HashMap<UUID, String> loadedNames = new HashMap<>();
 
     /**
      * @param mapInfo   the map info for this map
@@ -44,6 +51,7 @@ public class Map {
         this.worldName = worldName;
         this.center = center;
         this.radius = radius;
+        loadedNames = new HashMap<>();
     }
 
     /**
@@ -67,102 +75,33 @@ public class Map {
         //TODO print summery of map
     }
 
-    /**
-     * @return the info of this map
-     */
-    public MapInfo getInfo() {
-        return info;
+    public String getLoadedName(UUID gameid) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        return loadedNames.get(gameid);
     }
 
-    /**
-     * @param info the info to set
-     */
-    public void setInfo(MapInfo info) {
-        this.info = info;
+    public void load(UUID gameid, String name) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        if (loadedNames.put(gameid, name) != null) {
+            log.warning("Loaded the same map for the same game instance twice?");
+        }
     }
 
-    /**
-     * @return the center of this map
-     */
-    public Vector3D getCenter() {
-        return center;
+    public boolean isLoaded(UUID gameid) {
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        return loadedNames.containsKey(gameid);
     }
 
-    /**
-     * @param center the center to set
-     */
-    public void setCenter(Vector3D center) {
-        this.center = center;
-    }
-
-    /**
-     * @return the radius of this map
-     */
-    public int getRadius() {
-        return radius;
-    }
-
-    /**
-     * @param radius the radius to set
-     */
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
-    /**
-     * @return the worldname of this map
-     */
-    public String getWorldName() {
-        return worldName;
-    }
-
-    /**
-     * @param worldName the worldname to set
-     */
-    public void setWorldName(String worldName) {
-        this.worldName = worldName;
-    }
-
-    /**
-     * @return the list of markers for this map
-     */
-    public List<Marker> getMarkers() {
-        return markers;
-    }
-
-    /**
-     * @param markers the list of markers to set
-     */
-    public void setMarkers(List<Marker> markers) {
-        this.markers = markers;
-
-    }
-
-    /**
-     * @return the list of chest markers for this map
-     */
-    public List<ChestMarker> getChestMarkers() {
-        return chestMarkers;
-    }
-
-    /**
-     * @param chestMarkers the chestmarkers to set
-     */
-    public void setChestMarkers(List<ChestMarker> chestMarkers) {
-        this.chestMarkers = chestMarkers;
-    }
-
-    /**
-     * @return if this map is loaded
-     */
-    public boolean isLoaded() {
-        return loaded;
-    }
-
-    /**
-     * @param loaded if this map is loaded
-     */
-    public void setLoaded(boolean loaded) {
-        this.loaded = loaded;
+    public void unload(UUID gameid){
+        if(loadedNames == null){
+            loadedNames = new HashMap<>();
+        }
+        loadedNames.remove(gameid);
     }
 }

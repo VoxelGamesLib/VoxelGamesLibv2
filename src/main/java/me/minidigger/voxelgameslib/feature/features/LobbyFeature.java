@@ -29,7 +29,7 @@ public class LobbyFeature extends AbstractFeature {
     private double curr;
     private BossBar bossBar;
 
-    public LobbyFeature(){
+    public LobbyFeature() {
         log.finer("creating lobby feature with starting " + starting + " curr " + curr);
     }
 
@@ -39,6 +39,7 @@ public class LobbyFeature extends AbstractFeature {
         log.finer("Starting lobby feature with starting " + starting + " curr " + curr);
         // bossbar
         bossBar = getPhase().getFeature(BossBarFeature.class).getBossBar();
+        bossBar.setVisible(false);
 
         // scoreboard
         scoreboard = getPhase().getFeature(ScoreboardFeature.class).getScoreboard();

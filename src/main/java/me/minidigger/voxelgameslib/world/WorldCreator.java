@@ -256,7 +256,7 @@ public class WorldCreator extends BaseCommand {
             return;
         }
 
-        mapScanner.scan(map);
+        mapScanner.scan(map, editor.getUuid());
 
         File worldFolder = new File(worldHandler.getWorldContainer(), map.getWorldName());
 

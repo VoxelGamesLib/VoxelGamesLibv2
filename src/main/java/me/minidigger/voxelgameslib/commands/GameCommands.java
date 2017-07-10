@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.game.GameMode;
@@ -30,6 +31,8 @@ public class GameCommands extends BaseCommand {
 
     @Inject
     private GameHandler gameHandler;
+    @Inject
+    private GlobalConfig config;
 
     @Subcommand("help")
     @CommandAlias("game")
@@ -75,6 +78,10 @@ public class GameCommands extends BaseCommand {
         if (game.getActivePhase().isRunning()) {
             game.join(sender);
             Lang.msg(sender, LangKey.GAME_GAME_STARTED);
+            if (config.announceNewGame) {
+                //TODO make this actually clickable, lol
+                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, sender.getDisplayName(), mode.getName());
+            }
         } else {
             Lang.msg(sender, LangKey.GAME_COULD_NOT_START);
         }
@@ -108,14 +115,14 @@ public class GameCommands extends BaseCommand {
             if (games.size() > 1) {
                 //TODO msg
             } else {
-                log.finer("skip " + getName());
+                log.finer("skip " + games.get(0).getActivePhase().getName());
                 games.get(0).endPhase();
             }
         } else {
             if (games.size() > id || id < 0) {
                 //TODO msg
             } else {
-                log.finer("skip " + getName());
+                log.finer("skip " + games.get(0).getActivePhase().getName());
                 games.get(id).endPhase();
             }
         }
@@ -124,6 +131,6 @@ public class GameCommands extends BaseCommand {
     @Subcommand("shout")
     @CommandAlias("shout|s")
     public void shout(User sender) {
-        // send msg to entire game
+        // TODO send msg to entire game
     }
 }

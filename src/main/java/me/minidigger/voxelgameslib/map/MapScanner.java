@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.exception.MapException;
@@ -30,8 +31,8 @@ public class MapScanner {
      *
      * @param map the map to scan
      */
-    public void scan(@Nonnull Map map) {
-        searchForMarkers(map, map.getCenter(), map.getRadius());
+    public void scan(@Nonnull Map map, UUID gameid) {
+        searchForMarkers(map, map.getCenter(), map.getRadius(), gameid);
 
         List<Marker> errored = new ArrayList<>();
 
@@ -66,10 +67,10 @@ public class MapScanner {
      * @param center the center location
      * @param range  the range in where to scan
      */
-    public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range) {
-        World world = Bukkit.getWorld(map.getWorldName());
+    public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range, UUID gameid) {
+        World world = Bukkit.getWorld(map.getLoadedName(gameid));
         if (world == null) {
-            throw new MapException("Could not find world " + map.getWorldName() + ". Is it loaded?");
+            throw new MapException("Could not find world " + map.getLoadedName(gameid) + "(" + map.getInfo().getName() + ")" + ". Is it loaded?");
         }
 
         List<Marker> markers = new ArrayList<>();

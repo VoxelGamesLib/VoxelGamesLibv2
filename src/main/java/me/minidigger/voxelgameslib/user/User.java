@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
+import me.minidigger.voxelgameslib.elo.RatingWrapper;
 import me.minidigger.voxelgameslib.game.GameMode;
 import me.minidigger.voxelgameslib.lang.Locale;
 import me.minidigger.voxelgameslib.role.Permission;
@@ -109,7 +110,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     /**
      * @return all ratings for this player
      */
-    Map<String, Rating> getRatings();
+    Map<String, RatingWrapper> getRatings();
 
     /**
      * sets the player object for this user

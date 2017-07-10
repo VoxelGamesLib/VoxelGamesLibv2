@@ -38,6 +38,8 @@ public enum LangKey {
     GAME_START_ABORTED("{red}Game start aborted!"),
     GAME_STARTING_ACCELERATED("{green}We have reached the max amount of players. Speeding up countdown!"),
 
+    GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {aqua}Click here to join!","name","mode"),
+
     GAME_GAMELIST_HEADER("{gold}##### Currently running games ####"),
     GAME_GAMELIST_ENTRY(
             "{aqua}# {yellow}{uuid} {aqua}- {yellow}{mode} {aqua}in phase {yellow}{phase} {aqua}with {yellow}{players}({spectators}) {aqua}players",

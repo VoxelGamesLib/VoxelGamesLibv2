@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -134,20 +135,21 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param map the map that should be loaded
      * @throws WorldException something goes wrong
      */
-    public void loadWorld(@Nonnull Map map) {
-        map.setLoaded(true);
+    public void loadWorld(@Nonnull Map map, UUID gameid) {
+        map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
+        log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
 
-        File file = new File(worldContainer, map.getWorldName());
-        FileUtils.delete(file);
+        File file = new File(worldContainer, map.getLoadedName(gameid));
 
         try {
             ZipFile zip = new ZipFile(new File(worldsFolder, map.getWorldName() + ".zip"));
             zip.extractAll(file.getAbsolutePath());
+            FileUtils.delete(new File(file, "uid.dat"));
         } catch (ZipException e) {
-            throw new WorldException("Could not unzip world " + map.getWorldName() + ".", e);
+            throw new WorldException("Could not unzip world " + map.getInfo().getName() + ".", e);
         }
 
-        loadLocalWorld(map.getWorldName());
+        loadLocalWorld(map.getLoadedName(gameid));
     }
 
     /**
@@ -157,15 +159,16 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      *
      * @param map the map that should be unloaded.
      */
-    public void unloadWorld(@Nonnull Map map) {
-        unloadLocalWorld(map.getWorldName());
-        map.setLoaded(false);
-
-        FileUtils.delete(new File(worldContainer, map.getWorldName()));
+    public void unloadWorld(@Nonnull Map map, UUID gameid) {
+        unloadLocalWorld(map.getLoadedName(gameid));
+        FileUtils.delete(new File(worldContainer, map.getLoadedName(gameid)));
+        map.unload(gameid);
     }
 
     @Override
     public void start() {
+        cleanup();
+
         //worldRepository.setURL();// TODO make url configurable
         if (!worldsFolder.exists()) {
             log.warning(
@@ -194,7 +197,18 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
     @Override
     public void stop() {
+        cleanup();
+    }
 
+    private void cleanup() {
+        File[] files = worldContainer.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory() && file.getName().startsWith("TEMP_")) {
+                    FileUtils.delete(file);
+                }
+            }
+        }
     }
 
     @Nonnull

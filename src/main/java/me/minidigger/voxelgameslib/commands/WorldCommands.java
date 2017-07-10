@@ -53,7 +53,7 @@ public class WorldCommands extends BaseCommand {
         Optional<Map> o = handler.getMap(mapName);
         Map map = o.orElseGet(() -> handler.loadMap(mapName));
 
-        handler.loadWorld(map);
+        handler.loadWorld(map, sender.getUuid());
     }
 
     @Subcommand("unload")
@@ -62,7 +62,7 @@ public class WorldCommands extends BaseCommand {
     public void unload(User sender, String mapName) {
         Optional<Map> o = handler.getMap(mapName);
         if (o.isPresent()) {
-            handler.unloadWorld(o.get());
+            handler.unloadWorld(o.get(), sender.getUuid());
         } else {
             Lang.msg(sender, LangKey.WORLD_UNKNOWN_MAP, mapName);
         }
@@ -89,7 +89,7 @@ public class WorldCommands extends BaseCommand {
         Optional<Map> o = handler.getMap(world);
         if (o.isPresent()) {
             Map map = o.get();
-            sender.getPlayer().teleport(map.getCenter().toLocation(map.getWorldName()));
+            sender.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName(sender.getUuid())));
         } else {
             World w = Bukkit.getWorld(world);
             if (w != null) {
