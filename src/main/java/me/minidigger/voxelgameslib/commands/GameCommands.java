@@ -115,14 +115,14 @@ public class GameCommands extends BaseCommand {
             if (games.size() > 1) {
                 //TODO msg
             } else {
-                log.finer("skip " + getName());
+                log.finer("skip " + games.get(0).getActivePhase().getName());
                 games.get(0).endPhase();
             }
         } else {
             if (games.size() > id || id < 0) {
                 //TODO msg
             } else {
-                log.finer("skip " + getName());
+                log.finer("skip " + games.get(0).getActivePhase().getName());
                 games.get(id).endPhase();
             }
         }
@@ -131,6 +131,6 @@ public class GameCommands extends BaseCommand {
     @Subcommand("shout")
     @CommandAlias("shout|s")
     public void shout(User sender) {
-        // send msg to entire game
+        // TODO send msg to entire game
     }
 }
