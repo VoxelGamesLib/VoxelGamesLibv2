@@ -34,3 +34,16 @@ You will need to grab a Spigot jar to run. You can set up the server as such, in
 ![IntelliJ Dev Setup](https://i.imgur.com/GTxsHjO.png)
 
 `mvn install` will automatically install the compiled plugin in `/testserver/plugins` for your convenience.
+
+### Maven Repository
+
+VoxelGamesLib can be found on the [indices.io repository](https://nexus.indices.io).
+
+```
+<repositories>
+    <repository>
+        <id>indices</id>
+        <url>https://nexus.indices.io/content/groups/public/</url>
+    </repository>
+</repositories>
+```

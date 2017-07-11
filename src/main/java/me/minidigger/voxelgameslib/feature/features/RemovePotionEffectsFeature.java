@@ -3,7 +3,7 @@ package me.minidigger.voxelgameslib.feature.features;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 
 public class RemovePotionEffectsFeature extends AbstractFeature {
-    
+
     @Override
     public void start() {
         getPhase().getGame().getPlayers().forEach(user -> {
