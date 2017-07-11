@@ -35,7 +35,7 @@ public class VoidTeleportFeature extends AbstractFeature {
 
     @Override
     public Class[] getDependencies() {
-        return new Class[0];
+        return new Class[]{SpawnFeature.class};
     }
 
     @EventHandler
