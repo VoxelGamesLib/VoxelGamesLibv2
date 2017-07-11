@@ -17,7 +17,7 @@ import me.minidigger.voxelgameslib.utils.CollectionUtil;
 @Singleton
 public class GlobalConfig extends Config {
 
-    public final int configVersion = 1;
+    public final int configVersion = 2;
     @Expose
     public int currentVersion = configVersion;
 
@@ -36,6 +36,8 @@ public class GlobalConfig extends Config {
     public int signUpdateInterval = 60;
     @Expose
     public boolean announceNewGame = true;
+    @Expose
+    public boolean loadGameDefinitions = false;
 
     /**
      * @return the default config, with all default settings
