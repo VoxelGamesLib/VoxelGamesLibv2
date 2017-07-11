@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.event.events.game.GameStartEvent;
 import me.minidigger.voxelgameslib.exception.GameModeNotAvailableException;
 import me.minidigger.voxelgameslib.exception.GameStartException;
@@ -50,6 +51,8 @@ public class GameHandler implements Handler {
     private PersistenceHandler persistenceHandler;
     @Inject
     private Gson gson;
+    @Inject
+    private ConfigHandler configHandler;
 
     private final List<Game> games = new ArrayList<>();
     private final List<GameMode> modes = new ArrayList<>();
@@ -57,7 +60,11 @@ public class GameHandler implements Handler {
 
     @Override
     public void start() {
-        loadGameDefinitons();
+        if (configHandler.get().loadGameDefinitions) {
+            loadGameDefinitons();
+        } else {
+            log.info("Game definitions are deactivated");
+        }
     }
 
     @Override
