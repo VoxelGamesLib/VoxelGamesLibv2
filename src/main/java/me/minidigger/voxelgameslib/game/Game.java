@@ -129,6 +129,8 @@ public interface Game extends Tickable {
      */
     boolean isSpectating(@Nonnull UUID uuid);
 
+    boolean isParticipating(@Nonnull UUID user);
+
     /**
      * Creates a new feature class (using guice and stuff)
      *
@@ -189,6 +191,9 @@ public interface Game extends Tickable {
      * @param data the data
      */
     void putGameData(@Nonnull String key, @Nonnull Object data);
+
+    @Nonnull
+    List<User> getAllUsers();
 
     /**
      * @param key the key to get the data for

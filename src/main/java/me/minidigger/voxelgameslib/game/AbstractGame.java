@@ -90,6 +90,8 @@ public abstract class AbstractGame implements Game {
     private final List<User> players = new ArrayList<>();
     @Transient // todo: save this in the entity, relation to User as well
     private final List<User> spectators = new ArrayList<>();
+    @Transient
+    private final List<User> allUsers = new ArrayList<>();
 
     @Transient
     // todo: save this in the entity, see: @Convert annotation (https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object)
@@ -129,14 +131,12 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void broadcastMessage(@Nonnull Component message) {
-        players.forEach(u -> u.sendMessage(message));
-        spectators.forEach(u -> u.sendMessage(message));
+        allUsers.forEach(u -> u.sendMessage(message));
     }
 
     @Override
     public void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args) {
-        players.forEach(user -> Lang.msg(user, key, args));
-        spectators.forEach(user -> Lang.msg(user, key, args));
+        allUsers.forEach(user -> Lang.msg(user, key, args));
     }
 
     @Override
@@ -342,6 +342,7 @@ public abstract class AbstractGame implements Game {
 
         if (!isPlaying(user.getUuid())) {
             players.add(user);
+            allUsers.add(user);
             Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }
@@ -360,6 +361,7 @@ public abstract class AbstractGame implements Game {
 
         if (!isPlaying(user.getUuid()) && !isSpectating(user.getUuid())) {
             spectators.add(user);
+            allUsers.add(user);
         }
     }
 
@@ -367,6 +369,7 @@ public abstract class AbstractGame implements Game {
     public void leave(@Nonnull User user) {
         players.remove(user);
         spectators.remove(user);
+        allUsers.remove(user);
         Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
@@ -385,6 +388,11 @@ public abstract class AbstractGame implements Game {
     @Override
     public boolean isSpectating(@Nonnull UUID user) {
         return spectators.stream().anyMatch(u -> u.getUuid().equals(user));
+    }
+
+    @Override
+    public boolean isParticipating(@Nonnull UUID user) {
+        return allUsers.stream().anyMatch(u -> u.getUuid().equals(user));
     }
 
     @Override
@@ -435,6 +443,12 @@ public abstract class AbstractGame implements Game {
     @Override
     public List<User> getSpectators() {
         return spectators;
+    }
+
+    @Nonnull
+    @Override
+    public List<User> getAllUsers() {
+        return allUsers;
     }
 
     @Nullable
