@@ -15,6 +15,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>indices-releases</id>
+            <url>https://nexus.indices.io/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>indices-snapshots</id>
+            <url>https://nexus.indices.io/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
@@ -127,6 +138,10 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>indices</id>
+            <url>https://nexus.indices.io/content/groups/public/</url>
+        </repository>
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
