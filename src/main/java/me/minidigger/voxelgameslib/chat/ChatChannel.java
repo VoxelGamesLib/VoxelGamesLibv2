@@ -43,7 +43,7 @@ public class ChatChannel {
      *
      * @param identifier a unique identifier for this channel
      */
-    public ChatChannel(String identifier) {
+    ChatChannel(String identifier) {
         this(identifier, null);
     }
 
