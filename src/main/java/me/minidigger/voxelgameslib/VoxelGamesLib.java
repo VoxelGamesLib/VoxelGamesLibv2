@@ -11,7 +11,6 @@ import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.chat.ChatListener;
-import me.minidigger.voxelgameslib.commands.FunCommands;
 import me.minidigger.voxelgameslib.commands.GameCommands;
 import me.minidigger.voxelgameslib.commands.LangCommands;
 import me.minidigger.voxelgameslib.commands.OverrideCommands;
@@ -177,9 +176,6 @@ public final class VoxelGamesLib extends JavaPlugin {
             registerCommandCompletions();
 
             registerListeners();
-
-            // load tacos
-            newChain().async(() -> injector.getInstance(FunCommands.class).load()).execute();
         } catch (Exception ex) {
             errorHandler.handle(ex, Severity.ERROR);
         }
