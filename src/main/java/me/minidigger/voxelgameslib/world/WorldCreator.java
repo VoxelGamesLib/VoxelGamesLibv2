@@ -238,6 +238,7 @@ public class WorldCreator extends BaseCommand {
             sender.getPlayer().performCommand("editmode off");
             MapInfo info = new MapInfo(displayName, author, gameModes);
             map = new Map(info, worldName, center, radius);
+            map.load(sender.getUuid(), worldName);
             map.printSummery(sender);
             sender.sendMessage(
                     Lang.trans(LangKey.WORLD_CREATOR_DONE_QUERY, sender.getLocale())
