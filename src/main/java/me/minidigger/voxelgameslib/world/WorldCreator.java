@@ -239,7 +239,7 @@ public class WorldCreator extends BaseCommand {
             MapInfo info = new MapInfo(displayName, author, gameModes);
             map = new Map(info, worldName, center, radius);
             map.load(sender.getUuid(), worldName);
-            map.printSummery(sender);
+            map.printSummary(sender);
             sender.sendMessage(
                     Lang.trans(LangKey.WORLD_CREATOR_DONE_QUERY, sender.getLocale())
                             .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator done")));

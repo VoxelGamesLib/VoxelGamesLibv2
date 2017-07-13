@@ -69,7 +69,7 @@ public class Map {
     /**
      * Prints a nice summary of this map
      */
-    public void printSummery(@Nonnull User sender) {
+    public void printSummary(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_CREATOR_MAP_SUMMARY, info.getName(), worldName, info.getAuthor(),
                 center, radius, info.getGamemodes());
         //TODO print summery of map

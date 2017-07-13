@@ -206,7 +206,9 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void tick() {
-        activePhase.tick();
+        if(activePhase.isRunning()) {
+            activePhase.tick();
+        }
     }
 
     @Override
