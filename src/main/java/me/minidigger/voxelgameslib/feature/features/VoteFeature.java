@@ -30,9 +30,11 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Syntax;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
+@Log
 public class VoteFeature extends AbstractFeature implements FeatureCommandImplementor {
     //TODO add scoreboard
     @Getter
@@ -66,6 +68,8 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         if (availableMaps.size() == 0) {
             getPhase().getGame().broadcastMessage(LangKey.VOTE_NO_MAPS_FOUND);
             getPhase().getGame().abortGame();
+            log.warning("Game " + getPhase().getGame().getUuid() + "(" + getPhase().getGame().getGameMode().getName() + ")" +
+                    " was aborted because it didn't find any maps to play!");
             return;
         }
 
