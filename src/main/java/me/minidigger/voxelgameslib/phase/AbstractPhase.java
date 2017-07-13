@@ -91,6 +91,9 @@ public abstract class AbstractPhase implements Phase {
 
     @Override
     public void addFeature(@Nonnull Feature feature) {
+        if (features.contains(feature)) {
+            throw new RuntimeException("Tried to register " + feature + " twice!");
+        }
         log.finer("add " + feature.getClass().getSimpleName() + " feature");
         features.add(feature);
     }
