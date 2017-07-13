@@ -97,6 +97,10 @@ public class MapScanner {
                                 if (markerData == null) {
                                     log.warning("owning player name null?!");
                                     markerData = skull.getOwner();
+                                    if(markerData == null){
+                                        log.warning("just set it to undefined...");
+                                        markerData = "undefined";
+                                    }
                                 }
                                 markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
                                         DirectionUtil.directionToYaw(skull.getRotation()),
