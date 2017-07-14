@@ -223,7 +223,7 @@ public class GamePlayer implements User {
 
     private void setPlayerData(Player player) {
         name = player.getName();
-        ipAddress = player.getAddress().getAddress().toString();
+        ipAddress = player.getAddress().getAddress().getHostAddress();
         banned = player.isBanned();
     }
 
