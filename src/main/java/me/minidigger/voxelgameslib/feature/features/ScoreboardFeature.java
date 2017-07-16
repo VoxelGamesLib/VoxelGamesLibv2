@@ -2,14 +2,13 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import javax.inject.Inject;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
 import me.minidigger.voxelgameslib.scoreboard.ScoreboardHandler;
-
-import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "ScoreboardFeature", author = "MiniDigger", version = "1.0",
         description = "Handles the scoreboard for all other features")
@@ -49,11 +48,9 @@ public class ScoreboardFeature extends AbstractFeature {
     }
 
     @SuppressWarnings("JavaDoc")
-    @EventHandler
+    @GameEvent
     public void onJoin(GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            scoreboard.addUser(event.getUser());
-        }
+        scoreboard.addUser(event.getUser());
     }
 
     /**

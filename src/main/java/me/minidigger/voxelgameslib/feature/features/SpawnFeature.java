@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
@@ -61,19 +62,15 @@ public class SpawnFeature extends AbstractFeature {
     }
 
     @SuppressWarnings("JavaDoc")
-    @EventHandler
+    @GameEvent
     public void onRespawn(PlayerRespawnEvent e) {
-        if (getPhase().getGame().isPlaying(e.getPlayer().getUniqueId())) {
             e.setRespawnLocation(getSpawn(e.getPlayer().getUniqueId()));
-        }
     }
 
     @SuppressWarnings("JavaDoc")
-    @EventHandler
+    @GameEvent
     public void onJoin(GameJoinEvent e) {
-        if (getPhase().getGame().isPlaying(e.getUser().getUuid())) {
             e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
-        }
     }
 
     @Override

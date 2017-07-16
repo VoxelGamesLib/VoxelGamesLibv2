@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
@@ -21,8 +22,6 @@ import me.minidigger.voxelgameslib.scoreboard.ScoreboardHandler;
 import me.minidigger.voxelgameslib.scoreboard.ScoreboardLine;
 import me.minidigger.voxelgameslib.scoreboard.StringScoreboardLine;
 import me.minidigger.voxelgameslib.user.User;
-
-import org.bukkit.event.EventHandler;
 
 import lombok.Getter;
 
@@ -72,23 +71,19 @@ public class PersonalScoreboardFeature extends AbstractFeature {
         return new Class[0];
     }
 
-    @EventHandler
+    @GameEvent
     public void onJoin(GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            Scoreboard scoreboard = scoreboardHandler.createScoreboard(getPhase().getGame().getGameMode().getName());
-            scoreboard.addUser(event.getUser());
-            scoreboards.put(event.getUser(), scoreboard);
-        }
+        Scoreboard scoreboard = scoreboardHandler.createScoreboard(getPhase().getGame().getGameMode().getName());
+        scoreboard.addUser(event.getUser());
+        scoreboards.put(event.getUser(), scoreboard);
     }
 
-    @EventHandler
+    @GameEvent
     public void onQuit(GameLeaveEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            Scoreboard scoreboard = scoreboards.get(event.getUser());
-            scoreboard.removeAllLines();
-            scoreboard.removeAllUsers();
-            scoreboards.remove(event.getUser());
-        }
+        Scoreboard scoreboard = scoreboards.get(event.getUser());
+        scoreboard.removeAllLines();
+        scoreboard.removeAllUsers();
+        scoreboards.remove(event.getUser());
     }
 
     public Scoreboard getScoreboardForUser(User user) {
@@ -166,8 +161,8 @@ public class PersonalScoreboardFeature extends AbstractFeature {
 
         @Override
         public boolean isAdded(@Nonnull User user) {
-            for(Scoreboard scoreboard : scoreboards) {
-                if(scoreboard.isAdded(user)) {
+            for (Scoreboard scoreboard : scoreboards) {
+                if (scoreboard.isAdded(user)) {
                     return true;
                 }
             }

@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.event.EventHandler;
 
 /**
  * Provides a boss bar instance for other features
@@ -63,14 +62,11 @@ public class BossBarFeature extends AbstractFeature {
 
     @GameEvent
     public void onGameJoin(GameJoinEvent event) {
-        System.out.println(event.getUser().getRawDisplayName() + " joined game " + getPhase().getGame().getUuid() + "(" + getPhase().getGame().getGameMode().getName() + ")");
         bossBar.addPlayer(event.getUser().getPlayer());
     }
 
-    @EventHandler
+    @GameEvent
     public void onGameLeave(GameLeaveEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            bossBar.removePlayer(event.getUser().getPlayer());
-        }
+        bossBar.removePlayer(event.getUser().getPlayer());
     }
 }

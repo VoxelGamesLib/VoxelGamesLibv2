@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
@@ -10,7 +11,6 @@ import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
 
 import org.bukkit.boss.BossBar;
-import org.bukkit.event.EventHandler;
 
 import lombok.extern.java.Log;
 
@@ -78,46 +78,42 @@ public class LobbyFeature extends AbstractFeature {
         return new Class[]{ScoreboardFeature.class, BossBarFeature.class};
     }
 
-    @EventHandler
+    @GameEvent
     public void onJoin(GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
-                    getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers()));
+        scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
+                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers()));
 
-            if (getPhase().getGame().getPlayers().size() >= getPhase().getGame().getMinPlayers()) {
-                if (!starting) {
-                    starting = true;
-                    curr = startDelay;
-                    //TODO also update scoreboard
-                    getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING);
-                    bossBar.setTitle(Lang.parseLegacyFormat(Lang.string(LangKey.GAME_STARTING)));
-                    bossBar.setVisible(true);
+        if (getPhase().getGame().getPlayers().size() >= getPhase().getGame().getMinPlayers()) {
+            if (!starting) {
+                starting = true;
+                curr = startDelay;
+                //TODO also update scoreboard
+                getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING);
+                bossBar.setTitle(Lang.parseLegacyFormat(Lang.string(LangKey.GAME_STARTING)));
+                bossBar.setVisible(true);
+            }
+
+            if (starting && getPhase().getGame().getPlayers().size() == getPhase().getGame().getMaxPlayers()) {
+                if (curr > fastStartDelay) {
+                    curr = fastStartDelay;
                 }
 
-                if (starting && getPhase().getGame().getPlayers().size() == getPhase().getGame().getMaxPlayers()) {
-                    if (curr > fastStartDelay) {
-                        curr = fastStartDelay;
-                    }
-
-                    getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING_ACCELERATED);
-                }
+                getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING_ACCELERATED);
             }
         }
     }
 
-    @EventHandler
+    @GameEvent
     public void onLeave(GameLeaveEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
-                    getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers()));
-            if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()
-                    && starting) {
-                starting = false;
-                // TODO also update scoreboard
-                getPhase().getGame().broadcastMessage(LangKey.GAME_START_ABORTED);
-                bossBar.setTitle("");
-                bossBar.setVisible(false);
-            }
+        scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
+                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers()));
+        if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()
+                && starting) {
+            starting = false;
+            // TODO also update scoreboard
+            getPhase().getGame().broadcastMessage(LangKey.GAME_START_ABORTED);
+            bossBar.setTitle("");
+            bossBar.setVisible(false);
         }
     }
 }

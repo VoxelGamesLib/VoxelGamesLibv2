@@ -1,11 +1,11 @@
 package me.minidigger.voxelgameslib.feature.features;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -38,12 +38,12 @@ public class VoidTeleportFeature extends AbstractFeature {
         return new Class[]{SpawnFeature.class};
     }
 
-    @EventHandler
+    @GameEvent
     public void onVoidDamage(EntityDamageEvent event) {
-        if(event.getEntityType() != EntityType.PLAYER)
+        if (event.getEntityType() != EntityType.PLAYER)
             return;
 
-        if(event.getCause().equals(EntityDamageEvent.DamageCause.VOID) && getPhase().getGame().isPlaying(event.getEntity().getUniqueId())) {
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             Player player = (Player) event.getEntity();
 
             player.teleport(getPhase().getFeature(SpawnFeature.class).getSpawn(player.getUniqueId()));
@@ -52,10 +52,10 @@ public class VoidTeleportFeature extends AbstractFeature {
         }
     }
 
-    @EventHandler
+    @GameEvent
     public void onFellOutOfWorld(PlayerMoveEvent event) {
         // just in case damage is disabled
-        if(event.getTo().getY() < 0 && getPhase().getGame().isPlaying(event.getPlayer().getUniqueId())) {
+        if (event.getTo().getY() < 0) {
             event.getPlayer().teleport(getPhase().getFeature(SpawnFeature.class).getSpawn(event.getPlayer().getUniqueId()));
         }
     }

@@ -6,9 +6,8 @@ public class RemovePotionEffectsFeature extends AbstractFeature {
 
     @Override
     public void start() {
-        getPhase().getGame().getPlayers().forEach(user -> {
-            user.getPlayer().getActivePotionEffects().forEach((potionEffect -> user.getPlayer().removePotionEffect(potionEffect.getType())));
-        });
+        getPhase().getGame().getPlayers().forEach(user -> user.getPlayer().getActivePotionEffects()
+                .forEach((potionEffect -> user.getPlayer().removePotionEffect(potionEffect.getType()))));
     }
 
     @Override

@@ -4,12 +4,12 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Arrays;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
 @FeatureInfo(name = "NoBlockBreakFeature", author = "MiniDigger", version = "1.0",
@@ -71,20 +71,18 @@ public class NoBlockBreakFeature extends AbstractFeature {
     }
 
     @SuppressWarnings({"JavaDoc", "Duplicates"})
-    @EventHandler
+    @GameEvent
     public void onBlockBreak(BlockBreakEvent event) {
-        if (getPhase().getGame().isPlaying(event.getPlayer().getUniqueId())) {
-            if (blacklist.length != 0) {
-                if (Arrays.stream(blacklist).anyMatch(m -> m.equals(event.getBlock().getType()))) {
-                    event.setCancelled(true);
-                }
-            } else if (whitelist.length != 0) {
-                if (Arrays.stream(whitelist).noneMatch(m -> m.equals(event.getBlock().getType()))) {
-                    event.setCancelled(true);
-                }
-            } else {
+        if (blacklist.length != 0) {
+            if (Arrays.stream(blacklist).anyMatch(m -> m.equals(event.getBlock().getType()))) {
                 event.setCancelled(true);
             }
+        } else if (whitelist.length != 0) {
+            if (Arrays.stream(whitelist).noneMatch(m -> m.equals(event.getBlock().getType()))) {
+                event.setCancelled(true);
+            }
+        } else {
+            event.setCancelled(true);
         }
     }
 }

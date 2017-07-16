@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.feature.features;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.user.User;
@@ -20,7 +21,7 @@ public class NoHungerLossFeature extends AbstractFeature {
         user.getPlayer().setFoodLevel(20);
     }
 
-    @EventHandler
+    @GameEvent
     public void onHungerDepletion(FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }

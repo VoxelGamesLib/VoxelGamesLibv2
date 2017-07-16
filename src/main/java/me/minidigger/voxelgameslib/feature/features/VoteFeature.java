@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
@@ -21,8 +22,6 @@ import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.world.WorldConfig;
-
-import org.bukkit.event.EventHandler;
 
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
@@ -131,11 +130,9 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
     }
 
-    @EventHandler
+    @GameEvent
     public void onJoin(@Nonnull GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            sendVoteMessage(event.getUser());
-        }
+        sendVoteMessage(event.getUser());
     }
 
     @Override

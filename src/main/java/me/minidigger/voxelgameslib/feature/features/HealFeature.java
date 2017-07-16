@@ -2,12 +2,11 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.user.User;
-
-import org.bukkit.event.EventHandler;
 
 @FeatureInfo(name = "HealFeature", author = "MiniDigger", version = "1.0",
         description = "Small feature that heals and feeds players on join")
@@ -37,11 +36,9 @@ public class HealFeature extends AbstractFeature {
         }
     }
 
-    @EventHandler
+    @GameEvent
     public void onJoin(GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            heal(event.getUser());
-        }
+        heal(event.getUser());
     }
 
     @Override
