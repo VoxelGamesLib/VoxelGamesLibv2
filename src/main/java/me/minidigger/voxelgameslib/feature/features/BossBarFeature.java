@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
@@ -60,11 +61,10 @@ public class BossBarFeature extends AbstractFeature {
         return new Class[0];
     }
 
-    @EventHandler
+    @GameEvent
     public void onGameJoin(GameJoinEvent event) {
-        if (event.getGame().getUuid().equals(getPhase().getGame().getUuid())) {
-            bossBar.addPlayer(event.getUser().getPlayer());
-        }
+        System.out.println(event.getUser().getRawDisplayName() + " joined game " + getPhase().getGame().getUuid() + "(" + getPhase().getGame().getGameMode().getName() + ")");
+        bossBar.addPlayer(event.getUser().getPlayer());
     }
 
     @EventHandler

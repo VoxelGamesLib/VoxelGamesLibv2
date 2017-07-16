@@ -21,6 +21,7 @@ import me.minidigger.voxelgameslib.commands.WorldRepositoryCommands;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.error.ErrorHandler;
+import me.minidigger.voxelgameslib.event.EventHandler;
 import me.minidigger.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import me.minidigger.voxelgameslib.exception.LangException;
 import me.minidigger.voxelgameslib.exception.UserException;
@@ -110,6 +111,9 @@ public final class VoxelGamesLib extends JavaPlugin {
     private ChatHandler chatHandler;
     @Inject
     private MetricHandler metricHandler;
+    @Inject
+    private EventHandler eventHandler;
+
 
     @Override
     public void onLoad() {
@@ -150,6 +154,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // then enable all VGL stuff
             Timings.time("EnableAllHandler", () -> {
+                eventHandler.start();
                 configHandler.start();
                 persistenceHandler.start();
                 langHandler.start();
@@ -203,6 +208,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
                 gameHandler.stop();
                 moduleHandler.stop();
+                eventHandler.stop();
 
                 persistenceHandler.stop();
                 errorHandler.stop();

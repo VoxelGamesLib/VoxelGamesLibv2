@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import me.minidigger.voxelgameslib.VoxelGamesLib;
+import me.minidigger.voxelgameslib.event.EventHandler;
 import me.minidigger.voxelgameslib.exception.DependencyGraphException;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
 import me.minidigger.voxelgameslib.feature.Feature;
@@ -21,8 +21,6 @@ import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
 
-import org.bukkit.Bukkit;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
@@ -35,7 +33,7 @@ import lombok.extern.java.Log;
 public abstract class AbstractPhase implements Phase {
 
     @Inject
-    private VoxelGamesLib main;
+    private EventHandler eventHandler;
     @Inject
     private BukkitCommandManager commandManager;
 
@@ -154,7 +152,7 @@ public abstract class AbstractPhase implements Phase {
             }
 
             if (feature instanceof Listener) {
-                Bukkit.getPluginManager().registerEvents((Listener) feature, main);
+                eventHandler.registerEvents((Listener) feature, getGame());
             }
 
             if (feature instanceof FeatureCommandImplementor) {
@@ -183,7 +181,7 @@ public abstract class AbstractPhase implements Phase {
             }
 
             if (feature instanceof Listener) {
-                HandlerList.unregisterAll((Listener) feature);
+                eventHandler.unregister((Listener) feature, getGame());
             }
 
             if (feature instanceof FeatureCommandImplementor) {
