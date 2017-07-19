@@ -35,7 +35,7 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.phase.Phase;
-import me.minidigger.voxelgameslib.team.Team;
+import me.minidigger.voxelgameslib.components.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.world.WorldHandler;

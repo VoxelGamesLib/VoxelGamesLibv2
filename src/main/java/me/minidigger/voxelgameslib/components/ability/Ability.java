@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.ability;
+package me.minidigger.voxelgameslib.components.ability;
 
 import org.bukkit.event.Listener;
 

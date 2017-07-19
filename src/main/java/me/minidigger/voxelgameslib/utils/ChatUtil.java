@@ -3,7 +3,6 @@ package me.minidigger.voxelgameslib.utils;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
-import net.kyori.text.format.TextDecoration;
 import net.kyori.text.serializer.ComponentSerializer;
 
 import java.lang.reflect.Method;

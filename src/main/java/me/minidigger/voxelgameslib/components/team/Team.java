@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.team;
+package me.minidigger.voxelgameslib.components.team;
 
 import java.util.ArrayList;
 import java.util.List;

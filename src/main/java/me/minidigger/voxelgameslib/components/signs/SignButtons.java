@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.signs;
+package me.minidigger.voxelgameslib.components.signs;
 
 import net.kyori.text.TextComponent;
 

@@ -1,6 +1,6 @@
-package me.minidigger.voxelgameslib.kits;
+package me.minidigger.voxelgameslib.components.kits;
 
-import me.minidigger.voxelgameslib.ability.Ability;
+import me.minidigger.voxelgameslib.components.ability.Ability;
 
 import org.bukkit.inventory.ItemStack;
 

@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.scoreboard;
+package me.minidigger.voxelgameslib.components.scoreboard;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,12 +1,9 @@
 package me.minidigger.voxelgameslib.persistence;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import me.minidigger.voxelgameslib.handler.Handler;
-import me.minidigger.voxelgameslib.lang.Locale;
-import me.minidigger.voxelgameslib.signs.SignLocation;
 import me.minidigger.voxelgameslib.user.User;
 
 /**

@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.scoreboard;
+package me.minidigger.voxelgameslib.components.scoreboard;
 
 /**
  * A simple line with a string, that can be updated

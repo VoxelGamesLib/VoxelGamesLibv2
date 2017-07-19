@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.phase.Phase;
-import me.minidigger.voxelgameslib.team.Team;
+import me.minidigger.voxelgameslib.components.team.Team;
 import me.minidigger.voxelgameslib.tick.Tickable;
 import me.minidigger.voxelgameslib.user.User;
 

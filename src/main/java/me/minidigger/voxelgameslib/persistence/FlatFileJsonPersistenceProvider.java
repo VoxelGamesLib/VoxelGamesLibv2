@@ -6,9 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,8 +14,6 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import me.minidigger.voxelgameslib.lang.Locale;
-import me.minidigger.voxelgameslib.signs.SignLocation;
 import me.minidigger.voxelgameslib.user.User;
 
 /**

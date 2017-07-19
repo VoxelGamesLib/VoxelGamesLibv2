@@ -7,8 +7,8 @@ import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
-import me.minidigger.voxelgameslib.scoreboard.Scoreboard;
-import me.minidigger.voxelgameslib.scoreboard.ScoreboardHandler;
+import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
+import me.minidigger.voxelgameslib.components.scoreboard.ScoreboardHandler;
 
 @FeatureInfo(name = "ScoreboardFeature", author = "MiniDigger", version = "1.0",
         description = "Handles the scoreboard for all other features")

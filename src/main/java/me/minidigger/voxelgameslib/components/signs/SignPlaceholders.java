@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.signs;
+package me.minidigger.voxelgameslib.components.signs;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;

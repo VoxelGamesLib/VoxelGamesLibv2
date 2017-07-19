@@ -7,10 +7,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
-import me.minidigger.voxelgameslib.ability.Ability;
+import me.minidigger.voxelgameslib.components.ability.Ability;
 import me.minidigger.voxelgameslib.commands.KitCommands;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
-import me.minidigger.voxelgameslib.kits.Kit;
+import me.minidigger.voxelgameslib.components.kits.Kit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
