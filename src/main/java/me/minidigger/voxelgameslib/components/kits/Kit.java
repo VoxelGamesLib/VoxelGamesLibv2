@@ -22,7 +22,7 @@ public class Kit {
     /**
      * Create a new kit
      *
-     * @param name name of kit
+     * @param name  name of kit
      * @param items items the kit contains
      */
     public Kit(String name, ItemStack[] items) {
@@ -34,8 +34,9 @@ public class Kit {
      *
      * You can use the {@link me.minidigger.voxelgameslib.utils.ItemBuilder} to build an item
      *
-     * @param name name of kit
-     * @param items items the kit contains
+     * @param name      name of kit
+     * @param items     items the kit contains
+     * @param abilities the abilities of this kit
      */
     public Kit(String name, ItemStack[] items, Ability[] abilities) {
         this.name = name;

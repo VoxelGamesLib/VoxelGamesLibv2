@@ -92,10 +92,6 @@ public class CustomAddCommand extends GitCommand<DirCache> {
 
     private boolean update = false;
 
-    /**
-     *
-     * @param repo
-     */
     public CustomAddCommand(Repository repo) {
         super(repo);
         filepatterns = new LinkedList<>();
@@ -121,7 +117,7 @@ public class CustomAddCommand extends GitCommand<DirCache> {
 
     /**
      * Allow clients to provide their own implementation of a FileTreeIterator
-     * @param f
+     * @param f f
      * @return {@code this}
      */
     public CustomAddCommand setWorkingTreeIterator(WorkingTreeIterator f) {

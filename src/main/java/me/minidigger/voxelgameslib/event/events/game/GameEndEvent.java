@@ -19,6 +19,7 @@ public class GameEndEvent extends GameEvent {
     /**
      * @param game       the game that ended
      * @param winners    the winners. can be 0, 1 or many
+     * @param duration   the duration the game run for
      * @param wasAborted if the game was aborted (server shutdown, all players leave, by command)
      */
     public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, Duration duration,

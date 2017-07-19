@@ -10,28 +10,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
-
 import lombok.extern.java.Log;
 
 import static org.bukkit.Bukkit.getServer;
 
 /**
- * Manages a connection to the database pool and lets you work with an active
- * prepared statement.
- * <p/>
- * Must close after you are done with it, preferably wrapping in a try/catch/finally
- * DbStatement statement = null;
- * try {
- * statement = new DbStatement();
- * // use it
- * } catch (Exception e) {
- * // handle exception
- * } finally {
- * if (statement != null) {
- * statement.close();
- * }
- * }
+ * Manages a connection to the database pool and lets you work with an active prepared statement.
+ * <p> Must close after you are done with it, preferably wrapping in a try/catch/finally DbStatement
+ * statement = null; try { statement = new DbStatement(); // use it } catch (Exception e) { //
+ * handle exception } finally { if (statement != null) { statement.close(); } }
  */
 @Log
 public class DbStatement implements AutoCloseable {
@@ -62,9 +49,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Starts a transaction on this connection
-     *
-     * @return
-     * @throws SQLException
      */
     public void startTransaction() throws SQLException {
         dbConn.setAutoCommit(false);
@@ -73,9 +57,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Commits a pending transaction on this connection
-     *
-     * @return
-     * @throws SQLException
      */
     public void commit() {
         if (!isDirty) {
@@ -92,9 +73,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Rollsback a pending transaction on this connection.
-     *
-     * @return
-     * @throws SQLException
      */
     public synchronized void rollback() {
         if (!isDirty) {
@@ -111,9 +89,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Initiates a new prepared statement on this connection.
-     *
-     * @param query
-     * @throws SQLException
      */
     public DbStatement query(@Language("MySQL") String query) throws SQLException {
         this.query = query;
@@ -132,8 +107,6 @@ public class DbStatement implements AutoCloseable {
      * Utility method used by execute calls to set the statements parameters to execute on.
      *
      * @param params Array of Objects to use for each parameter.
-     * @return
-     * @throws SQLException
      */
     private void prepareExecute(Object... params) throws SQLException {
         closeResult();
@@ -148,10 +121,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Execute an update query with the supplied parameters
-     *
-     * @param params
-     * @return
-     * @throws SQLException
      */
     public int executeUpdate(Object... params) throws SQLException {
         try {
@@ -165,10 +134,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Executes the prepared statement with the supplied parameters.
-     *
-     * @param params
-     * @return
-     * @throws SQLException
      */
     public DbStatement execute(Object... params) throws SQLException {
         try {
@@ -210,8 +175,8 @@ public class DbStatement implements AutoCloseable {
     /**
      * Gets all results as an array of DbRow
      *
-     * @return
-     * @throws SQLException
+     * @return the fetched rows
+     * @throws SQLException when something goes wrong
      */
     public ArrayList<DbRow> getResults() throws SQLException {
         if (resultSet == null) {
@@ -229,7 +194,7 @@ public class DbStatement implements AutoCloseable {
      * Gets the next DbRow from the result set.
      *
      * @return DbRow containing a hashmap of the columns
-     * @throws SQLException
+     * @throws SQLException when something goes wrong
      */
     public DbRow getNextRow() throws SQLException {
         if (resultSet == null) {
@@ -257,9 +222,6 @@ public class DbStatement implements AutoCloseable {
 
     /**
      * Util method to get the next result set and close it when done.
-     *
-     * @return
-     * @throws SQLException
      */
     private ResultSet getNextResultSet() throws SQLException {
         if (resultSet != null && resultSet.next()) {

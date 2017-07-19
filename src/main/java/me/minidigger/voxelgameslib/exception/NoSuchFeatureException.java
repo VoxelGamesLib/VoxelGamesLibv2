@@ -6,7 +6,7 @@ import me.minidigger.voxelgameslib.feature.Feature;
 
 /**
  * Thrown when something tries to access a {@link Feature} in a {@link
- * me.minidigger.voxelgameslib.api.phase.Phase} that is not present at this time.
+ * me.minidigger.voxelgameslib.phase.Phase} that is not present at this time.
  */
 public class NoSuchFeatureException extends VoxelGameLibException {
 

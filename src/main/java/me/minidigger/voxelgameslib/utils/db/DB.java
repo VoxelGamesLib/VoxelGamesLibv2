@@ -80,7 +80,7 @@ public final class DB {
 
     /**
      * Initiates a new DbStatement and prepares the first query.
-     * <p/>
+     * <p>
      * YOU MUST MANUALLY CLOSE THIS STATEMENT IN A finally {} BLOCK!
      *
      * @param query

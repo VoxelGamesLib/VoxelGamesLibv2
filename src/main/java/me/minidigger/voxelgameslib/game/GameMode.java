@@ -26,8 +26,13 @@ public class GameMode extends jskills.GameInfo {
     /**
      * Constructs a new {@link GameMode}
      *
-     * @param name      the name of this {@link GameMode}
-     * @param gameClass the class that implements this {@link GameMode}
+     * @param name                     the name of this {@link GameMode}
+     * @param gameClass                the class that implements this {@link GameMode}
+     * @param initialMean              initialMean
+     * @param initialStandardDeviation initialStandardDeviation
+     * @param beta                     beta
+     * @param dynamicFactor            dynamicFactor
+     * @param drawProbability          drawProbability
      */
     public GameMode(@Nonnull String name, @Nonnull Class<? extends Game> gameClass,
                     double initialMean, double initialStandardDeviation,

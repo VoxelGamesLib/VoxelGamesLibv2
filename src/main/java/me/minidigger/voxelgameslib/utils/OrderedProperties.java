@@ -27,24 +27,24 @@ import java.util.Vector;
  * This class provides an alternative to the JDK's {@link Properties} class. It fixes the design
  * flaw of using inheritance over composition, while keeping up the same APIs as the original class.
  * Keys and values are guaranteed to be of type {@link String}.
- * <p/>
+ * <p>
  * This class is not synchronized, contrary to the original implementation.
- * <p/>
+ * <p>
  * As additional functionality, this class keeps its properties in a well-defined order. By default,
  * the order is the one in which the individual properties have been added, either through explicit
  * API calls or through reading them top-to-bottom from a properties file.
- * <p/>
+ * <p>
  * Also, an optional flag can be set to omit the comment that contains the current date when storing
  * the properties to a properties file.
- * <p/>
+ * <p>
  * Currently, this class does not support the concept of default properties, contrary to the
  * original implementation.
- * <p/>
+ * <p>
  * <strong>Note that this implementation is not synchronized.</strong> If multiple threads access
  * ordered properties concurrently, and at least one of the threads modifies the ordered properties
  * structurally, it <em>must</em> be synchronized externally. This is typically accomplished by
  * synchronizing on some object that naturally encapsulates the properties.
- * <p/>
+ * <p>
  * Note that the actual (and quite complex) logic of parsing and storing properties from and to a
  * stream is delegated to the {@link Properties} class from the JDK.
  *
@@ -276,7 +276,7 @@ public final class OrderedProperties implements Serializable {
     /**
      * Creates a new instance that will have both the same property entries and
      * the same behavior as the given source.
-     * <p/>
+     * <p>
      * Note that the source instance and the copy instance will share the same
      * comparator instance if a custom ordering had been configured on the source.
      *

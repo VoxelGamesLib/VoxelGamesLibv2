@@ -105,6 +105,7 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
      *
      * @param clazz      the class of the config
      * @param configFile the file to load
+     * @param <T>        the type of the config
      * @return the loaded config
      * @throws ConfigException if something went wrong
      */

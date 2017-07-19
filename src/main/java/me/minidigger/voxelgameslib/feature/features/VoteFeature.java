@@ -132,6 +132,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
 
     @GameEvent
     public void onJoin(@Nonnull GameJoinEvent event) {
+        log.finer("send vote msg");
         sendVoteMessage(event.getUser());
     }
 

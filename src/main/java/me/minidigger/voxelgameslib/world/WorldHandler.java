@@ -132,7 +132,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * it <br><b>Always needs to call super! Super needs to be called first (because it copies the
      * world)</b>
      *
-     * @param map the map that should be loaded
+     * @param map    the map that should be loaded
+     * @param gameid the id of the game this map belongs to
      * @throws WorldException something goes wrong
      */
     public void loadWorld(@Nonnull Map map, UUID gameid) {
@@ -157,7 +158,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * <br><b>Always needs to call super! Super needs to be called last (because it deletes the
      * world folder)</b>
      *
-     * @param map the map that should be unloaded.
+     * @param map    the map that should be unloaded.
+     * @param gameid the id of the game that this map belongs to
      */
     public void unloadWorld(@Nonnull Map map, UUID gameid) {
         unloadLocalWorld(map.getLoadedName(gameid));

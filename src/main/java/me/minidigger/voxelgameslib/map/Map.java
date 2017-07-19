@@ -68,6 +68,8 @@ public class Map {
 
     /**
      * Prints a nice summary of this map
+     *
+     * @param sender the user to send the summary to
      */
     public void printSummary(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_CREATOR_MAP_SUMMARY, info.getName(), worldName, info.getAuthor(),
@@ -76,14 +78,14 @@ public class Map {
     }
 
     public String getLoadedName(UUID gameid) {
-        if(loadedNames == null){
+        if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
         return loadedNames.get(gameid);
     }
 
     public void load(UUID gameid, String name) {
-        if(loadedNames == null){
+        if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
         if (loadedNames.put(gameid, name) != null) {
@@ -92,14 +94,14 @@ public class Map {
     }
 
     public boolean isLoaded(UUID gameid) {
-        if(loadedNames == null){
+        if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
         return loadedNames.containsKey(gameid);
     }
 
-    public void unload(UUID gameid){
-        if(loadedNames == null){
+    public void unload(UUID gameid) {
+        if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
         loadedNames.remove(gameid);

@@ -9,9 +9,9 @@ import lombok.extern.java.Log;
 /**
  * Template class for user to override. Will run on a different thread so
  * you can run SQL queries safely without impacting main thread.
- * <p/>
+ * <p>
  * Will automatically close the connection once run() is done!
- * <p/>
+ * <p>
  * Calls onError when a SQLException is fired, and provides
  * an onResultsSync method to be overridden to receive all DB Results back on main thread,
  * by calling getResultsSync() on the Async run(DbStatement) call.

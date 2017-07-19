@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class DbRow extends HashMap<String, Object> {
     /**
      * Get the result as proper type.
-     * <p/>
+     * <p>
      * VALID: Long myLong = row.get("someUnsignedIntColumn");
      * INVALID: String myString = row.get("someUnsignedIntColumn");
      *
@@ -22,7 +22,7 @@ public class DbRow extends HashMap<String, Object> {
     }
     /**
      * Get the result as proper type., returning default if not found.
-     * <p/>
+     * <p>
      * VALID: Long myLong = row.get("someUnsignedIntColumn");
      * INVALID: String myString = row.get("someUnsignedIntColumn");
      *
@@ -39,7 +39,7 @@ public class DbRow extends HashMap<String, Object> {
     }
     /**
      * Removes a result, returning as proper type.
-     * <p/>
+     * <p>
      * VALID: Long myLong = row.remove("someUnsignedIntColumn");
      * INVALID: String myString = row.remove("someUnsignedIntColumn");
      *
@@ -53,7 +53,7 @@ public class DbRow extends HashMap<String, Object> {
 
     /**
      * Removes a result, returning as proper type, returning default if not found
-     * <p/>
+     * <p>
      * VALID: Long myLong = row.get("someUnsignedIntColumn");
      * INVALID: String myString = row.get("someUnsignedIntColumn");
      *

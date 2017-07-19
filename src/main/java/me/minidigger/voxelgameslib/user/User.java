@@ -163,7 +163,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     void setUuid(UUID uuid);
 
     /**
-     * Channels a user is listening to
+     * @return Channels a user is listening to
      */
     List<ChatChannel> getChannels();
 

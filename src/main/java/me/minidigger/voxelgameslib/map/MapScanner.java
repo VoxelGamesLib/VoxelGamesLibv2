@@ -29,7 +29,8 @@ public class MapScanner {
     /**
      * Scans a map for markers
      *
-     * @param map the map to scan
+     * @param map    the map to scan
+     * @param gameid the id of the game that the map belongs to
      */
     public void scan(@Nonnull Map map, UUID gameid) {
         searchForMarkers(map, map.getCenter(), map.getRadius(), gameid);
@@ -97,7 +98,7 @@ public class MapScanner {
                                 if (markerData == null) {
                                     log.warning("owning player name null?!");
                                     markerData = skull.getOwner();
-                                    if(markerData == null){
+                                    if (markerData == null) {
                                         log.warning("just set it to undefined...");
                                         markerData = "undefined";
                                     }

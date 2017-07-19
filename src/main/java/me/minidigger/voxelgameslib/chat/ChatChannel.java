@@ -5,7 +5,6 @@ import net.kyori.text.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Nullable;
 
 import me.minidigger.voxelgameslib.user.User;
@@ -81,7 +80,8 @@ public class ChatChannel {
     /**
      * Sends a component message to the channel's listeners
      *
-     * @param byUser sender
+     * @param byUser  sender
+     * @param message the message to send
      */
     public void sendMessage(User byUser, Component message) {
         listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(this, byUser.getDisplayName(), message)));

@@ -65,6 +65,7 @@ public interface Phase extends Tickable {
      * Searched for a instance of the specified class.
      *
      * @param clazz the class of the {@link Feature}
+     * @param <T>   the type of the feature
      * @return the instance of the class, if present.
      * @throws NoSuchFeatureException if this phase doesn't has that feature registered
      */
