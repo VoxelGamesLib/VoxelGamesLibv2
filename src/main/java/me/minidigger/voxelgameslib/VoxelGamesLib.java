@@ -18,6 +18,7 @@ import me.minidigger.voxelgameslib.commands.RoleCommands;
 import me.minidigger.voxelgameslib.commands.VGLCommands;
 import me.minidigger.voxelgameslib.commands.WorldCommands;
 import me.minidigger.voxelgameslib.commands.WorldRepositoryCommands;
+import me.minidigger.voxelgameslib.components.inventory.InventoryHandler;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.error.ErrorHandler;
@@ -89,6 +90,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private UserHandler userHandler;
     @Inject
     private RoleHandler roleHandler;
+    @Inject
+    private InventoryHandler inventoryHandler;
     @Inject
     private MapHandler mapHandler;
     @Inject
@@ -162,6 +165,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 chatHandler.start();
                 userHandler.start();
                 roleHandler.start();
+                inventoryHandler.start();
                 mapHandler.start();
                 worldHandler.start();
                 teamHandler.start();
@@ -198,6 +202,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 chatHandler.stop();
                 userHandler.stop();
                 roleHandler.stop();
+                inventoryHandler.stop();
                 mapHandler.stop();
                 worldHandler.stop();
                 teamHandler.stop();
