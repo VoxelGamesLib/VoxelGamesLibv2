@@ -138,6 +138,7 @@
                     <excludes>me.minidigger.voxelgameslib.utils.OrderedProperties.java</excludes>
                     <stylesheetfile>src/main/javadocs/javadoc_stylesheet.css</stylesheetfile>
                     <show>public</show>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
         </plugins>
