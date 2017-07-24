@@ -72,7 +72,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             return;
         }
 
-       // getPhase().getGame().getPlayers().forEach(this::sendVoteMessage);
+        getPhase().getGame().getPlayers().forEach(this::sendVoteMessage);
     }
 
     @Override

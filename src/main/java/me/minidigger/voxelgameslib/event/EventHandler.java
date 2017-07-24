@@ -34,7 +34,7 @@ import lombok.extern.java.Log;
 
 @Log
 @Singleton
-public class EventHandler implements Handler, Listener{
+public class EventHandler implements Handler, Listener {
 
     private static final EventFilter filterPlayers = (event, registeredListener, user) ->
             user.filter(user1 -> registeredListener.getGame().isPlaying(user1.getUuid())).isPresent();
@@ -86,18 +86,11 @@ public class EventHandler implements Handler, Listener{
         );
 
         // check if we need to register a new event
-        newEvents.forEach(eventClass -> {
-            System.out.println("add new event " + eventClass.getName());
-            if (eventClass.getName().contains("GameJoinEvent")) {
-                System.out.println("REGISTER JOIN");
-                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.HIGH, eventExecutor, voxelGamesLib);
-            } else {
-                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.NORMAL, eventExecutor, voxelGamesLib);
-            }
-        });
+        newEvents.forEach(eventClass ->
+                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.HIGH, eventExecutor, voxelGamesLib));
 
         // register normal events
-        //Bukkit.getServer().getPluginManager().registerEvents(listener, voxelGamesLib);
+        Bukkit.getServer().getPluginManager().registerEvents(listener, voxelGamesLib);
     }
 
     public void unregister(Listener listener, Game game) {
@@ -130,10 +123,6 @@ public class EventHandler implements Handler, Listener{
     }
 
     public <T extends Event> void callEvent(T event) {
-        if (event.getEventName().equalsIgnoreCase("GameJoinEvent")) {
-            System.out.println("CALL JOIN");
-            new RuntimeException().printStackTrace();
-        }
         if (activeEvents.containsKey(event.getClass())) {
             activeEvents.get(event.getClass()).forEach(registeredListener -> {
                 Optional<User> user = Optional.empty();

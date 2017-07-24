@@ -345,7 +345,6 @@ public abstract class AbstractGame implements Game {
         if (!isPlaying(user.getUuid())) {
             players.add(user);
             allUsers.add(user);
-            System.out.println("CALL ONCE");
             Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }

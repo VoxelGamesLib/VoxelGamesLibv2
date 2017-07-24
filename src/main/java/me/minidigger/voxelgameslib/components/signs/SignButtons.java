@@ -64,7 +64,6 @@ public class SignButtons implements Listener {
             Sign sign = (Sign) event.getClickedBlock().getState();
             for (int i = 0; i < sign.getLines().length; i++) {
                 String line = sign.getLines()[i];
-                System.out.println(getButtons().size());
                 for (String key : getButtons().keySet()) {
                     if (line.contains("[" + key + "]")) {
                         //TODO implement perm check
