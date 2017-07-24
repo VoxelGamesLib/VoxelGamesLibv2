@@ -4,12 +4,14 @@ import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a user left a game
  */
 public class GameLeaveEvent extends GameEvent {
 
+    private static final HandlerList handlers = new HandlerList();
     private User user;
 
     /**
@@ -27,5 +29,14 @@ public class GameLeaveEvent extends GameEvent {
     @Nonnull
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }
