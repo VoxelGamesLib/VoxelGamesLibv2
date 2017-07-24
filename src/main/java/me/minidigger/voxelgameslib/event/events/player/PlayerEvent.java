@@ -7,7 +7,7 @@ import me.minidigger.voxelgameslib.user.User;
 
 import lombok.Getter;
 
-public class PlayerEvent extends VoxelGamesLibEvent {
+public abstract class PlayerEvent extends VoxelGamesLibEvent {
 
     @Getter
     private User user;

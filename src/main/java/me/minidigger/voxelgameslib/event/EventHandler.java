@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -73,30 +72,12 @@ public class EventHandler implements Handler, Listener{
                             registeredListener.addFilter(filterPlayers);
                         }
 
-                        //TODO contendense ifAbsende and ifPresent into one
-                        activeListeners.computeIfAbsent(game.getUuid(), (key) -> new ArrayList<>());
-                        activeListeners.computeIfPresent(game.getUuid(), (key, list) -> {
-                            list.add(registeredListener);
-                            if (listener.getClass().getName().contains("VoteFeature")) {
-                                System.out.println("register for VoteFeature " + eventClass.getName() + " " + method.getName());
-                            }
-                            return list;
-                        });
+                        activeListeners.computeIfAbsent(game.getUuid(), (key) -> new ArrayList<>()).add(registeredListener);
 
                         activeEvents.computeIfAbsent(eventClass, (key) -> {
                             newEvents.add(eventClass);
-                            if (listener.getClass().getName().contains("VoteFeature")) {
-                                System.out.println("new event for VoteFeature " + eventClass.getName() + " " + method.getName());
-                            }
                             return new ArrayList<>();
-                        });
-                        activeEvents.computeIfPresent(eventClass, (key, list) -> {
-                            list.add(registeredListener);
-                            if (listener.getClass().getName().contains("VoteFeature")) {
-                                System.out.println("new listener for VoteFeature " + eventClass.getName() + " " + method.getName());
-                            }
-                            return list;
-                        });
+                        }).add(registeredListener);
                     } else {
                         log.warning("Invalid parameter for " + listener.getClass().getName() + " " + method.toString());
                         return;

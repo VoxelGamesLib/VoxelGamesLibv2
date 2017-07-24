@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Marker class for events
  */
-public class VoxelGamesLibEvent extends Event {
+public abstract class VoxelGamesLibEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
