@@ -17,6 +17,7 @@ import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
+import me.minidigger.voxelgameslib.game.DefaultGameData;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
@@ -96,9 +97,10 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             winner = availableMaps.values().iterator().next();
         }
 
-        getPhase().getGame().putGameData("map", winner);
-        getPhase().getGame()
-                .broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), max);
+        DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
+        gameData.voteWinner = winner;
+        getPhase().getGame().putGameData(gameData);
+        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), max);
     }
 
     @Override

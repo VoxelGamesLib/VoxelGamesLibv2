@@ -26,7 +26,7 @@ public class GameDefinition {
     private List<Phase> phases;
 
     @Expose
-    private Map<String, Object> gameData;
+    private Map<Class<GameData>, GameData> gameData;
 
     /**
      * @return the gamemode for this definition
@@ -75,14 +75,14 @@ public class GameDefinition {
     /**
      * @param gameData the game data map
      */
-    public void setGameData(Map<String, Object> gameData) {
+    public void setGameData(Map<Class<GameData>, GameData> gameData) {
         this.gameData = gameData;
     }
 
     /**
      * @return the game data map
      */
-    public Map<String, Object> getGameData() {
+    public Map<Class<GameData>, GameData> getGameData() {
         return gameData;
     }
 

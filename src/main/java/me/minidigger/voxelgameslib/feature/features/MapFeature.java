@@ -9,6 +9,7 @@ import me.minidigger.voxelgameslib.exception.GameStartException;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
+import me.minidigger.voxelgameslib.game.DefaultGameData;
 import me.minidigger.voxelgameslib.map.Map;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.world.WorldHandler;
@@ -28,14 +29,13 @@ public class MapFeature extends AbstractFeature {
 
     @Override
     public void start() {
-        Object object = getPhase().getGame().getGameData(mapGameDataKey);
-        if (object == null || !(object instanceof MapInfo)) {
+        DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
+        if (gameData.lobbyMap == null) {
             throw new GameStartException(getPhase().getGame().getGameMode(), "No map data was stored!");
         }
 
         try {
-            MapInfo mapInfo = (MapInfo) object;
-            map = worldHandler.loadMap(mapInfo.getName());
+            map = worldHandler.loadMap(gameData.lobbyMap.getName());
 
             if (!map.isLoaded(getPhase().getGame().getUuid())) {
                 worldHandler.loadWorld(map, getPhase().getGame().getUuid());

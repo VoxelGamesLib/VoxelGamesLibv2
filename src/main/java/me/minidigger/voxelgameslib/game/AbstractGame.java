@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 
 import me.minidigger.voxelgameslib.chat.ChatChannel;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
+import me.minidigger.voxelgameslib.components.team.Team;
 import me.minidigger.voxelgameslib.elo.EloHandler;
 import me.minidigger.voxelgameslib.event.events.game.GameEndEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
@@ -35,7 +36,6 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.phase.Phase;
-import me.minidigger.voxelgameslib.components.team.Team;
 import me.minidigger.voxelgameslib.tick.TickHandler;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.world.WorldHandler;
@@ -95,7 +95,7 @@ public abstract class AbstractGame implements Game {
 
     @Transient
     // todo: save this in the entity, see: @Convert annotation (https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object)
-    private Map<String, Object> gameData = new HashMap<>();
+    private Map<Class<GameData>, GameData> gameData = new HashMap<>();
 
     private boolean aborted = false;
 
@@ -206,7 +206,7 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void tick() {
-        if(activePhase.isRunning()) {
+        if (activePhase.isRunning()) {
             activePhase.tick();
         }
     }
@@ -317,7 +317,9 @@ public abstract class AbstractGame implements Game {
         // TODO this doesn't respect if a user changed the lobby in the config
         Optional<MapInfo> info = worldHandler.getMapInfo("Lobby");
         if (info.isPresent()) {
-            putGameData("lobbymap", info.get());
+            DefaultGameData gameData = getGameData(DefaultGameData.class).orElse(new DefaultGameData());
+            gameData.lobbyMap = info.get();
+            putGameData(gameData);
         } else {
             abortGame();
         }
@@ -453,15 +455,17 @@ public abstract class AbstractGame implements Game {
         return allUsers;
     }
 
-    @Nullable
+    @Nonnull
     @Override
-    public Object getGameData(@Nonnull String key) {
-        return gameData.get(key);
+    public <T extends GameData> Optional<T> getGameData(@Nonnull Class<T> key) {
+        //noinspection unchecked,SuspiciousMethodCalls
+        return Optional.ofNullable((T) gameData.get(key));
     }
 
     @Override
-    public void putGameData(@Nonnull String key, @Nonnull Object data) {
-        gameData.put(key, data);
+    public void putGameData(@Nonnull GameData data) {
+        //noinspection unchecked
+        gameData.put((Class<GameData>) data.getClass(), data);
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.kyori.text.Component;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -187,10 +188,9 @@ public interface Game extends Tickable {
     /**
      * Saves a object with a key into the gamedata map
      *
-     * @param key  the key
      * @param data the data
      */
-    void putGameData(@Nonnull String key, @Nonnull Object data);
+    void putGameData(@Nonnull GameData data);
 
     @Nonnull
     List<User> getAllUsers();
@@ -199,8 +199,8 @@ public interface Game extends Tickable {
      * @param key the key to get the data for
      * @return the game data for that key, may be null
      */
-    @Nullable
-    Object getGameData(@Nonnull String key);
+    @Nonnull
+    <T extends GameData> Optional<T> getGameData(@Nonnull Class<T> key);
 
     /**
      * Similar to endGame, but doesn't with stuff like elo or stats

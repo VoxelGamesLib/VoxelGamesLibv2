@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import javax.inject.Inject;
 
@@ -35,6 +36,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
 import lombok.extern.java.Log;
 
 /**
@@ -306,5 +308,17 @@ public class WorldCreator extends BaseCommand {
         Lang.msg(sender, LangKey.WORLD_CREATOR_DONE);
 
         worldHandler.getWorldRepository().commitRepo();
+    }
+
+    @Subcommand("modify")
+    @CommandPermission("%admin")
+    @Syntax("<world> - the name of the map you want to modify")
+    public void modify(User user, String world) {
+        Optional<Map> o = worldHandler.getMap(world);
+
+        this.map = o.orElseGet(() -> worldHandler.loadMap(world));
+        step = 8;
+
+        //TODO use inventory for world creator
     }
 }
