@@ -1,10 +1,12 @@
 package me.minidigger.voxelgameslib.components.inventory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.handler.Handler;
@@ -19,6 +21,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
+import lombok.extern.java.Log;
+
+@Singleton
+@Log
 public class InventoryHandler implements Handler, Listener {
 
     @Inject
@@ -42,28 +48,29 @@ public class InventoryHandler implements Handler, Listener {
         HandlerList.unregisterAll(this);
     }
 
-    /**
-     * Creates a new Basic Inventory and returns it
-     *
-     * @param title title of new inventory
-     * @param size size/capacity of new inventory
-     * @return the newly created inventory
-     */
-    public BasicInventory createBasicInventory(String title, int size) {
-        return new BasicInventory(title, size);
-    }
 
     /**
-     * Creates a new inventory for a player and registers it as being active
+     * Creates a new inventory for a player
      *
-     * @param inventory the inventory to be used as a base
-     * @param player the player to create it for
-     * @return an instance of the inventory used when opening it for a player
+     * @param inventoryType Type of inventory to use
+     * @param player player to create the inventory for
+     * @param title inventory title
+     * @param size size of inventory space
+     * @return the created inventory
      */
-    public BaseInventory createForPlayer(BaseInventory inventory, Player player) {
-        BaseInventory inv = inventory.createForPlayer(player);
-        inventories.put(inv.getIdentifier(), inventory);
-        return inv;
+    public <T extends BaseInventory> T createInventory(Class<T> inventoryType, Player player, String title, int size) {
+        T instance = null;
+
+        try {
+            instance = inventoryType.getDeclaredConstructor(Player.class, String.class, int.class).newInstance(player, title, size);
+        } catch (NoSuchMethodException|InstantiationException|IllegalAccessException|InvocationTargetException e) {
+            log.severe("Error creating new inventory (VGL Inventory API): " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        inventories.put(player.getUniqueId(), instance);
+
+        return instance;
     }
 
     /**
@@ -78,12 +85,12 @@ public class InventoryHandler implements Handler, Listener {
     @EventHandler
     public void onOpenListener(InventoryOpenEvent event) {
         event.setCancelled(true);
-        this.getInventory(event.getPlayer()).ifPresent(inventory -> inventory.onOpen((Player) event.getPlayer()));
+        this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onOpen);
     }
 
     @EventHandler
     public void onCloseListener(InventoryCloseEvent event) {
-        this.getInventory(event.getPlayer()).ifPresent(inventory -> inventory.onClose((Player) event.getPlayer()));
+        this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onClose);
     }
 
     @EventHandler

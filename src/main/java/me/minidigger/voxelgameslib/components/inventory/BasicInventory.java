@@ -1,5 +1,7 @@
 package me.minidigger.voxelgameslib.components.inventory;
 
+import org.bukkit.entity.Player;
+
 /**
  * A basic inventory is a type of inventory.<br/>
  *
@@ -7,7 +9,7 @@ package me.minidigger.voxelgameslib.components.inventory;
  * other than the single inventory page.
  */
 public class BasicInventory extends BaseInventory {
-    public BasicInventory(String title, int size) {
-        super(title, size);
+    public BasicInventory(Player player, String title, int size) {
+        super(player, title, size);
     }
 }

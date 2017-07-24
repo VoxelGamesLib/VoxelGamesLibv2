@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class BaseInventory {
     private UUID identifier;
+    private Player player;
     protected Inventory bukkitInventory;
     protected String title;
     protected int size;
@@ -24,10 +25,13 @@ public abstract class BaseInventory {
     /**
      * Creates a new BaseInventory
      *
+     * @param player the player to create the inventory on
      * @param title title of new inventory
      * @param size size/capacity of new inventory
      */
-    public BaseInventory(String title, int size) {
+    public BaseInventory(Player player, String title, int size) {
+        this.identifier = player.getUniqueId();
+        this.player = player;
         this.title = title;
         this.size = Math.min(54, (int) (Math.ceil((double) size / 9)) * 9);
 
@@ -35,43 +39,14 @@ public abstract class BaseInventory {
     }
 
     /**
-     * Creates a new instance of this inventory designed to be used by the player
-     *
-     * @param p player that will open the inventory
-     * @return the duplicated inventory
-     */
-    BaseInventory createForPlayer(Player p) {
-        BaseInventory inv = null;
-        try {
-            inv = (BaseInventory) clone();
-            inv.setIdentifier(p.getUniqueId());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-
-        return inv;
-    }
-
-    /**
      * <p>Get the inventory's identifier</p>
      *
      * <p>This should be the same as the UUID of the player opening it.</p>
      *
-     * @return
+     * @return the identifier (generally player UUID)
      */
     public UUID getIdentifier() {
         return identifier;
-    }
-
-    /**
-     * <p>Sets the identifier for this inventory</p>
-     *
-     * <p>This should be the same as the player opening it.</p>
-     *
-     * @param identifier identifier of the inventory
-     */
-    public void setIdentifier(UUID identifier) {
-        this.identifier = identifier;
     }
 
     /**
@@ -105,15 +80,15 @@ public abstract class BaseInventory {
     /**
      * Perform the defined action when an inventory is opened by a player
      */
-    public void onOpen(Player p) {
-        openInventoryAction.accept(p);
+    public void onOpen() {
+        openInventoryAction.accept(player);
     }
 
     /**
      * Perform the defined action when an inventory is opened by a player
      */
-    public void onClose(Player p) {
-        closeInventoryAction.accept(p);
+    public void onClose() {
+        closeInventoryAction.accept(player);
     }
 
     /**

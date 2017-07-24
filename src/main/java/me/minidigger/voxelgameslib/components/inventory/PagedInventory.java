@@ -6,6 +6,7 @@ import java.util.Map;
 import me.minidigger.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -24,15 +25,21 @@ public class PagedInventory extends BaseInventory {
     /**
      * Creates a new PagedInventory
      *
-     * @param title title of new inventory
-     * @param size  size/capacity of new inventory
+     * @see BaseInventory#BaseInventory(Player, String, int)
      */
-    public PagedInventory(String title, int size) {
-        super(title, size);
+    public PagedInventory(Player player, String title, int size) {
+        super(player, title, size);
     }
 
-    public PagedInventory(String title, boolean dynamicInventory) {
-        super(title, 54);
+    /**
+     * Creates a new PagedInventory
+     *
+     * Has the ability to specify if the inventory is dynamic (size determined by contents)
+     *
+     * @see BaseInventory#BaseInventory(Player, String, int)
+     */
+    public PagedInventory(Player player, String title, boolean dynamicInventory) {
+        super(player, title, 54);
         this.dynamicInventory = dynamicInventory;
     }
 
@@ -41,11 +48,15 @@ public class PagedInventory extends BaseInventory {
     }
 
     public ItemStack getBackwardItem() {
-        return new ItemBuilder(forward).name(ChatColor.GOLD + "Back").build();
+        return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();
     }
 
     public ItemStack getCloseItem() {
-        return new ItemBuilder(forward).name(ChatColor.RED + "Next").build();
+        return new ItemBuilder(close).name(ChatColor.RED + "Next").build();
+    }
+
+    public void setTitleFormat(String titleFormat) {
+        this.titleFormat = titleFormat;
     }
 
     public void setForwardItem(ItemStack item) {
