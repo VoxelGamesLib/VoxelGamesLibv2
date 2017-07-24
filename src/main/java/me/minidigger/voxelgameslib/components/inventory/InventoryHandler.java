@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.components.inventory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
 
@@ -9,6 +10,7 @@ import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.handler.Handler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -76,17 +78,21 @@ public class InventoryHandler implements Handler, Listener {
     @EventHandler
     public void onOpenListener(InventoryOpenEvent event) {
         event.setCancelled(true);
-        inventories.get(event.getPlayer().getUniqueId()).onOpen((Player) event.getPlayer());
+        this.getInventory(event.getPlayer()).ifPresent(inventory -> inventory.onOpen((Player) event.getPlayer()));
     }
 
     @EventHandler
     public void onCloseListener(InventoryCloseEvent event) {
-        inventories.get(event.getPlayer().getUniqueId()).onClose((Player) event.getPlayer());
+        this.getInventory(event.getPlayer()).ifPresent(inventory -> inventory.onClose((Player) event.getPlayer()));
     }
 
     @EventHandler
     public void onClickListener(InventoryClickEvent event) {
         event.setCancelled(true);
-        inventories.get(event.getWhoClicked().getUniqueId()).onClick(event.getCurrentItem(), event);
+        this.getInventory(event.getWhoClicked()).ifPresent(inventory -> inventory.onClick(event.getCurrentItem(), event));
+    }
+
+    private Optional<BaseInventory> getInventory(final HumanEntity player) {
+        return Optional.ofNullable(this.inventories.get(player.getUniqueId()));
     }
 }
