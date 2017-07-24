@@ -5,9 +5,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import javax.inject.Inject;
@@ -32,7 +35,7 @@ import lombok.extern.java.Log;
 
 @Log
 @Singleton
-public class EventHandler implements Handler {
+public class EventHandler implements Handler, Listener{
 
     private static final EventFilter filterPlayers = (event, registeredListener, user) ->
             user.filter(user1 -> registeredListener.getGame().isPlaying(user1.getUuid())).isPresent();
@@ -51,7 +54,7 @@ public class EventHandler implements Handler {
     private UserHandler userHandler;
 
     public void registerEvents(Listener listener, Game game) {
-        List<Class<Event>> newEvents = new ArrayList<>();
+        Set<Class<Event>> newEvents = new HashSet<>();
         Arrays.stream(listener.getClass().getMethods()).filter((method -> method.isAnnotationPresent(GameEvent.class))).forEach(
                 method -> {
                     if (method.getParameterCount() != 1) {
@@ -70,18 +73,28 @@ public class EventHandler implements Handler {
                             registeredListener.addFilter(filterPlayers);
                         }
 
+                        //TODO contendense ifAbsende and ifPresent into one
                         activeListeners.computeIfAbsent(game.getUuid(), (key) -> new ArrayList<>());
                         activeListeners.computeIfPresent(game.getUuid(), (key, list) -> {
                             list.add(registeredListener);
+                            if (listener.getClass().getName().contains("VoteFeature")) {
+                                System.out.println("register for VoteFeature " + eventClass.getName() + " " + method.getName());
+                            }
                             return list;
                         });
 
                         activeEvents.computeIfAbsent(eventClass, (key) -> {
                             newEvents.add(eventClass);
+                            if (listener.getClass().getName().contains("VoteFeature")) {
+                                System.out.println("new event for VoteFeature " + eventClass.getName() + " " + method.getName());
+                            }
                             return new ArrayList<>();
                         });
                         activeEvents.computeIfPresent(eventClass, (key, list) -> {
                             list.add(registeredListener);
+                            if (listener.getClass().getName().contains("VoteFeature")) {
+                                System.out.println("new listener for VoteFeature " + eventClass.getName() + " " + method.getName());
+                            }
                             return list;
                         });
                     } else {
@@ -93,14 +106,17 @@ public class EventHandler implements Handler {
 
         // check if we need to register a new event
         newEvents.forEach(eventClass -> {
-            if(eventClass.getName().contains("GameJoin")){
+            System.out.println("add new event " + eventClass.getName());
+            if (eventClass.getName().contains("GameJoinEvent")) {
                 System.out.println("REGISTER JOIN");
+                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.HIGH, eventExecutor, voxelGamesLib);
+            } else {
+                Bukkit.getServer().getPluginManager().registerEvent(eventClass, this, EventPriority.NORMAL, eventExecutor, voxelGamesLib);
             }
-            Bukkit.getServer().getPluginManager().registerEvent(eventClass, listener, EventPriority.HIGH, eventExecutor, voxelGamesLib);
         });
 
         // register normal events
-        Bukkit.getServer().getPluginManager().registerEvents(listener, voxelGamesLib);
+        //Bukkit.getServer().getPluginManager().registerEvents(listener, voxelGamesLib);
     }
 
     public void unregister(Listener listener, Game game) {
@@ -133,7 +149,7 @@ public class EventHandler implements Handler {
     }
 
     public <T extends Event> void callEvent(T event) {
-        if(event.getEventName().equalsIgnoreCase("GameJoinEvent")){
+        if (event.getEventName().equalsIgnoreCase("GameJoinEvent")) {
             System.out.println("CALL JOIN");
             new RuntimeException().printStackTrace();
         }
