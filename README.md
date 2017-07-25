@@ -1,6 +1,7 @@
 # VoxelGamesLib v2
 
 [![Build Status](https://ci.indices.io/buildStatus/icon?job=VoxelGamesLibv2)](https://ci.indices.io/job/VoxelGamesLibv2)
+[![codebeat badge](https://codebeat.co/badges/fca40169-ef87-4f2a-af71-5524970eb058)](https://codebeat.co/projects/github-com-voxelgameslib-voxelgameslibv2-master)
 
 Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
 
