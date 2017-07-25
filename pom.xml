@@ -274,7 +274,7 @@
         <dependency>
             <groupId>com.bugsnag</groupId>
             <artifactId>bugsnag</artifactId>
-            <version>[3.0,4.0)</version>
+            <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
         <!-- hikaricp -->
