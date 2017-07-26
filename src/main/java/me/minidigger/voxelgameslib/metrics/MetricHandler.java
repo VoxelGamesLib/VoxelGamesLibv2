@@ -1,6 +1,6 @@
 package me.minidigger.voxelgameslib.metrics;
 
-import org.bstats.Metrics;
+import org.bstats.bukkit.Metrics;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
