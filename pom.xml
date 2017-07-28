@@ -53,24 +53,24 @@
                         ${project.build.directory}/dependency-reduced-pom.xml
                     </dependencyReducedPomLocation>
                     <!-- don't relocate while testing, it breaks debugging -->
-                    <!--<relocations>-->
-                    <!--<relocation>-->
-                    <!--<pattern>co.aikar.commands</pattern>-->
-                    <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.command</shadedPattern>-->
-                    <!--</relocation>-->
-                    <!--<relocation>-->
-                    <!--<pattern>co.aikar.timings.lib</pattern>-->
-                    <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.timings</shadedPattern>-->
-                    <!--</relocation>-->
-                    <!--<relocation>-->
-                    <!--<pattern>org.bstats</pattern>-->
-                    <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.metrics</shadedPattern>-->
-                    <!--</relocation>-->
-                    <!--<relocation>-->
-                    <!--<pattern>co.aikar.taskchain</pattern>-->
-                    <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.taskchain</shadedPattern>-->
-                    <!--</relocation>-->
-                    <!--</relocations>-->
+                    <relocations>
+                        <!--<relocation>-->
+                        <!--<pattern>co.aikar.commands</pattern>-->
+                        <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.command</shadedPattern>-->
+                        <!--</relocation>-->
+                        <!--<relocation>-->
+                        <!--<pattern>co.aikar.timings.lib</pattern>-->
+                        <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.timings</shadedPattern>-->
+                        <!--</relocation>-->
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>me.minidigger.voxelgameslib.zlib.metrics</shadedPattern>
+                        </relocation>
+                        <!--<relocation>-->
+                        <!--<pattern>co.aikar.taskchain</pattern>-->
+                        <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.taskchain</shadedPattern>-->
+                        <!--</relocation>-->
+                    </relocations>
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
