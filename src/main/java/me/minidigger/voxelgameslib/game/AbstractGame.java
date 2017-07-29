@@ -344,13 +344,15 @@ public abstract class AbstractGame implements Game {
         }
 
         if (!isPlaying(user.getUuid())) {
+            players.add(user);
+            allUsers.add(user);
             GameJoinEvent event = new GameJoinEvent(this, user);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
+                players.remove(user);
+                allUsers.remove(user);
                 return false;
             }
-            players.add(user);
-            allUsers.add(user);
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }
 
