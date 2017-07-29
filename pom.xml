@@ -62,10 +62,10 @@
                         <!--<pattern>co.aikar.timings.lib</pattern>-->
                         <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.timings</shadedPattern>-->
                         <!--</relocation>-->
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>me.minidigger.voxelgameslib.zlib.metrics</shadedPattern>
-                        </relocation>
+                        <!--<relocation>-->
+                            <!--<pattern>org.bstats</pattern>-->
+                            <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.metrics</shadedPattern>-->
+                        <!--</relocation>-->
                         <!--<relocation>-->
                         <!--<pattern>co.aikar.taskchain</pattern>-->
                         <!--<shadedPattern>me.minidigger.voxelgameslib.zlib.taskchain</shadedPattern>-->
@@ -304,6 +304,22 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.10.Final</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- test dependencies -->
+        <!-- junit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- mocking -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.8.47</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

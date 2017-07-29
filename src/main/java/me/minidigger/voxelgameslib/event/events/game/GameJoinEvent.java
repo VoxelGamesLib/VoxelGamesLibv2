@@ -4,15 +4,18 @@ import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.user.User;
+
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 /**
  * Called when a user joins a game
  */
-public class GameJoinEvent extends GameEvent {
+public class GameJoinEvent extends GameEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private User user;
+    private boolean cancelled;
 
     /**
      * @param game the game the user joined
@@ -38,5 +41,15 @@ public class GameJoinEvent extends GameEvent {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 }

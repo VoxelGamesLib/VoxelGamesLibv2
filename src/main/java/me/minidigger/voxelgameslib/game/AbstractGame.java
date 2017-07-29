@@ -338,16 +338,19 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void join(@Nonnull User user) {
+    public boolean join(@Nonnull User user) {
         if (!getActivePhase().allowJoin()) {
-            spectate(user);
-            return;
+            return spectate(user);
         }
 
         if (!isPlaying(user.getUuid())) {
+            GameJoinEvent event = new GameJoinEvent(this, user);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                return false;
+            }
             players.add(user);
             allUsers.add(user);
-            Bukkit.getPluginManager().callEvent(new GameJoinEvent(this, user));
             broadcastMessage(LangKey.GAME_PLAYER_JOIN, (Object) user.getDisplayName());
         }
 
@@ -355,18 +358,22 @@ public abstract class AbstractGame implements Game {
         user.removeListeningChannel(chatHandler.defaultChannel.getIdentifier()); // stop listening to global messages
         user.addListeningChannel(chatChannel.getIdentifier()); // local channel
         user.setActiveChannel(chatChannel.getIdentifier());
+        return true;
     }
 
     @Override
-    public void spectate(@Nonnull User user) {
+    public boolean spectate(@Nonnull User user) {
         if (!getActivePhase().allowSpectate()) {
             Lang.msg(user, LangKey.GAME_CANT_SPECTATE);
+            return false;
         }
 
         if (!isPlaying(user.getUuid()) && !isSpectating(user.getUuid())) {
             spectators.add(user);
             allUsers.add(user);
+            return true;
         }
+        return false;
     }
 
     @Override

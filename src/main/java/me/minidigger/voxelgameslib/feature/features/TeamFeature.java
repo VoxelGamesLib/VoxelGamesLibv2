@@ -2,23 +2,25 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import javax.inject.Singleton;
 
-import me.minidigger.voxelgameslib.feature.AbstractFeature;
-import me.minidigger.voxelgameslib.components.team.Team;
-import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.game.DefaultGameData;
 
-public class TeamFeature extends AbstractFeature {
+import lombok.extern.java.Log;
 
-    private List<Team> teams = new ArrayList<>();
+@Log
+@Singleton
+public class TeamFeature extends TeamSelectFeature {
 
     @Override
     public void start() {
-        // TODO team feature
-        for (User user : getPhase().getGame().getPlayers()) {
-            Team team = new Team();
-            team.put(user, user.getRating(getPhase().getGame().getGameMode()));
-            teams.add(team);
+        getPhase().setAllowJoin(false);
+
+        DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
+        teams = gameData.teams;
+        if (teams == null || teams.size() == 0) {
+            log.severe("You need to run team select before running team feature!");
+            getPhase().getGame().abortGame();
         }
     }
 
@@ -42,21 +44,7 @@ public class TeamFeature extends AbstractFeature {
         return new Class[0];
     }
 
-    public Team[] getTeamsOrdered() {
-        return new Team[0];
-    }
-
-    /**
-     * @param user the user to check for
-     * @return the team of the user, if present
-     */
-    public Optional<Team> getTeam(User user) {
-        for (Team team : teams) {
-            if (team.containsKey(user)) {
-                return Optional.of(team);
-            }
-        }
-
-        return Optional.empty();
+    public List<jskills.Team> getJSkillTeamsOrdered() {
+        return new ArrayList<>(); //TODO
     }
 }

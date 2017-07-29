@@ -1,7 +1,6 @@
 package me.minidigger.voxelgameslib.elo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -46,10 +45,10 @@ public class EloHandler implements Handler {
      */
     public void handleGameEnd(Game game, TeamFeature teamFeature) {
         List<ITeam> teams = new ArrayList<>();
-        teams.addAll(Arrays.asList(teamFeature.getTeamsOrdered()));
+        teams.addAll(teamFeature.getJSkillTeamsOrdered());
         Map<IPlayer, Rating> newRatings = calculator
                 .calculateNewRatings(game.getGameMode(), teams,
-                        IntStream.of(teamFeature.getTeamsOrdered().length).toArray());
+                        IntStream.of(teamFeature.getJSkillTeamsOrdered().size()).toArray());
         update(game, newRatings);
     }
 

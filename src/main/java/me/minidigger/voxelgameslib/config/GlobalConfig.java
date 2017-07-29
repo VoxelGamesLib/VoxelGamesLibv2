@@ -26,8 +26,7 @@ public class GlobalConfig extends Config {
     @Expose
     public boolean useRoleSystem = true;
     @Expose
-    public List<String> availableLanguages = CollectionUtil
-            .toStringList(Locale.values(), Locale::getTag);
+    public List<String> availableLanguages = CollectionUtil.toStringList(Locale.values(), Locale::getTag);
     @Expose
     public Locale defaultLocale = Locale.ENGLISH;
     @Expose

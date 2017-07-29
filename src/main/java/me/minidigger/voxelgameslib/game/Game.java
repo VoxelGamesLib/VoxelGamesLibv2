@@ -98,14 +98,14 @@ public interface Game extends Tickable {
      *
      * @param user the user that wants to join this game
      */
-    void join(@Nonnull User user);
+    boolean join(@Nonnull User user);
 
     /**
      * lets a user spectate this game
      *
      * @param user the user which wants to spectate
      */
-    void spectate(@Nonnull User user);
+    boolean spectate(@Nonnull User user);
 
     /**
      * Lets a user leave this game
