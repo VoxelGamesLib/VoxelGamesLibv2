@@ -11,6 +11,7 @@ import org.hibernate.internal.CoreMessageLogger_$logger;
 import org.hibernate.internal.EntityManagerMessageLogger_$logger;
 import org.hibernate.internal.log.ConnectionAccessLogger_$logger;
 import org.hibernate.internal.log.ConnectionPoolingLogger_$logger;
+import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 import org.reflections.Reflections;
 
 import java.util.Optional;
@@ -62,6 +63,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                 //TODO figure out how to use hikari with hibernate
                 //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
                 .build();
+
+        JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(ComponentTypeDescriptor.INSTANCE);
 
         MetadataSources sources = new MetadataSources(registry);
 
