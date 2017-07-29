@@ -1,7 +1,6 @@
 package me.minidigger.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
-import com.google.inject.Injector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +9,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.components.inventory.BasicInventory;
+import me.minidigger.voxelgameslib.components.inventory.InventoryHandler;
 import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
@@ -22,7 +23,15 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.user.User;
+import me.minidigger.voxelgameslib.user.UserHandler;
+import me.minidigger.voxelgameslib.utils.ItemBuilder;
 import me.minidigger.voxelgameslib.world.WorldConfig;
+
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
@@ -44,12 +53,20 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
 
     @Inject
     private WorldConfig config;
-
     @Inject
-    private Injector injector;
+    private UserHandler userHandler;
+    @Inject
+    private InventoryHandler inventoryHandler;
 
     private Map<UUID, Integer> votes = new HashMap<>();
     private Map<Integer, MapInfo> availableMaps = new HashMap<>();
+
+    @Getter
+    @Setter
+    private boolean enableVoteMenu = true;
+    @Getter
+    @Setter
+    private ItemStack openMenuItem = new ItemStack(Material.PAPER, 1);
 
     @Override
     public void start() {
@@ -74,6 +91,9 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         }
 
         getPhase().getGame().getPlayers().forEach(this::sendVoteMessage);
+        if (enableVoteMenu) {
+            getPhase().getGame().getPlayers().forEach(user -> user.getPlayer().getInventory().setItem(0, openMenuItem));
+        }
     }
 
     @Override
@@ -138,6 +158,39 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         sendVoteMessage(event.getUser());
     }
 
+    @GameEvent
+    public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
+        userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
+            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() == openMenuItem) {
+                int start = 18;
+                BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", 27);
+                for (int id : availableMaps.keySet()) {
+                    MapInfo info = availableMaps.get(id);
+                    ItemStack item = new ItemBuilder(Material.PAPER).amount(id).color(Color.PURPLE).name(info.getName()).lore(info.getAuthor()).build();
+                    basicInventory.getBukkitInventory().setItem(start, item);
+                    basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> confirmVote(user, id)));
+                }
+            }
+        });
+    }
+
+    /**
+     * Confirms a vote for a map
+     */
+    private void confirmVote(User voter, Integer mapId) {
+        if (votes.containsKey(voter.getUuid())) {
+            Lang.msg(voter, LangKey.VOTE_ALREADY_VOTED);
+        } else {
+            if (availableMaps.get(mapId) == null) {
+                Lang.msg(voter, LangKey.VOTE_UNKNOWN_MAP, mapId);
+                return;
+            }
+
+            votes.put(voter.getUuid(), mapId);
+            Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapId);
+        }
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Class<? extends Feature>[] getDependencies() {
@@ -154,17 +207,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             if (map == null) {
                 sendVoteMessage(sender);
             } else {
-                if (votes.containsKey(sender.getUuid())) {
-                    Lang.msg(sender, LangKey.VOTE_ALREADY_VOTED);
-                } else {
-                    if (availableMaps.get(map) == null) {
-                        Lang.msg(sender, LangKey.VOTE_UNKNOWN_MAP, map);
-                        return;
-                    }
-
-                    votes.put(sender.getUuid(), map);
-                    Lang.msg(sender, LangKey.VOTE_SUBMITTED, map);
-                }
+                confirmVote(sender, map);
             }
         }
     }

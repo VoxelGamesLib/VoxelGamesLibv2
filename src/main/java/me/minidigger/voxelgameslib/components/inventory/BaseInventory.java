@@ -49,6 +49,10 @@ public abstract class BaseInventory {
         return identifier;
     }
 
+    public Inventory getBukkitInventory() {
+        return bukkitInventory;
+    }
+
     /**
      * Set the action to be performed when the inventory opens
      *

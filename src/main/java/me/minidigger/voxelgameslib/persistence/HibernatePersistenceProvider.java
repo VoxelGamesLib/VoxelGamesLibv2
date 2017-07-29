@@ -45,7 +45,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                 ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class};
 
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                // credetials and stuff
+                // credentials and stuff
                 .applySetting("hibernate.connection.username", config.persistence.user)
                 .applySetting("hibernate.connection.password", config.persistence.pass)
                 .applySetting("hibernate.connection.driver_class", config.persistence.driver)
@@ -78,11 +78,6 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             StandardServiceRegistryBuilder.destroy(registry);
             e.printStackTrace();
         }
-
-        VoxelGamesLib.newChain().asyncFirst(() ->
-                session(session -> session.save(new TestEntity("TEST")))
-        ).async(id -> session(session -> session.load(TestEntity.class, id)))
-                .syncLast((entity -> log.info("Result is " + entity.getTest()))).execute();
     }
 
     @Override
