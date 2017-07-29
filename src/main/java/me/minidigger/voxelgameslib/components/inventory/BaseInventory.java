@@ -18,16 +18,18 @@ public abstract class BaseInventory {
     protected Inventory bukkitInventory;
     protected String title;
     protected int size;
-    protected Consumer<Player> openInventoryAction = (p) -> {};
-    protected Consumer<Player> closeInventoryAction = (p) -> {};
+    protected Consumer<Player> openInventoryAction = (p) -> {
+    };
+    protected Consumer<Player> closeInventoryAction = (p) -> {
+    };
     protected Map<ItemStack, BiConsumer<ItemStack, InventoryClickEvent>> clickActions = new HashMap<>();
 
     /**
      * Creates a new BaseInventory
      *
      * @param player the player to create the inventory on
-     * @param title title of new inventory
-     * @param size size/capacity of new inventory
+     * @param title  title of new inventory
+     * @param size   size/capacity of new inventory
      */
     public BaseInventory(Player player, String title, int size) {
         this.identifier = player.getUniqueId();
@@ -35,7 +37,7 @@ public abstract class BaseInventory {
         this.title = title;
         this.size = Math.min(54, (int) (Math.ceil((double) size / 9)) * 9);
 
-        bukkitInventory = Bukkit.createInventory(null, size, title);
+        bukkitInventory = Bukkit.createInventory(player, size, title);
     }
 
     /**
@@ -74,7 +76,7 @@ public abstract class BaseInventory {
     /**
      * Add new actions to be performed when a player clicks an ItemStack in an inventory
      *
-     * @param is itemstack to create the click action for
+     * @param is     itemstack to create the click action for
      * @param action the action to perform
      */
     public void addClickAction(ItemStack is, BiConsumer<ItemStack, InventoryClickEvent> action) {
@@ -99,7 +101,7 @@ public abstract class BaseInventory {
      * Perform the defined action when a certain ItemStack is clicked in an inventory
      *
      * @param is clicked item
-     * @param e click event
+     * @param e  click event
      */
     public void onClick(ItemStack is, InventoryClickEvent e) {
         if (clickActions.containsKey(is)) {

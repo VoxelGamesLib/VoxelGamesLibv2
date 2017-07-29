@@ -28,7 +28,6 @@ import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ItemBuilder;
 import me.minidigger.voxelgameslib.world.WorldConfig;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -182,15 +181,17 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     @GameEvent
     public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
         userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
-            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() == openMenuItem) {
+            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
                 int start = 18;
                 BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", 27);
                 for (int id : availableMaps.keySet()) {
                     MapInfo info = availableMaps.get(id);
-                    ItemStack item = new ItemBuilder(Material.PAPER).amount(id).color(Color.PURPLE).name(info.getName()).lore(info.getAuthor()).build();
-                    basicInventory.getBukkitInventory().setItem(start, item);
+                    ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
+                    basicInventory.getBukkitInventory().setItem(start++, item);
                     basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> confirmVote(user, id)));
                 }
+                user.getPlayer().openInventory(basicInventory.getBukkitInventory());
+                log.finer("open vote menu");
             }
         });
     }
