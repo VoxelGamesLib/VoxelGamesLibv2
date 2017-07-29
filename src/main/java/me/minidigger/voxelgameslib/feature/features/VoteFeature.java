@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.components.inventory.BasicInventory;
 import me.minidigger.voxelgameslib.components.inventory.InventoryHandler;
 import me.minidigger.voxelgameslib.event.GameEvent;
@@ -32,6 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
@@ -57,15 +59,19 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     private UserHandler userHandler;
     @Inject
     private InventoryHandler inventoryHandler;
+    @Inject
+    private VoxelGamesLib voxelGamesLib;
 
     private Map<UUID, Integer> votes = new HashMap<>();
     private Map<Integer, MapInfo> availableMaps = new HashMap<>();
 
     @Getter
     @Setter
+    @Expose
     private boolean enableVoteMenu = true;
     @Getter
     @Setter
+    //@Expose TODO figure out how we want to expose items
     private ItemStack openMenuItem = new ItemStack(Material.PAPER, 1);
 
     @Override
@@ -92,7 +98,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
 
         getPhase().getGame().getPlayers().forEach(this::sendVoteMessage);
         if (enableVoteMenu) {
-            getPhase().getGame().getPlayers().forEach(user -> user.getPlayer().getInventory().setItem(0, openMenuItem));
+            getPhase().getGame().getPlayers().forEach(this::giveVoteMenuItem);
         }
     }
 
@@ -144,6 +150,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
      * @param user the user that should receive the message
      */
     public void sendVoteMessage(User user) {
+        log.finer("send vote msg");
         Lang.msg(user, LangKey.VOTE_MESSAGE_TOP);
         for (int id : availableMaps.keySet()) {
             MapInfo info = availableMaps.get(id);
@@ -152,10 +159,24 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
     }
 
+    public void giveVoteMenuItem(User user) {
+        log.finer("give vote menu item");
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if(!getPhase().isRunning())return;
+                user.getPlayer().getInventory().setItem(0, openMenuItem);
+                user.getPlayer().updateInventory();
+            }
+        }.runTaskLater(voxelGamesLib, 5); // delay because we might be in progress of switching worlds
+    }
+
     @GameEvent
     public void onJoin(@Nonnull GameJoinEvent event) {
-        log.finer("send vote msg");
         sendVoteMessage(event.getUser());
+        if (enableVoteMenu) {
+            giveVoteMenuItem(event.getUser());
+        }
     }
 
     @GameEvent
