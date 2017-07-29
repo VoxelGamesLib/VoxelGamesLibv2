@@ -253,6 +253,18 @@ public abstract class AbstractPhase implements Phase {
                         return false;
                     }
                 }
+
+                for (@SuppressWarnings("unchecked") Class<? extends Feature> dependency : feature
+                        .getSoftDependencies()) {
+                    if (dependency.equals(feature.getClass())) {
+                        log.severe(feature.getName() + " tried to depend on itself...");
+                        continue;
+                    }
+                    graph.addDependency(feature.getClass(), dependency);
+
+                    added.add(feature.getClass());
+                    added.add(dependency);
+                }
             }
 
             // add features that have no dependency connection to any other feature. they can't be left out alone!

@@ -38,7 +38,18 @@ public interface Feature extends Tickable {
     String getName();
 
     /**
-     * @return all features this feature depends on
+     * @return all features this feature depends on. this feature will load before any dependency in
+     * this list and the dependencies are required to be active
      */
-    Class[] getDependencies();
+    default Class[] getDependencies() {
+        return new Class[0];
+    }
+
+    /**
+     * @return all features this phase soft depends on. this feature will load before any dependency
+     * in this list, but the dependencies are not required to be active
+     */
+    default Class[] getSoftDependencies() {
+        return new Class[0];
+    }
 }
