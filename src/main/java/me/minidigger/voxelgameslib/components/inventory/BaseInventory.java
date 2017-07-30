@@ -6,6 +6,8 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import javax.inject.Inject;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,6 +15,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class BaseInventory {
+
+    @Inject
+    private InventoryHandler inventoryHandler;
+
     private UUID identifier;
     private Player player;
     protected Inventory bukkitInventory;
@@ -107,5 +113,21 @@ public abstract class BaseInventory {
         if (clickActions.containsKey(is)) {
             clickActions.get(is).accept(is, e);
         }
+    }
+
+    /**
+     * Make the player close the inventory
+     *
+     * @param player player to close inventory for
+     */
+    public void close(Player player) {
+        player.closeInventory();
+    }
+
+    /**
+     * Destroys this inventory from the map. Call this when you are done with this inventory.
+     */
+    public void destroy() {
+        inventoryHandler.removeInventory(identifier);
     }
 }

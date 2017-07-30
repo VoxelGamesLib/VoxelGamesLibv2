@@ -7,6 +7,7 @@ import me.minidigger.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -29,6 +30,18 @@ public class PagedInventory extends BaseInventory {
      */
     public PagedInventory(Player player, String title, int size) {
         super(player, title, size);
+
+        addClickAction(forward, (itemStack, clickEvent) -> {
+            setPage(++currentPage);
+        });
+
+        addClickAction(backward, (itemStack, clickEvent) -> {
+            setPage(--currentPage);
+        });
+
+        addClickAction(close, ((itemStack, clickEvent) -> {
+            close((Player) clickEvent.getWhoClicked());
+        }));
     }
 
     /**
@@ -55,6 +68,15 @@ public class PagedInventory extends BaseInventory {
         return new ItemBuilder(close).name(ChatColor.RED + "Next").build();
     }
 
+    /**
+     * Sets the format for the inventory title.
+     *
+     * Available placeholders:
+     * %title% - replaced with inventory title (defined on object creation)
+     * %page% - replaced with page number
+     *
+     * @param titleFormat format
+     */
     public void setTitleFormat(String titleFormat) {
         this.titleFormat = titleFormat;
     }
@@ -69,5 +91,18 @@ public class PagedInventory extends BaseInventory {
 
     public void setCloseItem(ItemStack item) {
         close = item;
+    }
+
+    /**
+     * Sets the visible page of the inventory
+     *
+     * @param newPage id of page to set as visible
+     */
+    public void setPage(int newPage) {
+        if (pages.containsKey(newPage)) {
+            currentPage = newPage;
+
+            // do stuff here pls todo yes
+        }
     }
 }
