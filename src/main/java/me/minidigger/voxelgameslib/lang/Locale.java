@@ -34,7 +34,7 @@ public class Locale implements Serializable {
     @Id
     private String tag;
 
-    protected Locale(){
+    protected Locale() {
         // JPA
     }
 

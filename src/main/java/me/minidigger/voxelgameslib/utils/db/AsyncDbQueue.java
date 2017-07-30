@@ -6,8 +6,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.bukkit.Bukkit;
-
 import lombok.extern.java.Log;
 
 @Log

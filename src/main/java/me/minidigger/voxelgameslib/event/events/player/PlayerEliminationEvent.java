@@ -5,8 +5,9 @@ import javax.annotation.Nonnull;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.user.User;
 
-import lombok.Getter;
 import org.bukkit.event.HandlerList;
+
+import lombok.Getter;
 
 /**
  * This event is called when a player is eliminated from a game.<br>Gametypes should call this

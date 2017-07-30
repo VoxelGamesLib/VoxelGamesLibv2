@@ -53,9 +53,9 @@ public class InventoryHandler implements Handler, Listener {
      * Creates a new inventory for a player
      *
      * @param inventoryType Type of inventory to use
-     * @param player player to create the inventory for
-     * @param title inventory title
-     * @param size size of inventory space
+     * @param player        player to create the inventory for
+     * @param title         inventory title
+     * @param size          size of inventory space
      * @return the created inventory
      */
     public <T extends BaseInventory> T createInventory(Class<T> inventoryType, Player player, String title, int size) {
@@ -63,7 +63,7 @@ public class InventoryHandler implements Handler, Listener {
 
         try {
             instance = inventoryType.getDeclaredConstructor(Player.class, String.class, int.class).newInstance(player, title, size);
-        } catch (NoSuchMethodException|InstantiationException|IllegalAccessException|InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             log.severe("Error creating new inventory (VGL Inventory API): " + e.getMessage());
             e.printStackTrace();
         }

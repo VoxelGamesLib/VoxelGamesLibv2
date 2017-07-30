@@ -6,7 +6,6 @@ import net.kyori.text.format.TextColor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.soap.Text;
 
 import lombok.Getter;
 

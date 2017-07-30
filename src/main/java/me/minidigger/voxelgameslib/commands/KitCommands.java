@@ -15,7 +15,8 @@ import lombok.extern.java.Log;
 /**
  * Handles commands relating to kits.
  *
- * This is only registered if the {@link me.minidigger.voxelgameslib.feature.features.KitFeature} requests for it to be enabled.
+ * This is only registered if the {@link me.minidigger.voxelgameslib.feature.features.KitFeature}
+ * requests for it to be enabled.
  */
 @Log
 @Singleton

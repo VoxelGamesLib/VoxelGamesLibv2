@@ -8,8 +8,6 @@ import javax.inject.Singleton;
 
 import me.minidigger.voxelgameslib.handler.Handler;
 
-import org.bukkit.Bukkit;
-
 import lombok.extern.java.Log;
 
 /**

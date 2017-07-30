@@ -5,7 +5,6 @@ import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.user.User;
 
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @FeatureInfo(name = "NoHungerLossFeature", author = "aphelion", version = "1.0",

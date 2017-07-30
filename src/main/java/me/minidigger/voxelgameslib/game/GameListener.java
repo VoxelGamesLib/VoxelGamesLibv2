@@ -3,12 +3,9 @@ package me.minidigger.voxelgameslib.game;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.exception.UserException;
-import me.minidigger.voxelgameslib.lang.Lang;
-import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 

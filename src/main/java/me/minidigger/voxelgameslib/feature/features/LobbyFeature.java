@@ -2,13 +2,13 @@ package me.minidigger.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
 import me.minidigger.voxelgameslib.event.GameEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
 import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
-import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
 
 import org.bukkit.boss.BossBar;
 

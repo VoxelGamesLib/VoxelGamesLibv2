@@ -19,7 +19,6 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.persistence.Entity;
 
-import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.timings.Timings;
 import me.minidigger.voxelgameslib.user.GamePlayer;

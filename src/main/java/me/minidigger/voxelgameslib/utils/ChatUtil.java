@@ -81,7 +81,7 @@ public class ChatUtil {
     public static Component formatChannelMessage(ChatChannel channel, Component displayName, Component message) {
         Component prefix = TextComponent.of("");
 
-        if(channel.getPrefix() != null) {
+        if (channel.getPrefix() != null) {
             prefix.append(channel.getPrefix());
         }
 

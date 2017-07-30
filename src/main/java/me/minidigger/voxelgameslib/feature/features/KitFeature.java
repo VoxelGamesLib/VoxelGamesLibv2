@@ -3,14 +3,13 @@ package me.minidigger.voxelgameslib.feature.features;
 import com.google.inject.Injector;
 
 import java.util.List;
-
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
-import me.minidigger.voxelgameslib.components.ability.Ability;
 import me.minidigger.voxelgameslib.commands.KitCommands;
-import me.minidigger.voxelgameslib.feature.AbstractFeature;
+import me.minidigger.voxelgameslib.components.ability.Ability;
 import me.minidigger.voxelgameslib.components.kits.Kit;
+import me.minidigger.voxelgameslib.feature.AbstractFeature;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -41,12 +40,12 @@ public class KitFeature extends AbstractFeature {
      */
     @Override
     public void start() {
-        if(registerCommands) {
+        if (registerCommands) {
             commandManager.registerCommand(injector.getInstance(KitCommands.class));
         }
 
         kits.forEach(kit -> {
-            if(kit.getAbilities() != null) {
+            if (kit.getAbilities() != null) {
                 for (Ability ability : kit.getAbilities()) {
                     Bukkit.getPluginManager().registerEvents(ability, voxelGamesLib);
                 }
@@ -59,12 +58,12 @@ public class KitFeature extends AbstractFeature {
      */
     @Override
     public void stop() {
-        if(registerCommands) {
+        if (registerCommands) {
             commandManager.unregisterCommand(injector.getInstance(KitCommands.class));
         }
 
         kits.forEach(kit -> {
-            if(kit.getAbilities() != null) {
+            if (kit.getAbilities() != null) {
                 for (Ability ability : kit.getAbilities()) {
                     HandlerList.unregisterAll(ability);
                 }

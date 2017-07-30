@@ -43,17 +43,6 @@
  */
 package me.minidigger.voxelgameslib.world;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.FileMode.GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.LinkedList;
-
-import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.errors.FilterFailedException;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -75,14 +64,24 @@ import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
+import static org.eclipse.jgit.lib.FileMode.GITLINK;
+import static org.eclipse.jgit.lib.FileMode.TYPE_GITLINK;
+import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+
 /**
- * A class used to execute a {@code Add} command. It has setters for all
- * supported options and arguments of this command and a {@link #call()} method
- * to finally execute the command. Each instance of this class should only be
- * used for one invocation of the command (means: one call to {@link #call()})
+ * A class used to execute a {@code Add} command. It has setters for all supported options and
+ * arguments of this command and a {@link #call()} method to finally execute the command. Each
+ * instance of this class should only be used for one invocation of the command (means: one call to
+ * {@link #call()})
  *
- * @see <a href="http://www.kernel.org/pub/software/scm/git/docs/git-add.html"
- *      >Git documentation about Add</a>
+ * @see <a href="http://www.kernel.org/pub/software/scm/git/docs/git-add.html" >Git documentation
+ * about Add</a>
  */
 public class CustomAddCommand extends GitCommand<DirCache> {
 
@@ -98,15 +97,12 @@ public class CustomAddCommand extends GitCommand<DirCache> {
     }
 
     /**
-     * Add a path to a file/directory whose content should be added.
-     * <p>
-     * A directory name (e.g. <code>dir</code> to add <code>dir/file1</code> and
-     * <code>dir/file2</code>) can also be given to add all files in the
-     * directory, recursively. Fileglobs (e.g. *.c) are not yet supported.
+     * Add a path to a file/directory whose content should be added. <p> A directory name (e.g.
+     * <code>dir</code> to add <code>dir/file1</code> and <code>dir/file2</code>) can also be given
+     * to add all files in the directory, recursively. Fileglobs (e.g. *.c) are not yet supported.
      *
-     * @param filepattern
-     *            repository-relative path of file/directory to add (with
-     *            <code>/</code> as separator)
+     * @param filepattern repository-relative path of file/directory to add (with <code>/</code> as
+     *                    separator)
      * @return {@code this}
      */
     public CustomAddCommand addFilepattern(String filepattern) {
@@ -117,6 +113,7 @@ public class CustomAddCommand extends GitCommand<DirCache> {
 
     /**
      * Allow clients to provide their own implementation of a FileTreeIterator
+     *
      * @param f f
      * @return {@code this}
      */
@@ -126,9 +123,8 @@ public class CustomAddCommand extends GitCommand<DirCache> {
     }
 
     /**
-     * Executes the {@code Add} command. Each instance of this class should only
-     * be used for one invocation of the command. Don't call this method twice
-     * on an instance.
+     * Executes the {@code Add} command. Each instance of this class should only be used for one
+     * invocation of the command. Don't call this method twice on an instance.
      *
      * @return the DirCache after Add
      */
@@ -260,17 +256,13 @@ public class CustomAddCommand extends GitCommand<DirCache> {
     }
 
     /**
-     * @param update
-     *            If set to true, the command only matches {@code filepattern}
-     *            against already tracked files in the index rather than the
-     *            working tree. That means that it will never stage new files,
-     *            but that it will stage modified new contents of tracked files
-     *            and that it will remove files from the index if the
-     *            corresponding files in the working tree have been removed.
-     *            In contrast to the git command line a {@code filepattern} must
-     *            exist also if update is set to true as there is no
-     *            concept of a working directory here.
-     *
+     * @param update If set to true, the command only matches {@code filepattern} against already
+     *               tracked files in the index rather than the working tree. That means that it
+     *               will never stage new files, but that it will stage modified new contents of
+     *               tracked files and that it will remove files from the index if the corresponding
+     *               files in the working tree have been removed. In contrast to the git command
+     *               line a {@code filepattern} must exist also if update is set to true as there is
+     *               no concept of a working directory here.
      * @return {@code this}
      */
     public CustomAddCommand setUpdate(boolean update) {

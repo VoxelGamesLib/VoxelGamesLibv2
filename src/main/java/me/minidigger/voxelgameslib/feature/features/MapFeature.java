@@ -11,7 +11,6 @@ import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.game.DefaultGameData;
 import me.minidigger.voxelgameslib.map.Map;
-import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 
 @FeatureInfo(name = "MapFeature", author = "MiniDigger", version = "1.0",

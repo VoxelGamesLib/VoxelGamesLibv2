@@ -3,31 +3,24 @@ package me.minidigger.voxelgameslib.utils.db;
 import java.util.HashMap;
 
 /**
- * TypeDef alias for results with a template return type getter
- * so casting/implicit getInt type calls are not needed.
+ * TypeDef alias for results with a template return type getter so casting/implicit getInt type
+ * calls are not needed.
  */
 public class DbRow extends HashMap<String, Object> {
     /**
-     * Get the result as proper type.
-     * <p>
-     * VALID: Long myLong = row.get("someUnsignedIntColumn");
+     * Get the result as proper type. <p> VALID: Long myLong = row.get("someUnsignedIntColumn");
      * INVALID: String myString = row.get("someUnsignedIntColumn");
      *
-     * @param <T>
-     * @param column
      * @return Object of the matching type of the result.
      */
     public <T> T get(String column) {
         return (T) super.get(column);
     }
+
     /**
-     * Get the result as proper type., returning default if not found.
-     * <p>
-     * VALID: Long myLong = row.get("someUnsignedIntColumn");
-     * INVALID: String myString = row.get("someUnsignedIntColumn");
+     * Get the result as proper type., returning default if not found. <p> VALID: Long myLong =
+     * row.get("someUnsignedIntColumn"); INVALID: String myString = row.get("someUnsignedIntColumn");
      *
-     * @param <T>
-     * @param column
      * @return Object of the matching type of the result.
      */
     public <T> T get(String column, T def) {
@@ -37,14 +30,12 @@ public class DbRow extends HashMap<String, Object> {
         }
         return res;
     }
+
     /**
-     * Removes a result, returning as proper type.
-     * <p>
-     * VALID: Long myLong = row.remove("someUnsignedIntColumn");
-     * INVALID: String myString = row.remove("someUnsignedIntColumn");
+     * Removes a result, returning as proper type. <p> VALID: Long myLong =
+     * row.remove("someUnsignedIntColumn"); INVALID: String myString =
+     * row.remove("someUnsignedIntColumn");
      *
-     * @param <T>
-     * @param column
      * @return Object of the matching type of the result.
      */
     public <T> T remove(String column) {
@@ -52,13 +43,10 @@ public class DbRow extends HashMap<String, Object> {
     }
 
     /**
-     * Removes a result, returning as proper type, returning default if not found
-     * <p>
-     * VALID: Long myLong = row.get("someUnsignedIntColumn");
-     * INVALID: String myString = row.get("someUnsignedIntColumn");
+     * Removes a result, returning as proper type, returning default if not found <p> VALID: Long
+     * myLong = row.get("someUnsignedIntColumn"); INVALID: String myString =
+     * row.get("someUnsignedIntColumn");
      *
-     * @param <T>
-     * @param column
      * @return Object of the matching type of the result.
      */
     public <T> T remove(String column, T def) {

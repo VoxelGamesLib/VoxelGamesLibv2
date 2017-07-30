@@ -3,6 +3,7 @@ package me.minidigger.voxelgameslib.event.events.game;
 import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.game.Game;
+
 import org.bukkit.event.HandlerList;
 
 /**

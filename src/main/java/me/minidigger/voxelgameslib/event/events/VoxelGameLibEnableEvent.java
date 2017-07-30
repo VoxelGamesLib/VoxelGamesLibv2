@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.event.events;
 
 import me.minidigger.voxelgameslib.event.VoxelGamesLibEvent;
+
 import org.bukkit.event.HandlerList;
 
 /**

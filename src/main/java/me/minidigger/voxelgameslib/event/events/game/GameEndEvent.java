@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.user.User;
+
 import org.bukkit.event.HandlerList;
 
 /**

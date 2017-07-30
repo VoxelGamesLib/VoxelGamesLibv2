@@ -28,12 +28,10 @@ import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ItemBuilder;
 import me.minidigger.voxelgameslib.world.WorldConfig;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -164,7 +162,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(!getPhase().isRunning())return;
+                if (!getPhase().isRunning()) return;
                 user.getPlayer().getInventory().setItem(0, openMenuItem);
                 user.getPlayer().updateInventory();
             }

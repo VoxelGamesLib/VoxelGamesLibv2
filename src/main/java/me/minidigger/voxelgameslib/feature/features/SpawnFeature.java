@@ -19,7 +19,6 @@ import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.user.User;
 
 import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 @FeatureInfo(name = "SpawnFeature", author = "MiniDigger", version = "1.0",
@@ -64,13 +63,13 @@ public class SpawnFeature extends AbstractFeature {
     @SuppressWarnings("JavaDoc")
     @GameEvent
     public void onRespawn(PlayerRespawnEvent e) {
-            e.setRespawnLocation(getSpawn(e.getPlayer().getUniqueId()));
+        e.setRespawnLocation(getSpawn(e.getPlayer().getUniqueId()));
     }
 
     @SuppressWarnings("JavaDoc")
     @GameEvent
     public void onJoin(GameJoinEvent e) {
-            e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
+        e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
     }
 
     @Override

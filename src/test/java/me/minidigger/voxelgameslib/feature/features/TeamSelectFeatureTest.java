@@ -17,7 +17,7 @@ public class TeamSelectFeatureTest extends FeatureTest<TeamSelectFeature> {
 
     @Test
     public void test() {
-        if(true)return;//TODO do we really want unit tests?...
+        if (true) return;//TODO do we really want unit tests?...
         getFeature().setTeamCount(4);
         getFeature().getPhase().getGame().join(getMockUser("Test1"));
         getFeature().getPhase().getGame().join(getMockUser("Test2"));

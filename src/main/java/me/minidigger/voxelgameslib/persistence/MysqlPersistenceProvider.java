@@ -3,7 +3,6 @@ package me.minidigger.voxelgameslib.persistence;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
@@ -11,8 +10,6 @@ import me.minidigger.voxelgameslib.user.GamePlayer;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.db.DB;
 import me.minidigger.voxelgameslib.utils.db.DbRow;
-
-import org.bukkit.Bukkit;
 
 import lombok.extern.java.Log;
 

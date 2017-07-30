@@ -11,16 +11,16 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import me.minidigger.voxelgameslib.event.GameEvent;
-import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
-import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
-import me.minidigger.voxelgameslib.feature.AbstractFeature;
-import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.components.scoreboard.AbstractScoreboard;
 import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
 import me.minidigger.voxelgameslib.components.scoreboard.ScoreboardHandler;
 import me.minidigger.voxelgameslib.components.scoreboard.ScoreboardLine;
 import me.minidigger.voxelgameslib.components.scoreboard.StringScoreboardLine;
+import me.minidigger.voxelgameslib.event.GameEvent;
+import me.minidigger.voxelgameslib.event.events.game.GameJoinEvent;
+import me.minidigger.voxelgameslib.event.events.game.GameLeaveEvent;
+import me.minidigger.voxelgameslib.feature.AbstractFeature;
+import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.user.User;
 
 import lombok.Getter;

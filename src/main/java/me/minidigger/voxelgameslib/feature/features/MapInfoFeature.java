@@ -1,10 +1,10 @@
 package me.minidigger.voxelgameslib.feature.features;
 
+import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureInfo;
 import me.minidigger.voxelgameslib.map.Map;
-import me.minidigger.voxelgameslib.components.scoreboard.Scoreboard;
 
 import org.bukkit.ChatColor;
 
