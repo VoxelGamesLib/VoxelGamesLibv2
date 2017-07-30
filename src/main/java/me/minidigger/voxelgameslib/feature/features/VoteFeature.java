@@ -28,9 +28,12 @@ import me.minidigger.voxelgameslib.user.UserHandler;
 import me.minidigger.voxelgameslib.utils.ItemBuilder;
 import me.minidigger.voxelgameslib.world.WorldConfig;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -71,7 +74,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     @Getter
     @Setter
     //@Expose TODO figure out how we want to expose items
-    private ItemStack openMenuItem = new ItemStack(Material.PAPER, 1);
+    private ItemStack openMenuItem = new ItemBuilder(Material.PAPER).amount(1).name(ChatColor.GOLD + "Vote for a map").build();
 
     @Override
     public void start() {
@@ -149,7 +152,6 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
      * @param user the user that should receive the message
      */
     public void sendVoteMessage(User user) {
-        log.finer("send vote msg");
         Lang.msg(user, LangKey.VOTE_MESSAGE_TOP);
         for (int id : availableMaps.keySet()) {
             MapInfo info = availableMaps.get(id);
@@ -159,7 +161,6 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     public void giveVoteMenuItem(User user) {
-        log.finer("give vote menu item");
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -182,7 +183,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
         userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
             if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
-                int start = 18;
+                int start = 10;
                 BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", 27);
                 for (int id : availableMaps.keySet()) {
                     MapInfo info = availableMaps.get(id);
@@ -191,7 +192,6 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
                     basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> confirmVote(user, id)));
                 }
                 user.getPlayer().openInventory(basicInventory.getBukkitInventory());
-                log.finer("open vote menu");
             }
         });
     }

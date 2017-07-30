@@ -84,7 +84,6 @@ public class InventoryHandler implements Handler, Listener {
 
     @EventHandler
     public void onOpenListener(InventoryOpenEvent event) {
-        event.setCancelled(true);
         this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onOpen);
     }
 
@@ -95,8 +94,10 @@ public class InventoryHandler implements Handler, Listener {
 
     @EventHandler
     public void onClickListener(InventoryClickEvent event) {
-        event.setCancelled(true);
-        this.getInventory(event.getWhoClicked()).ifPresent(inventory -> inventory.onClick(event.getCurrentItem(), event));
+        this.getInventory(event.getWhoClicked()).ifPresent(inventory -> {
+            event.setCancelled(true);
+            inventory.onClick(event.getCurrentItem(), event);
+        });
     }
 
     private Optional<BaseInventory> getInventory(final HumanEntity player) {
