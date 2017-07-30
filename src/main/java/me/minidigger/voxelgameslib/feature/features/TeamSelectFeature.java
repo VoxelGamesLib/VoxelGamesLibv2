@@ -16,6 +16,8 @@ import me.minidigger.voxelgameslib.feature.AbstractFeature;
 import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
 import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.game.DefaultGameData;
+import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.user.User;
 
 import org.bukkit.ChatColor;
@@ -71,11 +73,12 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     public void stop() {
         Map<String, Integer> sizes = calcSizes();
 
-        // ad everyone who isn't in a team yet to the smallest team
+        // add everyone who isn't in a team yet to the smallest team
         for (User user : getPhase().getGame().getPlayers()) {
-            if (getTeam(user) == null) {
+            if (!getTeam(user).isPresent()) {
                 Team t = getTeam(findSmallest(sizes)).orElseThrow(() -> new RuntimeException("Null team encountered"));
                 t.join(user, user.getRating(getPhase().getGame().getGameMode()));
+                Lang.msg(user, LangKey.TEAM_AUTO_ASSIGNED, t.getName());
                 sizes.put(t.getName(), sizes.get(t.getName()) + 1);
             }
         }
@@ -126,6 +129,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
                 log.finer("SWITCH: " + player + " from " + large + " to " + small);
                 largeT.leave(player);
                 smallT.join(player, player.getRating(getPhase().getGame().getGameMode()));
+                Lang.msg(player, LangKey.TEAM_AUTO_BALANCED, largeT.getName(), smallT.getName());
                 switched = true;
                 break;
                 //}
@@ -137,6 +141,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
                 User player = largeT.getPlayers().get(largeT.getPlayers().size() - 1);
                 largeT.leave(player);
                 smallT.join(player, player.getRating(getPhase().getGame().getGameMode()));
+                Lang.msg(player, LangKey.TEAM_AUTO_BALANCED, largeT.getName(), smallT.getName());
             }
 
             balance();

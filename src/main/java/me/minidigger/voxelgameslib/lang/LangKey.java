@@ -38,7 +38,7 @@ public enum LangKey {
     GAME_START_ABORTED("{red}Game start aborted!"),
     GAME_STARTING_ACCELERATED("{green}We have reached the max amount of players. Speeding up countdown!"),
 
-    GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {aqua}Click here to join!","name","mode"),
+    GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {aqua}Click here to join!", "name", "mode"),
 
     GAME_GAMELIST_HEADER("{gold}##### Currently running games ####"),
     GAME_GAMELIST_ENTRY(
@@ -136,7 +136,10 @@ public enum LangKey {
     WORLD_UNKNOWN_MAP("{red}Could not find a map named {yellow}{map}{red} :/", "map"),
 
     DUEL_WRONG_PLAYER_COUNT("{red}You can't duel with {yellow}{players} {red}players, you need {yellow}2{red}!",
-            "players");
+            "players"),
+
+    TEAM_AUTO_ASSIGNED("{aqua}You didn't select a team and have been automatically assigned to team {yellow}{team}", "team"),
+    TEAM_AUTO_BALANCED("{aqua}You were auto balanced from {yellow}{team1}{aqua} to {yellow}{team2}", "team1", "team2");
 
     @Nonnull
     private final String defaultValue;

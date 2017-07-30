@@ -29,6 +29,8 @@ public class Team {
         this.players = new ArrayList<>();
         this.color = color;
         this.game = game;
+
+        this.jskillTeam = new jskills.Team();
     }
 
     public void join(User user, Rating rating) {
