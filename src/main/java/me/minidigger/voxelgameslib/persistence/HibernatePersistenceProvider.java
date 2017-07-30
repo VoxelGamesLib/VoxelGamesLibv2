@@ -19,6 +19,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.persistence.Entity;
 
+import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.timings.Timings;
 import me.minidigger.voxelgameslib.user.GamePlayer;
@@ -34,6 +35,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @Inject
     private GlobalConfig config;
+    @Inject
+    private ConfigHandler configHandler;
 
     private SessionFactory sessionFactory;
 
@@ -43,6 +46,12 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
         Class[] iDontEvenKnow = new Class[]{CoreMessageLogger_$logger.class, Log_$logger.class,
                 ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class};
 
+        boolean shouldCreateTable = config.persistence.initialTableCreation;
+        if (shouldCreateTable) {
+            config.persistence.initialTableCreation = false;
+            configHandler.saveGlobalConfig();
+        }
+
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 // credentials and stuff
                 .applySetting("hibernate.connection.username", config.persistence.user)
@@ -51,7 +60,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                 .applySetting("hibernate.connection.url", config.persistence.url + "?useSSL=false")
                 .applySetting("hibernate.dialect", config.persistence.dialect)
                 // misc settings
-                .applySetting("hibernate.hbm2ddl.auto", "update")
+                .applySetting("hibernate.hbm2ddl.auto", shouldCreateTable ? "create" : "update")
                 .applySetting("hibernate.show_sql", config.persistence.showSQL + "")
                 //TODO apparently this is an anti-pattern [0], but it fixes an issue so ¯\_(ツ)_/¯
                 // [0]: https://vladmihalcea.com/2016/09/05/the-hibernate-enable_lazy_load_no_trans-anti-pattern/

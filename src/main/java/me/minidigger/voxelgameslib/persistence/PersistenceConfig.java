@@ -21,4 +21,6 @@ public class PersistenceConfig {
     public int pool_size = 10;
     @Expose
     public boolean showSQL = true;
+    @Expose
+    public boolean initialTableCreation = true;
 }

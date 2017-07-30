@@ -61,6 +61,10 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
         loggingHandler.setLevel(Level.parse(globalConfig.logLevel));
     }
 
+    public void saveGlobalConfig() {
+        saveConfig(globalConfigFile, globalConfig);
+    }
+
     /**
      * Checks if the config needs to be migrated
      *
