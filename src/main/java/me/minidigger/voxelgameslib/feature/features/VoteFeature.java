@@ -79,7 +79,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     @Override
     public void start() {
         String mode = getPhase().getGame().getGameMode().getName();
-        int id = 0;
+        int id = 1;
         for (MapInfo info : config.maps) {
             if (info.getGamemodes().contains(mode)) {
                 availableMaps.put(id++, info);
@@ -183,13 +183,16 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
         userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
             if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
-                int start = 10;
+                int start = 9;
                 BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", 27);
                 for (int id : availableMaps.keySet()) {
                     MapInfo info = availableMaps.get(id);
                     ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
                     basicInventory.getBukkitInventory().setItem(start++, item);
-                    basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> confirmVote(user, id)));
+                    basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> {
+                        confirmVote(user, id);
+                        inventoryClickEvent.getWhoClicked().closeInventory();
+                    }));
                 }
                 user.getPlayer().openInventory(basicInventory.getBukkitInventory());
             }

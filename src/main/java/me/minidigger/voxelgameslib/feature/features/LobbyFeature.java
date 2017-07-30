@@ -45,7 +45,7 @@ public class LobbyFeature extends AbstractFeature {
         scoreboard = getPhase().getFeature(ScoreboardFeature.class).getScoreboard();
 
         scoreboard.createAndAddLine("lobby-line",
-                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMinPlayers());
+                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers());
         scoreboard.createAndAddLine("Waiting for players...");
     }
 
