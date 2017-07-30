@@ -276,6 +276,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     public void finishWorldEditing(User editor, Map map) {
         World world = Bukkit.getWorld(map.getLoadedName(editor.getUuid()));
         world.setSpawnLocation((int) map.getCenter().getX(), (int) map.getCenter().getY(), (int) map.getCenter().getZ());
+        world.setAutoSave(true);
         world.save();
 
         NMSUtil.flushSaveQueue(world);
