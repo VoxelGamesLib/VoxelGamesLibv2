@@ -1,5 +1,6 @@
 package me.minidigger.voxelgameslib.world;
 
+import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
@@ -10,12 +11,16 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,11 +29,17 @@ import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.exception.MapException;
 import me.minidigger.voxelgameslib.exception.WorldException;
 import me.minidigger.voxelgameslib.handler.Handler;
+import me.minidigger.voxelgameslib.lang.Lang;
+import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.Map;
 import me.minidigger.voxelgameslib.map.MapInfo;
+import me.minidigger.voxelgameslib.map.MapScanner;
+import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.FileUtils;
+import me.minidigger.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -46,18 +57,16 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Inject
     @Named("WorldsFolder")
     private File worldsFolder;
-
     @Getter
     @Inject
     @Named("WorldContainer")
     private File worldContainer;
-
     @Inject
     private ConfigHandler configHandler;
-
     @Inject
     private Gson gson;
-
+    @Inject
+    private MapScanner mapScanner;
     @Getter
     @Inject
     private WorldRepository worldRepository;
@@ -260,5 +269,52 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      */
     public void saveConfig() {
         configHandler.saveConfig(configFile, config);
+    }
+
+    public void finishWorldEditing(User editor, Map map) {
+        World world = Bukkit.getWorld(map.getLoadedName(editor.getUuid()));
+        world.setSpawnLocation((int) map.getCenter().getX(), (int) map.getCenter().getY(), (int) map.getCenter().getZ());
+        Arrays.stream(world.getLoadedChunks()).forEach(Chunk::unload);
+        world.save();
+
+        mapScanner.scan(map, editor.getUuid());
+
+        File worldFolder = new File(getWorldContainer(), map.getWorldName());
+
+        try {
+            FileWriter fileWriter = new FileWriter(new File(worldFolder, "config.json"));
+            gson.toJson(map, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_CONFIG_ERROR, e.getMessage(),
+                    e.getClass().getName());
+            log.log(Level.WARNING, "Error while saving the world config", e);
+            return;
+        }
+
+        ZipFile zip;
+        try {
+            zip = ZipUtil.createZip(worldFolder);
+        } catch (ZipException e) {
+            Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_ZIP_ERROR, e.getMessage(),
+                    e.getClass().getName());
+            log.log(Level.WARNING, "Error while creating the zip", e);
+            return;
+        }
+
+        try {
+            Files.move(zip.getFile(), new File(getWorldsFolder(), zip.getFile().getName()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (!config.maps.contains(map.getInfo())) {
+            config.maps.add(map.getInfo());
+            saveConfig();
+        }
+
+        getWorldRepository().commitRepo();
+
+        Lang.msg(editor, LangKey.WORLD_CREATOR_DONE);
     }
 }

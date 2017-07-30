@@ -139,7 +139,19 @@ public enum LangKey {
             "players"),
 
     TEAM_AUTO_ASSIGNED("{aqua}You didn't select a team and have been automatically assigned to team {yellow}{team}", "team"),
-    TEAM_AUTO_BALANCED("{aqua}You were auto balanced from {yellow}{team1}{aqua} to {yellow}{team2}", "team1", "team2");
+    TEAM_AUTO_BALANCED("{aqua}You were auto balanced from {yellow}{team1}{aqua} to {yellow}{team2}", "team1", "team2"),
+
+    WORLD_MODIFY_START("{green}World modifier started"),
+    WORLD_MODIFY_NOT_STARTED("{red}You need to start the world modifier using {yellow}/wc m start {red}first"),
+    WORLD_MODIFY_DISPLAYNAME_VIEW("{aqua}The current display name is {yellow}{name}", "name"),
+    WORLD_MODIFY_DISPLAYNAME_EDIT("{aqua}Changed the display name to {yellow}{name}", "name"),
+    WORLD_MODIFY_AUTHOR_VIEW("{aqua}The current author is {yellow}{author}", "author"),
+    WORLD_MODIFY_AUTHOR_EDIT("{aqua}Changed the author to {yellow}{author}", "author"),
+    WORLD_MODIFY_RADIUS_VIEW("{aqua}The current radius is {yellow}{radius}", "radius"),
+    WORLD_MODIFY_RADIUS_EDIT("{aqua}Changed the radius to {yellow}{radius}", "radius"),
+    WORLD_MODIFY_CENTER_VIEW("{aqua}The current center is {yellow}{center}", "center"),
+    WORLD_MODIFY_CENTER_EDIT("{aqua}Changed the center to {yellow}{center}", "center"),
+    WORLD_MODIFY_HELP("Idk some fancy help text");//TODO help for wc m
 
     @Nonnull
     private final String defaultValue;

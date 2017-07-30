@@ -43,6 +43,7 @@ public class EditMode extends BaseCommand {
     public void on(User sender) {
         if (!editMode.contains(sender.getUuid())) {
             editMode.add(sender.getUuid());
+            //TODO item for editmode
             Lang.msg(sender, LangKey.EDITMODE_ENABLED);
         } else {
             Lang.msg(sender, LangKey.EDITMODE_ALREADY_ENABLED);

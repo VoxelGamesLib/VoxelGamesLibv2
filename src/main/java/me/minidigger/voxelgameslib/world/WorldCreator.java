@@ -1,22 +1,13 @@
 package me.minidigger.voxelgameslib.world;
 
-import com.google.common.io.Files;
-import com.google.gson.Gson;
 import com.google.inject.Singleton;
 
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.format.TextColor;
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.game.GameHandler;
@@ -25,10 +16,8 @@ import me.minidigger.voxelgameslib.lang.Lang;
 import me.minidigger.voxelgameslib.lang.LangKey;
 import me.minidigger.voxelgameslib.map.Map;
 import me.minidigger.voxelgameslib.map.MapInfo;
-import me.minidigger.voxelgameslib.map.MapScanner;
 import me.minidigger.voxelgameslib.map.Vector3D;
 import me.minidigger.voxelgameslib.user.User;
-import me.minidigger.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
 
@@ -36,7 +25,6 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
 import lombok.extern.java.Log;
 
 /**
@@ -55,15 +43,6 @@ public class WorldCreator extends BaseCommand {
 
     @Inject
     private GameHandler gameHandler;
-
-    @Inject
-    private MapScanner mapScanner;
-
-    @Inject
-    private WorldConfig config;
-
-    @Inject
-    private Gson gson;
 
     private User editor;
 
@@ -259,66 +238,15 @@ public class WorldCreator extends BaseCommand {
             return;
         }
 
-        mapScanner.scan(map, editor.getUuid());
+        worldHandler.finishWorldEditing(editor, map);
 
-        File worldFolder = new File(worldHandler.getWorldContainer(), map.getWorldName());
-
-        try {
-            FileWriter fileWriter = new FileWriter(new File(worldFolder, "config.json"));
-            gson.toJson(map, fileWriter);
-            fileWriter.close();
-        } catch (IOException e) {
-            Lang.msg(sender, LangKey.WORLD_CREATOR_SAVE_CONFIG_ERROR, e.getMessage(),
-                    e.getClass().getName());
-            log.log(Level.WARNING, "Error while saving the world config", e);
-            return;
-        }
-
-        ZipFile zip;
-        try {
-            zip = ZipUtil.createZip(worldFolder);
-        } catch (ZipException e) {
-            Lang.msg(sender, LangKey.WORLD_CREATOR_SAVE_ZIP_ERROR, e.getMessage(),
-                    e.getClass().getName());
-            log.log(Level.WARNING, "Error while creating the zip", e);
-            return;
-        }
-
-        try {
-            Files.move(zip.getFile(), new File(worldHandler.getWorldsFolder(), zip.getFile().getName()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (!config.maps.contains(map.getInfo())) {
-            config.maps.add(map.getInfo());
-            worldHandler.saveConfig();
-        }
-
-        // TODO debug
-//        editor = null;
-//        step = 0;
-//        worldName = null;
-//        center = null;
-//        radius = -1;
-//        displayName = null;
-//        author = null;
-//        gameModes = new ArrayList<>();
-
-        Lang.msg(sender, LangKey.WORLD_CREATOR_DONE);
-
-        worldHandler.getWorldRepository().commitRepo();
-    }
-
-    @Subcommand("modify")
-    @CommandPermission("%admin")
-    @Syntax("<world> - the name of the map you want to modify")
-    public void modify(User user, String world) {
-        Optional<Map> o = worldHandler.getMap(world);
-
-        this.map = o.orElseGet(() -> worldHandler.loadMap(world));
-        step = 8;
-
-        //TODO use inventory for world creator
+        editor = null;
+        step = 0;
+        worldName = null;
+        center = null;
+        radius = -1;
+        displayName = null;
+        author = null;
+        gameModes = new ArrayList<>();
     }
 }
