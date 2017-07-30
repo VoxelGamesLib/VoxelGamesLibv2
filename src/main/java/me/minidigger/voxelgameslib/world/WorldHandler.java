@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.minidigger.voxelgameslib.VoxelGamesLib;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.exception.MapException;
 import me.minidigger.voxelgameslib.exception.WorldException;
@@ -36,10 +36,10 @@ import me.minidigger.voxelgameslib.map.MapInfo;
 import me.minidigger.voxelgameslib.map.MapScanner;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.utils.FileUtils;
+import me.minidigger.voxelgameslib.utils.NMSUtil;
 import me.minidigger.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -70,6 +70,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Getter
     @Inject
     private WorldRepository worldRepository;
+    @Inject
+    private VoxelGamesLib voxelGamesLib;
 
     private WorldConfig config;
     private File configFile;
@@ -274,10 +276,13 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     public void finishWorldEditing(User editor, Map map) {
         World world = Bukkit.getWorld(map.getLoadedName(editor.getUuid()));
         world.setSpawnLocation((int) map.getCenter().getX(), (int) map.getCenter().getY(), (int) map.getCenter().getZ());
-        Arrays.stream(world.getLoadedChunks()).forEach(Chunk::unload);
         world.save();
 
+        NMSUtil.flushSaveQueue(world);
+
         mapScanner.scan(map, editor.getUuid());
+
+        log.info(map.getMarkers().get(0).getLoc().toLocation(map.getLoadedName(editor.getUuid())).getBlock().getType().name());
 
         File worldFolder = new File(getWorldContainer(), map.getWorldName());
 
@@ -303,7 +308,13 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         }
 
         try {
-            Files.move(zip.getFile(), new File(getWorldsFolder(), zip.getFile().getName()));
+            File to = new File(getWorldsFolder(), zip.getFile().getName());
+            if (to.exists()) {
+                if (!to.delete()) {
+                    log.warning("Could not delete " + to.getName());
+                }
+            }
+            Files.move(zip.getFile(), to);
         } catch (IOException e) {
             e.printStackTrace();
         }

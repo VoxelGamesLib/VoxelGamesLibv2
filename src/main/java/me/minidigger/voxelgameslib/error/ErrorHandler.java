@@ -67,11 +67,11 @@ public class ErrorHandler implements Handler {
             LoggedUncaughtExceptionHandler.enable(bugsnag);
 
             setupCallbacks();
+
+            injectErrorHandlers();
         } else {
             log.warning("Bugsnag is disabled, will not report errors");
         }
-
-        injectErrorHandlers();
     }
 
     @Override
