@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.chat.ChatListener;
 import me.minidigger.voxelgameslib.commands.GameCommands;
+import me.minidigger.voxelgameslib.commands.KitCommands;
 import me.minidigger.voxelgameslib.commands.LangCommands;
 import me.minidigger.voxelgameslib.commands.OverrideCommands;
 import me.minidigger.voxelgameslib.commands.RoleCommands;
@@ -19,6 +20,7 @@ import me.minidigger.voxelgameslib.commands.VGLCommands;
 import me.minidigger.voxelgameslib.commands.WorldCommands;
 import me.minidigger.voxelgameslib.commands.WorldRepositoryCommands;
 import me.minidigger.voxelgameslib.components.inventory.InventoryHandler;
+import me.minidigger.voxelgameslib.components.kits.KitHandler;
 import me.minidigger.voxelgameslib.components.signs.SignButtons;
 import me.minidigger.voxelgameslib.components.signs.SignHandler;
 import me.minidigger.voxelgameslib.components.signs.SignListener;
@@ -117,6 +119,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private MetricHandler metricHandler;
     @Inject
     private EventHandler eventHandler;
+    @Inject
+    private KitHandler kitHandler;
 
 
     @Override
@@ -174,6 +178,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 matchmakingHandler.start();
                 signHandler.start();
                 metricHandler.start();
+                kitHandler.start();
 
                 gameHandler.start();
                 moduleHandler.start();
@@ -211,6 +216,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 matchmakingHandler.stop();
                 signHandler.stop();
                 metricHandler.stop();
+                kitHandler.stop();
 
                 gameHandler.stop();
                 moduleHandler.stop();
@@ -280,6 +286,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(EditMode.class));
         commandManager.registerCommand(injector.getInstance(WorldRepositoryCommands.class));
         commandManager.registerCommand(injector.getInstance(LoggingHandler.class));
+        commandManager.registerCommand(injector.getInstance(KitCommands.class));
     }
 
     private void registerListeners() {

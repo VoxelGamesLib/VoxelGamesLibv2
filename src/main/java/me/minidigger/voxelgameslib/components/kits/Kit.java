@@ -1,23 +1,33 @@
 package me.minidigger.voxelgameslib.components.kits;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import me.minidigger.voxelgameslib.components.ability.Ability;
 
 import org.bukkit.inventory.ItemStack;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 public class Kit {
 
-    @Getter
-    @Setter
     private String name;
-    @Getter
-    @Setter
-    private ItemStack[] items;
-    @Getter
-    @Setter
-    private Ability[] abilities;
+    private Map<Integer, ItemStack> items;
+    private Map<Integer, Ability> abilities;
+
+    protected Kit() {
+        // jpa
+    }
+
+    /**
+     * Create a new kit
+     *
+     * @param name name of kit
+     */
+    public Kit(String name) {
+        this(name, new HashMap<>(), new HashMap<>());
+    }
 
     /**
      * Create a new kit
@@ -25,8 +35,8 @@ public class Kit {
      * @param name  name of kit
      * @param items items the kit contains
      */
-    public Kit(String name, ItemStack[] items) {
-        this(name, items, null);
+    public Kit(String name, Map<Integer, ItemStack> items) {
+        this(name, items, new HashMap<>());
     }
 
     /**
@@ -38,9 +48,17 @@ public class Kit {
      * @param items     items the kit contains
      * @param abilities the abilities of this kit
      */
-    public Kit(String name, ItemStack[] items, Ability[] abilities) {
+    public Kit(String name, Map<Integer, ItemStack> items, Map<Integer, Ability> abilities) {
         this.name = name;
         this.items = items;
         this.abilities = abilities;
+    }
+
+    public void addItem(int slot, ItemStack is) {
+        items.put(slot, is);
+    }
+
+    public void addAbility(int slot, Ability is) {
+        abilities.put(slot, is);
     }
 }

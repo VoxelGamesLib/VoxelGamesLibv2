@@ -46,7 +46,7 @@ public class KitFeature extends AbstractFeature {
 
         kits.forEach(kit -> {
             if (kit.getAbilities() != null) {
-                for (Ability ability : kit.getAbilities()) {
+                for (Ability ability : kit.getAbilities().values()) {
                     Bukkit.getPluginManager().registerEvents(ability, voxelGamesLib);
                 }
             }
@@ -64,7 +64,7 @@ public class KitFeature extends AbstractFeature {
 
         kits.forEach(kit -> {
             if (kit.getAbilities() != null) {
-                for (Ability ability : kit.getAbilities()) {
+                for (Ability ability : kit.getAbilities().values()) {
                     HandlerList.unregisterAll(ability);
                 }
             }

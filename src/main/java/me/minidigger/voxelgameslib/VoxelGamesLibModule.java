@@ -2,15 +2,19 @@ package me.minidigger.voxelgameslib;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
 import java.io.File;
 import java.util.Map;
 
+import me.minidigger.voxelgameslib.components.kits.EnchantmentTypeAdapter;
+import me.minidigger.voxelgameslib.components.kits.ItemMetaTypeAdapter;
 import me.minidigger.voxelgameslib.config.ConfigHandler;
 import me.minidigger.voxelgameslib.config.GlobalConfig;
 import me.minidigger.voxelgameslib.feature.Feature;
@@ -27,6 +31,8 @@ import me.minidigger.voxelgameslib.world.WorldConfig;
 import me.minidigger.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
@@ -67,6 +73,8 @@ public final class VoxelGamesLibModule extends AbstractModule {
                 .toInstance(new File(dataFolder.getAbsoluteFile(), "games"));
         bind(File.class).annotatedWith(Names.named("DataFolder"))
                 .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
+        bind(File.class).annotatedWith(Names.named("KitsFolder"))
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
 
         bind(WorldConfig.class).toProvider(WorldHandler.class);
         bind(GlobalConfig.class).toProvider(ConfigHandler.class);
@@ -80,11 +88,27 @@ public final class VoxelGamesLibModule extends AbstractModule {
     @Provides
     public Gson getGson(Injector injector) {
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
-        builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
-        builder.registerTypeAdapter(Game.class, injector.getInstance(GameTypeAdapter.class));
+        addTypeAdapters(builder, injector);
         builder.setPrettyPrinting();
         builder.excludeFieldsWithoutExposeAnnotation();
         return builder.create();
+    }
+
+    @Provides
+    @Named("IgnoreExposedBS")
+    public Gson getGsonWithoutExposed(Injector injector) {
+        GsonBuilder builder = new GsonBuilder();
+        addTypeAdapters(builder, injector);
+        builder.setPrettyPrinting();
+        return builder.create();
+    }
+
+    private void addTypeAdapters(GsonBuilder builder, Injector injector) {
+        builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
+        builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
+        builder.registerTypeAdapter(Game.class, injector.getInstance(GameTypeAdapter.class));
+        builder.registerTypeAdapter(ItemMeta.class, injector.getInstance(ItemMetaTypeAdapter.class));
+        builder.registerTypeAdapter(new TypeToken<Map<Enchantment, Integer>>() {
+        }.getType(), injector.getInstance(EnchantmentTypeAdapter.class));
     }
 }
