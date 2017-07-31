@@ -97,13 +97,13 @@ if(project.hasProperty('indicesUsername') && project.hasProperty('indicesPasswor
 
                     issueManagement {
                         system 'GitHub Issues'
-                        url 'https://github.com/LordRobust/troubleinminecraft/issues'
+                        url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
                     }
 
                     scm {
-                        connection 'scm:git@github.com:LordRobust/troubleinminecraft.git'
-                        developerConnection 'scm:git@github.com:LordRobust/troubleinminecraft.git'
-                        url 'https://github.com/LordRobust/troubleinminecraft/'
+                        connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                        developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                        url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
                     }
                 }
             }
