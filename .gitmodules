@@ -1,9 +1,0 @@
-[submodule "1vs1"]
-	path = 1vs1
-	url = https://github.com/VoxelGamesLib/1vs1.git
-[submodule "testserver"]
-	path = testserver
-	url = https://github.com/VoxelGamesLib/testserver.git
-[submodule "Deathmatch"]
-	path = Deathmatch
-	url = https://github.com/VoxelGamesLib/Deathmatch.git

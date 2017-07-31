@@ -31,7 +31,7 @@ public class ItemMetaTypeAdapter implements JsonDeserializer<ItemMeta>, JsonSeri
             Class clazz = Class.forName(name);
             return context.deserialize(json, clazz);
         } catch (Exception e) {
-            log.log(Level.WARNING, "Could not deserialize phase:\n" + json.toString(), e);
+            log.log(Level.WARNING, "Could not deserialize itemmeta:\n" + json.toString(), e);
         }
         return null;
     }
