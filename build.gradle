@@ -58,7 +58,12 @@ processResources {
     ]
 }
 
-/*task javadocJar(type: Jar) {
+task copyToServer(dependsOn: 'jar', type: Copy) {
+    from 'build/libs/voxelgameslib-' + project.version + '.jar'
+    into '../testserver/plugins/'
+}
+
+task javadocJar(type: Jar) {
     classifier 'javadoc'
     from javadoc
 }
@@ -71,7 +76,7 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives javadocJar
     archives sourcesJar
-}*/
+}
 
 signing {
     required { !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives') }
