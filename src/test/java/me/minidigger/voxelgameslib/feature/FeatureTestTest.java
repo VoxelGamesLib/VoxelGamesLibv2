@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.feature;
+/*package me.minidigger.voxelgameslib.feature;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,3 +49,4 @@ public class FeatureTestTest extends FeatureTest<FeatureTestTest.TestFeature> {
         }
     }
 }
+*/

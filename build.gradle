@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id 'signing'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+group = 'me.minidigger'
+version = '2.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://nexus.indices.io/content/groups/public/" }
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+    maven { url "https://oss.sonatype.org/content/groups/public/" }
+    maven { url "https://ci.emc.gs/nexus/content/groups/aikar/" }
+    maven { url "https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/" }
+    maven { url "http://dl.bintray.com/etienne/java-utilities" }
+    maven { url "http://repo.bstats.org/content/repositories/releases/" }
+    maven { url "http://repo.dmulloy2.net/content/groups/public/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT'
+    compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compile group: 'de.davidbilge', name: 'jskill', version: '1.1-SNAPSHOT'
+    compile group: 'net.lingala.zip4j', name: 'zip4j', version: '1.3.2'
+    compile group: 'co.aikar', name: 'taskchain-bukkit', version: '3.6.0'
+    compile group: 'net.kyori', name: 'text', version: '1.12-SNAPSHOT'
+    compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.2'
+    compile group: 'com.bugsnag', name: 'bugsnag', version: '3.0.2'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.3'
+    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12-R0.1-SNAPSHOT'
+    //compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12-R0.1-SNAPSHOT'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+    compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+            'version': project.version
+    ]
+}
+
+/*task javadocJar(type: Jar) {
+    classifier 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}*/
+
+signing {
+    required { !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives') }
+    sign configurations.archives
+}
+
+if(project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: 'https://nexus.indices.io/content/repositories/releases/') {
+                    authentication(userName: indicesUsername, password: indicesPassword)
+                }
+
+                snapshotRepository(url: 'https://nexus.indices.io/content/repositories/snapshots/') {
+                    authentication(userName: indicesUsername, password: indicesPassword)
+                }
+
+                pom.project {
+                    name project.name
+
+                    issueManagement {
+                        system 'GitHub Issues'
+                        url 'https://github.com/LordRobust/troubleinminecraft/issues'
+                    }
+
+                    scm {
+                        connection 'scm:git@github.com:LordRobust/troubleinminecraft.git'
+                        developerConnection 'scm:git@github.com:LordRobust/troubleinminecraft.git'
+                        url 'https://github.com/LordRobust/troubleinminecraft/'
+                    }
+                }
+            }
+        }
+    }
+}

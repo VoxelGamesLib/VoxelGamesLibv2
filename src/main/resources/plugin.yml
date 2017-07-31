@@ -1,5 +1,5 @@
 name: VoxelGamesLib
-version: ${project.version}
+version: @version@
 main: me.minidigger.voxelgameslib.VoxelGamesLib
 authors: [MiniDigger]
 depend: [ProtocolLib]

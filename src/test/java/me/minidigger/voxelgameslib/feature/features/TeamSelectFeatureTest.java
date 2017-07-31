@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.feature.features;
+/*package me.minidigger.voxelgameslib.feature.features;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,4 +31,4 @@ public class TeamSelectFeatureTest extends FeatureTest<TeamSelectFeature> {
         assertThat(getFeature().getTeam(getMockUser("Test3")).isPresent(), is(true));
         assertThat(getFeature().getTeam(getMockUser("Test4")).isPresent(), is(true));
     }
-}
+}*/
