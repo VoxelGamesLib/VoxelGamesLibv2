@@ -79,8 +79,8 @@ public class GameCommands extends BaseCommand {
             game.join(sender);
             Lang.msg(sender, LangKey.GAME_GAME_STARTED);
             if (config.announceNewGame) {
-                //TODO make this actually clickable, lol
-                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, sender.getDisplayName(), mode.getName());
+                //TODO figure out which command to enter
+                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, "todo make this actually work, lol", sender.getDisplayName(), mode.getName());
             }
         } else {
             Lang.msg(sender, LangKey.GAME_COULD_NOT_START);

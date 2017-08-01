@@ -73,10 +73,8 @@ public class ChatUtil {
      */
     public static void sendMessage(GamePlayer gameUser, Component message) {
         try {
-            String msg = ComponentSerializer.serialize(message);
-            log.finer("message to " + gameUser.getRawDisplayName() + " " + msg);
             ENTITYPLAYER_SENDMESSAGE_METHOD.invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
-                    CHATSERIALIZER_A_METHOD.invoke(null, msg));
+                    CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializer.serialize(message)));
         } catch (Exception e) {
             throw new RuntimeException("wut", e);
         }

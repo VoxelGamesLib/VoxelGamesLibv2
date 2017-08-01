@@ -40,7 +40,7 @@ public enum LangKey {
     GAME_STOP_IN_NO_GAME("{red}You don't play in any game, trying spectating games..."),
     GAME_STOP_IN_NO_GAME_SPEC("{red}You don't spectate any game. Can't stop"),
 
-    GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {aqua}Click here to join!", "name", "mode"),
+    GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {click:run_command:{command}}{aqua}Click here to join!{/click}", "command", "name", "mode"),
 
     GAME_GAMELIST_HEADER("{gold}##### Currently running games ####"),
     GAME_GAMELIST_ENTRY(
@@ -92,7 +92,7 @@ public enum LangKey {
             "{aqua}Map {yellow}{name}{aqua} by {yellow}{author}{aqua} won with {yellow}{votes}{aqua} votes",
             "name", "author", "votes"),
     VOTE_MESSAGE_TOP("{gold}### You can now vote for a map! ###"),
-    VOTE_MESSAGE_MAP("{click:run_command:{command}}{aqua}#{yellow}{num}{aqua}: {yellow}{name}{aqua} by {yellow}{author}{/click}", "command","num", "name", "author"),
+    VOTE_MESSAGE_MAP("{click:run_command:{command}}{aqua}#{yellow}{num}{aqua}: {yellow}{name}{aqua} by {yellow}{author}{/click}", "command", "num", "name", "author"),
     VOTE_MESSAGE_BOT("{gold}###############################"),
     VOTE_NO_MAPS_FOUND("{red}Could not find any maps!"),
     VOTE_SUBMITTED("{green}Vote for map {yellow}{map}{green} submitted", "map"),

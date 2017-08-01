@@ -112,20 +112,20 @@ public class Lang {
                 if (clickEvent != null)
                     throw new VoxelGameLibException("Can't parse click action (nested) " + string);
                 String[] args = token.split(":");
-                if (args.length == 1)
+                if (args.length < 2)
                     throw new VoxelGameLibException("Can't parse click action (too few args) " + string);
                 switch (args[1]) {
                     case "run_command":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command:", ""));
                         break;
                     case "suggest_command":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:suggest_command", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:suggest_command:", ""));
                         break;
                     case "open_url":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:open_url", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:open_url:", ""));
                         break;
                     case "change_page":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:change_page", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:change_page:", ""));
                         break;
                     default:
                         throw new VoxelGameLibException("Can't parse click action (invalid type " + args[1] + ") " + string);
@@ -140,17 +140,17 @@ public class Lang {
                     //TODO nested hover events?
                     throw new VoxelGameLibException("Can't parse hover action (nested) " + string);
                 String[] args = token.split(":");
-                if (args.length == 1)
+                if (args.length < 2)
                     throw new VoxelGameLibException("Can't parse hover action (too few args) " + string);
                 switch (args[1]) {
                     case "show_text":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text", "")));
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text:", "")));
                         break;
                     case "show_item":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_item", "")));
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_item:", "")));
                         break;
                     case "show_entity":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_entity", "")));
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_entity:", "")));
                         break;
                     default:
                         throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + string);
@@ -173,7 +173,6 @@ public class Lang {
             // put it together
             componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
             if (addClick) {
-                log.info("add click");
                 componentBuilder = componentBuilder.clickEvent(clickEvent);
                 clickEvent = null;
             }
@@ -181,6 +180,13 @@ public class Lang {
                 componentBuilder = componentBuilder.hoverEvent(hoverEvent);
                 hoverEvent = null;
             }
+        }
+
+        if (clickEvent != null) {
+            throw new VoxelGameLibException("Unfinished click tag " + string);
+        }
+        if (hoverEvent != null) {
+            throw new VoxelGameLibException("Unfinished hover tag " + string);
         }
 
         return componentBuilder;
