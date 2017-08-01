@@ -153,7 +153,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         Lang.msg(user, LangKey.VOTE_MESSAGE_TOP);
         for (int id : availableMaps.keySet()) {
             MapInfo info = availableMaps.get(id);
-            Lang.msg(user, LangKey.VOTE_MESSAGE_MAP, id, info.getName(), info.getAuthor());
+            Lang.msg(user, LangKey.VOTE_MESSAGE_MAP, "/vote " + id, id, info.getName(), info.getAuthor());
         }
         Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
     }

@@ -2,6 +2,8 @@ package me.minidigger.voxelgameslib.lang;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
+import net.kyori.text.event.ClickEvent;
+import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
 
 import javax.annotation.Nonnull;
@@ -9,6 +11,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.exception.LangException;
+import me.minidigger.voxelgameslib.exception.VoxelGameLibException;
 import me.minidigger.voxelgameslib.user.GameConsoleUser;
 import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
@@ -16,9 +19,12 @@ import me.minidigger.voxelgameslib.utils.ChatUtil;
 
 import org.bukkit.ChatColor;
 
+import lombok.extern.java.Log;
+
 /**
  * Gives quick access to the lang storage and translation and stuff
  */
+@Log
 public class Lang {
 
     @Inject
@@ -83,7 +89,8 @@ public class Lang {
     }
 
     /**
-     * Parses a string into a component builder.<br> Takes care of {color} variables
+     * Parses a string into a component builder.<br> Takes care of {color} variables and handles
+     * click and hover events
      *
      * @param string the input string
      * @return the outputted and properly filled component builder
@@ -93,15 +100,87 @@ public class Lang {
         TextComponent componentBuilder = TextComponent.of("");
         String[] tokens = string.split("\\{|}");
         TextColor savedColor = TextColor.WHITE;
+        ClickEvent clickEvent = null;
+        boolean addClick = false;
+        HoverEvent hoverEvent = null;
+        boolean addHover = false;
         outer:
         for (String token : tokens) {
-            for (TextColor color : TextColor.values()) {
-                if (color.name().equalsIgnoreCase(token)) {
-                    savedColor = color;
-                    continue outer;
+            // actions
+            if (token.startsWith("click")) {
+                addClick = false;
+                if (clickEvent != null)
+                    throw new VoxelGameLibException("Can't parse click action (nested) " + string);
+                String[] args = token.split(":");
+                if (args.length == 1)
+                    throw new VoxelGameLibException("Can't parse click action (too few args) " + string);
+                switch (args[1]) {
+                    case "run_command":
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command", ""));
+                        break;
+                    case "suggest_command":
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:suggest_command", ""));
+                        break;
+                    case "open_url":
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:open_url", ""));
+                        break;
+                    case "change_page":
+                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:change_page", ""));
+                        break;
+                    default:
+                        throw new VoxelGameLibException("Can't parse click action (invalid type " + args[1] + ") " + string);
+                }
+                continue;
+            } else if (token.equals("/click")) {
+                addClick = true;
+                token = "";
+            } else if (token.startsWith("hover")) {
+                addHover = false;
+                if (hoverEvent != null)
+                    //TODO nested hover events?
+                    throw new VoxelGameLibException("Can't parse hover action (nested) " + string);
+                String[] args = token.split(":");
+                if (args.length == 1)
+                    throw new VoxelGameLibException("Can't parse hover action (too few args) " + string);
+                switch (args[1]) {
+                    case "show_text":
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text", "")));
+                        break;
+                    case "show_item":
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_item", "")));
+                        break;
+                    case "show_entity":
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_entity", "")));
+                        break;
+                    default:
+                        throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + string);
+                }
+                continue;
+            } else if (token.equals("/hover")) {
+                addHover = true;
+                token = "";
+            }
+            // color stuff
+            else {
+                for (TextColor color : TextColor.values()) {
+                    if (color.name().equalsIgnoreCase(token)) {
+                        savedColor = color;
+                        continue outer;
+                    }
                 }
             }
+
+            // put it together
             componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
+            if (addClick) {
+                log.info("add click");
+                componentBuilder = componentBuilder.clickEvent(clickEvent);
+                clickEvent = null;
+            }
+            if (addHover) {
+                componentBuilder = componentBuilder.hoverEvent(hoverEvent);
+                hoverEvent = null;
+            }
         }
 
         return componentBuilder;

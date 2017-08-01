@@ -13,9 +13,12 @@ import me.minidigger.voxelgameslib.user.GamePlayer;
 
 import org.bukkit.Bukkit;
 
+import lombok.extern.java.Log;
+
 /**
  * Small util for chat related stuff
  */
+@Log
 public class ChatUtil {
 
     private static String NMS_PREFIX = Bukkit.getServer().getClass().getPackage().getName()
@@ -70,9 +73,10 @@ public class ChatUtil {
      */
     public static void sendMessage(GamePlayer gameUser, Component message) {
         try {
-            ENTITYPLAYER_SENDMESSAGE_METHOD
-                    .invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
-                            CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializer.serialize(message)));
+            String msg = ComponentSerializer.serialize(message);
+            log.finer("message to " + gameUser.getRawDisplayName() + " " + msg);
+            ENTITYPLAYER_SENDMESSAGE_METHOD.invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
+                    CHATSERIALIZER_A_METHOD.invoke(null, msg));
         } catch (Exception e) {
             throw new RuntimeException("wut", e);
         }
