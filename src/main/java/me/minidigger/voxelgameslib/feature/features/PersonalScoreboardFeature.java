@@ -149,6 +149,15 @@ public class PersonalScoreboardFeature extends AbstractFeature {
             return Optional.empty();
         }
 
+        @Nonnull
+        public List<ScoreboardLine> getLines(@Nonnull String key) {
+            List<ScoreboardLine> lines = new ArrayList<>();
+
+            scoreboards.forEach(scoreboard -> scoreboard.getLine(key).ifPresent(lines::add));
+
+            return lines;
+        }
+
         @Override
         public void addUser(@Nonnull User user) {
             // dont call this

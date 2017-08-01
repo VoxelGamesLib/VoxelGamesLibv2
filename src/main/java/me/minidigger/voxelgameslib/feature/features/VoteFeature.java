@@ -126,7 +126,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
         gameData.voteWinner = winner;
         getPhase().getGame().putGameData(gameData);
-        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), max);
+        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), Math.min(max, 0));
     }
 
     @Override
@@ -207,13 +207,14 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         if (votes.containsKey(voter.getUuid())) {
             Lang.msg(voter, LangKey.VOTE_ALREADY_VOTED);
         } else {
-            if (availableMaps.get(mapId) == null) {
+            MapInfo mapInfo = availableMaps.get(mapId);
+            if (mapInfo == null) {
                 Lang.msg(voter, LangKey.VOTE_UNKNOWN_MAP, mapId);
                 return;
             }
 
             votes.put(voter.getUuid(), mapId);
-            Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapId);
+            Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapInfo.getName(), mapId);
         }
     }
 

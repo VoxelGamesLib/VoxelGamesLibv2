@@ -95,7 +95,7 @@ public enum LangKey {
     VOTE_MESSAGE_MAP("{click:run_command:{command}}{aqua}#{yellow}{num}{aqua}: {yellow}{name}{aqua} by {yellow}{author}{/click}", "command", "num", "name", "author"),
     VOTE_MESSAGE_BOT("{gold}###############################"),
     VOTE_NO_MAPS_FOUND("{red}Could not find any maps!"),
-    VOTE_SUBMITTED("{green}Vote for map {yellow}{map}{green} submitted", "map"),
+    VOTE_SUBMITTED("{green}Vote for map #{yellow}{mapId}{green} ({yellow}{mapName}{green}) submitted", "mapName", "mapId"),
     VOTE_UNKNOWN_MAP("{red}Unknown map {yellow}{map}", "map"),
 
     WORLD_CREATOR_DONE(

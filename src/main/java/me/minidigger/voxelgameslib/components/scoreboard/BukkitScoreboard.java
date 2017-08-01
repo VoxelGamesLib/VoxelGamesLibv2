@@ -79,23 +79,23 @@ public class BukkitScoreboard extends AbstractScoreboard {
     }
 
     @Override
-    public StringScoreboardLine createAndAddLine(String key, String content) {
-        Team team = scoreboard.registerNewTeam("line" + key);
-        BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
-        int score = addLine(key, scoreboardLine);
-        String entry = scoreboardLine.setScore(score);
-        objective.getScore(entry).setScore(score);
-        scoreboardLine.setValue(content);
-        return scoreboardLine;
-    }
-
-    @Override
     public StringScoreboardLine createAndAddLine(int pos, String content) {
         Team team = scoreboard.registerNewTeam("line" + pos);
         BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
         addLine(pos, scoreboardLine);
         String entry = scoreboardLine.setScore(pos);
         objective.getScore(entry).setScore(pos);
+        scoreboardLine.setValue(content);
+        return scoreboardLine;
+    }
+
+    @Override
+    public StringScoreboardLine createAndAddLine(String key, String content) {
+        Team team = scoreboard.registerNewTeam("line" + key);
+        BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
+        int score = addLine(key, scoreboardLine);
+        String entry = scoreboardLine.setScore(score);
+        objective.getScore(entry).setScore(score);
         scoreboardLine.setValue(content);
         return scoreboardLine;
     }
