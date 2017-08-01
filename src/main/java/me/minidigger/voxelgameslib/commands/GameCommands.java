@@ -87,6 +87,35 @@ public class GameCommands extends BaseCommand {
         }
     }
 
+    @Subcommand("stop")
+    @CommandPermission("%admin")
+    public void gameStop(User sender, @co.aikar.commands.annotation.Optional String gameid) {
+        List<Game> games = gameHandler.getGames(sender.getUuid(), false);
+        if (games.size() == 0) {
+            Lang.msg(sender, LangKey.GAME_STOP_IN_NO_GAME);
+            games = gameHandler.getGames(sender.getUuid(), true);
+            if (games.size() == 0) {
+                Lang.msg(sender, LangKey.GAME_STOP_IN_NO_GAME_SPEC);
+            } else if (games.size() == 1) {
+                games.get(0).abortGame();
+            } else {
+                if (gameid == null) {
+                    // TODO send all games guy is in
+                } else {
+                    // todo stop the game specified
+                }
+            }
+        } else if (games.size() == 1) {
+            games.get(0).abortGame();
+        } else {
+            if (gameid == null) {
+                // TODO send all games guy is in
+            } else {
+                // todo stop the game specified
+            }
+        }
+    }
+
     @Subcommand("join")
     @CommandCompletion("@gamemodes")
     @Syntax("<mode> - the mode you want to start")
