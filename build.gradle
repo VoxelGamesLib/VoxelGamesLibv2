@@ -87,6 +87,10 @@ task copyToServer(dependsOn: 'jar', type: Copy) {
     into '../testserver/plugins/'
 }
 
+javadoc{
+    options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
+}
+
 task javadocJar(type: Jar) {
     classifier 'javadoc'
     from javadoc
