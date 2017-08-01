@@ -1,15 +1,17 @@
 package me.minidigger.voxelgameslib.components.kits;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
+import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
+
+import net.minidev.json.JSONUtil;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -24,6 +26,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 
 import lombok.extern.java.Log;
 
@@ -57,7 +60,7 @@ public class KitHandler implements Handler {
             }
         }
         log.info("There are " + availableKits.size() + " kits available.");
-log.info("ddddd");
+
         // test stuff
         Kit kit = new Kit("test");
         kit.addItem(0, new ItemBuilder(Material.STONE).name("Test Stone").build());
@@ -89,12 +92,21 @@ log.info("ddddd");
 
     private Kit loadKit(String name, File file) {
         try {
-            FileReader fileReader = new FileReader(file);
-            Kit kit = gson.fromJson(fileReader, Kit.class);
-            fileReader.close();
+            JsonConfiguration jsonConfiguration = JsonConfiguration.loadConfiguration(file);
+            Kit kit = new Kit();
+            kit.setName(jsonConfiguration.getString("name", "INVALID"));
+
+            Map<String, Object> map = jsonConfiguration.getConfigurationSection("items").getValues(false);
+            Map<Integer, ItemStack> items = new HashMap<>();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                items.put(Integer.parseInt(entry.getKey()), (ItemStack) entry.getValue());
+            }
+            kit.setItems(items);
+
+            // TODO load abilities
             kits.put(name, kit);
             return kit;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -103,9 +115,16 @@ log.info("ddddd");
 
     private void saveKit(Kit kit, File file) {
         try {
-            FileWriter writer = new FileWriter(file);
-            gson.toJson(kit, Kit.class, writer);
-            writer.close();
+            JsonConfiguration jsonConfiguration = new JsonConfiguration();
+            jsonConfiguration.set("name", kit.getName());
+
+            jsonConfiguration.createSection("items", kit.getItems());
+
+            // TODO save abilities
+
+            FileWriter fileWriter = new FileWriter(file);
+            gson.toJson(new JsonParser().parse(jsonConfiguration.saveToString()),fileWriter);
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

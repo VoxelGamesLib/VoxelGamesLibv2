@@ -37,6 +37,8 @@ public enum LangKey {
     GAME_STARTING("{green}The game is about to start"),
     GAME_START_ABORTED("{red}Game start aborted!"),
     GAME_STARTING_ACCELERATED("{green}We have reached the max amount of players. Speeding up countdown!"),
+    GAME_STOP_IN_NO_GAME("{red}You don't play in any game, trying spectating games..."),
+    GAME_STOP_IN_NO_GAME_SPEC("{red}You don't spectate any game. Can't stop"),
 
     GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {aqua}Click here to join!", "name", "mode"),
 
