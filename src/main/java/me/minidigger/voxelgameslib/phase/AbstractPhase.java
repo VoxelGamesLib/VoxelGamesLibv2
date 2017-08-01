@@ -21,6 +21,7 @@ import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
 
+import me.minidigger.voxelgameslib.tick.Tickable;
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
@@ -61,6 +62,8 @@ public abstract class AbstractPhase implements Phase {
 
     private LocalDateTime startTime;
     private Duration duration;
+
+    private List<Tickable> phaseTickables = new ArrayList<>();
 
     public AbstractPhase() {
         className = getClass().getName().replace(PhaseTypeAdapter.DEFAULT_PATH + ".", "");
@@ -192,8 +195,14 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
+    public void addTickable(Tickable tickable) {
+        phaseTickables.add(tickable);
+    }
+
+    @Override
     public void tick() {
         features.forEach(Feature::tick);
+        phaseTickables.forEach(Tickable::tick);
     }
 
     @Override

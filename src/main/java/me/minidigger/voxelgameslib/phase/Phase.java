@@ -127,4 +127,11 @@ public interface Phase extends Tickable {
      * @return the duration
      */
     Duration getDuration();
+
+    /**
+     * Adds a tickable exclusive to the phase
+     *
+     * @param tickable the tickable object
+     */
+    void addTickable(Tickable tickable);
 }
