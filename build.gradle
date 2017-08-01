@@ -1,12 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.sf.proguard:proguard-gradle:5.3.2'
+    }
+}
+
 plugins {
     id 'java'
     id 'maven'
     id 'signing'
     id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
-apply plugin: "com.github.johnrengelman.shadow"
 
 import org.apache.tools.ant.filters.ReplaceTokens
+import proguard.gradle.ProGuardTask
 
 group = 'me.minidigger'
 version = '2.0-SNAPSHOT'
@@ -62,6 +71,7 @@ shadowJar {
     relocate 'co.aikar.commands', 'me.minidigger.voxelgameslib.command'
     relocate 'org.bstats', 'me.minidigger.voxelgameslib.metrics'
 }
+
 build.dependsOn shadowJar
 
 processResources {
@@ -126,4 +136,11 @@ if(project.hasProperty('indicesUsername') && project.hasProperty('indicesPasswor
             }
         }
     }
+}
+
+task proguard(type: ProGuardTask) {
+    configuration 'proguard.txt'
+
+    injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
+    outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
 }

@@ -104,10 +104,10 @@ public final class VoxelGamesLibModule extends AbstractModule {
     }
 
     private void addTypeAdapters(GsonBuilder builder, Injector injector) {
+        builder.registerTypeAdapter(ItemMeta.class, injector.getInstance(ItemMetaTypeAdapter.class));
         builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
         builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
         builder.registerTypeAdapter(Game.class, injector.getInstance(GameTypeAdapter.class));
-        builder.registerTypeAdapter(ItemMeta.class, injector.getInstance(ItemMetaTypeAdapter.class));
         builder.registerTypeAdapter(new TypeToken<Map<Enchantment, Integer>>() {
         }.getType(), injector.getInstance(EnchantmentTypeAdapter.class));
     }

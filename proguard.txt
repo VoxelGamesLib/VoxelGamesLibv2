@@ -1,0 +1,41 @@
+-injars build\libs\voxelgameslib-2.0-SNAPSHOT-all.jar
+-outjars build\libs\voxelgameslib-2.0-SNAPSHOT-result.jar
+
+-libraryjars 'C:\Program Files\Java\jdk1.8.0_131\jre\lib\rt.jar'
+-libraryjars 'C:\Users\Martin\IdeaProjects\VoxelGamesLib2\testserver\cache\patched_1.12.jar'
+
+-dontskipnonpubliclibraryclassmembers
+-dontoptimize
+-dontobfuscate
+-dontusemixedcaseclassnames
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,Signature,InnerClasses
+-dontpreverify
+
+
+# Keep - Applications. Keep all application classes, along with their 'main'
+# methods.
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+
+# Keep - Library. Keep all public and protected classes, fields, and methods.
+-keep public class me.minidigger.** {
+    public protected <fields>;
+    public protected <methods>;
+}
+
+# Also keep - Enumerations. Keep the special static methods that are required in
+# enumeration classes.
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Also keep - Database drivers. Keep all implementations of java.sql.Driver.
+-keep class * extends java.sql.Driver
+
+# Also keep - Swing UI L&F. Keep all extensions of javax.swing.plaf.ComponentUI,
+# along with the special 'createUI' method.
+-keep class * extends javax.swing.plaf.ComponentUI {
+    public static javax.swing.plaf.ComponentUI createUI(javax.swing.JComponent);
+}

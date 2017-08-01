@@ -16,6 +16,9 @@ import javax.inject.Singleton;
 
 import org.bukkit.enchantments.Enchantment;
 
+import lombok.extern.java.Log;
+
+@Log
 @Singleton
 public class EnchantmentTypeAdapter implements JsonDeserializer<Map<Enchantment, Integer>>, JsonSerializer<Map<Enchantment, Integer>> {
 
@@ -37,6 +40,7 @@ public class EnchantmentTypeAdapter implements JsonDeserializer<Map<Enchantment,
         for (Map.Entry<Enchantment, Integer> entry : src.entrySet()) {
             object.add(entry.getKey().getName(), new JsonPrimitive(entry.getValue()));
         }
+        log.info("serialize using adapter");
         return object;
     }
 }

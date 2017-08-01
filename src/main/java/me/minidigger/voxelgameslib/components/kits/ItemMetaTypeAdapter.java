@@ -38,6 +38,7 @@ public class ItemMetaTypeAdapter implements JsonDeserializer<ItemMeta>, JsonSeri
 
     @Override
     public JsonElement serialize(ItemMeta src, Type typeOfSrc, JsonSerializationContext context) {
+        System.out.println("serialize meta");
         JsonObject object = (JsonObject) context.serialize(src);
         object.add("className", new JsonPrimitive(src.getClass().getName()));
         return object;

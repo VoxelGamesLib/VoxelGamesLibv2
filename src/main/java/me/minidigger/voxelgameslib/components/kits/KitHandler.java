@@ -8,9 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -37,7 +39,7 @@ public class KitHandler implements Handler {
     private Gson gson;
 
     private Map<String, Kit> kits = new HashMap<>();
-    private List<String> availableKits = new ArrayList<>();
+    private Set<String> availableKits = new HashSet<>();
 
     @Override
     public void start() {
@@ -55,7 +57,7 @@ public class KitHandler implements Handler {
             }
         }
         log.info("There are " + availableKits.size() + " kits available.");
-
+log.info("ddddd");
         // test stuff
         Kit kit = new Kit("test");
         kit.addItem(0, new ItemBuilder(Material.STONE).name("Test Stone").build());
