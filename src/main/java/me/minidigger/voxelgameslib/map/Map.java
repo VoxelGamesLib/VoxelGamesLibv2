@@ -94,7 +94,9 @@ public class Map {
     }
 
     public boolean isLoaded(UUID gameid) {
+        log.finer("Is  "+ info.getName() + " loaded?");
         if (loadedNames == null) {
+            log.finer("Loaded names = null");
             loadedNames = new HashMap<>();
         }
         return loadedNames.containsKey(gameid);

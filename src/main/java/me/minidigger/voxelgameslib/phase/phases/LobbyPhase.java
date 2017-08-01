@@ -31,7 +31,7 @@ public class LobbyPhase extends AbstractPhase {
 
         MapFeature mapFeature = getGame().createFeature(MapFeature.class, this);
         mapFeature.setShouldUnload(false);
-        mapFeature.setMapGameDataKey("lobbymap");
+        mapFeature.setType(MapFeature.Type.LOBBY);
         addFeature(mapFeature);
 
         SpawnFeature spawnFeature = getGame().createFeature(SpawnFeature.class, this);
