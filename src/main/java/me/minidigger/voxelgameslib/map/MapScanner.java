@@ -103,9 +103,12 @@ public class MapScanner {
                                         markerData = "undefined";
                                     }
                                 }
-                                markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
-                                        DirectionUtil.directionToYaw(skull.getRotation()),
-                                        markerData));
+                                if (markerData.startsWith("vgl:")) {
+                                    markerData = markerData.replaceFirst("vgl:", "");
+                                    markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
+                                            DirectionUtil.directionToYaw(skull.getRotation()),
+                                            markerData));
+                                }
                             } else {
                                 log.warning("unknown owner");
                             }
