@@ -22,6 +22,7 @@ import me.minidigger.voxelgameslib.user.User;
 import me.minidigger.voxelgameslib.user.UserHandler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -46,6 +47,7 @@ public class EventHandler implements Handler, Listener {
 
     private Map<Class<? extends Event>, Method> reflectionCachePlayer = new HashMap<>();
     private Map<Class<? extends Event>, Method> reflectionCacheUser = new HashMap<>();
+    private Map<Class<? extends Event>, Method> reflectionCacheEntity = new HashMap<>();
 
     @Inject
     private VoxelGamesLib voxelGamesLib;
@@ -154,13 +156,16 @@ public class EventHandler implements Handler, Listener {
         }
 
         // search for method to get player
-        if (!reflectionCachePlayer.containsKey(event.getClass()) && !reflectionCacheUser.containsKey(event.getClass())) {
-            for (Method m : event.getClass().getMethods()) {
+        if (!reflectionCachePlayer.containsKey(event.getClass()) && !reflectionCacheUser.containsKey(event.getClass()) && !reflectionCacheEntity.containsKey(event.getClass())) {
+            for (Method m : event.getClass().getDeclaredMethods()) {
                 if (m.getReturnType().equals(User.class)) {
                     reflectionCacheUser.put(event.getClass(), m);
                     break;
                 } else if (m.getReturnType().equals(Player.class)) {
                     reflectionCachePlayer.put(event.getClass(), m);
+                    break;
+                } else if (Entity.class.isAssignableFrom(m.getReturnType())) {
+                    reflectionCacheEntity.put(event.getClass(), m);
                     break;
                 }
             }
@@ -175,7 +180,7 @@ public class EventHandler implements Handler, Listener {
                 e.printStackTrace();
                 return Optional.empty();
             }
-        } else if (reflectionCacheUser.containsKey(event.getClass())) {
+        } else if (reflectionCachePlayer.containsKey(event.getClass())) {
             Method method = reflectionCachePlayer.get(event.getClass());
             try {
                 return userHandler.getUser(((Player) method.invoke(event)).getUniqueId());
@@ -183,7 +188,21 @@ public class EventHandler implements Handler, Listener {
                 e.printStackTrace();
                 return Optional.empty();
             }
+        } else if (reflectionCacheEntity.containsKey(event.getClass())) {
+            Method method = reflectionCacheEntity.get(event.getClass());
+            try {
+                Entity entity = (Entity) method.invoke(event);
+                if (entity instanceof Player) {
+                    return userHandler.getUser(entity.getUniqueId());
+                } else {
+                    return Optional.empty();
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+                return Optional.empty();
+            }
         } else {
+            log.warning("Could not even a way to get a user out of " + event.getEventName() + "!");
             return Optional.empty();
         }
     }
