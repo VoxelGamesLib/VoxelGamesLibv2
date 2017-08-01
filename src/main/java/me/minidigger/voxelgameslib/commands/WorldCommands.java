@@ -53,7 +53,7 @@ public class WorldCommands extends BaseCommand {
         Optional<Map> o = handler.getMap(mapName);
         Map map = o.orElseGet(() -> handler.loadMap(mapName));
 
-        handler.loadWorld(map, sender.getUuid());
+        handler.loadWorld(map, sender.getUuid(), false);
     }
 
     @Subcommand("unload")

@@ -37,7 +37,7 @@ public class MapFeature extends AbstractFeature {
             map = worldHandler.loadMap(gameData.lobbyMap.getName());
 
             if (!map.isLoaded(getPhase().getGame().getUuid())) {
-                worldHandler.loadWorld(map, getPhase().getGame().getUuid());
+                worldHandler.loadWorld(map, getPhase().getGame().getUuid(), true);
             }
         } catch (Exception ex) {
             throw new GameStartException(getPhase().getGame().getGameMode(), ex);

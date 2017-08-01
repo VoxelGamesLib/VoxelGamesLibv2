@@ -40,6 +40,7 @@ import me.minidigger.voxelgameslib.utils.NMSUtil;
 import me.minidigger.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -147,7 +148,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param gameid the id of the game this map belongs to
      * @throws WorldException something goes wrong
      */
-    public void loadWorld(@Nonnull Map map, UUID gameid) {
+    public void loadWorld(@Nonnull Map map, UUID gameid, boolean replaceMarkers) {
         map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
         log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
 
@@ -161,7 +162,11 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             throw new WorldException("Could not unzip world " + map.getInfo().getName() + ".", e);
         }
 
-        loadLocalWorld(map.getLoadedName(gameid));
+        World world = loadLocalWorld(map.getLoadedName(gameid));
+
+        if (replaceMarkers) {
+            replaceMarkers(world, map);
+        }
     }
 
     /**
@@ -176,6 +181,18 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         unloadLocalWorld(map.getLoadedName(gameid));
         FileUtils.delete(new File(worldContainer, map.getLoadedName(gameid)));
         map.unload(gameid);
+    }
+
+    /**
+     * Replaces the marker blocks with
+     *
+     * @param world the world in which the markers are located
+     * @param map   the map defining the markers
+     */
+    public void replaceMarkers(World world, Map map) {
+        map.getMarkers().forEach(marker -> marker.getLoc().toLocation(world.getName()).getBlock().setType(Material.AIR));
+        log.finer("Replaced " + map.getMarkers().size() + " markers with air");
+        //TODO chest markers?
     }
 
     @Override
@@ -234,9 +251,10 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * Loads a local world
      *
      * @param name the world to load
+     * @return the loaded world
      * @throws WorldException if the world is not found or something else goes wrong
      */
-    public void loadLocalWorld(@Nonnull String name) {
+    public World loadLocalWorld(@Nonnull String name) {
         org.bukkit.WorldCreator wc = new WorldCreator(name);
         wc.environment(World.Environment.NORMAL); //TODO do we need support for environment in maps?
         wc.generateStructures(false);
@@ -245,6 +263,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         wc.generatorSettings("");
         World world = wc.createWorld();
         world.setAutoSave(false);
+        return world;
     }
 
     /**
