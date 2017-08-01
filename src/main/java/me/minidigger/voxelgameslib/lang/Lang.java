@@ -98,7 +98,7 @@ public class Lang {
     @Nonnull
     public static TextComponent parseFormat(@Nonnull String string) {
         TextComponent componentBuilder = TextComponent.of("");
-        String[] tokens = string.split("\\{|}");
+        String[] tokens = string.split("[{}]");
         TextColor savedColor = TextColor.WHITE;
         ClickEvent clickEvent = null;
         boolean addClick = false;
