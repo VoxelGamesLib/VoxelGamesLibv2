@@ -42,7 +42,7 @@ public class EventHandler implements Handler, Listener {
 
     private final EventExecutor eventExecutor = (listener, event) -> callEvent(event);
 
-    private Map<Class<? extends Event>, List<RegisteredListener>> activeEvents = new HashMap<>();
+    private final Map<Class<? extends Event>, List<RegisteredListener>> activeEvents = new HashMap<>();
     private Map<UUID, List<RegisteredListener>> activeListeners = new HashMap<>();
 
     private Map<Class<? extends Event>, Method> reflectionCachePlayer = new HashMap<>();
@@ -124,27 +124,36 @@ public class EventHandler implements Handler, Listener {
 
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Event> void callEvent(T event) {
-        if (activeEvents.containsKey(event.getClass())) {
-            activeEvents.get(event.getClass()).forEach(registeredListener -> {
-                Optional<User> user = Optional.empty();
-                boolean tried = false;
-                for (EventFilter filter : registeredListener.getFilters()) {
-                    if (!user.isPresent() && !tried) {
-                        user = figureOutUser(event);
-                        tried = true;
-                    }
-                    if (!filter.filter(event, registeredListener, user)) {
-                        return;
-                    }
-                }
+        synchronized (activeEvents) {
+            Class<Event> eventClass = (Class<Event>) event.getClass();
+            while (!eventClass.equals(Object.class)) {
+                if (activeEvents.containsKey(eventClass)) {
+                    activeEvents.get(eventClass).forEach(registeredListener -> {
+                        Optional<User> user = Optional.empty();
+                        boolean tried = false;
+                        for (EventFilter filter : registeredListener.getFilters()) {
+                            if (!user.isPresent() && !tried) {
+                                user = figureOutUser(event);
+                                tried = true;
+                            }
+                            if (!filter.filter(event, registeredListener, user)) {
+                                return;
+                            }
+                        }
 
-                try {
-                    registeredListener.getMethod().invoke(registeredListener.getListener(), event);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    log.log(Level.SEVERE, "Error while calling eventhandler!", e);
+                        try {
+                            registeredListener.getMethod().invoke(registeredListener.getListener(), event);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            log.log(Level.SEVERE, "Error while calling eventhandler!", e);
+                        }
+                    });
+                    break;
+                }else{
+                    eventClass = (Class<Event>) eventClass.getSuperclass();
                 }
-            });
+            }
         }
     }
 
