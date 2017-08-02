@@ -140,8 +140,8 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @Override
-    public AbstractFeatureCommand getCommandClass() {
-        return new VoteFeatureCommand();
+    public Class<? extends AbstractFeatureCommand> getCommandClass() {
+        return VoteFeatureCommand.class;
     }
 
     /**
@@ -170,7 +170,8 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @GameEvent
-    public void onJoin(@Nonnull GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event, User user) {
+        System.out.println("its works " + user.getRawDisplayName());
         sendVoteMessage(event.getUser());
         if (enableVoteMenu) {
             giveVoteMenuItem(event.getUser());
@@ -225,16 +226,16 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @Singleton
-    class VoteFeatureCommand extends AbstractFeatureCommand {
+    static class VoteFeatureCommand extends AbstractFeatureCommand<VoteFeature> {
 
         @CommandAlias("vote")
         @CommandPermission("%user")
         @Syntax("[map] - the map to vote for")
         public void vote(User sender, @Optional Integer map) {
             if (map == null) {
-                sendVoteMessage(sender);
+                getFeature().sendVoteMessage(sender);
             } else {
-                confirmVote(sender, map);
+                getFeature().confirmVote(sender, map);
             }
         }
     }

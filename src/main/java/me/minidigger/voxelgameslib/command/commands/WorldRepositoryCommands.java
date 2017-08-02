@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.commands;
+package me.minidigger.voxelgameslib.command.commands;
 
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;

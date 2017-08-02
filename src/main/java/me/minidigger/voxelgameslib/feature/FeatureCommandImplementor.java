@@ -10,5 +10,5 @@ public interface FeatureCommandImplementor {
      * @return an implementation of {@link AbstractFeatureCommand} that houses the commands for a
      * feature
      */
-    AbstractFeatureCommand getCommandClass();
+    Class<? extends AbstractFeatureCommand> getCommandClass();
 }

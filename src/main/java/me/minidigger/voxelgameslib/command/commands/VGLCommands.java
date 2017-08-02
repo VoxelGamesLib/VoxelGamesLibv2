@@ -1,4 +1,4 @@
-package me.minidigger.voxelgameslib.commands;
+package me.minidigger.voxelgameslib.command.commands;
 
 import com.google.inject.name.Named;
 
