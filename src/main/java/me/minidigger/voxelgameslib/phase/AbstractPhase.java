@@ -4,9 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -63,7 +61,7 @@ public abstract class AbstractPhase implements Phase {
     private LocalDateTime startTime;
     private Duration duration;
 
-    private List<Tickable> phaseTickables = new ArrayList<>();
+    private Map<UUID, Tickable> phaseTickables = new HashMap<>();
 
     public AbstractPhase() {
         className = getClass().getName().replace(PhaseTypeAdapter.DEFAULT_PATH + ".", "");
@@ -141,7 +139,7 @@ public abstract class AbstractPhase implements Phase {
 
         log.finer("start phase" + getName());
 
-        phaseTickables.forEach(Tickable::start);
+        phaseTickables.values().forEach(Tickable::start);
 
         for (Feature feature : features) {
             if (game.isAborting()) {
@@ -195,20 +193,25 @@ public abstract class AbstractPhase implements Phase {
             }
         }
 
-        phaseTickables.forEach(Tickable::stop);
+        phaseTickables.values().forEach(Tickable::stop);
 
         startedFeatures.clear();
     }
 
     @Override
-    public void addTickable(Tickable tickable) {
-        phaseTickables.add(tickable);
+    public void addTickable(UUID identifier, Tickable tickable) {
+        phaseTickables.put(identifier, tickable);
+    }
+
+    @Override
+    public void removeTickable(UUID identifier) {
+        phaseTickables.remove(identifier);
     }
 
     @Override
     public void tick() {
         features.forEach(Feature::tick);
-        phaseTickables.forEach(Tickable::tick);
+        phaseTickables.values().forEach(Tickable::tick);
     }
 
     @Override

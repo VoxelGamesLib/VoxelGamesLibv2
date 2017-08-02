@@ -2,6 +2,7 @@ package me.minidigger.voxelgameslib.phase;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -133,5 +134,12 @@ public interface Phase extends Tickable {
      *
      * @param tickable the tickable object
      */
-    void addTickable(Tickable tickable);
+    void addTickable(UUID identifier, Tickable tickable);
+
+    /**
+     * Removes a tickable that is dependent on the phase
+     *
+     * @param identifier identifier of the tickable
+     */
+    void removeTickable(UUID identifier);
 }
