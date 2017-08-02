@@ -70,7 +70,6 @@ shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
 
-    relocate 'co.aikar.commands', 'me.minidigger.voxelgameslib.command'
     relocate 'org.bstats', 'me.minidigger.voxelgameslib.metrics'
 }
 
