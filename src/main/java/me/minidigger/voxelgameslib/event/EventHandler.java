@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -74,11 +75,11 @@ public class EventHandler implements Handler, Listener {
                             registeredListener.addFilter(filterPlayers);
                         }
 
-                        activeListeners.computeIfAbsent(game.getUuid(), (key) -> new ArrayList<>()).add(registeredListener);
+                        activeListeners.computeIfAbsent(game.getUuid(), (key) -> new CopyOnWriteArrayList<>()).add(registeredListener);
 
                         activeEvents.computeIfAbsent(eventClass, (key) -> {
                             newEvents.add(eventClass);
-                            return new ArrayList<>();
+                            return new CopyOnWriteArrayList<>();
                         }).add(registeredListener);
                     } else {
                         log.warning("Invalid parameter for " + listener.getClass().getName() + " " + method.toString());
@@ -126,33 +127,31 @@ public class EventHandler implements Handler, Listener {
 
     @SuppressWarnings("unchecked")
     public <T extends Event> void callEvent(T event) {
-        synchronized (activeEvents) {
-            Class<Event> eventClass = (Class<Event>) event.getClass();
-            while (!eventClass.equals(Object.class)) {
-                if (activeEvents.containsKey(eventClass)) {
-                    activeEvents.get(eventClass).forEach(registeredListener -> {
-                        Optional<User> user = Optional.empty();
-                        boolean tried = false;
-                        for (EventFilter filter : registeredListener.getFilters()) {
-                            if (!user.isPresent() && !tried) {
-                                user = figureOutUser(event);
-                                tried = true;
-                            }
-                            if (!filter.filter(event, registeredListener, user)) {
-                                return;
-                            }
+        Class<Event> eventClass = (Class<Event>) event.getClass();
+        while (!eventClass.equals(Object.class)) {
+            if (activeEvents.containsKey(eventClass)) {
+                activeEvents.get(eventClass).forEach(registeredListener -> {
+                    Optional<User> user = Optional.empty();
+                    boolean tried = false;
+                    for (EventFilter filter : registeredListener.getFilters()) {
+                        if (!user.isPresent() && !tried) {
+                            user = figureOutUser(event);
+                            tried = true;
                         }
+                        if (!filter.filter(event, registeredListener, user)) {
+                            return;
+                        }
+                    }
 
-                        try {
-                            registeredListener.getMethod().invoke(registeredListener.getListener(), event);
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            log.log(Level.SEVERE, "Error while calling eventhandler!", e);
-                        }
-                    });
-                    break;
-                }else{
-                    eventClass = (Class<Event>) eventClass.getSuperclass();
-                }
+                    try {
+                        registeredListener.getMethod().invoke(registeredListener.getListener(), event);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        log.log(Level.SEVERE, "Error while calling eventhandler!", e);
+                    }
+                });
+                break;
+            } else {
+                eventClass = (Class<Event>) eventClass.getSuperclass();
             }
         }
     }
