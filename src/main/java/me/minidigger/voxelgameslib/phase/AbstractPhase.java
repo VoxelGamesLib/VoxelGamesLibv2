@@ -140,6 +140,9 @@ public abstract class AbstractPhase implements Phase {
         startTime = LocalDateTime.now();
 
         log.finer("start phase" + getName());
+
+        phaseTickables.forEach(Tickable::start);
+
         for (Feature feature : features) {
             if (game.isAborting()) {
                 return;
@@ -191,6 +194,9 @@ public abstract class AbstractPhase implements Phase {
                 commandManager.unregisterCommand(((FeatureCommandImplementor) feature).getCommandClass());
             }
         }
+
+        phaseTickables.forEach(Tickable::stop);
+
         startedFeatures.clear();
     }
 
