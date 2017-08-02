@@ -157,7 +157,7 @@ public class EventHandler implements Handler, Listener {
 
         // search for method to get player
         if (!reflectionCachePlayer.containsKey(event.getClass()) && !reflectionCacheUser.containsKey(event.getClass()) && !reflectionCacheEntity.containsKey(event.getClass())) {
-            for (Method m : event.getClass().getDeclaredMethods()) {
+            for (Method m : event.getClass().getMethods()) {
                 if (m.getReturnType().equals(User.class)) {
                     reflectionCacheUser.put(event.getClass(), m);
                     break;
