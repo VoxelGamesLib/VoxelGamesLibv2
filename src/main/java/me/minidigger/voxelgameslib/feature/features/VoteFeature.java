@@ -182,7 +182,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
             if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
                 int start = 9;
-                BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", 27);
+                BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", availableMaps.size());
                 for (int id : availableMaps.keySet()) {
                     MapInfo info = availableMaps.get(id);
                     ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
@@ -192,7 +192,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
                         basicInventory.close(user.getPlayer());
 
                         // Destroy the inventory, we don't need it anymore
-                        basicInventory.destroy();
+                        inventoryHandler.removeInventory(basicInventory.getIdentifier());
                     }));
                 }
                 user.getPlayer().openInventory(basicInventory.getBukkitInventory());
