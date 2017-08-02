@@ -18,7 +18,11 @@ public class BukkitStringScoreboardLine extends StringScoreboardLine {
         setValue(value);
     }
 
-    String setScore(int score) {
+    public String getScore() {
+        return entry;
+    }
+
+    public String setScore(int score) {
         return entry = ChatColor.values()[score].toString();
     }
 
