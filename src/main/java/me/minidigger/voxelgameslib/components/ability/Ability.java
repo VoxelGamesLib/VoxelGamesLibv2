@@ -1,12 +1,23 @@
 package me.minidigger.voxelgameslib.components.ability;
 
-import me.minidigger.voxelgameslib.event.GameEvent;
+import com.google.inject.Injector;
+import me.minidigger.voxelgameslib.game.Game;
+import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.tick.Tickable;
 import me.minidigger.voxelgameslib.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Ability implements Listener, Tickable {
+    @Inject
+    private Injector injector;
+
+    protected UUID identifier;
     protected User affected;
 
     /**
@@ -15,13 +26,18 @@ public abstract class Ability implements Listener, Tickable {
      * @param user the user the ability will affect/apply to
      */
     public Ability(User user) {
+        this.identifier = UUID.randomUUID();
         this.affected = user;
     }
 
-    @GameEvent
-    public void onDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getUniqueId().equals(affected.getUuid())) {
-            // todo unregister tickable on death
+    protected void unregister(Ability caller) {
+        HandlerList.unregisterAll(caller);
+        List<Game> games = injector.getInstance(GameHandler.class).getGames(affected.getUuid(), false);
+
+        if (games.size() == 1) {
+            Game game = games.get(0);
+
+            game.getActivePhase().removeTickable(identifier);
         }
     }
 }
