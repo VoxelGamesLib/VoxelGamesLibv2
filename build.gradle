@@ -87,7 +87,7 @@ task copyToServer(dependsOn: 'jar', type: Copy) {
     into '../testserver/plugins/'
 }
 
-javadoc{
+javadoc {
     options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
 }
 
@@ -107,11 +107,13 @@ artifacts {
 }
 
 signing {
-    required { !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives') }
+    required {
+        !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives')
+    }
     sign configurations.archives
 }
 
-if(project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
+if (project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
     uploadArchives {
         repositories {
             mavenDeployer {
