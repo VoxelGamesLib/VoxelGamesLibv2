@@ -123,11 +123,4 @@ public abstract class BaseInventory {
     public void close(Player player) {
         player.closeInventory();
     }
-
-    /**
-     * Destroys this inventory from the map. Call this when you are done with this inventory.
-     */
-    public void destroy() {
-        inventoryHandler.removeInventory(identifier);
-    }
 }
