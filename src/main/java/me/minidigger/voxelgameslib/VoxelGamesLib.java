@@ -181,24 +181,24 @@ public final class VoxelGamesLib extends JavaPlugin {
                 kitHandler.start();
 
                 gameHandler.start();
-                moduleHandler.start();
             });
-
-            // register commands
-            registerCommandContexts();
-            registerCommandReplacements();
-            registerCommands();
-            registerCommandCompletions();
 
             registerListeners();
         } catch (Exception ex) {
             errorHandler.handle(ex, Severity.ERROR);
         }
+
+        // register commands
+        registerCommandContexts();
+        registerCommandReplacements();
+        registerCommands();
+        registerCommandCompletions();
+
+        moduleHandler.start();
     }
 
     @Override
     public void onDisable() {
-        System.out.println("stopping");
         try {
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
             Timings.time("DisableAllHandler", () -> {
