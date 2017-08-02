@@ -1,5 +1,7 @@
 package me.minidigger.voxelgameslib.components.inventory;
 
+import com.google.inject.Injector;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,8 @@ public class InventoryHandler implements Handler, Listener {
 
     @Inject
     private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private Injector injector;
 
     private Map<UUID, BaseInventory> inventories = new HashMap<>();
 
@@ -63,6 +67,7 @@ public class InventoryHandler implements Handler, Listener {
 
         try {
             instance = inventoryType.getDeclaredConstructor(Player.class, String.class, int.class).newInstance(player, title, size);
+            injector.injectMembers(instance);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             log.severe("Error creating new inventory (VGL Inventory API): " + e.getMessage());
             e.printStackTrace();
