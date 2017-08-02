@@ -213,8 +213,8 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     }
 
     @Override
-    public AbstractFeatureCommand getCommandClass() {
-        return new TeamSelectFeatureCommand();
+    public Class<? extends AbstractFeatureCommand> getCommandClass() {
+        return TeamSelectFeatureCommand.class;
     }
 
     public void setTeamCount(int teamCount) {

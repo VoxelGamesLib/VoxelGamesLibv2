@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.phase;
 
 import com.google.gson.annotations.Expose;
+import com.google.inject.Injector;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,15 +12,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import me.minidigger.voxelgameslib.command.CommandHandler;
 import me.minidigger.voxelgameslib.event.EventHandler;
 import me.minidigger.voxelgameslib.exception.DependencyGraphException;
 import me.minidigger.voxelgameslib.exception.NoSuchFeatureException;
+import me.minidigger.voxelgameslib.feature.AbstractFeatureCommand;
 import me.minidigger.voxelgameslib.feature.Feature;
 import me.minidigger.voxelgameslib.feature.FeatureCommandImplementor;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.graph.Graph;
-
 import me.minidigger.voxelgameslib.tick.Tickable;
+
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
@@ -35,6 +38,10 @@ public abstract class AbstractPhase implements Phase {
     private EventHandler eventHandler;
     @Inject
     private BukkitCommandManager commandManager;
+    @Inject
+    private Injector injector;
+    @Inject
+    private CommandHandler commandHandler;
 
     @Expose
     private String name;
@@ -160,7 +167,11 @@ public abstract class AbstractPhase implements Phase {
             }
 
             if (feature instanceof FeatureCommandImplementor) {
-                commandManager.registerCommand(((FeatureCommandImplementor) feature).getCommandClass());
+                AbstractFeatureCommand cmd = injector.getInstance(((FeatureCommandImplementor) feature).getCommandClass());
+                //noinspection unchecked
+                cmd.setFeature(feature);
+                commandHandler.register(cmd,this);
+                commandManager.registerCommand(cmd);
             }
 
             startedFeatures.add(feature);
@@ -189,7 +200,9 @@ public abstract class AbstractPhase implements Phase {
             }
 
             if (feature instanceof FeatureCommandImplementor) {
-                commandManager.unregisterCommand(((FeatureCommandImplementor) feature).getCommandClass());
+                AbstractFeatureCommand cmd = injector.getInstance(((FeatureCommandImplementor) feature).getCommandClass());
+                commandHandler.unregister(cmd,this);
+                commandManager.unregisterCommand(cmd);
             }
         }
 

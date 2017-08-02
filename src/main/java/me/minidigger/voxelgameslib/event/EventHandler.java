@@ -59,7 +59,7 @@ public class EventHandler implements Handler, Listener {
         Set<Class<Event>> newEvents = new HashSet<>();
         Arrays.stream(listener.getClass().getMethods()).filter((method -> method.isAnnotationPresent(GameEvent.class))).forEach(
                 method -> {
-                    if (method.getParameterCount() != 1) {
+                    if (method.getParameterCount() != 1 && method.getParameterCount() != 2) {
                         log.warning("Invalid parameters for " + listener.getClass().getName() + " " + method.toString());
                         return;
                     }
@@ -100,7 +100,7 @@ public class EventHandler implements Handler, Listener {
         //noinspection unchecked
         Arrays.stream(listener.getClass().getMethods())
                 .filter((method -> method.isAnnotationPresent(GameEvent.class)))
-                .filter(method -> method.getParameterCount() == 1)
+                .filter(method -> method.getParameterCount() != 1 || method.getParameterCount() != 2)
                 .filter(method -> Event.class.isAssignableFrom(method.getParameterTypes()[0]))
                 .map(method -> (Class<Event>) method.getParameterTypes()[0]).forEach(
                 eventClass -> activeEvents.get(eventClass).removeIf(registeredListener -> registeredListener.getListener().equals(listener)));
@@ -144,7 +144,12 @@ public class EventHandler implements Handler, Listener {
                     }
 
                     try {
-                        registeredListener.getMethod().invoke(registeredListener.getListener(), event);
+                        if (registeredListener.getMethod().getParameterCount() == 2) {
+                            System.out.println("method " + registeredListener.getMethod());
+                            registeredListener.getMethod().invoke(registeredListener.getListener(), event, user.orElse(null));
+                        } else {
+                            registeredListener.getMethod().invoke(registeredListener.getListener(), event);
+                        }
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         log.log(Level.SEVERE, "Error while calling eventhandler!", e);
                     }

@@ -11,14 +11,15 @@ import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.chat.ChatHandler;
 import me.minidigger.voxelgameslib.chat.ChatListener;
-import me.minidigger.voxelgameslib.commands.GameCommands;
-import me.minidigger.voxelgameslib.commands.KitCommands;
-import me.minidigger.voxelgameslib.commands.LangCommands;
-import me.minidigger.voxelgameslib.commands.OverrideCommands;
-import me.minidigger.voxelgameslib.commands.RoleCommands;
-import me.minidigger.voxelgameslib.commands.VGLCommands;
-import me.minidigger.voxelgameslib.commands.WorldCommands;
-import me.minidigger.voxelgameslib.commands.WorldRepositoryCommands;
+import me.minidigger.voxelgameslib.command.CommandHandler;
+import me.minidigger.voxelgameslib.command.commands.GameCommands;
+import me.minidigger.voxelgameslib.command.commands.KitCommands;
+import me.minidigger.voxelgameslib.command.commands.LangCommands;
+import me.minidigger.voxelgameslib.command.commands.OverrideCommands;
+import me.minidigger.voxelgameslib.command.commands.RoleCommands;
+import me.minidigger.voxelgameslib.command.commands.VGLCommands;
+import me.minidigger.voxelgameslib.command.commands.WorldCommands;
+import me.minidigger.voxelgameslib.command.commands.WorldRepositoryCommands;
 import me.minidigger.voxelgameslib.components.inventory.InventoryHandler;
 import me.minidigger.voxelgameslib.components.kits.KitHandler;
 import me.minidigger.voxelgameslib.components.signs.SignButtons;
@@ -121,6 +122,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private EventHandler eventHandler;
     @Inject
     private KitHandler kitHandler;
+    @Inject
+    private CommandHandler commandHandler;
 
 
     @Override
@@ -179,6 +182,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 signHandler.start();
                 metricHandler.start();
                 kitHandler.start();
+                commandHandler.start();
 
                 gameHandler.start();
             });
@@ -217,6 +221,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 signHandler.stop();
                 metricHandler.stop();
                 kitHandler.stop();
+                commandHandler.stop();
 
                 gameHandler.stop();
                 moduleHandler.stop();

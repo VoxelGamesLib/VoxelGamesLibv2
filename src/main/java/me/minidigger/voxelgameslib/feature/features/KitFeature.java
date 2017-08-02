@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import me.minidigger.voxelgameslib.VoxelGamesLib;
-import me.minidigger.voxelgameslib.commands.KitCommands;
+import me.minidigger.voxelgameslib.command.commands.KitCommands;
 import me.minidigger.voxelgameslib.components.ability.Ability;
 import me.minidigger.voxelgameslib.components.kits.Kit;
 import me.minidigger.voxelgameslib.feature.AbstractFeature;
