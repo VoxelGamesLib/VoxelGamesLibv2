@@ -32,7 +32,7 @@ public class GameCommands extends BaseCommand {
     @CommandAlias("game")
     @CommandPermission("%user")
     public void game(User sender) {
-        // todo game command
+        // todo game help commands, pending a PR to ACF
     }
 
     @Subcommand("list")
@@ -62,8 +62,7 @@ public class GameCommands extends BaseCommand {
     @CommandPermission("%premium")
     public void gameStart(User sender, GameMode mode) {
         if (gameHandler.getGames(sender.getUuid(), true).size() != 0) {
-            //TODO msg
-            sender.sendMessage(TextComponent.of("not another one"));
+            Lang.msg(sender, LangKey.GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES);
             return;
         }
 
@@ -74,7 +73,7 @@ public class GameCommands extends BaseCommand {
             Lang.msg(sender, LangKey.GAME_GAME_STARTED);
             if (config.announceNewGame) {
                 //TODO figure out which command to enter
-                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, "todo make this actually work, lol", sender.getDisplayName(), mode.getName());
+                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, "game join " + mode.getName(), sender.getDisplayName(), mode.getName());
             }
         } else {
             Lang.msg(sender, LangKey.GAME_COULD_NOT_START);
@@ -83,31 +82,26 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("stop")
     @CommandPermission("%admin")
-    public void gameStop(User sender, @co.aikar.commands.annotation.Optional String gameid) {
+    public void gameStop(User sender, @co.aikar.commands.annotation.Optional String gameId) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), false);
         if (games.size() == 0) {
             Lang.msg(sender, LangKey.GAME_STOP_IN_NO_GAME);
             games = gameHandler.getGames(sender.getUuid(), true);
+
             if (games.size() == 0) {
                 Lang.msg(sender, LangKey.GAME_STOP_IN_NO_GAME_SPEC);
-            } else if (games.size() == 1) {
-                games.get(0).abortGame();
-            } else {
-                if (gameid == null) {
-                    // TODO send all games guy is in
-                } else {
-                    // todo stop the game specified
-                }
             }
         } else if (games.size() == 1) {
             games.get(0).abortGame();
-        } else {
-            if (gameid == null) {
-                // TODO send all games guy is in
-            } else {
-                // todo stop the game specified
-            }
         }
+
+        if (gameId == null) {
+            games.forEach(Game::abortGame);
+        } else {
+            // todo we need a better way to have game identifiers
+            games.get(Integer.parseInt(gameId)).abortGame();
+        }
+
     }
 
     @Subcommand("join")
@@ -119,14 +113,24 @@ public class GameCommands extends BaseCommand {
         if (game.isPresent()) {
             game.get().join(sender);
         } else {
-            Lang.msg(sender, LangKey.GAME_NO_GAME_FOUND);
+            Lang.msg(sender, LangKey.GAME_NO_GAME_TO_JOIN_FOUND);
         }
     }
 
     @Subcommand("leave")
     @CommandPermission("%user")
     public void gameLeave(User sender) {
-        // todo game leave command
+        List<Game> games = gameHandler.getGames(sender.getUuid(), true);
+
+        if (games.size() == 0) {
+            Lang.msg(sender, LangKey.GAME_NOT_FOUND);
+            return;
+        } else if (games.size() > 1) {
+            // todo perhaps remove in production
+            Lang.msg(sender, LangKey.GAME_IN_MORE_THAN_ONE_GAME);
+        }
+
+        games.forEach(game -> game.leave(sender));
     }
 
     @Subcommand("skip-phase")
@@ -135,14 +139,14 @@ public class GameCommands extends BaseCommand {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
         if (id == null) {
             if (games.size() > 1) {
-                //TODO msg
+                Lang.msg(sender, LangKey.GAME_IN_TOO_MANY_GAMES);
             } else {
                 log.finer("skip " + games.get(0).getActivePhase().getName());
                 games.get(0).endPhase();
             }
         } else {
             if (games.size() > id || id < 0) {
-                //TODO msg
+                Lang.msg(sender, LangKey.GAME_INVALID_GAME_ID);
             } else {
                 log.finer("skip " + games.get(id).getActivePhase().getName());
                 games.get(id).endPhase();
@@ -152,7 +156,17 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("shout")
     @CommandAlias("shout|s")
-    public void shout(User sender) {
-        // TODO send msg to entire game
+    public void shout(User sender, String message) {
+        List<Game> games = gameHandler.getGames(sender.getUuid(), true);
+
+        if (games.size() == 0) {
+            Lang.msg(sender, LangKey.GAME_NOT_IN_GAME_NO_ID);
+            return;
+        } else if (games.size() > 1) {
+            Lang.msg(sender, LangKey.GAME_IN_TOO_MANY_GAMES);
+            return;
+        } else {
+            games.get(0).broadcastMessage(TextComponent.of(message));
+        }
     }
 }
