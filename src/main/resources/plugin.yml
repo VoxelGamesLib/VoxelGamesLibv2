@@ -3,4 +3,4 @@ version: @version@
 main: VoxelGamesLib
 authors: [VoxelGamesLib]
 depend: [ProtocolLib]
-website: https://www.voxelgameslib.com
+website: https://github.com/VoxelGamesLib/VoxelGamesLibv2
