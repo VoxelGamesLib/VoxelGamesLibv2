@@ -158,9 +158,7 @@ public class PagedInventory extends BaseInventory {
      * @param newPage id of page to set as visible
      */
     public void setPage(int newPage) {
-        if (pages.containsKey(newPage)) {
-            ItemStack[] contents = pages.get(newPage);
-
+        getPage(newPage).ifPresent(contents -> {
             PageChangeEvent pageChangeEvent = new PageChangeEvent(this, currentPage, newPage, contents);
             Bukkit.getPluginManager().callEvent(pageChangeEvent);
 
@@ -180,7 +178,7 @@ public class PagedInventory extends BaseInventory {
                     open();
                 }
             }
-        }
+        });
     }
 
     /**
