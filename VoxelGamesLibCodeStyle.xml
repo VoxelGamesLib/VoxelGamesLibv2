@@ -232,7 +232,7 @@
             <package name="java" withSubpackages="true" static="false"/>
             <package name="javax" withSubpackages="true" static="false"/>
             <emptyLine/>
-            <package name="me.minidigger" withSubpackages="true" static="false"/>
+            <package name="com.voxelgameslib" withSubpackages="true" static="false"/>
             <emptyLine/>
             <package name="org.bukkit" withSubpackages="true" static="false"/>
             <emptyLine/>

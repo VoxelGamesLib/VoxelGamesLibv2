@@ -1,5 +1,6 @@
 name: VoxelGamesLib
 version: @version@
-main: me.minidigger.voxelgameslib.VoxelGamesLib
-authors: [MiniDigger]
+main: VoxelGamesLib
+authors: [VoxelGamesLib]
 depend: [ProtocolLib]
+website: https://www.voxelgameslib.com

@@ -19,7 +19,7 @@
 }
 
 # Keep - Library. Keep all public and protected classes, fields, and methods.
--keep public class me.minidigger.** {
+-keep public class com.voxelgameslib.** {
     public protected <fields>;
     public protected <methods>;
 }

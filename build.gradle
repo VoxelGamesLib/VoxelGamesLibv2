@@ -17,7 +17,7 @@ plugins {
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
-group = 'me.minidigger'
+group = 'com.voxelgameslib'
 version = '2.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -70,7 +70,7 @@ shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
 
-    relocate 'org.bstats', 'me.minidigger.voxelgameslib.metrics'
+    relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
 }
 
 build.dependsOn shadowJar
