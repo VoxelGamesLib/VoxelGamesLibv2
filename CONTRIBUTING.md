@@ -20,14 +20,9 @@ See [README.md](README.md)
 
 ## Dev Setup
 
-### Submodules
-
-This project includes some games as submodules. to work with them run 
-`git submodule update --init --recursive`
-
 ### Test Server
 
-An optimised test server submodule is packaged with VoxelGamesLib.
+An optimised test server submodule is available for use with VoxelGamesLib. You can fetch it [here](https://github.com/VoxelGamesLib/testserver)
 
 You will need to grab a Spigot jar to run. You can set up the server as such, in IntelliJ IDEA:
 
@@ -39,6 +34,7 @@ You will need to grab a Spigot jar to run. You can set up the server as such, in
 
 VoxelGamesLib can be found on the [indices.io repository](https://nexus.indices.io).
 
+Maven:
 ```
 <repositories>
     <repository>
@@ -46,4 +42,24 @@ VoxelGamesLib can be found on the [indices.io repository](https://nexus.indices.
         <url>https://nexus.indices.io/content/groups/public/</url>
     </repository>
 </repositories>
+
+<dependencies>
+    <dependency>
+        <group>com.voxelgameslib</group>
+        <artifactId>voxelgameslib</artifactId>
+        <version>2.0-SNAPSHOT</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+Gradle:
+```
+repositories {
+    maven { url 'https://nexus.indices.io/content/groups/public/' }
+}
+
+dependencies {
+    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '2.0-SNAPSHOT'
+}
 ```
