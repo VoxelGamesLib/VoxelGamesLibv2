@@ -190,7 +190,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
                     basicInventory.getBukkitInventory().setItem(pos++, item);
                     basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> {
                         confirmVote(user, id);
-                        basicInventory.close(user.getPlayer());
+                        basicInventory.close();
 
                         // Destroy the inventory, we don't need it anymore
                         inventoryHandler.removeInventory(basicInventory.getIdentifier());
