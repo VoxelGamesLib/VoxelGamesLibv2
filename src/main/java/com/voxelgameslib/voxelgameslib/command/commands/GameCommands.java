@@ -132,7 +132,6 @@ public class GameCommands extends BaseCommand {
     @Subcommand("skip-phase")
     @CommandPermission("%admin")
     public void skipPhase(User sender, @co.aikar.commands.annotation.Optional Integer id) {
-        // todo skip phase command
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
         if (id == null) {
             if (games.size() > 1) {
@@ -145,7 +144,7 @@ public class GameCommands extends BaseCommand {
             if (games.size() > id || id < 0) {
                 //TODO msg
             } else {
-                log.finer("skip " + games.get(0).getActivePhase().getName());
+                log.finer("skip " + games.get(id).getActivePhase().getName());
                 games.get(id).endPhase();
             }
         }
