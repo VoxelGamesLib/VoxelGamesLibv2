@@ -15,10 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class BaseInventory {
-
-    @Inject
-    private InventoryHandler inventoryHandler;
-
     private UUID identifier;
     private Player player;
     protected Inventory bukkitInventory;
@@ -41,9 +37,9 @@ public abstract class BaseInventory {
         this.identifier = player.getUniqueId();
         this.player = player;
         this.title = title;
-        this.size = Math.min(54, (int) (Math.ceil((double) size / 9)) * 9);
+        this.size = Math.min(9, (int) (Math.ceil((double) size / 9)) * 9);
 
-        bukkitInventory = Bukkit.createInventory(null, size, title);
+        bukkitInventory = Bukkit.createInventory(null, this.size, title);
     }
 
     /**
@@ -55,6 +51,15 @@ public abstract class BaseInventory {
      */
     public UUID getIdentifier() {
         return identifier;
+    }
+
+    /**
+     * Returns the inventory holder
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
     }
 
     public Inventory getBukkitInventory() {
@@ -116,11 +121,16 @@ public abstract class BaseInventory {
     }
 
     /**
-     * Make the player close the inventory
-     *
-     * @param player player to close inventory for
+     * Make the player open the inventory
      */
-    public void close(Player player) {
+    public void open() {
+        player.openInventory(bukkitInventory);
+    }
+
+    /**
+     * Make the player close the inventory
+     */
+    public void close() {
         player.closeInventory();
     }
 }
