@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
+import com.voxelgameslib.voxelgameslib.user.User;
+
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
  * Represents a scoreboard, a sidebar used to display information.

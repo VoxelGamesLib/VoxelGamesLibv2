@@ -1,13 +1,11 @@
 package com.voxelgameslib.voxelgameslib.event.events.player;
 
-import javax.annotation.Nonnull;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.game.Game;
-
+import com.voxelgameslib.voxelgameslib.user.User;
+import lombok.Getter;
 import org.bukkit.event.HandlerList;
 
-import lombok.Getter;
+import javax.annotation.Nonnull;
 
 /**
  * This event is called when a player is eliminated from a game.<br>Gametypes should call this

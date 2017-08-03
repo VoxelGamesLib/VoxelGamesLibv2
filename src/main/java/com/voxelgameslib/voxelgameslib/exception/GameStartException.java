@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
+
+import javax.annotation.Nonnull;
 
 /**
  * Thrown when something goes wrong while starting a {@link Game}

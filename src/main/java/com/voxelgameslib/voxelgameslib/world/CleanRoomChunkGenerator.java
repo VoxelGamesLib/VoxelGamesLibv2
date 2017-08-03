@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.world;
 
-import java.util.Random;
-import javax.annotation.Nonnull;
-
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 /**
  * Created by Martin on 07.10.2016.

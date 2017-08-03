@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.event.events.game;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.event.VoxelGamesLibEvent;
 import com.voxelgameslib.voxelgameslib.game.Game;
+
+import javax.annotation.Nonnull;
 
 /**
  * Parent class for game events

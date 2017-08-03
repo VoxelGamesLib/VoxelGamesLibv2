@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.module;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.annotation.Nonnull;
 
 /**
  * Marks a class as module, specifies some useful data about the module

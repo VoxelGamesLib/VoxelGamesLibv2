@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
+import com.voxelgameslib.voxelgameslib.user.User;
+
 import java.util.Optional;
 import java.util.UUID;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
  * Empty persistence provider, used when persistence is disabled

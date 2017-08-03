@@ -1,16 +1,14 @@
 package com.voxelgameslib.voxelgameslib.components.team;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import org.bukkit.ChatColor;
-
 import jskills.Rating;
 import lombok.Data;
+import org.bukkit.ChatColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class Team {

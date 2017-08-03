@@ -1,20 +1,19 @@
 package com.voxelgameslib.voxelgameslib.game;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import net.kyori.text.Component;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.user.User;
+import net.kyori.text.Component;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.time.Duration;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * A {@link Game} is the representation of an instance of a {@link GameMode}. Handles everything

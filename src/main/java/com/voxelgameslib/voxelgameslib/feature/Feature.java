@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
+
+import javax.annotation.Nonnull;
 
 /**
  * A {@link Feature} is a piece of logic that is active during a {@link Phase}. It typically listens

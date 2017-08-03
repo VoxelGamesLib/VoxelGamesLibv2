@@ -1,17 +1,15 @@
 package com.voxelgameslib.voxelgameslib.chat;
 
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
+import lombok.Getter;
+import lombok.Setter;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * A chat channel represents a collection of listeners who are able to receive messages send into
@@ -48,7 +46,7 @@ public class ChatChannel {
 
     /**
      * Adds a new listener to the channel
-     *
+     * <p>
      * Listeners can hear messages, but messages they send will not be sent to this channel unless
      * it is their active channel.
      *

@@ -1,37 +1,9 @@
 package com.voxelgameslib.voxelgameslib.user;
 
 import com.google.gson.annotations.Expose;
-
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.role.Role;
-import net.kyori.text.Component;
-import net.kyori.text.TextComponent;
-
-import org.hibernate.annotations.Type;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
@@ -39,11 +11,18 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.persistence.converter.ComponentConverter;
 import com.voxelgameslib.voxelgameslib.persistence.converter.LocaleConverter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
+import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
-import org.bukkit.entity.Player;
-
 import jskills.Rating;
+import net.kyori.text.Component;
+import net.kyori.text.TextComponent;
+import org.bukkit.entity.Player;
+import org.hibernate.annotations.Type;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * abstract implementation of the user interface that deals with some stuff

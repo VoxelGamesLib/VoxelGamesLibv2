@@ -1,7 +1,7 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import java.io.IOException;
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
 /**
  * Thrown when something is wrong related to lang stuff

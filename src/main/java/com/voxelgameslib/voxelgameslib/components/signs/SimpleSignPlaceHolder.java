@@ -2,7 +2,6 @@ package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.voxelgameslib.voxelgameslib.user.User;
 import net.kyori.text.Component;
-
 import org.bukkit.Location;
 
 /**

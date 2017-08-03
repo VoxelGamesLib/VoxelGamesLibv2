@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.game.GameMode;
+
+import javax.annotation.Nonnull;
 
 /**
  * Thrown when trying to do something with a {@link GameMode} that is not registered on this server

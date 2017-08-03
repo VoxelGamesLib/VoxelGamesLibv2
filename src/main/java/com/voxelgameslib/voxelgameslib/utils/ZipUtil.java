@@ -4,8 +4,8 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 
-import java.io.File;
 import javax.annotation.Nonnull;
+import java.io.File;
 
 /**
  * Small util to make working with zips easier

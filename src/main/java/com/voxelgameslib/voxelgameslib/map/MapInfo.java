@@ -2,8 +2,8 @@ package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.List;
 import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Small class to handle info about this map

@@ -2,24 +2,21 @@ package com.voxelgameslib.voxelgameslib.lang;
 
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
+import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
+import lombok.extern.java.Log;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
+import org.bukkit.ChatColor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
-import org.bukkit.ChatColor;
-
-import lombok.extern.java.Log;
 
 /**
  * Gives quick access to the lang storage and translation and stuff

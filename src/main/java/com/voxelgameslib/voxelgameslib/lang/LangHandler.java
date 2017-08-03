@@ -1,20 +1,19 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
+import lombok.extern.java.Log;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-
-import lombok.extern.java.Log;
 
 /**
  * Handles the languages. holds all lang storages and registered languages.

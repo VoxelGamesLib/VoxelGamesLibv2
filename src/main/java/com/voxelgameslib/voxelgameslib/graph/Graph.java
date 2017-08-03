@@ -1,12 +1,8 @@
 package com.voxelgameslib.voxelgameslib.graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
+
+import java.util.*;
 
 /**
  * Represents a graph of nodes. Every node is of GraphNode type and it has set a value of the

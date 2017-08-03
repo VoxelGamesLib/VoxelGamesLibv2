@@ -1,22 +1,12 @@
 package com.voxelgameslib.voxelgameslib.error;
 
+import co.aikar.commands.ACFUtil;
+import co.aikar.commands.CommandIssuer;
 import com.bugsnag.Bugsnag;
 import com.bugsnag.Severity;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-
+import lombok.extern.java.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandMap;
@@ -28,9 +18,11 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 
-import co.aikar.commands.ACFUtil;
-import co.aikar.commands.CommandIssuer;
-import lombok.extern.java.Log;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 @Log
 public class ErrorHandler implements Handler {

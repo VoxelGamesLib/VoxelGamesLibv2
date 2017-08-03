@@ -1,27 +1,21 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.game.GameMode;
-import com.voxelgameslib.voxelgameslib.user.User;
-import net.kyori.text.TextComponent;
-
-import java.util.List;
-import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
+import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
-
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandCompletion;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
+import com.voxelgameslib.voxelgameslib.user.User;
 import lombok.extern.java.Log;
+import net.kyori.text.TextComponent;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.List;
+import java.util.Optional;
 
 @Singleton
 @Log

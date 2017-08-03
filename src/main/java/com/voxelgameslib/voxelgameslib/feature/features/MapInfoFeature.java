@@ -5,7 +5,6 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.map.Map;
-
 import org.bukkit.ChatColor;
 
 @FeatureInfo(name = "MapInfoFeature", author = "MiniDigger", version = "1.0",

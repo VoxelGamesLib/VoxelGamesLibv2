@@ -1,18 +1,8 @@
 package com.voxelgameslib.voxelgameslib.phase.phases;
 
-import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 import com.voxelgameslib.voxelgameslib.GameConstants;
-import com.voxelgameslib.voxelgameslib.feature.features.ClearInventoryFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.GameModeFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.HealFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.MapInfoFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.NoBlockBreakFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.NoBlockPlaceFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.NoDamageFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.ScoreboardFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
-
+import com.voxelgameslib.voxelgameslib.feature.features.*;
+import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 import org.bukkit.GameMode;
 
 /**

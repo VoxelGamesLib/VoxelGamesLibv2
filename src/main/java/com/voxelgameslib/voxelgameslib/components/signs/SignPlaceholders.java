@@ -6,25 +6,14 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
+import lombok.extern.java.Log;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.ComponentSerializer;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -37,7 +26,14 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import lombok.extern.java.Log;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Log
 @Singleton

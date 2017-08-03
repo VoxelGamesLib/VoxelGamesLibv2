@@ -1,27 +1,7 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.Writer;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.InvalidPropertiesFormatException;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.io.*;
+import java.util.*;
 
 /**
  * This class provides an alternative to the JDK's {@link Properties} class. It fixes the design

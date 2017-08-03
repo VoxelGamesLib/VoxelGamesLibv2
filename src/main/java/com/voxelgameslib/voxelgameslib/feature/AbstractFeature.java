@@ -1,12 +1,10 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
 import com.google.gson.annotations.Expose;
+import com.voxelgameslib.voxelgameslib.phase.Phase;
+import org.bukkit.event.Listener;
 
 import javax.annotation.Nonnull;
-
-import com.voxelgameslib.voxelgameslib.phase.Phase;
-
-import org.bukkit.event.Listener;
 
 /**
  * Abstract implementation of Phase

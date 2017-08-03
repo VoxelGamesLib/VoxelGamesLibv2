@@ -1,15 +1,14 @@
 package com.voxelgameslib.voxelgameslib.config;
 
 import com.google.gson.annotations.Expose;
-
-import java.util.List;
-import java.util.logging.Level;
-import javax.annotation.Nonnull;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.utils.CollectionUtil;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceConfig;
+import com.voxelgameslib.voxelgameslib.utils.CollectionUtil;
+
+import javax.annotation.Nonnull;
+import javax.inject.Singleton;
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * The config defines all configuration values (and the default values)

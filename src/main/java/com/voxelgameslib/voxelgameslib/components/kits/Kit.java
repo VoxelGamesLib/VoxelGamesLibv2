@@ -1,14 +1,12 @@
 package com.voxelgameslib.voxelgameslib.components.kits;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
+import lombok.Data;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.Data;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class Kit {
@@ -42,7 +40,7 @@ public class Kit {
 
     /**
      * Create a new kit
-     *
+     * <p>
      * You can use the {@link ItemBuilder} to build an item
      *
      * @param name      name of kit

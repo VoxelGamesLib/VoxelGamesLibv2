@@ -1,22 +1,19 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.Injector;
-
-import java.util.List;
-import javax.inject.Inject;
-
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
+import com.voxelgameslib.voxelgameslib.components.ability.Ability;
 import com.voxelgameslib.voxelgameslib.components.kits.Kit;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
-import co.aikar.commands.BukkitCommandManager;
-import lombok.Getter;
-import lombok.Setter;
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * This feature allows the use of kits and abilities

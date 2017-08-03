@@ -1,77 +1,61 @@
 package com.voxelgameslib.voxelgameslib;
 
-import com.google.inject.Injector;
-
+import co.aikar.commands.*;
+import co.aikar.taskchain.BukkitTaskChainFactory;
+import co.aikar.taskchain.TaskChain;
+import co.aikar.taskchain.TaskChainFactory;
+import co.aikar.timings.lib.TimingManager;
 import com.bugsnag.Severity;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
+import com.google.inject.Injector;
+import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.chat.ChatListener;
-import com.voxelgameslib.voxelgameslib.command.commands.OverrideCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.WorldRepositoryCommands;
+import com.voxelgameslib.voxelgameslib.command.CommandHandler;
+import com.voxelgameslib.voxelgameslib.command.commands.*;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignButtons;
+import com.voxelgameslib.voxelgameslib.components.signs.SignHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignListener;
+import com.voxelgameslib.voxelgameslib.components.signs.SignPlaceholders;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.elo.EloHandler;
 import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
+import com.voxelgameslib.voxelgameslib.event.EventHandler;
+import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
+import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.game.GameListener;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.LangHandler;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
-import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
-import com.voxelgameslib.voxelgameslib.role.Role;
-import com.voxelgameslib.voxelgameslib.team.TeamHandler;
-import com.voxelgameslib.voxelgameslib.tick.TickHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.user.UserListener;
-import com.voxelgameslib.voxelgameslib.world.EditMode;
-import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-import com.voxelgameslib.voxelgameslib.world.WorldModifyCommands;
-import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.command.CommandHandler;
-import com.voxelgameslib.voxelgameslib.command.commands.GameCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.LangCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.RoleCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
-import com.voxelgameslib.voxelgameslib.components.signs.SignHandler;
-import com.voxelgameslib.voxelgameslib.components.signs.SignPlaceholders;
-import com.voxelgameslib.voxelgameslib.event.EventHandler;
-import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
-import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.matchmaking.MatchmakingHandler;
 import com.voxelgameslib.voxelgameslib.metrics.MetricHandler;
+import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
+import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
+import com.voxelgameslib.voxelgameslib.team.TeamHandler;
+import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.user.UserListener;
+import com.voxelgameslib.voxelgameslib.world.EditMode;
 import com.voxelgameslib.voxelgameslib.world.WorldCreator;
-
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
+import com.voxelgameslib.voxelgameslib.world.WorldModifyCommands;
+import lombok.extern.java.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import co.aikar.commands.BukkitCommandCompletionContext;
-import co.aikar.commands.BukkitCommandExecutionContext;
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.CommandCompletions;
-import co.aikar.commands.CommandContexts;
-import co.aikar.commands.CommandReplacements;
-import co.aikar.taskchain.BukkitTaskChainFactory;
-import co.aikar.taskchain.TaskChain;
-import co.aikar.taskchain.TaskChainFactory;
-import co.aikar.timings.lib.TimingManager;
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Log
 public final class VoxelGamesLib extends JavaPlugin {

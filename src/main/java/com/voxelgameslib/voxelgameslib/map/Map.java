@@ -1,20 +1,14 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
-
 import lombok.Data;
 import lombok.extern.java.Log;
+
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a
@@ -94,7 +88,7 @@ public class Map {
     }
 
     public boolean isLoaded(UUID gameid) {
-        log.finer("Is  "+ info.getName() + " loaded?");
+        log.finer("Is  " + info.getName() + " loaded?");
         if (loadedNames == null) {
             log.finer("Loaded names = null");
             loadedNames = new HashMap<>();

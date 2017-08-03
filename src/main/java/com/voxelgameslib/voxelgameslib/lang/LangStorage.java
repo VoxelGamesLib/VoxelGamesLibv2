@@ -1,20 +1,18 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
 import com.google.inject.name.Named;
+import com.voxelgameslib.voxelgameslib.exception.LangException;
+import com.voxelgameslib.voxelgameslib.utils.OrderedProperties;
+import lombok.extern.java.Log;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.exception.LangException;
-import com.voxelgameslib.voxelgameslib.utils.OrderedProperties;
-
-import lombok.extern.java.Log;
 
 /**
  * A lang storage holds all lang keys (and their translations) that are translated into one locale

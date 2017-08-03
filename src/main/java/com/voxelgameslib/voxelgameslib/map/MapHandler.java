@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.map;
 
-import java.util.HashMap;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.handler.Handler;
+import java.util.HashMap;
 
 /**
  * Created by Martin on 04.10.2016.

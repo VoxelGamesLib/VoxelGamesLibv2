@@ -1,18 +1,16 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import javax.inject.Inject;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public abstract class BaseInventory {
     private UUID identifier;
@@ -44,7 +42,7 @@ public abstract class BaseInventory {
 
     /**
      * <p>Get the inventory's identifier</p>
-     *
+     * <p>
      * <p>This should be the same as the UUID of the player opening it.</p>
      *
      * @return the identifier (generally player UUID)

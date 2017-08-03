@@ -3,35 +3,28 @@ package com.voxelgameslib.voxelgameslib.game;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Injector;
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
+import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
+import com.voxelgameslib.voxelgameslib.exception.GameStartException;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
+import com.voxelgameslib.voxelgameslib.tick.TickHandler;
+import com.voxelgameslib.voxelgameslib.user.User;
+import lombok.extern.java.Log;
+import org.bukkit.Bukkit;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
-import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
-import com.voxelgameslib.voxelgameslib.exception.GameStartException;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.tick.TickHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-
-import org.bukkit.Bukkit;
-
-import lombok.extern.java.Log;
 
 /**
  * Handles all {@link Game} instances and all {@link GameMode}s.

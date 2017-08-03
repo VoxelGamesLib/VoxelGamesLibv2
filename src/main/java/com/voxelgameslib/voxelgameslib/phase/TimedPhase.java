@@ -1,13 +1,11 @@
 package com.voxelgameslib.voxelgameslib.phase;
 
 import com.google.gson.annotations.Expose;
-
+import lombok.extern.java.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-
-import lombok.extern.java.Log;
 
 /**
  * A special {@link Phase} that automatically ends after a specified amount of ticks.

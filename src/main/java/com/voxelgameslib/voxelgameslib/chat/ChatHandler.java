@@ -4,10 +4,10 @@ import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import net.kyori.text.Component;
 
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import javax.inject.Singleton;
 
 /**
  * Handles everything related to chat

@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib;
 
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
@@ -8,30 +10,25 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
-
-import java.io.File;
-import java.util.Map;
-
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.feature.FeatureTypeAdapter;
-import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
-import com.voxelgameslib.voxelgameslib.module.Module;
-import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
-import com.voxelgameslib.voxelgameslib.world.WorldConfig;
-import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.feature.FeatureTypeAdapter;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameTypeAdapter;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
+import com.voxelgameslib.voxelgameslib.module.Module;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
+import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
-
+import com.voxelgameslib.voxelgameslib.world.WorldConfig;
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.timings.lib.TimingManager;
-import lombok.AllArgsConstructor;
+import java.io.File;
+import java.util.Map;
 
 @AllArgsConstructor
 public final class VoxelGamesLibModule extends AbstractModule {

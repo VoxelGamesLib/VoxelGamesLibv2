@@ -1,19 +1,17 @@
 package com.voxelgameslib.voxelgameslib.game;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
-
+import lombok.extern.java.Log;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 @Log
 @SuppressWarnings("JavaDoc")

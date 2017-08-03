@@ -1,33 +1,24 @@
 package com.voxelgameslib.voxelgameslib.components.kits;
 
+import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-
-import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
-
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
+import lombok.extern.java.Log;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.extern.java.Log;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 @Log
 @Singleton
@@ -122,7 +113,7 @@ public class KitHandler implements Handler {
             // TODO save abilities
 
             FileWriter fileWriter = new FileWriter(file);
-            gson.toJson(new JsonParser().parse(jsonConfiguration.saveToString()),fileWriter);
+            gson.toJson(new JsonParser().parse(jsonConfiguration.saveToString()), fileWriter);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

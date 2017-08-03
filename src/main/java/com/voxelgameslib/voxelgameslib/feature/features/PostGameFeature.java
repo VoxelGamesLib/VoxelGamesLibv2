@@ -1,12 +1,12 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
-import javax.annotation.Nullable;
-
-import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
+import com.voxelgameslib.voxelgameslib.user.User;
+
+import javax.annotation.Nullable;
 
 /**
  * This class implements core logic for a post-game feature to act like a summary for the game.

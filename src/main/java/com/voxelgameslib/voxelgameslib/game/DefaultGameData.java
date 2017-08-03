@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.game;
 
-import java.util.List;
-
-import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.map.MapInfo;
+
+import java.util.List;
 
 /**
  * Default game data class used internally by the framework

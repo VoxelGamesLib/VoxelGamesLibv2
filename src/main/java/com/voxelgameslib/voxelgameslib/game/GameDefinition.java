@@ -1,12 +1,11 @@
 package com.voxelgameslib.voxelgameslib.game;
 
 import com.google.gson.annotations.Expose;
+import com.voxelgameslib.voxelgameslib.phase.Phase;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nonnull;
-
-import com.voxelgameslib.voxelgameslib.phase.Phase;
 
 /**
  * Holds all important information of a game, ready to be saved to and loaded from json

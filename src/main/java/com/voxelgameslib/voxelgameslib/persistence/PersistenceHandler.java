@@ -1,14 +1,12 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.inject.Injector;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import lombok.extern.java.Log;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-
-import lombok.extern.java.Log;
 
 /**
  * Handles saving and loading of data into numerous formats

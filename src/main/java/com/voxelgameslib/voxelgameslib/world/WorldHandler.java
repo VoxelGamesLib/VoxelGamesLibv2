@@ -5,48 +5,37 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
-
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.exception.MapException;
 import com.voxelgameslib.voxelgameslib.exception.WorldException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.MapScanner;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.FileUtils;
 import com.voxelgameslib.voxelgameslib.utils.NMSUtil;
+import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
+import lombok.Getter;
+import lombok.extern.java.Log;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
+import org.bukkit.*;
+import org.bukkit.WorldCreator;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.exception.MapException;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.map.Map;
-import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
-
-import lombok.Getter;
-import lombok.extern.java.Log;
 
 /**
  * Handles the worlds (loading, unloading etc)

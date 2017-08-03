@@ -1,7 +1,6 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
-
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;

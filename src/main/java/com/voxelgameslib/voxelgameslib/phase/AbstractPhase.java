@@ -1,17 +1,8 @@
 package com.voxelgameslib.voxelgameslib.phase;
 
+import co.aikar.commands.BukkitCommandManager;
 import com.google.gson.annotations.Expose;
 import com.google.inject.Injector;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-
 import com.voxelgameslib.voxelgameslib.command.CommandHandler;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
 import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
@@ -22,11 +13,17 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.graph.Graph;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
-
+import lombok.extern.java.Log;
 import org.bukkit.event.Listener;
 
-import co.aikar.commands.BukkitCommandManager;
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
@@ -170,7 +167,7 @@ public abstract class AbstractPhase implements Phase {
                 AbstractFeatureCommand cmd = injector.getInstance(((FeatureCommandImplementor) feature).getCommandClass());
                 //noinspection unchecked
                 cmd.setFeature(feature);
-                commandHandler.register(cmd,this);
+                commandHandler.register(cmd, this);
                 commandManager.registerCommand(cmd);
             }
 
@@ -201,7 +198,7 @@ public abstract class AbstractPhase implements Phase {
 
             if (feature instanceof FeatureCommandImplementor) {
                 AbstractFeatureCommand cmd = injector.getInstance(((FeatureCommandImplementor) feature).getCommandClass());
-                commandHandler.unregister(cmd,this);
+                commandHandler.unregister(cmd, this);
                 commandManager.unregisterCommand(cmd);
             }
         }

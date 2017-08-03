@@ -2,7 +2,6 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import net.kyori.text.Component;
 import net.kyori.text.serializer.ComponentSerializer;
-
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;

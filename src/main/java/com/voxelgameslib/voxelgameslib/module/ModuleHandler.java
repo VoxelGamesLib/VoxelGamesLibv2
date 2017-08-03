@@ -2,20 +2,14 @@ package com.voxelgameslib.voxelgameslib.module;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
-
 import lombok.extern.java.Log;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import java.util.*;
 
 /**
  * The module handler takes care of all modules.

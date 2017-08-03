@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 
 @FeatureInfo(name = "ClearInventoryFeature", author = "MiniDigger", version = "1.0",
         description = "Simple feature that clears the inventory of all players when the game starts (or a new player joins)")

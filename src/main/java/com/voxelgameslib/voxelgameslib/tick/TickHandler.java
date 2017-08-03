@@ -1,19 +1,18 @@
 package com.voxelgameslib.voxelgameslib.tick;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.game.Game;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.phase.Phase;
+import org.bukkit.Bukkit;
+
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.phase.Phase;
-
-import org.bukkit.Bukkit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is

@@ -1,18 +1,16 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Subcommand;
 
 @Singleton
 @CommandAlias("worldrepository|wr")

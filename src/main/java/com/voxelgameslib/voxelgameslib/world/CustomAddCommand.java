@@ -48,11 +48,7 @@ import org.eclipse.jgit.api.errors.FilterFailedException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuildIterator;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.dircache.*;
 import org.eclipse.jgit.internal.JGitText;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -70,9 +66,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.FileMode.GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+import static org.eclipse.jgit.lib.FileMode.*;
 
 /**
  * A class used to execute a {@code Add} command. It has setters for all supported options and

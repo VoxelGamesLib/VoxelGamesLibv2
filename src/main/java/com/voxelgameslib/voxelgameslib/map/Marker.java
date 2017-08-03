@@ -1,10 +1,9 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
+import lombok.Data;
 
 import javax.annotation.Nonnull;
-
-import lombok.Data;
 
 /**
  * A marker marks a special position in the world. they are most of the time implemented by tile

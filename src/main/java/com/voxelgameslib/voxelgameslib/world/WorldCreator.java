@@ -1,31 +1,27 @@
 package com.voxelgameslib.voxelgameslib.world;
 
-import com.google.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.game.GameHandler;
-import com.voxelgameslib.voxelgameslib.game.GameMode;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.map.MapInfo;
-import com.voxelgameslib.voxelgameslib.map.Vector3D;
-import com.voxelgameslib.voxelgameslib.user.User;
-import net.kyori.text.TextComponent;
-import net.kyori.text.event.ClickEvent;
-import net.kyori.text.format.TextColor;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.map.Map;
-
-import org.bukkit.Bukkit;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
+import com.google.inject.Singleton;
+import com.voxelgameslib.voxelgameslib.game.GameHandler;
+import com.voxelgameslib.voxelgameslib.game.GameMode;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.Map;
+import com.voxelgameslib.voxelgameslib.map.MapInfo;
+import com.voxelgameslib.voxelgameslib.map.Vector3D;
+import com.voxelgameslib.voxelgameslib.user.User;
 import lombok.extern.java.Log;
+import net.kyori.text.TextComponent;
+import net.kyori.text.event.ClickEvent;
+import net.kyori.text.format.TextColor;
+import org.bukkit.Bukkit;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles creation of new worlds/maps

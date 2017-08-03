@@ -1,16 +1,13 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.google.gson.annotations.Expose;
-
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
-
-import lombok.Data;
 
 /**
  * Stores the location of a traced sign into the db

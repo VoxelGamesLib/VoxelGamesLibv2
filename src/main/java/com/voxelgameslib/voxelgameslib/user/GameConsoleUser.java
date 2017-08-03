@@ -7,22 +7,19 @@ import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
+import jskills.Rating;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
-import jskills.Rating;
 
 /**
  * Abstract implementation of the console user interface that deals with most stuff

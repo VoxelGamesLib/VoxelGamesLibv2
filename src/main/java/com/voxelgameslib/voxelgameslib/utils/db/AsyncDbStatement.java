@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
-import java.sql.SQLException;
-
 import lombok.extern.java.Log;
+
+import java.sql.SQLException;
 
 /**
  * Template class for user to override. Will run on a different thread so you can run SQL queries

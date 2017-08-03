@@ -1,23 +1,22 @@
 package com.voxelgameslib.voxelgameslib.elo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.TeamFeature;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-
+import com.voxelgameslib.voxelgameslib.user.User;
 import jskills.IPlayer;
 import jskills.ITeam;
 import jskills.Rating;
 import jskills.SkillCalculator;
 import jskills.trueskill.FactorGraphTrueSkillCalculator;
 import lombok.extern.java.Log;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * Handles the calculation of "skill" for players

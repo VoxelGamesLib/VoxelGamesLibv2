@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.timings;
 
+import lombok.extern.java.Log;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
-import lombok.extern.java.Log;
 
 /**
  * Small class that helps with timing stuff

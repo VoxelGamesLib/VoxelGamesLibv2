@@ -1,14 +1,13 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
 import com.google.gson.annotations.Expose;
-
-import java.io.Serializable;
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import javax.annotation.Nonnull;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Represents a language a player can select to get all messages in that language

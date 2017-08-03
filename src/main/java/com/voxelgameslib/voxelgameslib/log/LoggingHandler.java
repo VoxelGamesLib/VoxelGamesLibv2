@@ -1,24 +1,19 @@
 package com.voxelgameslib.voxelgameslib.log;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.user.User;
+import lombok.extern.java.Log;
+
+import javax.inject.Singleton;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Optional;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
-import lombok.extern.java.Log;
 
 @Log
 @Subcommand("log")

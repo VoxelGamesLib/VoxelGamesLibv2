@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.role.Permission;
+
+import javax.annotation.Nonnull;
 
 /**
  * Thrown when something tries to register a new permission for a permission that already exist with

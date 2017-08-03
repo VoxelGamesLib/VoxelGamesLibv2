@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import java.util.EnumMap;
-import javax.annotation.Nonnull;
-
 import org.bukkit.block.BlockFace;
+
+import javax.annotation.Nonnull;
+import java.util.EnumMap;
 
 /**
  * Small util for direction and yaw conversation <br> Modified version of

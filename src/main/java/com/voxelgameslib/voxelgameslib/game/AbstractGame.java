@@ -1,48 +1,35 @@
 package com.voxelgameslib.voxelgameslib.game;
 
 import com.google.inject.Injector;
-
-import com.voxelgameslib.voxelgameslib.elo.EloHandler;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameEndEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
-import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
-import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.TeamFeature;
-import com.voxelgameslib.voxelgameslib.map.MapInfo;
-import com.voxelgameslib.voxelgameslib.user.User;
-import net.kyori.text.Component;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.elo.EloHandler;
+import com.voxelgameslib.voxelgameslib.event.events.game.GameEndEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
+import com.voxelgameslib.voxelgameslib.feature.features.TeamFeature;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
+import lombok.extern.java.Log;
+import net.kyori.text.Component;
 import org.bukkit.Bukkit;
 
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.

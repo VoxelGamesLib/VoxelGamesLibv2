@@ -1,20 +1,13 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import com.google.inject.Injector;
+import lombok.extern.java.Log;
 
-import java.lang.reflect.Type;
-import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import lombok.extern.java.Log;
+import java.lang.reflect.Type;
+import java.util.logging.Level;
 
 /**
  * TypeAdapter for the Feature class, redirects gson to the right Feature implementation

@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
+
+import javax.annotation.Nonnull;
 
 /**
  * Thrown when something tries to access a {@link Feature} in a {@link

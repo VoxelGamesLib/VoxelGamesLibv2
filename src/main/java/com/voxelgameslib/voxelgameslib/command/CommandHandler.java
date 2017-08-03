@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.command;
 
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
+
+import javax.inject.Singleton;
 
 @Singleton
 public class CommandHandler implements Handler {

@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.user.User;
+
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Feature that handles dueling.

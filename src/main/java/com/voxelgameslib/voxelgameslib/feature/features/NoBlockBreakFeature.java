@@ -1,16 +1,14 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
-
-import java.util.Arrays;
-
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
-
+import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockBreakEvent;
+
+import java.util.Arrays;
 
 @FeatureInfo(name = "NoBlockBreakFeature", author = "MiniDigger", version = "1.0",
         description = "Small feature that blocks block breaking if active")

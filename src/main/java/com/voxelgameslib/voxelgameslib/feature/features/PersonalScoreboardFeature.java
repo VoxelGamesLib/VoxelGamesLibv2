@@ -1,29 +1,18 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.common.collect.Iterables;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
+import com.voxelgameslib.voxelgameslib.components.scoreboard.*;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.AbstractScoreboard;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardLine;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.StringScoreboardLine;
-
 import lombok.Getter;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import java.util.*;
 
 @FeatureInfo(name = "PersonalScoreboard", author = "aphel", version = "1.0",
         description = "Each player has their own individual scoreboard")

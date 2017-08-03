@@ -1,10 +1,9 @@
 package com.voxelgameslib.voxelgameslib.event;
 
-import java.util.Optional;
-
 import com.voxelgameslib.voxelgameslib.user.User;
-
 import org.bukkit.event.Event;
+
+import java.util.Optional;
 
 @FunctionalInterface
 public interface EventFilter {

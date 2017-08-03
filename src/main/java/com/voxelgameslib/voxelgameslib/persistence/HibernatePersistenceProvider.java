@@ -1,5 +1,11 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.user.GamePlayer;
+import com.voxelgameslib.voxelgameslib.user.User;
+import lombok.extern.java.Log;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.Log_$logger;
@@ -14,18 +20,10 @@ import org.hibernate.internal.log.ConnectionPoolingLogger_$logger;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 import org.reflections.Reflections;
 
-import java.util.Optional;
-import java.util.UUID;
 import javax.inject.Inject;
 import javax.persistence.Entity;
-
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
-import com.voxelgameslib.voxelgameslib.user.GamePlayer;
-import com.voxelgameslib.voxelgameslib.user.User;
-
-import lombok.extern.java.Log;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * A implementation of the persistence provider based on hibernate

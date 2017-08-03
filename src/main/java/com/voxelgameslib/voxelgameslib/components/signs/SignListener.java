@@ -1,22 +1,20 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
-import javax.inject.Inject;
-
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
-
+import lombok.extern.java.Log;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import lombok.extern.java.Log;
+import javax.inject.Inject;
 
 @Log
 @SuppressWarnings({"JavaDoc", "Duplicates"})

@@ -1,13 +1,8 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import com.voxelgameslib.voxelgameslib.components.inventory.events.PageChangeEvent;
 import com.voxelgameslib.voxelgameslib.exception.ComponentException;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,6 +12,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * A PagedInventory is a type of inventory.

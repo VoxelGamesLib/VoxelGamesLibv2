@@ -1,10 +1,9 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
-
+import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @FeatureInfo(name = "NoHungerLossFeature", author = "aphelion", version = "1.0",

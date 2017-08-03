@@ -1,25 +1,23 @@
 package com.voxelgameslib.voxelgameslib.world;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.inject.Singleton;
-
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import javax.annotation.Nonnull;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Commands related to the edit mode
