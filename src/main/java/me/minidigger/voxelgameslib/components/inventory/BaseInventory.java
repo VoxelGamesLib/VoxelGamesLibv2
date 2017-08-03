@@ -39,7 +39,7 @@ public abstract class BaseInventory {
         this.title = title;
         this.size = Math.min(9, (int) (Math.ceil((double) size / 9)) * 9);
 
-        bukkitInventory = Bukkit.createInventory(null, this.size, title);
+        constructNewInventory();
     }
 
     /**
@@ -132,5 +132,9 @@ public abstract class BaseInventory {
      */
     public void close() {
         player.closeInventory();
+    }
+
+    protected void constructNewInventory() {
+        bukkitInventory = Bukkit.createInventory(null, this.size, this.title);
     }
 }
