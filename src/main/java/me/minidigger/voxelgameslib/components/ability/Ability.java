@@ -1,6 +1,7 @@
 package me.minidigger.voxelgameslib.components.ability;
 
 import com.google.inject.Injector;
+import lombok.Getter;
 import me.minidigger.voxelgameslib.game.Game;
 import me.minidigger.voxelgameslib.game.GameHandler;
 import me.minidigger.voxelgameslib.tick.Tickable;
@@ -17,6 +18,7 @@ public abstract class Ability implements Listener, Tickable {
     @Inject
     private Injector injector;
 
+    @Getter
     protected UUID identifier;
     protected User affected;
 

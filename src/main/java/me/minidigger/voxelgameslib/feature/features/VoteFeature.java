@@ -182,12 +182,12 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
         userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
             if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
-                int start = 9;
+                int pos = 0;
                 BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", availableMaps.size());
                 for (int id : availableMaps.keySet()) {
                     MapInfo info = availableMaps.get(id);
                     ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
-                    basicInventory.getBukkitInventory().setItem(start++, item);
+                    basicInventory.getBukkitInventory().setItem(pos++, item);
                     basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> {
                         confirmVote(user, id);
                         basicInventory.close(user.getPlayer());
