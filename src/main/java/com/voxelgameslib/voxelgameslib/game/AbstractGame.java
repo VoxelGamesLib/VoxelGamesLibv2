@@ -243,6 +243,9 @@ public abstract class AbstractGame implements Game {
     }
 
     private void end() {
+        chatHandler.removeChannel(chatChannel.getIdentifier());
+        chatChannel = null;
+        
         while (players.size() != 0) {
             leave(players.get(0));
         }
@@ -256,8 +259,6 @@ public abstract class AbstractGame implements Game {
         }
 
         tickHandler.end(this);
-        chatHandler.removeChannel(chatChannel.getIdentifier());
-        chatChannel = null;
         gameHandler.removeGame(this);
     }
 
