@@ -52,12 +52,12 @@ public class KitHandler implements Handler {
         log.info("There are " + availableKits.size() + " kits available.");
 
         // test stuff
-        Kit kit = new Kit("test");
+        Kit kit = new Kit("DefaultKit");
         kit.addItem(0, new ItemBuilder(Material.STONE).name("Test Stone").build());
         kit.addItem(1, new ItemBuilder(Material.DIAMOND_SWORD).enchantment(Enchantment.DAMAGE_ALL, 5).name(ChatColor.RED + "Cool sword").amount(2).build());
         kit.addItem(2, new ItemBuilder(Material.LEATHER_BOOTS).enchantment(Enchantment.PROTECTION_EXPLOSIONS, 2).enchantment(Enchantment.PROTECTION_FALL, 5).name("Cool bots").amount(3).color(Color.RED).durability(10).lore("test").lore("Lore").build());
         createKit(kit);
-        kit = loadKit("test", new File(kitsDir, kit.getName() + ".json"));
+        kit = loadKit("DefaultKit", new File(kitsDir, kit.getName() + ".json"));
         System.out.println(kit);
     }
 
