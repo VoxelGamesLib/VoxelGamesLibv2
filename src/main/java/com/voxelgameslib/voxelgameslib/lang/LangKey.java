@@ -45,6 +45,7 @@ public enum LangKey {
     GAME_NOT_IN_GAME_NO_ID("{red}You are not in a game and did not specify a game ID"),
     GAME_IN_MORE_THAN_ONE_GAME("{red}You are in more than one game. Assuming you want to leave them all..."),
     GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES("{red}You are already in a game! Please leave the game before joining a new one."),
+    GAME_COULD_NOT_FIND_GAME("{red}Could not find game {yellow}{game}", "game"),
 
     GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {click:run_command:{command}}{aqua}Click here to join!{/click}", "command", "name", "mode"),
 

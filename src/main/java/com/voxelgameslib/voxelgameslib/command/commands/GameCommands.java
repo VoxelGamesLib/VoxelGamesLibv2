@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
@@ -9,13 +7,22 @@ import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
-import lombok.extern.java.Log;
+
 import net.kyori.text.TextComponent;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
+import lombok.extern.java.Log;
 
 @Singleton
 @Log
@@ -73,7 +80,7 @@ public class GameCommands extends BaseCommand {
             Lang.msg(sender, LangKey.GAME_GAME_STARTED);
             if (config.announceNewGame) {
                 //TODO figure out which command to enter
-                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, "game join " + mode.getName(), sender.getDisplayName(), mode.getName());
+                Lang.broadcast(LangKey.GAME_ANNOUNCE_GAME_STARTED, "/game joinuuid " + game.getUuid().toString(), sender.getDisplayName(), mode.getName());
             }
         } else {
             Lang.msg(sender, LangKey.GAME_COULD_NOT_START);
@@ -93,6 +100,7 @@ public class GameCommands extends BaseCommand {
             }
         } else if (games.size() == 1) {
             games.get(0).abortGame();
+            return;
         }
 
         if (gameId == null) {
@@ -114,6 +122,19 @@ public class GameCommands extends BaseCommand {
             game.get().join(sender);
         } else {
             Lang.msg(sender, LangKey.GAME_NO_GAME_TO_JOIN_FOUND);
+        }
+    }
+
+    @Subcommand("joinuuid")
+    @CommandCompletion("@gamemodes")
+    @Syntax("<uuid> - the uuid of the game you want to join")
+    @CommandPermission("%user")
+    public void gameJoinUUID(User sender, UUID id) {
+        Optional<Game> game = gameHandler.getGames().stream().filter(g -> g.getUuid().equals(id)).findAny();
+        if (game.isPresent()) {
+            game.get().join(sender);
+        } else {
+            Lang.msg(sender, LangKey.GAME_COULD_NOT_FIND_GAME, id);
         }
     }
 

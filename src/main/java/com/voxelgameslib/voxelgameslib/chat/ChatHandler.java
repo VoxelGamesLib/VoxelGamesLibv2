@@ -2,12 +2,14 @@ package com.voxelgameslib.voxelgameslib.chat;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.user.User;
+
 import net.kyori.text.Component;
 
-import javax.inject.Singleton;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
+import javax.inject.Singleton;
 
 /**
  * Handles everything related to chat
@@ -92,13 +94,15 @@ public class ChatHandler implements Handler {
         // you should *really* handle this yourself if you're removing a channel
 
         getChannel(id).ifPresent(chatChannel -> {
-            chatChannel.getListeners().forEach(user -> {
+            Iterator<User> itr = chatChannel.getListeners().iterator();
+            while (itr.hasNext()) {
+                User user = itr.next();
                 user.removeListeningChannel(id);
 
                 if (user.getActiveChannel().equals(chatChannel)) {
                     user.setActiveChannel("default");
                 }
-            });
+            }
         });
 
         activeChannels.remove(id);

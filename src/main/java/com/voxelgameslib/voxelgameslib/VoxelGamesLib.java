@@ -55,6 +55,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Log
@@ -241,6 +242,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 .fromTag(c.getFirstArg())
                 .orElseThrow(() -> new LangException("Unknown locale " + c.getFirstArg()))));
         con.registerContext(Role.class, c -> Role.fromName(c.getArgs().get(1)));
+        con.registerContext(UUID.class,c->UUID.fromString(c.getFirstArg()));
     }
 
     private void registerCommandReplacements() {
