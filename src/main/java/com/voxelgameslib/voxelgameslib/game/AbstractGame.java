@@ -379,6 +379,7 @@ public abstract class AbstractGame implements Game {
         if (!isPlaying(user.getUuid()) && !isSpectating(user.getUuid())) {
             spectators.add(user);
             allUsers.add(user);
+            playerStates.put(user.getUuid(), PlayerState.of(user));
             return true;
         }
         return false;
@@ -389,7 +390,7 @@ public abstract class AbstractGame implements Game {
         players.remove(user);
         spectators.remove(user);
         allUsers.remove(user);
-        playerStates.remove(user.getUuid()).apply(user);
+        Optional.ofNullable(playerStates.remove(user.getUuid())).ifPresent(state -> state.apply(user));
         Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
