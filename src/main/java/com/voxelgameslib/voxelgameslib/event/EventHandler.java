@@ -135,7 +135,6 @@ public class EventHandler implements Handler, Listener {
 
                     try {
                         if (registeredListener.getMethod().getParameterCount() == 2) {
-                            System.out.println("method " + registeredListener.getMethod());
                             registeredListener.getMethod().invoke(registeredListener.getListener(), event, user.orElse(null));
                         } else {
                             registeredListener.getMethod().invoke(registeredListener.getListener(), event);
