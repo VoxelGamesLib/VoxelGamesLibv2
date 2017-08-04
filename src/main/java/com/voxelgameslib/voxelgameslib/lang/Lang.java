@@ -116,13 +116,13 @@ public class Lang {
                         clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command:", ""));
                         break;
                     case "suggest_command":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:suggest_command:", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, token.replace("click:suggest_command:", ""));
                         break;
                     case "open_url":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:open_url:", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, token.replace("click:open_url:", ""));
                         break;
                     case "change_page":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:change_page:", ""));
+                        clickEvent = new ClickEvent(ClickEvent.Action.CHANGE_PAGE, token.replace("click:change_page:", ""));
                         break;
                     default:
                         throw new VoxelGameLibException("Can't parse click action (invalid type " + args[1] + ") " + string);
@@ -144,10 +144,10 @@ public class Lang {
                         hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text:", "")));
                         break;
                     case "show_item":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_item:", "")));
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, TextComponent.of(token.replace("hover:show_item:", "")));
                         break;
                     case "show_entity":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_entity:", "")));
+                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, TextComponent.of(token.replace("hover:show_entity:", "")));
                         break;
                     default:
                         throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + string);
