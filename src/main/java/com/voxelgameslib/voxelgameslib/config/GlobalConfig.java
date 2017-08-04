@@ -16,7 +16,7 @@ import java.util.logging.Level;
 @Singleton
 public class GlobalConfig extends Config {
 
-    public final int configVersion = 2;
+    public final int configVersion = 3;
     @Expose
     public int currentVersion = configVersion;
 
@@ -36,6 +36,8 @@ public class GlobalConfig extends Config {
     public boolean announceNewGame = true;
     @Expose
     public boolean loadGameDefinitions = false;
+    @Expose
+    public String defaultGame = "none";
 
     /**
      * @return the default config, with all default settings

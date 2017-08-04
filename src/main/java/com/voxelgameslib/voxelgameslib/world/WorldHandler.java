@@ -291,8 +291,6 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
         mapScanner.scan(map, editor.getUuid());
 
-        log.info(map.getMarkers().get(0).getLoc().toLocation(map.getLoadedName(editor.getUuid())).getBlock().getType().name());
-
         File worldFolder = new File(getWorldContainer(), map.getWorldName());
 
         try {

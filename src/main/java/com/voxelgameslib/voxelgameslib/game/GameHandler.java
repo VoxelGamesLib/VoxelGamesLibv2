@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.game;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Injector;
+
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
 import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
@@ -11,20 +12,27 @@ import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
-import lombok.extern.java.Log;
-import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.bukkit.Bukkit;
+
+import lombok.Getter;
+import lombok.extern.java.Log;
 
 /**
  * Handles all {@link Game} instances and all {@link GameMode}s.
@@ -47,6 +55,9 @@ public class GameHandler implements Handler {
     @Inject
     private ConfigHandler configHandler;
 
+    @Getter
+    private Game defaultGame;
+
     private final List<Game> games = new ArrayList<>();
     private final List<GameMode> modes = new ArrayList<>();
     private final List<GameDefinition> gameDefinitions = new ArrayList<>();
@@ -64,6 +75,20 @@ public class GameHandler implements Handler {
     public void stop() {
         games.forEach(Game::stop);
         games.clear();
+    }
+
+    /**
+     * Starts the default game, if it is defined and installed
+     */
+    public void startDefaultGame(){
+        if (configHandler.get().defaultGame != null && !configHandler.get().defaultGame.equals("none")) {
+            Optional<GameMode> mode = getGameModes().stream().filter(gameMode -> gameMode.getName().equalsIgnoreCase(configHandler.get().defaultGame)).findAny();
+            if (!mode.isPresent()) {
+                log.warning("Default gamemode " + configHandler.get().defaultGame + " isn't installed!");
+            } else {
+                defaultGame = startGame(mode.get());
+            }
+        }
     }
 
     /**

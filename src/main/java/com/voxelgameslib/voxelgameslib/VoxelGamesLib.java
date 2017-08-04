@@ -184,6 +184,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         registerCommandCompletions();
 
         moduleHandler.start();
+
+        gameHandler.startDefaultGame();
     }
 
     @Override

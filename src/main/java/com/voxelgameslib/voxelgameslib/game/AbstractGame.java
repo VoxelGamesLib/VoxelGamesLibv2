@@ -319,13 +319,18 @@ public abstract class AbstractGame implements Game {
     }
 
     protected void loadMap() {
+        loadMap("Lobby");
+    }
+
+    protected void loadMap(String name) {
         // TODO this doesn't respect if a user changed the lobby in the config
-        Optional<MapInfo> info = worldHandler.getMapInfo("Lobby");
+        Optional<MapInfo> info = worldHandler.getMapInfo(name);
         if (info.isPresent()) {
             DefaultGameData gameData = getGameData(DefaultGameData.class).orElse(new DefaultGameData());
             gameData.lobbyMap = info.get();
             putGameData(gameData);
         } else {
+            log.warning("Could not find map " + name);
             abortGame();
         }
     }
