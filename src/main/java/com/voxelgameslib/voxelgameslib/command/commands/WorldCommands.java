@@ -4,7 +4,6 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import java.util.Optional;
@@ -18,7 +17,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
+//import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import co.aikar.commands.annotation.UnknownHandler;
@@ -42,12 +41,12 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("help")
     @CommandPermission("%admin")
     public void world(User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
+        //CommandUtil.printHelp(sender, getCommandHelp());TODO comment back in once https://github.com/aikar/commands/pull/60 is merged
     }
 
     @Subcommand("info")
     @CommandPermission("%admin")
-    @Description("Shows some basic info about your current world")
+    //@Description("Shows some basic info about your current world")
     public void worldInfo(User sender) {
         Lang.msg(sender, LangKey.WORLD_INFO, sender.getPlayer().getLocation().getWorld().getName());
     }
@@ -55,7 +54,7 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("load")
     @CommandPermission("%admin")
     @Syntax("<mapname> - the name of the map to load")
-    @Description("Loads a map onto the server")
+    //@Description("Loads a map onto the server")
     public void load(User sender, String mapName) {
         Optional<Map> o = handler.getMap(mapName);
         Map map = o.orElseGet(() -> handler.loadMap(mapName));
@@ -66,7 +65,7 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("unload")
     @CommandPermission("%admin")
     @Syntax("<mapname> - the name of the map to unload")
-    @Description("Unloads a map from the server")
+    //@Description("Unloads a map from the server")
     public void unload(User sender, String mapName) {
         Optional<Map> o = handler.getMap(mapName);
         if (o.isPresent()) {
@@ -79,7 +78,7 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("loadlocal")
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to load")
-    @Description("Loads a local world onto the server")
+    //@Description("Loads a local world onto the server")
     public void loadLocal(User sender, String world) {
         handler.loadLocalWorld(world);
     }
@@ -87,7 +86,7 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("unloadlocal")
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to unload")
-    @Description("Unloads a local world from the server")
+    //@Description("Unloads a local world from the server")
     public void unloadLocal(User sender, String world) {
         handler.unloadLocalWorld(world);
     }
@@ -95,7 +94,7 @@ public class WorldCommands extends BaseCommand {
     @Subcommand("tp")
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to tp to")
-    @Description("Teleports you to a world")
+    //@Description("Teleports you to a world")
     public void tp(User sender, String world) {
         Optional<Map> o = handler.getMap(world);
         if (o.isPresent()) {
