@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.game;
 
 import com.google.inject.Injector;
+
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.components.team.Team;
@@ -17,19 +18,32 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
+import com.voxelgameslib.voxelgameslib.user.PlayerState;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-import lombok.extern.java.Log;
-import net.kyori.text.Component;
-import org.bukkit.Bukkit;
 
+import net.kyori.text.Component;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.persistence.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.bukkit.Bukkit;
+
+import lombok.extern.java.Log;
 
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
@@ -92,6 +106,9 @@ public abstract class AbstractGame implements Game {
 
     @Transient
     private ChatChannel chatChannel;
+
+    @Transient
+    private Map<UUID, PlayerState> playerStates = new HashMap<>();
 
     /**
      * Constructs a new {@link AbstractGame}
@@ -245,7 +262,7 @@ public abstract class AbstractGame implements Game {
     private void end() {
         chatHandler.removeChannel(chatChannel.getIdentifier());
         chatChannel = null;
-        
+
         while (players.size() != 0) {
             leave(players.get(0));
         }
@@ -334,6 +351,7 @@ public abstract class AbstractGame implements Game {
         if (!isPlaying(user.getUuid())) {
             players.add(user);
             allUsers.add(user);
+            playerStates.put(user.getUuid(),PlayerState.of(user));
             GameJoinEvent event = new GameJoinEvent(this, user);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
@@ -371,6 +389,7 @@ public abstract class AbstractGame implements Game {
         players.remove(user);
         spectators.remove(user);
         allUsers.remove(user);
+        playerStates.remove(user.getUuid()).apply(user);
         Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
