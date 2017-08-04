@@ -208,7 +208,7 @@ public abstract class AbstractPhase implements Phase {
             tickable.stop();
 
             if (tickable instanceof Ability) {
-                ((Ability) tickable).unregister((Ability) tickable);
+                ((Ability) tickable).unregister();
             }
         });
 
