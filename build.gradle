@@ -42,7 +42,7 @@ repositories {
     maven { url "http://repo.onarandombox.com/content/groups/public/" }
 }
 dependencies {
-    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT'
+    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT', changing: false
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
@@ -150,4 +150,9 @@ task proguard(type: ProGuardTask) {
 
     injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
     outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
+}
+
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
