@@ -344,14 +344,14 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public boolean join(@Nonnull User user) {
-        if (!getActivePhase().allowJoin()) {
+        if (!getActivePhase().allowJoin() || getMaxPlayers() == players.size()) {
             return spectate(user);
         }
 
         if (!isPlaying(user.getUuid())) {
             players.add(user);
             allUsers.add(user);
-            playerStates.put(user.getUuid(),PlayerState.of(user));
+            playerStates.put(user.getUuid(), PlayerState.of(user));
             GameJoinEvent event = new GameJoinEvent(this, user);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
