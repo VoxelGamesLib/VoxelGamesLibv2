@@ -140,6 +140,7 @@ public enum LangKey {
             "{red}You are trying to do the wrong step! You are at step {yellow}{step}{red}, you want to do step {yellow}{entered}{red}!",
             "step", "entered"),
 
+    WORLD_INFO("{aqua}You are on world {yellow}{world}", "world"),
     WORLD_UNKNOWN_MAP("{red}Could not find a map named {yellow}{map}{red} :/", "map"),
 
     DUEL_WRONG_PLAYER_COUNT("{red}You can't duel with {yellow}{players} {red}players, you need {yellow}2{red}!",
