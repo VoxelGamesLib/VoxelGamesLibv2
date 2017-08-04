@@ -4,6 +4,7 @@ import co.aikar.commands.BukkitCommandManager;
 import com.google.gson.annotations.Expose;
 import com.google.inject.Injector;
 import com.voxelgameslib.voxelgameslib.command.CommandHandler;
+import com.voxelgameslib.voxelgameslib.components.ability.Ability;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
 import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
 import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
@@ -203,7 +204,13 @@ public abstract class AbstractPhase implements Phase {
             }
         }
 
-        phaseTickables.values().forEach(Tickable::stop);
+        phaseTickables.values().forEach(tickable -> {
+            tickable.stop();
+
+            if (tickable instanceof Ability) {
+                ((Ability) tickable).unregister((Ability) tickable);
+            }
+        });
 
         startedFeatures.clear();
     }

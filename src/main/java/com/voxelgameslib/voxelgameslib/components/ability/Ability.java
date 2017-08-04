@@ -31,7 +31,7 @@ public abstract class Ability implements Listener, Tickable {
         this.affected = user;
     }
 
-    protected void unregister(Ability caller) {
+    public void unregister(Ability caller) {
         HandlerList.unregisterAll(caller);
         List<Game> games = injector.getInstance(GameHandler.class).getGames(affected.getUuid(), false);
 
