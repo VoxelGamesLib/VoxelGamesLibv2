@@ -42,7 +42,7 @@ public class PostGameFeature extends AbstractFeature {
     @Override
     public void tick() {
         if (getPhase() instanceof TimedPhase) {
-            if (((TimedPhase) getPhase()).getTicks() == 1) {
+            if (((TimedPhase) getPhase()).getTicks() == 2) {
                 if (winningTeam != null) {
                     getPhase().getGame().endGame(winningTeam, null);
                 } else if (winningUser != null) {
