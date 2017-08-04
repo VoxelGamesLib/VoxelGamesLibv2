@@ -5,7 +5,9 @@ import javax.annotation.Nonnull;
 /**
  * Created by Martin on 12.10.2016. <p> Style note: the members needs to be sorted alphabetical!
  */
-public enum LangKey {
+public enum LangKey implements Translatable {
+
+    DUMMY(""),
 
     COMMAND_NO_PERMISSION("{red}You need to be {yellow}{role}{red} to execute this command!", "role"),
     COMMAND_NO_CONSOLE("{red}This command can't be executed via console!"),
@@ -177,6 +179,7 @@ public enum LangKey {
     /**
      * @return the default value for this lang key, in english
      */
+    @Override
     @Nonnull
     public String getDefaultValue() {
         return defaultValue;
@@ -185,9 +188,14 @@ public enum LangKey {
     /**
      * @return the arguments that this key requires
      */
+    @Override
     @Nonnull
     public String[] getArgs() {
         return args;
     }
 
+    @Override
+    public Translatable[] getValues() {
+        return values();
+    }
 }

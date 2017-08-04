@@ -6,17 +6,20 @@ import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-import lombok.extern.java.Log;
+
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
-import org.bukkit.ChatColor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+
+import org.bukkit.ChatColor;
+
+import lombok.extern.java.Log;
 
 /**
  * Gives quick access to the lang storage and translation and stuff
@@ -30,45 +33,45 @@ public class Lang {
     private static UserHandler userHandler;
 
     /**
-     * Creates an ComponentBuilder based on that LangKey
+     * Creates an ComponentBuilder based on that Translatable
      *
      * @param key the lang key that should be translated
      * @return the created component builder
      */
     @Nonnull
-    public static TextComponent trans(@Nonnull LangKey key) {
+    public static TextComponent trans(@Nonnull Translatable key) {
         return trans(key, handler.getDefaultLocale());
     }
 
     /**
-     * Creates an ComponentBuilder based on that LangKey<br> The specified arguments are used to
-     * fill out placeholders
+     * Creates an ComponentBuilder based on that Translatable<br> The specified arguments are used
+     * to fill out placeholders
      *
      * @param key  the lang key that should be translated
      * @param args the arguments that should be replaying placeholders
      * @return the created component builder
      */
     @Nonnull
-    public static TextComponent trans(@Nonnull LangKey key, @Nullable Object... args) {
+    public static TextComponent trans(@Nonnull Translatable key, @Nullable Object... args) {
         return trans(key, handler.getDefaultLocale(), args);
     }
 
     /**
-     * Creates an ComponentBuilder based on that LangKey<br> Allows to specify a locale that should
-     * be used to translate
+     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that
+     * should be used to translate
      *
      * @param key the lang key that should be translated
      * @param loc the locale that should be used to translate the key
      * @return the created component builder
      */
     @Nonnull
-    public static TextComponent trans(@Nonnull LangKey key, @Nonnull Locale loc) {
+    public static TextComponent trans(@Nonnull Translatable key, @Nonnull Locale loc) {
         return trans(key, loc, new Object[0]);
     }
 
     /**
-     * Creates an ComponentBuilder based on that LangKey<br> Allows to specify a locale that should
-     * be used to translate<br> The specified arguments are used to fill out placeholders
+     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that
+     * should be used to translate<br> The specified arguments are used to fill out placeholders
      *
      * @param key  the lang key that should be translated
      * @param loc  the locale that should be used to translate the key
@@ -76,7 +79,7 @@ public class Lang {
      * @return the created component builder
      */
     @Nonnull
-    public static TextComponent trans(@Nonnull LangKey key, @Nonnull Locale loc,
+    public static TextComponent trans(@Nonnull Translatable key, @Nonnull Locale loc,
                                       @Nullable Object... args) {
         if (args == null) {
             args = new Object[0];
@@ -225,7 +228,7 @@ public class Lang {
      * @param user the user that should receive the message
      * @param key  the lang key that should be translated
      */
-    public static void msg(@Nonnull User user, @Nonnull LangKey key) {
+    public static void msg(@Nonnull User user, @Nonnull Translatable key) {
         user.sendMessage(trans(key));
     }
 
@@ -237,7 +240,7 @@ public class Lang {
      * @param key  the lang key that should be translated
      * @param args the args that should be replacing placeholders
      */
-    public static void msg(@Nonnull User user, @Nonnull LangKey key, @Nullable Object... args) {
+    public static void msg(@Nonnull User user, @Nonnull Translatable key, @Nullable Object... args) {
         user.sendMessage(trans(key, args));
     }
 
@@ -248,7 +251,7 @@ public class Lang {
      * @return the translated string
      */
     @Nonnull
-    public static String string(@Nonnull LangKey key) {
+    public static String string(@Nonnull Translatable key) {
         return string(key, handler.getDefaultLocale());
     }
 
@@ -261,7 +264,7 @@ public class Lang {
      * @return the translated string
      */
     @Nonnull
-    public static String string(@Nonnull LangKey key, @Nonnull Object... args) {
+    public static String string(@Nonnull Translatable key, @Nonnull Object... args) {
         return string(key, handler.getDefaultLocale(), args);
     }
 
@@ -274,7 +277,7 @@ public class Lang {
      * @return the translated string
      */
     @Nonnull
-    public static String string(@Nonnull LangKey key, @Nonnull Locale loc) {
+    public static String string(@Nonnull Translatable key, @Nonnull Locale loc) {
         return string(key, loc, new Object[0]);
     }
 
@@ -288,14 +291,19 @@ public class Lang {
      * @return the translated string
      */
     @Nonnull
-    public static String string(@Nonnull LangKey key, @Nonnull Locale loc, @Nonnull Object... args) {
+    public static String string(@Nonnull Translatable key, @Nonnull Locale loc, @Nonnull Object... args) {
         if (args.length != key.getArgs().length) {
             throw new LangException(
-                    "Wrong arguments for LangKey " + key.name() + ": entered " + args.length + ", expected "
+                    "Wrong arguments for Translatable " + key.name() + ": entered " + args.length + ", expected "
                             + key.getArgs().length);
         }
 
-        LangStorage storage = handler.getStorage(loc);
+        LangStorage storage;
+        if (key instanceof ExternalTranslatable) {
+            storage = handler.getExternalStorage(((ExternalTranslatable)key).getUuid(),loc);
+        } else {
+            storage = handler.getStorage(loc);
+        }
         String string = storage.get(key);
 
         for (int i = 0; i < args.length; i++) {
@@ -351,7 +359,7 @@ public class Lang {
      * @param key  the message to send
      * @param args the args for the message
      */
-    public static void broadcast(LangKey key, Object... args) {
+    public static void broadcast(Translatable key, Object... args) {
         userHandler.getUsers().forEach(user -> Lang.msg(user, key, args));
         GameConsoleUser.INSTANCE.sendMessage(Lang.trans(key, args));
     }

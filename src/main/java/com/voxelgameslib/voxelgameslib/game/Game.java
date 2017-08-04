@@ -2,18 +2,19 @@ package com.voxelgameslib.voxelgameslib.game;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
 import com.voxelgameslib.voxelgameslib.user.User;
+
 import net.kyori.text.Component;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A {@link Game} is the representation of an instance of a {@link GameMode}. Handles everything
@@ -65,7 +66,7 @@ public interface Game extends Tickable {
      * @param key  the message to be send
      * @param args the arguments for the key
      */
-    void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args);
+    void broadcastMessage(@Nonnull Translatable key, @Nullable Object... args);
 
     /**
      * Ends the current {@link Phase} and starts the next one.

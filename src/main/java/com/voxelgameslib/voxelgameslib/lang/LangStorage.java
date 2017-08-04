@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -22,17 +24,23 @@ public class LangStorage {
 
     @Inject
     @Named("LangFolder")
-    private File langFolder;
+    protected File langFolder;
 
     @Inject
     private LangHandler handler;
 
-    private File langFile;
+    protected File langFile;
 
     private Locale locale;
-    private final OrderedProperties messages = new OrderedProperties();
+    protected final OrderedProperties messages = new OrderedProperties();
     @Nullable
     private LangStorage parentStorage;
+
+    private Translatable translatable;
+
+    public void setTranslatable(Translatable translatable) {
+        this.translatable = translatable;
+    }
 
     /**
      * @return the local that the keys in this storage are translated with
@@ -70,7 +78,7 @@ public class LangStorage {
             langFolder.mkdirs();
         }
 
-        for (LangKey key : LangKey.values()) {
+        for (Translatable key : translatable.getValues()) {
             messages.setProperty(key.name(), key.getDefaultValue());
         }
         try {
@@ -89,7 +97,7 @@ public class LangStorage {
      */
     public int processNewValues() {
         int counter = 0;
-        for (LangKey key : LangKey.values()) {
+        for (Translatable key : translatable.getValues()) {
             if (!messages.containsProperty(key.name())) {
                 counter++;
                 messages.setProperty(key.name(), key.getDefaultValue());
@@ -136,7 +144,7 @@ public class LangStorage {
      * @return the translation for that key
      */
     @Nonnull
-    public String get(@Nonnull LangKey key) {
+    public String get(@Nonnull Translatable key) {
         String message = messages.getProperty(key.name());
         if (message == null || message.length() < 2) {
             if (parentStorage != null) {

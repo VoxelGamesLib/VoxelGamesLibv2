@@ -15,6 +15,7 @@ import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.TeamFeature;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
@@ -139,7 +140,7 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void broadcastMessage(@Nonnull LangKey key, @Nullable Object... args) {
+    public void broadcastMessage(@Nonnull Translatable key, @Nullable Object... args) {
         allUsers.forEach(user -> Lang.msg(user, key, args));
     }
 
