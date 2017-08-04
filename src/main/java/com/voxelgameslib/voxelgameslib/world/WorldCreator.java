@@ -1,10 +1,7 @@
 package com.voxelgameslib.voxelgameslib.world;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Subcommand;
 import com.google.inject.Singleton;
+
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
@@ -13,15 +10,22 @@ import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
-import lombok.extern.java.Log;
+
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.format.TextColor;
-import org.bukkit.Bukkit;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+
+import org.bukkit.Bukkit;
+
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
+import lombok.extern.java.Log;
 
 /**
  * Handles creation of new worlds/maps
@@ -70,9 +74,7 @@ public class WorldCreator extends BaseCommand {
         editor = sender;
         gameModes = new ArrayList<>();
 
-        sender.sendMessage(Lang.trans(LangKey.WORLD_CREATOR_ENTER_WORLD_NAME,
-                sender.getLocale())
-                .clickEvent((new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator world "))));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_WORLD_NAME, "/worldcreator world ");
 
         step = 1;
     }
@@ -90,9 +92,7 @@ public class WorldCreator extends BaseCommand {
         worldHandler.loadLocalWorld(worldName);
         sender.getPlayer().teleport(Bukkit.getWorld(worldName).getSpawnLocation());
 
-        sender.sendMessage(
-                Lang.trans(LangKey.WORLD_CREATOR_ENTER_CENTER, sender.getLocale())
-                        .clickEvent((new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator center"))));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_CENTER, "/worldcreator center");
 
         step = 2;
     }
@@ -108,10 +108,7 @@ public class WorldCreator extends BaseCommand {
         center = new Vector3D(sender.getPlayer().getLocation().getX(),
                 sender.getPlayer().getLocation().getY(), sender.getPlayer().getLocation().getZ());
 
-        sender.sendMessage(
-                Lang.trans(LangKey.WORLD_CREATOR_ENTER_RADIUS, sender.getLocale())
-                        .clickEvent(
-                                new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator radius ")));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_RADIUS, "/worldcreator radius ");
 
         step = 3;
     }
@@ -126,9 +123,7 @@ public class WorldCreator extends BaseCommand {
 
         this.radius = radius;
 
-        sender.sendMessage(Lang.trans(LangKey.WORLD_CREATOR_ENTER_DISPLAY_NAME,
-                sender.getLocale())
-                .clickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator name ")));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_DISPLAY_NAME, "/worldcreator name ");
 
         step = 4;
     }
@@ -143,11 +138,7 @@ public class WorldCreator extends BaseCommand {
 
         displayName = name;
 
-        sender.sendMessage(
-                Lang.trans(LangKey.WORLD_CREATOR_ENTER_AUTHOR, sender.getLocale(),
-                        displayName)
-                        .clickEvent(
-                                new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/worldcreator author ")));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_AUTHOR, displayName, "/worldcreator author ");
 
         step = 5;
     }
@@ -164,16 +155,12 @@ public class WorldCreator extends BaseCommand {
 
         Lang.msg(sender, LangKey.WORLD_CREATOR_AUTHOR_SET, author);
         for (GameMode mode : gameHandler.getGameModes()) {
-            sender
-                    .sendMessage(TextComponent.of(mode.getName() + " ").color(TextColor.YELLOW)
-                            .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-                                    "/worldcreator gamemode " + mode.getName())));
+            sender.sendMessage(TextComponent.of(mode.getName() + " ").color(TextColor.YELLOW)
+                    .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+                            "/worldcreator gamemode " + mode.getName())));
         }
 
-        sender.sendMessage(
-                Lang.trans(LangKey.WORLD_CREATOR_DONE_QUERY, sender.getLocale())
-                        .clickEvent(
-                                new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator gamemode done")));
+        Lang.msg(sender, LangKey.WORLD_CREATOR_DONE_QUERY, "/worldcreator gamemode done");
 
         step = 6;
     }
@@ -187,12 +174,8 @@ public class WorldCreator extends BaseCommand {
         }
 
         if (gamemode.equalsIgnoreCase("done")) {
-            sender.sendMessage(Lang.trans(LangKey.WORLD_CREATOR_EDIT_MODE_ON,
-                    sender.getLocale())
-                    .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator edit on")));
-            sender.sendMessage(Lang.trans(LangKey.WORLD_CREATOR_EDIT_MODE_OFF,
-                    sender.getLocale())
-                    .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator edit off")));
+            Lang.msg(sender, LangKey.WORLD_CREATOR_EDIT_MODE_ON, "/worldcreator edit on");
+            Lang.msg(sender, LangKey.WORLD_CREATOR_EDIT_MODE_OFF, "/worldcreator edit off");
             step = 7;
         } else {
             gameModes.add(gamemode);
@@ -217,9 +200,7 @@ public class WorldCreator extends BaseCommand {
             map = new Map(info, worldName, center, radius);
             map.load(sender.getUuid(), worldName);
             map.printSummary(sender);
-            sender.sendMessage(
-                    Lang.trans(LangKey.WORLD_CREATOR_DONE_QUERY, sender.getLocale())
-                            .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/worldcreator done")));
+            Lang.msg(sender, LangKey.WORLD_CREATOR_DONE_QUERY, "/worldcreator done");
             step = 8;
         } else {
             Lang.msg(sender, LangKey.GENERAL_INVALID_ARGUMENT, onOff);

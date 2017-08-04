@@ -109,19 +109,19 @@ public enum LangKey {
     WORLD_CREATOR_AUTHOR_SET(
             "{green}Author set to {yellow}{author}{green}.{aqua} Select the gamemodes this map should be played on.",
             "author"),
-    WORLD_CREATOR_DONE_QUERY("{aqua}Click here if you are done."),
-    WORLD_CREATOR_EDIT_MODE_ON("{aqua}Click here to enter map editing mode"),
-    WORLD_CREATOR_EDIT_MODE_OFF("{aqua}Click here when you are done"),
+    WORLD_CREATOR_DONE_QUERY("{click:run_command:{command}}{aqua}Click here if you are done.{/click}", "command"),
+    WORLD_CREATOR_EDIT_MODE_ON("{click:run_command:{command}}{aqua}Click here to enter map editing mode{/click}", "command"),
+    WORLD_CREATOR_EDIT_MODE_OFF("{click:run_command:{command}}{aqua}Click here when you are done{/click}", "command"),
     WORLD_CREATOR_ENTER_AUTHOR(
-            "{green}Name set to {yellow}{name}{green},{aqua} click here and enter the author", "name"),
+            "{click:suggest_command:{command}}{green}Name set to {yellow}{name}{green},{aqua} click here and enter the author{/click}", "name", "command"),
     WORLD_CREATOR_ENTER_DISPLAY_NAME(
-            "{green}Radius set.{aqua} Click here and enter the display name for the world."),
+            "{click:suggest_command:{command}}{green}Radius set.{aqua} Click here and enter the display name for the world.{/click}", "click"),
     WORLD_CREATOR_ENTER_CENTER(
-            "{green}World loaded.{aqua} Walk to the middle of the world and click here to mark it."),
+            "{click:run_command:{command}}{green}World loaded.{aqua} Walk to the middle of the world and click here to mark it.{/click}", "command"),
     WORLD_CREATOR_ENTER_RADIUS(
-            "{green}Center set.{aqua} Click here and enter the radius of this world (in which we should search for markers and load chunks and stuff)."),
+            "{click:suggest_command:{command}}{green}Center set.{aqua} Click here and enter the radius of this world (in which we should search for markers and load chunks and stuff).{click}", "command"),
     WORLD_CREATOR_ENTER_WORLD_NAME(
-            "{aqua}Click here and enter the name of the world that you want to create."),
+            "{click:suggest_command:{command}}{aqua}Click here and enter the name of the world that you want to create.{/click}", "command"),
     WORLD_CREATOR_GAMEMODE_ADDED("{green}Added gamemode, press another or press done to continue."),
     WORLD_CREATOR_GAMEMODE_DONE_BUTTON("{gold}Done."),
     WORLD_CREATOR_INFO(
