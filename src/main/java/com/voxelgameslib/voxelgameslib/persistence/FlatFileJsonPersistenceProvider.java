@@ -1,10 +1,9 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.gson.Gson;
+
 import com.voxelgameslib.voxelgameslib.user.User;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Simple persistence provider which uses gson to save the stuff as json to a flat file<br> <b>NOT

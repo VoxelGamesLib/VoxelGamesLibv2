@@ -1,9 +1,18 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
 import com.google.inject.Injector;
+
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-import lombok.extern.java.Log;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,13 +23,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import lombok.extern.java.Log;
 
 @Singleton
 @Log

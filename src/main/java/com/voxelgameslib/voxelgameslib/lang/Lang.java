@@ -300,7 +300,7 @@ public class Lang {
 
         LangStorage storage;
         if (key instanceof ExternalTranslatable) {
-            storage = handler.getExternalStorage(((ExternalTranslatable)key).getUuid(),loc);
+            storage = handler.getExternalStorage(((ExternalTranslatable) key).getUuid(), loc);
         } else {
             storage = handler.getStorage(loc);
         }

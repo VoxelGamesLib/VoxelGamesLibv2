@@ -1,13 +1,14 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import javax.inject.Singleton;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import lombok.extern.java.Log;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
-import javax.inject.Singleton;
 
 /**
  * This class overrides core Bukkit commands as necessary.

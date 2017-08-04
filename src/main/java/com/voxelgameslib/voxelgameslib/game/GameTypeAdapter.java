@@ -1,14 +1,22 @@
 package com.voxelgameslib.voxelgameslib.game;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.inject.Injector;
-import com.voxelgameslib.voxelgameslib.phase.Phase;
-import lombok.extern.java.Log;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.voxelgameslib.voxelgameslib.phase.Phase;
+
 import java.lang.reflect.Type;
 import java.util.logging.Level;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import lombok.extern.java.Log;
 
 /**
  * TypeAdapter for the Game class, redirects gson to the right Game implementation

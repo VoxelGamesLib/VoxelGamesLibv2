@@ -3,23 +3,24 @@ package com.voxelgameslib.voxelgameslib.components.inventory;
 import com.voxelgameslib.voxelgameslib.components.inventory.events.PageChangeEvent;
 import com.voxelgameslib.voxelgameslib.exception.ComponentException;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
+
 import org.apache.commons.lang.ArrayUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 /**
- * A PagedInventory is a type of inventory.
- * <p>
- * It has support for pagination, so you can have a multi-paged inventory.
+ * A PagedInventory is a type of inventory. <p> It has support for pagination, so you can have a
+ * multi-paged inventory.
  */
 public class PagedInventory extends BaseInventory {
     private ItemStack forward, backward, close;
@@ -56,9 +57,8 @@ public class PagedInventory extends BaseInventory {
     }
 
     /**
-     * Creates a new PagedInventory
-     * <p>
-     * Has the ability to specify if the inventory is dynamic (size determined by contents)
+     * Creates a new PagedInventory <p> Has the ability to specify if the inventory is dynamic (size
+     * determined by contents)
      *
      * @see BaseInventory#BaseInventory(Player, String, int)
      */
@@ -80,11 +80,8 @@ public class PagedInventory extends BaseInventory {
     }
 
     /**
-     * Sets the format for the inventory title.
-     * <p>
-     * Available placeholders:
-     * %title% - replaced with inventory title (defined on object creation)
-     * %page% - replaced with page number
+     * Sets the format for the inventory title. <p> Available placeholders: %title% - replaced with
+     * inventory title (defined on object creation) %page% - replaced with page number
      *
      * @param titleFormat format
      */
@@ -181,8 +178,6 @@ public class PagedInventory extends BaseInventory {
 
     /**
      * Automatically construct pages based off the item stack
-     *
-     * @param items
      */
     public void autoConstructPages(ItemStack... items) {
         // please dont judge me if none of this works. all theoretical code. could be a load of bs for all i know

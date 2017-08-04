@@ -2,13 +2,14 @@ package com.voxelgameslib.voxelgameslib.chat;
 
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
+
+import java.util.Optional;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.Optional;
 
 @Singleton
 @SuppressWarnings("Javadoc")

@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
+
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
@@ -10,14 +11,15 @@ import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.Marker;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
-import org.bukkit.Location;
-import org.bukkit.event.player.PlayerRespawnEvent;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.annotation.Nonnull;
+
+import org.bukkit.Location;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 @FeatureInfo(name = "SpawnFeature", author = "MiniDigger", version = "1.0",
         description = "Handles (re)spawning")

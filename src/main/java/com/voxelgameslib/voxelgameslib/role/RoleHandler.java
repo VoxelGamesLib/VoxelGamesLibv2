@@ -2,15 +2,16 @@ package com.voxelgameslib.voxelgameslib.role;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+
 import com.voxelgameslib.voxelgameslib.exception.DuplicatePermissionDefinitionException;
 import com.voxelgameslib.voxelgameslib.exception.NoSuchRoleException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 /**
  * Handles all roles for this server. The idea of roles is that server admins don't need to deal

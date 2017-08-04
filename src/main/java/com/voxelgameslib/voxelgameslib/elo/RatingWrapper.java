@@ -1,13 +1,13 @@
 package com.voxelgameslib.voxelgameslib.elo;
 
-import jskills.Rating;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import jskills.Rating;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @Entity

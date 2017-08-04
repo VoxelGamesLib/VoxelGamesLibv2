@@ -1,13 +1,15 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
+
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
-import org.bukkit.Material;
-import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.Arrays;
+
+import org.bukkit.Material;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 @FeatureInfo(name = "NoBlockPlaceFeature", author = "MiniDigger", version = "1.0",
         description = "Small feature that blocks block placing if active")

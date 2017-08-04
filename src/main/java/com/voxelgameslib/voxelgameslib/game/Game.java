@@ -52,8 +52,8 @@ public interface Game extends Tickable {
     void initGameFromModule();
 
     /**
-     * Sends a message to every {@link User} that is related to
-     * this game. This could be a participant in the game or a spectator.
+     * Sends a message to every {@link User} that is related to this game. This could be a
+     * participant in the game or a spectator.
      *
      * @param message the message to be send
      */

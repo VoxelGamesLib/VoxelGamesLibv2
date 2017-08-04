@@ -7,14 +7,16 @@ import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
-import lombok.extern.java.Log;
+
+import javax.inject.Inject;
+
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import javax.inject.Inject;
+import lombok.extern.java.Log;
 
 @Log
 @SuppressWarnings({"JavaDoc", "Duplicates"})

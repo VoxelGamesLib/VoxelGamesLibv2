@@ -1,10 +1,11 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
 import com.google.common.base.Splitter;
-import org.bukkit.ChatColor;
-import org.bukkit.scoreboard.Team;
 
 import java.util.Iterator;
+
+import org.bukkit.ChatColor;
+import org.bukkit.scoreboard.Team;
 
 public class BukkitStringScoreboardLine extends StringScoreboardLine {
 

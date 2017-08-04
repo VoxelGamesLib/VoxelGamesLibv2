@@ -2,9 +2,10 @@ package com.voxelgameslib.voxelgameslib.event.events.game;
 
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.user.User;
-import org.bukkit.event.HandlerList;
 
 import javax.annotation.Nonnull;
+
+import org.bukkit.event.HandlerList;
 
 /**
  * Called when a user left a game

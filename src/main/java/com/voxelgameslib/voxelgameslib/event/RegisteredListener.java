@@ -1,13 +1,15 @@
 package com.voxelgameslib.voxelgameslib.event;
 
 import com.voxelgameslib.voxelgameslib.game.Game;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
 
 import java.lang.reflect.Method;
 import java.util.List;
+
+import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor

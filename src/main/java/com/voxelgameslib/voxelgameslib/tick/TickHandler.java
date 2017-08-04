@@ -5,20 +5,20 @@ import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
-import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import org.bukkit.Bukkit;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is
- * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link
- * Game} instance<br> Every server mod has it's own implementation
- * of the TickHandler
+ * registered here. {@link Phase}s and {@link Feature}s receive their ticks from the {@link Game}
+ * instance<br> Every server mod has it's own implementation of the TickHandler
  */
 @Singleton
 public class TickHandler implements Handler {

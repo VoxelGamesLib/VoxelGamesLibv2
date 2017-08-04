@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.matchmaking;
 
 import com.voxelgameslib.voxelgameslib.game.GameMode;
+
 import lombok.Data;
 
 @Data

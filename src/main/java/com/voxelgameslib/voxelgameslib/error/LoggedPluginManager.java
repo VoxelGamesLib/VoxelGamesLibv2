@@ -1,12 +1,6 @@
 package com.voxelgameslib.voxelgameslib.error;
 
 import com.google.common.collect.Lists;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandMap;
-import org.bukkit.event.*;
-import org.bukkit.permissions.Permissible;
-import org.bukkit.permissions.Permission;
-import org.bukkit.plugin.*;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -14,6 +8,26 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventException;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.AuthorNagException;
+import org.bukkit.plugin.EventExecutor;
+import org.bukkit.plugin.IllegalPluginAccessException;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginLoader;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.UnknownDependencyException;
 
 /**
  * @author aadnk

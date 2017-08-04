@@ -1,10 +1,16 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
-import lombok.extern.java.Log;
 import org.intellij.lang.annotations.Language;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import lombok.extern.java.Log;
 
 import static org.bukkit.Bukkit.getServer;
 

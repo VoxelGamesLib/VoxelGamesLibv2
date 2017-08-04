@@ -1,7 +1,7 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import javax.annotation.Nonnull;
 import java.io.File;
+import javax.annotation.Nonnull;
 
 /**
  * Collection of file related utils

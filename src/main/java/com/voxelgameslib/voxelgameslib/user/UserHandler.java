@@ -2,18 +2,25 @@ package com.voxelgameslib.voxelgameslib.user;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-import lombok.extern.java.Log;
-import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+
+import org.bukkit.entity.Player;
+
+import lombok.extern.java.Log;
 
 @Log
 @Singleton

@@ -1,9 +1,10 @@
 package com.voxelgameslib.voxelgameslib.game;
 
 import com.google.gson.annotations.Expose;
-import lombok.extern.java.Log;
 
 import javax.annotation.Nonnull;
+
+import lombok.extern.java.Log;
 
 /**
  * A {@link GameMode} is a identifier for the type of a {@link Game}.

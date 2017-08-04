@@ -2,17 +2,23 @@ package com.voxelgameslib.voxelgameslib.map;
 
 import com.voxelgameslib.voxelgameslib.exception.MapException;
 import com.voxelgameslib.voxelgameslib.utils.DirectionUtil;
-import lombok.extern.java.Log;
-import org.bukkit.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
+import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import lombok.extern.java.Log;
 
 /**
  * Scans the map for markers.

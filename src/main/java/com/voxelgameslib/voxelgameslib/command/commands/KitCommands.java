@@ -1,18 +1,22 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
-import lombok.extern.java.Log;
 
 import javax.inject.Singleton;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
+import lombok.extern.java.Log;
+
 /**
- * Handles commands relating to kits.
- * <p>
- * This is only registered if the {@link KitFeature}
- * requests for it to be enabled.
+ * Handles commands relating to kits. <p> This is only registered if the {@link KitFeature} requests
+ * for it to be enabled.
  */
 @Log
 @Singleton

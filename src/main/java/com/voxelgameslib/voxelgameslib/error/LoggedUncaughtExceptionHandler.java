@@ -2,10 +2,11 @@ package com.voxelgameslib.voxelgameslib.error;
 
 import com.bugsnag.Bugsnag;
 import com.bugsnag.Severity;
-import lombok.extern.java.Log;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.WeakHashMap;
+
+import lombok.extern.java.Log;
 
 @Log
 public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler {

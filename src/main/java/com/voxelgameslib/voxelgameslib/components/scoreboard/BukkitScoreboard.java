@@ -2,14 +2,15 @@ package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.RandomUtil;
+
+import java.util.Optional;
+import javax.annotation.Nonnull;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-
-import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class BukkitScoreboard extends AbstractScoreboard {
 

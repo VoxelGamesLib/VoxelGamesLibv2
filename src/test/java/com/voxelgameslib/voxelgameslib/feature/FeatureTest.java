@@ -1,15 +1,16 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.voxelgameslib.voxelgameslib.game.AbstractGame;
+import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.phase.AbstractPhase;
+import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.phase.Phase;
+
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;

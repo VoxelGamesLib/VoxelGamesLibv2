@@ -3,9 +3,9 @@ package com.voxelgameslib.voxelgameslib.matchmaking;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Singleton;
 
 @Singleton
 public class MatchmakingHandler implements Handler {

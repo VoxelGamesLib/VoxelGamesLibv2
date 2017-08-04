@@ -2,15 +2,18 @@ package com.voxelgameslib.voxelgameslib.utils;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
-import lombok.extern.java.Log;
+
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 import net.kyori.text.serializer.ComponentSerializer;
+
+import java.lang.reflect.Method;
+import javax.annotation.Nonnull;
+
 import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
-import java.lang.reflect.Method;
+import lombok.extern.java.Log;
 
 /**
  * Small util for chat related stuff

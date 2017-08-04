@@ -1,11 +1,8 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
-import co.aikar.timings.lib.TimingManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.java.Log;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+
 import org.intellij.lang.annotations.Language;
 
 import java.sql.Connection;
@@ -13,6 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
+import co.aikar.timings.lib.TimingManager;
+import lombok.extern.java.Log;
 
 @Log
 public final class DB {
@@ -115,9 +118,7 @@ public final class DB {
 
     /**
      * Utility method to execute a query and retrieve first column of all results, then close
-     * statement.
-     * <p>
-     * Meant for single queries that will not use the statement multiple times.
+     * statement. <p> Meant for single queries that will not use the statement multiple times.
      */
     public static <T> List<T> getFirstColumnResults(@Language("MySQL") String query, Object... params) throws SQLException {
         List<T> dbRows = new ArrayList<>();
@@ -131,9 +132,8 @@ public final class DB {
     }
 
     /**
-     * Utility method to execute a query and retrieve all results, then close statement.
-     * <p>
-     * Meant for single queries that will not use the statement multiple times.
+     * Utility method to execute a query and retrieve all results, then close statement. <p> Meant
+     * for single queries that will not use the statement multiple times.
      *
      * @param query  The query to run
      * @param params The parameters to execute the statement with

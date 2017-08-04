@@ -9,8 +9,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import javax.annotation.Nullable;
 
 /**
- * This class implements core logic for a post-game feature to act like a summary for the game.
- * <p>
+ * This class implements core logic for a post-game feature to act like a summary for the game. <p>
  * Generally, this should be extended by your game to incorporate any game-specific logic and do
  * tasks like add the proper values to the scoreboard. Call the super methods before you do
  * anything.

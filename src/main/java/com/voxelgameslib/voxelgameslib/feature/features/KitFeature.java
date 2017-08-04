@@ -16,9 +16,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 
 import co.aikar.commands.BukkitCommandManager;
 import lombok.Getter;

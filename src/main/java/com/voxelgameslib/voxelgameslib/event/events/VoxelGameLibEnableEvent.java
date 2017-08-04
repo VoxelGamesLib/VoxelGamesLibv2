@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.event.events;
 
 import com.voxelgameslib.voxelgameslib.event.VoxelGamesLibEvent;
+
 import org.bukkit.event.HandlerList;
 
 /**

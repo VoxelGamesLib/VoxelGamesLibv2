@@ -3,13 +3,15 @@ package com.voxelgameslib.voxelgameslib.metrics;
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-import lombok.extern.java.Log;
+
 import org.bstats.bukkit.Metrics;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import lombok.extern.java.Log;
 
 @Log
 @Singleton

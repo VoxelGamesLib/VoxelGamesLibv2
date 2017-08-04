@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

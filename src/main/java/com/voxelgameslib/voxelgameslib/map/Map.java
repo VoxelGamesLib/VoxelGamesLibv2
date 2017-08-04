@@ -1,14 +1,20 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
+
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+
 import lombok.Data;
 import lombok.extern.java.Log;
-
-import javax.annotation.Nonnull;
-import java.util.*;
 
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a

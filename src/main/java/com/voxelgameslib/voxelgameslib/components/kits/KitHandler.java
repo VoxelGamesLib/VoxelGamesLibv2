@@ -1,24 +1,31 @@
 package com.voxelgameslib.voxelgameslib.components.kits;
 
-import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+
+import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-import lombok.extern.java.Log;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import lombok.extern.java.Log;
 
 @Log
 @Singleton

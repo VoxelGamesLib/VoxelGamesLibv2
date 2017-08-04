@@ -5,12 +5,13 @@ import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.utils.db.DbRow;
-import lombok.extern.java.Log;
 
-import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
+import javax.inject.Inject;
+
+import lombok.extern.java.Log;
 
 @Log
 public class MysqlPersistenceProvider implements PersistenceProvider {

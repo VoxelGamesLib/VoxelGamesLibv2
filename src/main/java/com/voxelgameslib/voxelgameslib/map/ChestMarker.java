@@ -1,9 +1,10 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+
+import org.bukkit.inventory.ItemStack;
 
 /**
  * A chest marker is a marker that is a chest (uh)<br> it is used to save kits or layout for chest

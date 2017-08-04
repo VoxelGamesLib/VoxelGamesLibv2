@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
+
 import org.bukkit.Bukkit;
 
 public class ScoreboardHandler implements Handler {

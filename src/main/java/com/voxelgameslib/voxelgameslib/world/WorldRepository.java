@@ -1,11 +1,8 @@
 package com.voxelgameslib.voxelgameslib.world;
 
-import lombok.extern.java.Log;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +10,10 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import lombok.extern.java.Log;
 
 @Log
 public class WorldRepository {

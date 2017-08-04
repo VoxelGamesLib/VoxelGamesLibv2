@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.voxelgameslib.voxelgameslib.user.User;
+
 import org.bukkit.block.Block;
 
 /**

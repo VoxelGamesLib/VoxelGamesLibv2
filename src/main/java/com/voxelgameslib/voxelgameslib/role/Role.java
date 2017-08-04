@@ -1,12 +1,13 @@
 package com.voxelgameslib.voxelgameslib.role;
 
-import lombok.Getter;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import lombok.Getter;
 
 /**
  * A role is part of the simplified permission system. all permissions are assigned to roles by

@@ -1,10 +1,11 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import lombok.extern.java.Log;
+import java.lang.reflect.Method;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import java.lang.reflect.Method;
+import lombok.extern.java.Log;
 
 @Log
 public class NMSUtil {

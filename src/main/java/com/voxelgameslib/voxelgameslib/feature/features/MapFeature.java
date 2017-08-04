@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
+
 import com.voxelgameslib.voxelgameslib.exception.GameStartException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
@@ -9,10 +10,11 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-import lombok.extern.java.Log;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import lombok.extern.java.Log;
 
 @Log
 @FeatureInfo(name = "MapFeature", author = "MiniDigger", version = "1.0",

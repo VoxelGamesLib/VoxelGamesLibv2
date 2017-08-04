@@ -3,17 +3,19 @@ package com.voxelgameslib.voxelgameslib.components.signs;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
+
 import net.kyori.text.TextComponent;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.HashMap;
-import java.util.Map;
 
 @Singleton
 public class SignButtons implements Listener {

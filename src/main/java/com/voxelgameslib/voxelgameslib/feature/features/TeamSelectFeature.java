@@ -1,8 +1,7 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
 import com.google.gson.annotations.Expose;
+
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
@@ -13,11 +12,19 @@ import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
-import lombok.extern.java.Log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javax.inject.Singleton;
+
 import org.bukkit.ChatColor;
 
-import javax.inject.Singleton;
-import java.util.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import lombok.extern.java.Log;
 
 @Log
 public class TeamSelectFeature extends AbstractFeature implements FeatureCommandImplementor {

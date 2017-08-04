@@ -6,8 +6,8 @@ import com.voxelgameslib.voxelgameslib.phase.Phase;
 import javax.annotation.Nonnull;
 
 /**
- * Thrown when something tries to access a {@link Feature} in a {@link
- * Phase} that is not present at this time.
+ * Thrown when something tries to access a {@link Feature} in a {@link Phase} that is not present at
+ * this time.
  */
 public class NoSuchFeatureException extends VoxelGameLibException {
 

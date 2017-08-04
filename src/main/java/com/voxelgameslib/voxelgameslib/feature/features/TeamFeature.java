@@ -1,11 +1,12 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
-import lombok.extern.java.Log;
 
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Singleton;
+
+import lombok.extern.java.Log;
 
 @Log
 @Singleton

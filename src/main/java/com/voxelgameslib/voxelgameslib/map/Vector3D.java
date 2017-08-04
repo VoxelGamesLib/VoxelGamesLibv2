@@ -18,11 +18,12 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 /**
  * Represents an immutable vector in three dimensions. This class is not final by design.

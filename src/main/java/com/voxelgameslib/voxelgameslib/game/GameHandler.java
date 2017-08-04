@@ -80,7 +80,7 @@ public class GameHandler implements Handler {
     /**
      * Starts the default game, if it is defined and installed
      */
-    public void startDefaultGame(){
+    public void startDefaultGame() {
         if (configHandler.get().defaultGame != null && !configHandler.get().defaultGame.equals("none")) {
             Optional<GameMode> mode = getGameModes().stream().filter(gameMode -> gameMode.getName().equalsIgnoreCase(configHandler.get().defaultGame)).findAny();
             if (!mode.isPresent()) {
