@@ -1,6 +1,6 @@
 name: VoxelGamesLib
 version: @version@
-main: VoxelGamesLib
+main: com.voxelgameslib.voxelgameslib.VoxelGamesLib
 authors: [VoxelGamesLib]
 depend: [ProtocolLib]
 website: https://github.com/VoxelGamesLib/VoxelGamesLibv2
