@@ -116,11 +116,11 @@ public enum LangKey {
     WORLD_CREATOR_ENTER_AUTHOR(
             "{click:suggest_command:{command}}{green}Name set to {yellow}{name}{green},{aqua} click here and enter the author{/click}", "name", "command"),
     WORLD_CREATOR_ENTER_DISPLAY_NAME(
-            "{click:suggest_command:{command}}{green}Radius set.{aqua} Click here and enter the display name for the world.{/click}", "click"),
+            "{click:suggest_command:{command}}{green}Radius set.{aqua} Click here and enter the display name for the world.{/click}", "command"),
     WORLD_CREATOR_ENTER_CENTER(
             "{click:run_command:{command}}{green}World loaded.{aqua} Walk to the middle of the world and click here to mark it.{/click}", "command"),
     WORLD_CREATOR_ENTER_RADIUS(
-            "{click:suggest_command:{command}}{green}Center set.{aqua} Click here and enter the radius of this world (in which we should search for markers and load chunks and stuff).{click}", "command"),
+            "{click:suggest_command:{command}}{green}Center set.{aqua} Click here and enter the radius of this world (in which we should search for markers and load chunks and stuff).{/click}", "command"),
     WORLD_CREATOR_ENTER_WORLD_NAME(
             "{click:suggest_command:{command}}{aqua}Click here and enter the name of the world that you want to create.{/click}", "command"),
     WORLD_CREATOR_GAMEMODE_ADDED("{green}Added gamemode, press another or press done to continue."),
