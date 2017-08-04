@@ -70,7 +70,7 @@ shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
 
-    relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
+    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
 }
 
 build.dependsOn shadowJar

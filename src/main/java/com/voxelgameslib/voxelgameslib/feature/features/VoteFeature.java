@@ -163,8 +163,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @GameEvent
-    public void onJoin(@Nonnull GameJoinEvent event, User user) {
-        System.out.println("its works " + user.getRawDisplayName());
+    public void onJoin(@Nonnull GameJoinEvent event) {
         sendVoteMessage(event.getUser());
         if (enableVoteMenu) {
             giveVoteMenuItem(event.getUser());
