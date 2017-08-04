@@ -43,7 +43,7 @@ public class KitFeature extends AbstractFeature {
     @Expose
     private List<String> allowedKits = new ArrayList<>();
 
-    private List<Kit> kits;
+    private List<Kit> kits = new ArrayList<>();
     @Getter
     @Setter
     private boolean registerCommands;
