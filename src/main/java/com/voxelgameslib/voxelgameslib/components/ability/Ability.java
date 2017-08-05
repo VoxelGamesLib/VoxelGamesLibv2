@@ -1,20 +1,17 @@
 package com.voxelgameslib.voxelgameslib.components.ability;
 
 import com.google.inject.Injector;
-
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import java.util.List;
-import java.util.UUID;
-import javax.inject.Inject;
-
+import lombok.Getter;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import lombok.Getter;
+import javax.inject.Inject;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Ability implements Listener, Tickable {
     @Inject
@@ -35,13 +32,19 @@ public abstract class Ability implements Listener, Tickable {
     }
 
     public void unregister() {
+        unregister(false);
+    }
+
+    public void unregister(boolean removeTickable) {
         HandlerList.unregisterAll(this);
         List<Game> games = injector.getInstance(GameHandler.class).getGames(affected.getUuid(), false);
 
         if (games.size() == 1) {
             Game game = games.get(0);
 
-            game.getActivePhase().removeTickable(identifier);
+            if (removeTickable) {
+                game.getActivePhase().removeTickable(identifier);
+            }
         }
     }
 }
