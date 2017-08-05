@@ -21,8 +21,8 @@ public class ZipUtil {
      * @throws ZipException if something goes wrong
      */
     @Nonnull
-    public static ZipFile createZip(@Nonnull File file) throws ZipException {
-        ZipFile zip = new ZipFile(new File(file.getParent(), file.getName() + ".zip"));
+    public static ZipFile createZip(@Nonnull File file, String name) throws ZipException {
+        ZipFile zip = new ZipFile(new File(file.getParent(), name + ".zip"));
 
         ZipParameters params = new ZipParameters();
         params.setIncludeRootFolder(false);

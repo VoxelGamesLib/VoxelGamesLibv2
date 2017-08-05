@@ -101,13 +101,14 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     public Map loadMap(@Nonnull String name) {
         Optional<Map> map = getMap(name);
         if (!map.isPresent()) {
-            if (!getMapInfo(name).isPresent()) {
+            Optional<MapInfo> mapInfo = getMapInfo(name);
+            if (!mapInfo.isPresent()) {
                 throw new MapException(
                         "Unknown map " + name + ". Did you register it into the world config?");
             }
 
             try {
-                ZipFile zipFile = new ZipFile(new File(worldsFolder, name + ".zip"));
+                ZipFile zipFile = new ZipFile(new File(worldsFolder, mapInfo.get().getName() + ".zip"));
                 for (FileHeader header : (List<FileHeader>) zipFile.getFileHeaders()) {
                     if (header.getFileName().endsWith("config.json")) {
                         InputStream stream = zipFile.getInputStream(header);
@@ -318,7 +319,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
         ZipFile zip;
         try {
-            zip = ZipUtil.createZip(worldFolder);
+            zip = ZipUtil.createZip(worldFolder, map.getInfo().getName());
         } catch (ZipException e) {
             Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_ZIP_ERROR, e.getMessage(),
                     e.getClass().getName());
