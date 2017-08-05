@@ -130,6 +130,18 @@ if (project.hasProperty('indicesUsername') && project.hasProperty('indicesPasswo
                 pom.project {
                     name project.name
 
+                    repositories {
+                        project.repositories.each { repo ->
+                            if (repo.name == 'MavenRepo' || repo.name == 'MavenLocal') {
+                                return
+                            }
+                            repository {
+                                id repo.name
+                                url repo.url
+                            }
+                        }
+                    }
+
                     issueManagement {
                         system 'GitHub Issues'
                         url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
