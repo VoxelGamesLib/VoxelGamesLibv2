@@ -68,15 +68,15 @@ public class PagedInventory extends BaseInventory {
     }
 
     public ItemStack getForwardItem() {
-        return new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();
+        return new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();//TODO i18n
     }
 
     public ItemStack getBackwardItem() {
-        return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();
+        return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();//TODO i18n;
     }
 
     public ItemStack getCloseItem() {
-        return new ItemBuilder(close).name(ChatColor.RED + "Next").build();
+        return new ItemBuilder(close).name(ChatColor.RED + "Next").build();//TODO i18n
     }
 
     /**

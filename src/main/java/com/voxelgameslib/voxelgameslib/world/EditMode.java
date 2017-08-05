@@ -1,17 +1,26 @@
 package com.voxelgameslib.voxelgameslib.world;
 
+import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
+import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -28,6 +37,11 @@ import co.aikar.commands.annotation.Syntax;
 @CommandAlias("editmode")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class EditMode extends BaseCommand {
+
+    @Inject
+    private MapHandler mapHandler;
+    @Inject
+    private InventoryHandler inventoryHandler;
 
     @Nonnull
     private List<UUID> editMode = new ArrayList<>();
@@ -81,6 +95,27 @@ public class EditMode extends BaseCommand {
         if (editMode.contains(sender.getUuid())) {
             ItemStack chest = new ItemBuilder(Material.CHEST).name(name).build();
             sender.getPlayer().getInventory().setItemInMainHand(chest);
+        } else {
+            Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
+        }
+    }
+
+    @Subcommand("gui")
+    @CommandPermission("%admin")
+    public void gui(User sender) {
+        if (editMode.contains(sender.getUuid())) {
+            PagedInventory inventory = inventoryHandler.createInventory(PagedInventory.class, sender.getPlayer(), "Markers", 9); //TODO i18n
+
+            Map<ItemStack, BiConsumer<ItemStack, InventoryClickEvent>> content = new HashMap<>();
+            mapHandler.getMarkerDefinitions().forEach(markerDefinition -> {
+                System.out.println("add marker");
+                ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
+                        .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
+                content.put(is, (item, event) -> ((Player) event.getWhoClicked()).performCommand("/editmode skull " + is.getItemMeta().getDisplayName()));
+            });
+            inventory.autoConstructPages(content.keySet().toArray(new ItemStack[content.size()]));
+            content.forEach(inventory::addClickAction);
+            inventory.open();
         } else {
             Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
         }
