@@ -68,9 +68,15 @@ public class GameCommands extends BaseCommand {
     @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%premium")
     public void gameStart(User sender, GameMode mode) {
-        if (gameHandler.getGames(sender.getUuid(), true).size() != 0) {
-            Lang.msg(sender, LangKey.GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES);
-            return;
+        List<Game> games = gameHandler.getGames(sender.getUuid(), true);
+        if (games.size() != 0) {
+            if (games.size() == 1 && games.get(0).getGameMode().equals(gameHandler.getDefaultGame().getGameMode())) {
+                // leave the default game
+                games.get(0).leave(sender);
+            } else {
+                Lang.msg(sender, LangKey.GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES);
+                return;
+            }
         }
 
         Game game = gameHandler.startGame(mode);
