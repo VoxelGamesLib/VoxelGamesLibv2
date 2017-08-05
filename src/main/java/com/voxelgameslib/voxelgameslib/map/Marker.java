@@ -22,6 +22,8 @@ public class Marker {
     @Expose
     private final String data;
 
+    private MarkerDefinition markerDefinition;
+
     /**
      * Constructs a new marker
      *
@@ -29,9 +31,10 @@ public class Marker {
      * @param yaw  the yaw for this marker
      * @param data the data of this marker
      */
-    public Marker(@Nonnull Vector3D loc, double yaw, @Nonnull String data) {
+    public Marker(@Nonnull Vector3D loc, double yaw, @Nonnull String data, MarkerDefinition markerDefinition) {
         this.loc = loc;
         this.yaw = yaw;
         this.data = data;
+        this.markerDefinition = markerDefinition;
     }
 }

@@ -7,8 +7,10 @@ import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.map.BasicMarkerDefinition;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.Marker;
+import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 
@@ -33,13 +35,13 @@ public class SpawnFeature extends AbstractFeature {
     private List<Vector3D> spawns = new ArrayList<>();
     private Map map;
 
+    private MarkerDefinition spawnMarker = new BasicMarkerDefinition("spawn");
+
     @Override
     public void start() {
         map = getPhase().getFeature(MapFeature.class).getMap();
-        for (Marker marker : map.getMarkers()) {
-            if (marker.getData().startsWith("spawn")) {
-                spawns.add(marker.getLoc());
-            }
+        for (Marker marker : map.getMarkers(spawnMarker)) {
+            spawns.add(marker.getLoc());
         }
         if (isInitialSpawn) {
             for (User user : getPhase().getGame().getPlayers()) {
@@ -73,18 +75,8 @@ public class SpawnFeature extends AbstractFeature {
     }
 
     @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
+    public MarkerDefinition[] getMarkers() {
+        return new MarkerDefinition[]{spawnMarker};
     }
 
     @Override

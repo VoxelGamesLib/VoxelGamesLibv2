@@ -41,4 +41,24 @@ public abstract class AbstractFeature implements Feature, Listener {
     public String getName() {
         return name;
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void tick() {
+
+    }
 }

@@ -6,7 +6,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.exception.MapException;
 import com.voxelgameslib.voxelgameslib.exception.WorldException;
@@ -14,6 +13,7 @@ import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
+import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.MapScanner;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -72,7 +72,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Inject
     private WorldRepository worldRepository;
     @Inject
-    private VoxelGamesLib voxelGamesLib;
+    private MapHandler mapHandler;
 
     private WorldConfig config;
     private File configFile;
@@ -112,6 +112,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
                     if (header.getFileName().endsWith("config.json")) {
                         InputStream stream = zipFile.getInputStream(header);
                         Map m = gson.fromJson(new JsonReader(new InputStreamReader(stream)), Map.class);
+                        m.initMarkers(mapHandler);
                         maps.add(m);
                         return m;
                     }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import lombok.Data;
@@ -52,6 +53,15 @@ public class Map {
         this.center = center;
         this.radius = radius;
         loadedNames = new HashMap<>();
+    }
+
+    /**
+     * Tries to parse all marker data into the definitions
+     *
+     * @param mapHandler the maphandler that provides the marker definitions
+     */
+    public void initMarkers(MapHandler mapHandler) {
+        markers.forEach(marker -> marker.setMarkerDefinition(mapHandler.createMarkerDefinition(marker.getData())));
     }
 
     /**
@@ -107,5 +117,9 @@ public class Map {
             loadedNames = new HashMap<>();
         }
         loadedNames.remove(gameid);
+    }
+
+    public List<Marker> getMarkers(MarkerDefinition spawnMarker) {
+        return markers.stream().filter(marker -> spawnMarker.isOfSameType(marker.getMarkerDefinition())).collect(Collectors.toList());
     }
 }

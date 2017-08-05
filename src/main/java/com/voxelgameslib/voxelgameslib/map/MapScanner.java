@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -24,7 +26,11 @@ import lombok.extern.java.Log;
  * Scans the map for markers.
  */
 @Log
+@Singleton
 public class MapScanner {
+
+    @Inject
+    private MapHandler mapHandler;
 
     /**
      * Scans a map for markers
@@ -93,25 +99,12 @@ public class MapScanner {
                     if (te.getType() == Material.SKULL) {
                         Skull skull = (Skull) te;
                         if (skull.getSkullType() == SkullType.PLAYER) {
-                            if (skull.getOwningPlayer() != null) {
-                                String markerData = skull.getOwningPlayer().getName();
-                                if (markerData == null) {
-                                    log.warning("owning player name null?!");
-                                    markerData = skull.getOwner();
-                                    if (markerData == null) {
-                                        log.warning("just set it to undefined...");
-                                        markerData = "undefined";
-                                    }
-                                }
-                                if (markerData.startsWith("vgl:")) {
-                                    markerData = markerData.replaceFirst("vgl:", "");
-                                    markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
-                                            DirectionUtil.directionToYaw(skull.getRotation()),
-                                            markerData));
-                                }
-                            } else {
-                                log.warning("unknown owner");
-                            }
+                            String markerData = getMarkerData(skull);
+                            if (markerData == null) continue;
+                            MarkerDefinition markerDefinition = mapHandler.createMarkerDefinition(markerData);
+                            markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
+                                    DirectionUtil.directionToYaw(skull.getRotation()),
+                                    markerData, markerDefinition));
                         }
                     } else if (te.getType() == Material.CHEST) {
                         Chest chest = (Chest) te;
@@ -136,5 +129,26 @@ public class MapScanner {
 
         map.setMarkers(markers);
         map.setChestMarkers(chestMarkers);
+    }
+
+    private void handleSkull(Skull skull) {
+
+    }
+
+    private String getMarkerData(Skull skull) {
+        if (skull.getOwningPlayer() != null) {
+            String markerData = skull.getOwningPlayer().getName();
+            if (markerData == null) {
+                log.warning("owning player name null?!");
+                markerData = skull.getOwner();
+                if (markerData == null) {
+                    log.warning("just set it to undefined...");
+                    markerData = "undefined";
+                }
+            }
+            return markerData;
+        } else {
+            return null;
+        }
     }
 }

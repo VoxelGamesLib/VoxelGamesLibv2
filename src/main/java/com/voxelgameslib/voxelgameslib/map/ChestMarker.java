@@ -24,7 +24,7 @@ public class ChestMarker extends Marker {
      * @param items the items that ar in that chest
      */
     public ChestMarker(@Nonnull Vector3D loc, @Nonnull String name, @Nonnull ItemStack[] items) {
-        super(loc, 0.0, name);
+        super(loc, 0.0, name, null);//TODO mark def for chest marker
         this.items = items;
     }
 

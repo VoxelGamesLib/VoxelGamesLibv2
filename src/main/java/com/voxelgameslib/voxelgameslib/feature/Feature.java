@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
 import com.voxelgameslib.voxelgameslib.game.GameMode;
+import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
 
@@ -51,5 +52,12 @@ public interface Feature extends Tickable {
      */
     default Class[] getSoftDependencies() {
         return new Class[0];
+    }
+
+    /**
+     * @return a list of all markers this feature uses
+     */
+    default MarkerDefinition[] getMarkers() {
+        return new MarkerDefinition[0];
     }
 }
