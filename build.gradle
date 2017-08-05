@@ -23,6 +23,10 @@ version = '2.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+ext{
+    dev = true
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -81,75 +85,77 @@ processResources {
     ]
 }
 
-task copyToServer(dependsOn: 'jar', type: Copy) {
-    from 'build/libs/voxelgameslib-' + project.version + '-all.jar'
-    into '../testserver/plugins/'
-}
-
-javadoc {
-    options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
-}
-
-task javadocJar(type: Jar) {
-    classifier 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-signing {
-    required {
-        !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives')
+if (dev) {
+    task copyToServer(dependsOn: 'jar', type: Copy) {
+        from 'build/libs/voxelgameslib-' + project.version + '-all.jar'
+        into '../testserver/plugins/'
     }
-    sign configurations.archives
-}
+} else {
+    javadoc {
+        options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
+    }
 
-if (project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    task javadocJar(type: Jar) {
+        classifier 'javadoc'
+        from javadoc
+    }
 
-                repository(url: 'https://nexus.indices.io/content/repositories/releases/') {
-                    authentication(userName: indicesUsername, password: indicesPassword)
-                }
+    task sourcesJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
 
-                snapshotRepository(url: 'https://nexus.indices.io/content/repositories/snapshots/') {
-                    authentication(userName: indicesUsername, password: indicesPassword)
-                }
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
 
-                pom.project {
-                    name project.name
+    signing {
+        required {
+            !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives')
+        }
+        sign configurations.archives
+    }
 
-                    issueManagement {
-                        system 'GitHub Issues'
-                        url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
+    if (project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                    repository(url: 'https://nexus.indices.io/content/repositories/releases/') {
+                        authentication(userName: indicesUsername, password: indicesPassword)
                     }
 
-                    scm {
-                        connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                        developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                        url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
+                    snapshotRepository(url: 'https://nexus.indices.io/content/repositories/snapshots/') {
+                        authentication(userName: indicesUsername, password: indicesPassword)
+                    }
+
+                    pom.project {
+                        name project.name
+
+                        issueManagement {
+                            system 'GitHub Issues'
+                            url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
+                        }
+
+                        scm {
+                            connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                            developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                            url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
+                        }
                     }
                 }
             }
         }
     }
-}
 
-task proguard(type: ProGuardTask) {
-    configuration 'proguard.txt'
+    task proguard(type: ProGuardTask) {
+        configuration 'proguard.txt'
 
-    injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
-    outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
+        injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
+        outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
+    }
 }
 
 configurations.all {
