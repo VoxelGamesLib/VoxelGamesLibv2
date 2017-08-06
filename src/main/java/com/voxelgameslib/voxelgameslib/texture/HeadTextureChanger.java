@@ -122,7 +122,7 @@ public class HeadTextureChanger {
         WorldMethodResolver.resolve(new ResolverQuery("notify", int.class, int.class, int.class)).invoke(world, x, y, z);
     }
 
-    public static SkullMeta applyTextureToMeta(SkullMeta meta, Object profile) throws Exception {
+    public static SkullMeta applyTextureToMeta(Object meta, Object profile) throws Exception {
         if (meta == null) {
             throw new IllegalArgumentException("meta cannot be null");
         }

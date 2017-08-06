@@ -11,6 +11,7 @@ import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.LangCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.OverrideCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.RoleCommands;
+import com.voxelgameslib.voxelgameslib.command.commands.TextureCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldRepositoryCommands;
@@ -42,6 +43,7 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
 import com.voxelgameslib.voxelgameslib.team.TeamHandler;
+import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -124,6 +126,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private KitHandler kitHandler;
     @Inject
     private CommandHandler commandHandler;
+    @Inject
+    private TextureHandler textureHandler;
 
 
     @Override
@@ -183,6 +187,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 metricHandler.start();
                 kitHandler.start();
                 commandHandler.start();
+                textureHandler.start();
 
                 gameHandler.start();
             });
@@ -224,6 +229,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 metricHandler.stop();
                 kitHandler.stop();
                 commandHandler.stop();
+                textureHandler.stop();
 
                 gameHandler.stop();
                 moduleHandler.stop();
@@ -295,6 +301,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(WorldRepositoryCommands.class));
         commandManager.registerCommand(injector.getInstance(LoggingHandler.class));
         commandManager.registerCommand(injector.getInstance(KitCommands.class));
+        commandManager.registerCommand(injector.getInstance(TextureCommands.class));
     }
 
     private void registerListeners() {

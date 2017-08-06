@@ -162,7 +162,10 @@ public enum LangKey implements Translatable {
     WORLD_MODIFY_RADIUS_EDIT("{aqua}Changed the radius to {yellow}{radius}", "radius"),
     WORLD_MODIFY_CENTER_VIEW("{aqua}The current center is {yellow}{center}", "center"),
     WORLD_MODIFY_CENTER_EDIT("{aqua}Changed the center to {yellow}{center}", "center"),
-    WORLD_MODIFY_HELP("Idk some fancy help text");//TODO help for wc m
+    WORLD_MODIFY_HELP("Idk some fancy help text"), //TODO help for wc m
+
+    TEXTURE_FETCHING_TEXTURE("{aqua}Fetching texture..."),
+    TEXTURE_TEXTURE_APPLIED("{green}Texture applied to skull!");
 
     @Nonnull
     private final String defaultValue;
