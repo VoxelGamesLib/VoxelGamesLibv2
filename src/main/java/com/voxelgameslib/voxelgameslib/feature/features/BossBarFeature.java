@@ -48,22 +48,6 @@ public class BossBarFeature extends AbstractFeature {
         bossBar.removeAll();
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
     @GameEvent
     public void onGameJoin(@Nonnull GameJoinEvent event) {
         bossBar.addPlayer(event.getUser().getPlayer());

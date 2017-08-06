@@ -57,21 +57,6 @@ public class PersonalScoreboardFeature extends AbstractFeature {
         });
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
 
     @GameEvent
     public void onJoin(@Nonnull GameJoinEvent event) {

@@ -37,17 +37,6 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     private int teamCount = 4;
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
-    @Override
     public void start() {
         // create default teams
         List<String> teamNames = new ArrayList<>();

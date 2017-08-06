@@ -52,11 +52,6 @@ public class LobbyFeature extends AbstractFeature {
     }
 
     @Override
-    public void stop() {
-
-    }
-
-    @Override
     public void tick() {
         if (starting) {
             curr--;
@@ -68,11 +63,6 @@ public class LobbyFeature extends AbstractFeature {
 
             bossBar.setProgress((curr / startDelay));
         }
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override

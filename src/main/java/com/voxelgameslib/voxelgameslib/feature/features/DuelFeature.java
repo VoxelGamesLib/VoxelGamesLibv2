@@ -78,26 +78,4 @@ public class DuelFeature extends AbstractFeature {
             two = temp;
         }
     }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
 }

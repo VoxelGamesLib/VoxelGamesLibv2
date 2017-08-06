@@ -2,7 +2,6 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.map.Map;
 
@@ -34,24 +33,8 @@ public class MapInfoFeature extends AbstractFeature {
     }
 
     @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
+    public Class[] getDependencies() {
         return new Class[]{MapFeature.class, ScoreboardFeature.class};
     }
 }

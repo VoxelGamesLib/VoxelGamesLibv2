@@ -25,27 +25,6 @@ public class TeamFeature extends TeamSelectFeature {
         }
     }
 
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
     @Nonnull
     public List<jskills.Team> getJSkillTeamsOrdered() {
         return new ArrayList<>(); //TODO

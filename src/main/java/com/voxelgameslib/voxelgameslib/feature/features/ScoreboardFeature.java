@@ -5,7 +5,6 @@ import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
 import javax.annotation.Nonnull;
@@ -33,20 +32,8 @@ public class ScoreboardFeature extends AbstractFeature {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void init() {
         scoreboard = scoreboardHandler.createScoreboard(getPhase().getGame().getGameMode().getName());
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
-        return new Class[0];
     }
 
     @SuppressWarnings("JavaDoc")

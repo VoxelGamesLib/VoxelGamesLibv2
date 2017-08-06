@@ -9,7 +9,6 @@ import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
@@ -131,16 +130,6 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
     @Nonnull
     public Class<? extends AbstractFeatureCommand> getCommandClass() {
         return VoteFeatureCommand.class;
@@ -218,13 +207,6 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             votes.put(voter.getUuid(), mapId);
             Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapInfo.getName(), mapId);
         }
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
-        return new Class[0];
     }
 
     @Singleton

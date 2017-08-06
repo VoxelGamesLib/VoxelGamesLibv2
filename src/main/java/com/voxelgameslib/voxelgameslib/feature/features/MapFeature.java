@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.voxelgameslib.voxelgameslib.exception.GameStartException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.map.Map;
@@ -66,23 +65,6 @@ public class MapFeature extends AbstractFeature {
         if (shouldUnload) {
             worldHandler.unloadWorld(map, getPhase().getGame().getUuid());
         }
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
-        return new Class[0];
     }
 
     /**

@@ -43,32 +43,6 @@ public class NoBlockPlaceFeature extends AbstractFeature {
         this.blacklist = blacklist;
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
     @SuppressWarnings({"JavaDoc", "Duplicates"})
     @GameEvent
     public void onBlockBreak(@Nonnull BlockPlaceEvent event) {

@@ -16,26 +16,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class VoidTeleportFeature extends AbstractFeature {
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
     @Nonnull
     public Class[] getDependencies() {
         return new Class[]{SpawnFeature.class};

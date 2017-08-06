@@ -25,18 +25,8 @@ public class PostGameFeature extends AbstractFeature {
     private User winningUser = null;
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void start() {
         initialiseScoreboard();
-    }
-
-    @Override
-    public void stop() {
-
     }
 
     @Override

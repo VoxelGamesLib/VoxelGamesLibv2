@@ -96,23 +96,6 @@ public class KitFeature extends AbstractFeature {
             }
         });
     }
-
-    /**
-     * @see AbstractFeature#tick()
-     */
-    @Override
-    public void tick() {
-
-    }
-
-    /**
-     * @see AbstractFeature#init()
-     */
-    @Override
-    public void init() {
-
-    }
-
     /**
      * Adds a kit to the feature
      *
@@ -129,14 +112,5 @@ public class KitFeature extends AbstractFeature {
      */
     public void setKits(@Nonnull List<Kit> kits) {
         this.kits = kits;
-    }
-
-    /**
-     * @see AbstractFeature#getDependencies()
-     */
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
     }
 }

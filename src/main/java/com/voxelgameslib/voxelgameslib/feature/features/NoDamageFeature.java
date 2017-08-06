@@ -12,32 +12,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
         description = "Small feature that disables any damage")
 public class NoDamageFeature extends AbstractFeature {
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
-
     @SuppressWarnings("JavaDoc")
     @GameEvent
     public void onDmg(@Nonnull EntityDamageEvent event) {

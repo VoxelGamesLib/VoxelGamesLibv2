@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
 import java.util.Arrays;
@@ -42,34 +41,6 @@ public class NoBlockBreakFeature extends AbstractFeature {
      */
     public void setBlacklist(@Nonnull Material[] blacklist) {
         this.blacklist = blacklist;
-    }
-
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
-        return new Class[0];
     }
 
     @SuppressWarnings({"JavaDoc", "Duplicates"})

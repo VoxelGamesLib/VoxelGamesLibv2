@@ -26,25 +26,4 @@ public class NoHungerLossFeature extends AbstractFeature {
     public void onHungerDepletion(@Nonnull FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    @Nonnull
-    public Class[] getDependencies() {
-        return new Class[0];
-    }
 }
