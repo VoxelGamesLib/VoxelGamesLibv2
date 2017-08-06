@@ -32,6 +32,7 @@ import org.bukkit.plugin.UnknownDependencyException;
 /**
  * @author aadnk
  */
+@SuppressWarnings("MissingJSR305")
 public abstract class LoggedPluginManager implements PluginManager {
 
     @SuppressWarnings("FieldCanBeLocal")

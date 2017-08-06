@@ -9,7 +9,9 @@ public interface Translatable {
     @Nonnull
     String[] getArgs();
 
+    @Nonnull
     String name();
 
+    @Nonnull
     Translatable[] getValues();
 }

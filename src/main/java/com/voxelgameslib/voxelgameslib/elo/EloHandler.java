@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+import javax.annotation.Nonnull;
 
 import jskills.IPlayer;
 import jskills.ITeam;
@@ -43,7 +44,7 @@ public class EloHandler implements Handler {
      * @param game        the game that ended
      * @param teamFeature the team feature that managed the teams for this game
      */
-    public void handleGameEnd(Game game, TeamFeature teamFeature) {
+    public void handleGameEnd(@Nonnull Game game, @Nonnull TeamFeature teamFeature) {
         List<ITeam> teams = new ArrayList<>();
         teams.addAll(teamFeature.getJSkillTeamsOrdered());
         Map<IPlayer, Rating> newRatings = calculator
@@ -59,7 +60,7 @@ public class EloHandler implements Handler {
      * @param duelFeature the duel feature that managed the game
      * @param winner      the user that won
      */
-    public void handleGameEnd(Game game, DuelFeature duelFeature, User winner) {
+    public void handleGameEnd(@Nonnull Game game, @Nonnull DuelFeature duelFeature, @Nonnull User winner) {
         List<ITeam> teams = new ArrayList<>();
         teams.add(new jskills.Team(duelFeature.getOne(),
                 duelFeature.getOne().getRating(game.getGameMode())));
@@ -79,7 +80,7 @@ public class EloHandler implements Handler {
      * @param game  the game that ended
      * @param users the users which played this game, in order, first = winner
      */
-    public void handleGameEnd(Game game, User... users) {
+    public void handleGameEnd(@Nonnull Game game, @Nonnull User... users) {
         List<ITeam> teams = new ArrayList<>();
         for (User user : users) {
             teams.add(new jskills.Team(user, user.getRating(game.getGameMode())));
@@ -90,7 +91,7 @@ public class EloHandler implements Handler {
         update(game, newRatings);
     }
 
-    private void update(Game game, Map<IPlayer, Rating> newRatings) {
+    private void update(@Nonnull Game game, @Nonnull Map<IPlayer, Rating> newRatings) {
         for (IPlayer iPlayer : newRatings.keySet()) {
             if (!(iPlayer instanceof User)) {
                 log.warning("WTF");

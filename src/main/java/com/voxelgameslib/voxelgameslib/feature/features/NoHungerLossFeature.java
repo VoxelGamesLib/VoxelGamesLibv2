@@ -5,6 +5,8 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @FeatureInfo(name = "NoHungerLossFeature", author = "aphelion", version = "1.0",
@@ -16,12 +18,12 @@ public class NoHungerLossFeature extends AbstractFeature {
         getPhase().getGame().getPlayers().forEach(this::feed);
     }
 
-    public void feed(User user) {
+    public void feed(@Nonnull User user) {
         user.getPlayer().setFoodLevel(20);
     }
 
     @GameEvent
-    public void onHungerDepletion(FoodLevelChangeEvent event) {
+    public void onHungerDepletion(@Nonnull FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
 
@@ -41,6 +43,7 @@ public class NoHungerLossFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

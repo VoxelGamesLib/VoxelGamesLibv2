@@ -42,6 +42,7 @@ public interface Feature extends Tickable {
      * @return all features this feature depends on. this feature will load before any dependency in
      * this list and the dependencies are required to be active
      */
+    @Nonnull
     default Class[] getDependencies() {
         return new Class[0];
     }
@@ -50,6 +51,7 @@ public interface Feature extends Tickable {
      * @return all features this phase soft depends on. this feature will load before any dependency
      * in this list, but the dependencies are not required to be active
      */
+    @Nonnull
     default Class[] getSoftDependencies() {
         return new Class[0];
     }
@@ -57,6 +59,7 @@ public interface Feature extends Tickable {
     /**
      * @return a list of all markers this feature uses
      */
+    @Nonnull
     default MarkerDefinition[] getMarkers() {
         return new MarkerDefinition[0];
     }

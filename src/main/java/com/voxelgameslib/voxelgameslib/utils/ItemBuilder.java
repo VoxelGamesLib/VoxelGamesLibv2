@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -31,7 +32,7 @@ public class ItemBuilder {
      * @param mat the {@link Material} to start the builder from
      * @since 1.0
      */
-    public ItemBuilder(final Material mat) {
+    public ItemBuilder(@Nonnull final Material mat) {
         is = new ItemStack(mat);
     }
 
@@ -41,7 +42,7 @@ public class ItemBuilder {
      * @param is the {@link ItemStack} to start the builder from
      * @since 1.0
      */
-    public ItemBuilder(final ItemStack is) {
+    public ItemBuilder(@Nonnull final ItemStack is) {
         this.is = is;
     }
 
@@ -52,6 +53,7 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
+    @Nonnull
     public ItemBuilder amount(final int amount) {
         is.setAmount(amount);
         return this;
@@ -64,7 +66,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
-    public ItemBuilder name(final String name) {
+    @Nonnull
+    public ItemBuilder name(@Nonnull final String name) {
         final ItemMeta meta = is.getItemMeta();
         meta.setDisplayName(name);
         is.setItemMeta(meta);
@@ -78,7 +81,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
-    public ItemBuilder lore(final String line) {
+    @Nonnull
+    public ItemBuilder lore(@Nonnull final String line) {
         final ItemMeta meta = is.getItemMeta();
         List<String> lore = meta.getLore();
         if (lore == null) {
@@ -97,6 +101,7 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
+    @Nonnull
     public ItemBuilder durability(final int durability) {
         is.setDurability((short) durability);
         return this;
@@ -110,6 +115,7 @@ public class ItemBuilder {
      * @since 1.0
      */
     @SuppressWarnings("deprecation")
+    @Nonnull
     public ItemBuilder data(final int data) {
         is.setData(new MaterialData(is.getType(), (byte) data));
         return this;
@@ -123,7 +129,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
-    public ItemBuilder enchantment(final Enchantment enchantment, final int level) {
+    @Nonnull
+    public ItemBuilder enchantment(@Nonnull final Enchantment enchantment, final int level) {
         is.addUnsafeEnchantment(enchantment, level);
         return this;
     }
@@ -135,7 +142,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
-    public ItemBuilder enchantment(final Enchantment enchantment) {
+    @Nonnull
+    public ItemBuilder enchantment(@Nonnull final Enchantment enchantment) {
         is.addUnsafeEnchantment(enchantment, 1);
         return this;
     }
@@ -147,7 +155,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
-    public ItemBuilder type(final Material material) {
+    @Nonnull
+    public ItemBuilder type(@Nonnull final Material material) {
         is.setType(material);
         return this;
     }
@@ -158,6 +167,7 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
+    @Nonnull
     public ItemBuilder clearLore() {
         final ItemMeta meta = is.getItemMeta();
         meta.setLore(new ArrayList<String>());
@@ -171,6 +181,7 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.0
      */
+    @Nonnull
     public ItemBuilder clearEnchantments() {
         for (final Enchantment e : is.getEnchantments().keySet()) {
             is.removeEnchantment(e);
@@ -185,7 +196,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.1
      */
-    public ItemBuilder color(Color color) {
+    @Nonnull
+    public ItemBuilder color(@Nonnull Color color) {
         if (is.getType() == Material.LEATHER_BOOTS || is.getType() == Material.LEATHER_CHESTPLATE
                 || is.getType() == Material.LEATHER_HELMET
                 || is.getType() == Material.LEATHER_LEGGINGS) {
@@ -205,7 +217,8 @@ public class ItemBuilder {
      * @return this builder for chaining
      * @since 1.3
      */
-    public ItemBuilder meta(Consumer<ItemMeta> consumer) {
+    @Nonnull
+    public ItemBuilder meta(@Nonnull Consumer<ItemMeta> consumer) {
         ItemMeta meta = is.getItemMeta();
         consumer.accept(meta);
         is.setItemMeta(meta);
@@ -218,6 +231,7 @@ public class ItemBuilder {
      * @return the created {@link ItemStack}
      * @since 1.0
      */
+    @Nonnull
     public ItemStack build() {
         return is;
     }

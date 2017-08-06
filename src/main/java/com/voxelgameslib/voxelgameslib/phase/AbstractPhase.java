@@ -92,7 +92,7 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
-    public void setNextPhase(Phase nextPhase) {
+    public void setNextPhase(@Nonnull Phase nextPhase) {
         this.nextPhase = nextPhase;
     }
 
@@ -224,12 +224,12 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
-    public void addTickable(UUID identifier, Tickable tickable) {
+    public void addTickable(@Nonnull UUID identifier, @Nonnull Tickable tickable) {
         phaseTickables.put(identifier, tickable);
     }
 
     @Override
-    public void removeTickable(UUID identifier) {
+    public void removeTickable(@Nonnull UUID identifier) {
         phaseTickables.remove(identifier);
     }
 
@@ -341,6 +341,7 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
+    @Nonnull
     public Duration getDuration() {
         if (duration == null) {
             return Duration.between(startTime, LocalDateTime.now());

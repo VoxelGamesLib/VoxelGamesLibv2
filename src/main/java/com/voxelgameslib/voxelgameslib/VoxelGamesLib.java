@@ -329,6 +329,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         return taskChainFactory.newSharedChain(name);
     }
 
+    @Nonnull
     public Injector getInjector() {
         return injector;
     }

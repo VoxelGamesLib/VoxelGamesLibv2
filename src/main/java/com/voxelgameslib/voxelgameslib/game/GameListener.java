@@ -52,7 +52,7 @@ public class GameListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(@Nonnull PlayerJoinEvent event) {
         Bukkit.getScheduler().runTaskLater(voxelGamesLib, () -> {
             if (gameHandler.getDefaultGame() != null) {
                 gameHandler.getDefaultGame().join(userHandler.getUser(event.getPlayer().getUniqueId()).orElseThrow(() ->

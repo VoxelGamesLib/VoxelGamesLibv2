@@ -18,7 +18,7 @@ public class BukkitScoreboard extends AbstractScoreboard {
     private Objective objective;
 
     @Override
-    public void setImplObject(Scoreboard object) {
+    public void setImplObject(@Nonnull Scoreboard object) {
         scoreboard = object;
         objective = scoreboard.registerNewObjective("VoxelGamesLib", "dummy"); // todo dont forget to remove dummy
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -68,7 +68,8 @@ public class BukkitScoreboard extends AbstractScoreboard {
     }
 
     @Override
-    public StringScoreboardLine createAndAddLine(String content) {
+    @Nonnull
+    public StringScoreboardLine createAndAddLine(@Nonnull String content) {
         Team team = scoreboard.registerNewTeam("line" + RandomUtil.generateString(8));
         BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
         int score = addLine(scoreboardLine);
@@ -79,7 +80,8 @@ public class BukkitScoreboard extends AbstractScoreboard {
     }
 
     @Override
-    public StringScoreboardLine createAndAddLine(int pos, String content) {
+    @Nonnull
+    public StringScoreboardLine createAndAddLine(int pos, @Nonnull String content) {
         Team team = scoreboard.registerNewTeam("line" + pos);
         BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
         addLine(pos, scoreboardLine);
@@ -90,7 +92,8 @@ public class BukkitScoreboard extends AbstractScoreboard {
     }
 
     @Override
-    public StringScoreboardLine createAndAddLine(String key, String content) {
+    @Nonnull
+    public StringScoreboardLine createAndAddLine(@Nonnull String key, @Nonnull String content) {
         Team team = scoreboard.registerNewTeam("line" + key);
         BukkitStringScoreboardLine scoreboardLine = new BukkitStringScoreboardLine(content, team);
         int score = addLine(key, scoreboardLine);

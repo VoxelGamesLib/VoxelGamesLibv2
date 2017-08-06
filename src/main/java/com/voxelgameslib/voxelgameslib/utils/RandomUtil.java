@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
 import java.util.Random;
+import javax.annotation.Nonnull;
 
 /**
  * Small util to work with random generated values
@@ -27,6 +28,7 @@ public class RandomUtil {
     /**
      * @return the random instance that is currently in use
      */
+    @Nonnull
     public static Random getRandom() {
         return random;
     }
@@ -45,6 +47,7 @@ public class RandomUtil {
      *
      * @return the random string
      */
+    @Nonnull
     public static String generateString() {
         return generateString(generateNumInRange(4, 10));
     }
@@ -54,6 +57,7 @@ public class RandomUtil {
      *
      * @return the random string
      */
+    @Nonnull
     public static String generateString(int length) {
         char[] buf = new char[length];
         for (int idx = 0; idx < buf.length; ++idx) {
@@ -80,7 +84,8 @@ public class RandomUtil {
      * @param <T>   the type of the array
      * @return the random entry
      */
-    public static <T> T randomEntry(T[] array) {
+    @Nonnull
+    public static <T> T randomEntry(@Nonnull T[] array) {
         return array[random.nextInt(array.length)];
     }
 }

@@ -138,13 +138,14 @@ public class GamePlayer implements User {
     }
 
     @Override
+    @Nonnull
     public Component getDisplayName() {
         if (rawDisplayName == null) {
             // wat?
             rawDisplayName = getPlayer().getDisplayName();
         }
 
-        if (displayName == null && rawDisplayName != null) {
+        if (displayName == null) {
             if (prefix == null) {
                 prefix = TextComponent.of("");
             }
@@ -157,37 +158,54 @@ public class GamePlayer implements User {
     }
 
     @Override
+    public void setDisplayName(@Nonnull String displayName) {
+        this.rawDisplayName = displayName;
+        refreshDisplayName();
+    }
+
+    @Override
+    @Nonnull
     public String getRawDisplayName() {
         return rawDisplayName;
     }
 
     @Override
+    @Nonnull
     public Player getPlayer() {
         return player;
     }
 
     @Override
+    public void setPlayer(@Nonnull Player player) {
+        this.player = player;
+        setPlayerData(player);
+    }
+
+    @Override
+    @Nonnull
     public Locale getLocale() {
         return locale;
     }
 
     @Override
-    public void setLocale(Locale locale) {
+    public void setLocale(@Nonnull Locale locale) {
         this.locale = locale;
     }
 
     @Override
+    @Nonnull
     public Role getRole() {
         return role;
     }
 
     @Override
-    public void setRole(Role role) {
+    public void setRole(@Nonnull Role role) {
         this.role = role;
     }
 
     @Override
-    public Rating getRating(GameMode mode) {
+    @Nonnull
+    public Rating getRating(@Nonnull GameMode mode) {
         RatingWrapper rating = getRatings().get(mode.getName());
         if (rating == null) {
             return mode.getDefaultRating();
@@ -197,23 +215,9 @@ public class GamePlayer implements User {
     }
 
     @Override
-    public void saveRating(GameMode mode, Rating rating) {
+    public void saveRating(@Nonnull GameMode mode, @Nonnull Rating rating) {
         ratings.put(mode.getName(), new RatingWrapper(rating));
         persistenceHandler.getProvider().saveUser(this);
-    }
-
-    @Override
-    public Map<String, RatingWrapper> getRatings() {
-        if (ratings == null) {
-            ratings = new HashMap<>();
-        }
-        return ratings;
-    }
-
-    @Override
-    public void setPlayer(Player player) {
-        this.player = player;
-        setPlayerData(player);
     }
 
     @Override
@@ -221,16 +225,19 @@ public class GamePlayer implements User {
         displayName = null; // regenerate full display name
     }
 
-    private void setPlayerData(Player player) {
+    @Override
+    @Nonnull
+    public Map<String, RatingWrapper> getRatings() {
+        if (ratings == null) {
+            ratings = new HashMap<>();
+        }
+        return ratings;
+    }
+
+    private void setPlayerData(@Nonnull Player player) {
         name = player.getName();
         ipAddress = player.getAddress().getAddress().getHostAddress();
         banned = player.isBanned();
-    }
-
-    @Override
-    public void setDisplayName(String displayName) {
-        this.rawDisplayName = displayName;
-        refreshDisplayName();
     }
 
     @Override
@@ -244,39 +251,42 @@ public class GamePlayer implements User {
     }
 
     @Override
+    @Nonnull
     public Component getPrefix() {
         return prefix;
     }
 
     @Override
-    public Component getSuffix() {
-        return suffix;
-    }
-
-    @Override
-    public void setPrefix(Component prefix) {
+    public void setPrefix(@Nonnull Component prefix) {
         this.prefix = prefix;
         refreshDisplayName();
     }
 
     @Override
-    public void setSuffix(Component suffix) {
+    @Nonnull
+    public Component getSuffix() {
+        return suffix;
+    }
+
+    @Override
+    public void setSuffix(@Nonnull Component suffix) {
         this.suffix = suffix;
         refreshDisplayName();
     }
 
     @Override
-    public void setUuid(UUID uuid) {
+    public void setUuid(@Nonnull UUID uuid) {
         this.uuid = uuid;
     }
 
     @Override
+    @Nonnull
     public List<ChatChannel> getChannels() {
         return channels;
     }
 
     @Override
-    public void addListeningChannel(String identifier) {
+    public void addListeningChannel(@Nonnull String identifier) {
         Optional<ChatChannel> channel = chatHandler.getChannel(identifier);
 
         if (channel.isPresent()) {
@@ -286,7 +296,7 @@ public class GamePlayer implements User {
     }
 
     @Override
-    public void removeListeningChannel(String identifier) {
+    public void removeListeningChannel(@Nonnull String identifier) {
         ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
 
         if (channel != null) {
@@ -300,12 +310,13 @@ public class GamePlayer implements User {
     }
 
     @Override
+    @Nonnull
     public ChatChannel getActiveChannel() {
         return activeChannel;
     }
 
     @Override
-    public void setActiveChannel(String identifier) {
+    public void setActiveChannel(@Nonnull String identifier) {
         chatHandler.getChannel(identifier).ifPresent((chatChannel -> activeChannel = chatChannel));
     }
 

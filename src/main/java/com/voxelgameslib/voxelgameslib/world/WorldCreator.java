@@ -17,6 +17,7 @@ import net.kyori.text.format.TextColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
@@ -58,13 +59,13 @@ public class WorldCreator extends BaseCommand {
     private Map map;
 
     @CommandPermission("%admin")
-    public void worldcreator(User sender) {
+    public void worldcreator(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_CREATOR_INFO);
     }
 
     @Subcommand("start")
     @CommandPermission("%admin")
-    public void start(User sender) {
+    public void start(@Nonnull User sender) {
         if (editor != null) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_IN_USE,
                     editor.getDisplayName());
@@ -81,7 +82,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("world")
     @CommandPermission("%admin")
-    public void world(User sender, String worldName) {
+    public void world(@Nonnull User sender, @Nonnull String worldName) {
         if (step != 1) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 1);
             return;
@@ -99,7 +100,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("center")
     @CommandPermission("%admin")
-    public void center(User sender) {
+    public void center(@Nonnull User sender) {
         if (step != 2) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 2);
             return;
@@ -115,7 +116,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("radius")
     @CommandPermission("%admin")
-    public void radius(User sender, int radius) {
+    public void radius(@Nonnull User sender, int radius) {
         if (step != 3) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 3);
             return;
@@ -130,7 +131,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("name")
     @CommandPermission("%admin")
-    public void name(User sender, String name) {
+    public void name(@Nonnull User sender, @Nonnull String name) {
         if (step != 4) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 4);
             return;
@@ -145,7 +146,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("author")
     @CommandPermission("%admin")
-    public void author(User sender, String author) {
+    public void author(@Nonnull User sender, @Nonnull String author) {
         if (step != 5) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 5);
             return;
@@ -167,7 +168,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("gamemode")
     @CommandPermission("%admin")
-    public void gamemode(User sender, String gamemode) {
+    public void gamemode(@Nonnull User sender, @Nonnull String gamemode) {
         if (step != 6) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 6);
             return;
@@ -186,7 +187,7 @@ public class WorldCreator extends BaseCommand {
     @Subcommand("edit")
     @CommandPermission("%admin")
     //TODO might want to replace onOff with boolean in the future
-    public void edit(User sender, String onOff) {
+    public void edit(@Nonnull User sender, @Nonnull String onOff) {
         if (step != 7) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 7);
             return;
@@ -209,7 +210,7 @@ public class WorldCreator extends BaseCommand {
 
     @Subcommand("done")
     @CommandPermission("%admin")
-    public void done(User sender) {
+    public void done(@Nonnull User sender) {
         if (step != 8) {
             Lang.msg(sender, LangKey.WORLD_CREATOR_WRONG_STEP, step, 8);
             return;

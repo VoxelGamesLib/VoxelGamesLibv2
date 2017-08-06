@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 /**
  * It represents the node of the graph. It holds a user value that is passed back to the user when a
@@ -20,7 +21,7 @@ final class GraphNode<T> {
      *
      * @param node The incoming node
      */
-    void addComingInNode(GraphNode<T> node) {
+    void addComingInNode(@Nonnull GraphNode<T> node) {
         if (comingInNodes == null) {
             comingInNodes = new ArrayList<>();
         }
@@ -32,7 +33,7 @@ final class GraphNode<T> {
      *
      * @param node The outgoing node
      */
-    void addGoingOutNode(GraphNode<T> node) {
+    void addGoingOutNode(@Nonnull GraphNode<T> node) {
         if (goingOutNodes == null) {
             goingOutNodes = new ArrayList<>();
         }
@@ -44,6 +45,7 @@ final class GraphNode<T> {
      *
      * @return The coming in nodes
      */
+    @Nonnull
     List<GraphNode<T>> getComingInNodes() {
         return comingInNodes;
     }
@@ -53,6 +55,7 @@ final class GraphNode<T> {
      *
      * @return The going out nodes
      */
+    @Nonnull
     List<GraphNode<T>> getGoingOutNodes() {
         return goingOutNodes;
     }

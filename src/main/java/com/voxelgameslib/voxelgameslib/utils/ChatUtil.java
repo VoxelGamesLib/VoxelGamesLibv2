@@ -48,6 +48,7 @@ public class ChatUtil {
      * @param comps the base components to serialize into text
      * @return the readable text
      */
+    @Nonnull
     public static String toPlainText(@Nonnull Component... comps) {
         StringBuilder sb = new StringBuilder();
         for (Component comp : comps) {
@@ -56,7 +57,7 @@ public class ChatUtil {
         return sb.toString();
     }
 
-    private static void toPlainText(StringBuilder sb, Component component) {
+    private static void toPlainText(@Nonnull StringBuilder sb, @Nonnull Component component) {
         if (component instanceof TextComponent) {
             sb.append(((TextComponent) component).content());
         }
@@ -71,7 +72,7 @@ public class ChatUtil {
      * @param gameUser the user that should get the message
      * @param message  the message to send to the user
      */
-    public static void sendMessage(GamePlayer gameUser, Component message) {
+    public static void sendMessage(@Nonnull GamePlayer gameUser, @Nonnull Component message) {
         try {
             ENTITYPLAYER_SENDMESSAGE_METHOD.invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
                     CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializer.serialize(message)));
@@ -80,7 +81,8 @@ public class ChatUtil {
         }
     }
 
-    public static Component formatChannelMessage(ChatChannel channel, Component displayName, Component message) {
+    @Nonnull
+    public static Component formatChannelMessage(@Nonnull ChatChannel channel, @Nonnull Component displayName, @Nonnull Component message) {
         Component prefix = TextComponent.of("");
 
         if (channel.getPrefix() != null) {

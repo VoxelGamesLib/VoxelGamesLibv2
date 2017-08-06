@@ -53,23 +53,41 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      *
      * @return the display name of the user, consists of prefix, raw display name and suffix.
      */
+    @Nonnull
     Component getDisplayName();
+
+    /**
+     * sets the raw display name for this user
+     *
+     * @param displayName the raw display name
+     */
+    void setDisplayName(@Nonnull String displayName);
 
     /**
      * returns the display name of the user
      *
      * @return the display name of the user
      */
+    @Nonnull
     String getRawDisplayName();
 
     /**
      * @return the bukkit player
      */
+    @Nonnull
     Player getPlayer();
+
+    /**
+     * sets the player object for this user
+     *
+     * @param player the new player object
+     */
+    void setPlayer(@Nonnull Player player);
 
     /**
      * @return the players currently selected locale
      */
+    @Nonnull
     Locale getLocale();
 
     /**
@@ -78,11 +96,12 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      *
      * @param locale the new locale
      */
-    void setLocale(Locale locale);
+    void setLocale(@Nonnull Locale locale);
 
     /**
      * @return the role of that player
      */
+    @Nonnull
     Role getRole();
 
     /**
@@ -90,14 +109,15 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      *
      * @param role the new role
      */
-    void setRole(Role role);
+    void setRole(@Nonnull Role role);
 
     /**
      * @param mode the mode to get the rating for
      * @return the rating of this player for gamemode mode. will return default values if not
      * present
      */
-    Rating getRating(GameMode mode);
+    @Nonnull
+    Rating getRating(@Nonnull GameMode mode);
 
     /**
      * Saves a rating for this users. will override existing ratings
@@ -105,19 +125,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      * @param mode   the mode the rating was achieved in
      * @param rating the new rating
      */
-    void saveRating(GameMode mode, Rating rating);
-
-    /**
-     * @return all ratings for this player
-     */
-    Map<String, RatingWrapper> getRatings();
-
-    /**
-     * sets the player object for this user
-     *
-     * @param player the new player object
-     */
-    void setPlayer(Player player);
+    void saveRating(@Nonnull GameMode mode, @Nonnull Rating rating);
 
     /**
      * Causes a new display name to be generated, based on the raw display name, prefix and suffix
@@ -125,46 +133,48 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     void refreshDisplayName();
 
     /**
-     * sets the raw display name for this user
-     *
-     * @param displayName the raw display name
+     * @return all ratings for this player
      */
-    void setDisplayName(String displayName);
+    @Nonnull
+    Map<String, RatingWrapper> getRatings();
 
     /**
      * @return the prefix for this user
      */
+    @Nonnull
     Component getPrefix();
-
-    /**
-     * @return the suffix for this user
-     */
-    Component getSuffix();
 
     /**
      * changes the prefix for this user. forces the display name to be regenerated
      *
      * @param prefix the new prefix
      */
-    void setPrefix(Component prefix);
+    void setPrefix(@Nonnull Component prefix);
+
+    /**
+     * @return the suffix for this user
+     */
+    @Nonnull
+    Component getSuffix();
 
     /**
      * changes the suffix for this user. forces the display name to be regenerated
      *
      * @param suffix the new suffix
      */
-    void setSuffix(Component suffix);
+    void setSuffix(@Nonnull Component suffix);
 
     /**
      * sets the uuid of this user. shouldn't be used, unless you are gamehandler
      *
      * @param uuid the new uuid
      */
-    void setUuid(UUID uuid);
+    void setUuid(@Nonnull UUID uuid);
 
     /**
      * @return Channels a user is listening to
      */
+    @Nonnull
     List<ChatChannel> getChannels();
 
     /**
@@ -172,20 +182,21 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      *
      * @param channel string identifier for the channel
      */
-    void addListeningChannel(String channel);
+    void addListeningChannel(@Nonnull String channel);
 
     /**
      * Remove the user from a channel
      *
      * @param channel string identifier for the channel
      */
-    void removeListeningChannel(String channel);
+    void removeListeningChannel(@Nonnull String channel);
 
     /**
      * Get the user's active channel
      *
      * @return ChatChannel the channel the user is speaking to
      */
+    @Nonnull
     ChatChannel getActiveChannel();
 
     /**
@@ -193,7 +204,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      *
      * @param channel string identifier for the channel
      */
-    void setActiveChannel(String channel);
+    void setActiveChannel(@Nonnull String channel);
 
     /**
      * Applies the default prefix of the role, if there is one

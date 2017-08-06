@@ -37,7 +37,7 @@ public abstract class AbstractScoreboard implements Scoreboard {
     }
 
     @Override
-    public int addLine(String key, @Nonnull ScoreboardLine line) {
+    public int addLine(@Nonnull String key, @Nonnull ScoreboardLine line) {
         int pos = addLine(line);
         keys.put(key, pos);
         return pos;

@@ -9,6 +9,7 @@ import com.voxelgameslib.voxelgameslib.utils.db.DbRow;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import lombok.extern.java.Log;
@@ -31,12 +32,13 @@ public class MysqlPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(@Nonnull User user) {
         DB.executeUpdateAsync("UPDATE vgl_user SET username = ? WHERE uuid = ?", user.getRawDisplayName(), user.getUuid());
     }
 
     @Override
-    public Optional<User> loadUser(UUID id) {
+    @Nonnull
+    public Optional<User> loadUser(@Nonnull UUID id) {
         User user = new GamePlayer();
         DbRow userData;
 

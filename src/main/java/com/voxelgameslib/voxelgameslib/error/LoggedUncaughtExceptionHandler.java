@@ -5,6 +5,7 @@ import com.bugsnag.Severity;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.WeakHashMap;
+import javax.annotation.Nonnull;
 
 import lombok.extern.java.Log;
 
@@ -14,7 +15,11 @@ public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler 
     private final UncaughtExceptionHandler originalHandler;
     private final WeakHashMap<Bugsnag, Boolean> clientMap = new WeakHashMap<Bugsnag, Boolean>();
 
-    static void enable(Bugsnag bugsnag) {
+    LoggedUncaughtExceptionHandler(@Nonnull UncaughtExceptionHandler originalHandler) {
+        this.originalHandler = originalHandler;
+    }
+
+    static void enable(@Nonnull Bugsnag bugsnag) {
         UncaughtExceptionHandler currentHandler = Thread.getDefaultUncaughtExceptionHandler();
 
         // Find or create the Bugsnag ExceptionHandler
@@ -30,7 +35,7 @@ public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler 
         bugsnagHandler.clientMap.put(bugsnag, true);
     }
 
-    static void disable(Bugsnag bugsnag) {
+    static void disable(@Nonnull Bugsnag bugsnag) {
         // Find the Bugsnag ExceptionHandler
         UncaughtExceptionHandler currentHandler = Thread.getDefaultUncaughtExceptionHandler();
         if (currentHandler instanceof LoggedUncaughtExceptionHandler) {
@@ -45,11 +50,7 @@ public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler 
         }
     }
 
-    LoggedUncaughtExceptionHandler(UncaughtExceptionHandler originalHandler) {
-        this.originalHandler = originalHandler;
-    }
-
-    public void uncaughtException(Thread thread, Throwable throwable) {
+    public void uncaughtException(@Nonnull Thread thread, @Nonnull Throwable throwable) {
         // Notify any subscribed clients of the uncaught exception
         for (Bugsnag bugsnag : clientMap.keySet()) {
             bugsnag.notify(throwable, Severity.ERROR);

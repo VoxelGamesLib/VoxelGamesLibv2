@@ -11,6 +11,8 @@ import com.google.inject.Injector;
 
 import java.lang.reflect.Type;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -29,7 +31,8 @@ public class PhaseTypeAdapter implements JsonDeserializer<Phase>, JsonSerializer
     private Injector injector;
 
     @Override
-    public Phase deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    @Nullable
+    public Phase deserialize(@Nonnull JsonElement json, @Nullable Type typeOfT, @Nonnull JsonDeserializationContext context)
             throws JsonParseException {
         try {
             JsonObject jsonObject = json.getAsJsonObject();
@@ -51,7 +54,8 @@ public class PhaseTypeAdapter implements JsonDeserializer<Phase>, JsonSerializer
     }
 
     @Override
-    public JsonElement serialize(Phase src, Type typeOfSrc, JsonSerializationContext context) {
+    @Nonnull
+    public JsonElement serialize(@Nonnull Phase src, @Nonnull Type typeOfSrc, @Nonnull JsonSerializationContext context) {
         return context.serialize(src, src.getClass());
     }
 }

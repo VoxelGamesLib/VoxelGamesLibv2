@@ -30,6 +30,7 @@ public interface Game extends Tickable {
     /**
      * @return a unique identifier for this game
      */
+    @Nonnull
     UUID getUuid();
 
     /**
@@ -213,6 +214,7 @@ public interface Game extends Tickable {
      *
      * @return the duration
      */
+    @Nonnull
     Duration getDuration();
 
     /**

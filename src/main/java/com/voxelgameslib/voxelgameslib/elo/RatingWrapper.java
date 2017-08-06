@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.elo;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,10 +36,11 @@ public class RatingWrapper {
         //JPA
     }
 
-    public RatingWrapper(Rating rating) {
+    public RatingWrapper(@Nonnull Rating rating) {
         this(rating.getConservativeStandardDeviationMultiplier(), rating.getMean(), rating.getStandardDeviation(), rating.getConservativeRating());
     }
 
+    @Nonnull
     public Rating toRating() {
         return new Rating(getMean(), getStandardDeviation(), getConservativeStandardDeviationMultiplier());
     }

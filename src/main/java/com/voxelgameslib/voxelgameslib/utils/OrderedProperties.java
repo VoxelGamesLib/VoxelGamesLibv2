@@ -42,7 +42,7 @@ import java.util.Vector;
  *
  * @see Properties
  */
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "MissingJSR305"})
 public final class OrderedProperties implements Serializable {
 
     private static final long serialVersionUID = 1L;

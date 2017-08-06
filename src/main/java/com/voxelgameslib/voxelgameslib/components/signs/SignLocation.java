@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -40,7 +42,7 @@ public class SignLocation {
      * @param location the location
      * @param lines    the lines this sign currently has
      */
-    public SignLocation(Location location, String[] lines) {
+    public SignLocation(@Nonnull Location location, @Nonnull String[] lines) {
         this.location = location;
 
         block = location.getBlock();
@@ -50,7 +52,12 @@ public class SignLocation {
         setLines(lines);
     }
 
-    public void setLines(String[] lines) {
+    @Nonnull
+    public String[] getLines() {
+        return new String[]{lines0, lines1, lines2, lines3};
+    }
+
+    public void setLines(@Nonnull String[] lines) {
         lines0 = lines[0];
         lines1 = lines[1];
         lines2 = lines[2];
@@ -63,10 +70,6 @@ public class SignLocation {
             sign.setLine(3, lines3);
             sign.update();
         }
-    }
-
-    public String[] getLines() {
-        return new String[]{lines0, lines1, lines2, lines3};
     }
 
     /**

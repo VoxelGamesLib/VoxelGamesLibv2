@@ -27,7 +27,7 @@ public interface Phase extends Tickable {
      *
      * @param nextPhase the new next phase
      */
-    void setNextPhase(Phase nextPhase);
+    void setNextPhase(@Nonnull Phase nextPhase);
 
     /**
      * sets the game this phase is attached to
@@ -127,6 +127,7 @@ public interface Phase extends Tickable {
      *
      * @return the duration
      */
+    @Nonnull
     Duration getDuration();
 
     /**
@@ -134,12 +135,12 @@ public interface Phase extends Tickable {
      *
      * @param tickable the tickable object
      */
-    void addTickable(UUID identifier, Tickable tickable);
+    void addTickable(@Nonnull UUID identifier, @Nonnull Tickable tickable);
 
     /**
      * Removes a tickable that is dependent on the phase
      *
      * @param identifier identifier of the tickable
      */
-    void removeTickable(UUID identifier);
+    void removeTickable(@Nonnull UUID identifier);
 }

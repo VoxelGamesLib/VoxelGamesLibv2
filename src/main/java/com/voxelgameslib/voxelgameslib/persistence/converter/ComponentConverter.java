@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.persistence.converter;
 import net.kyori.text.Component;
 import net.kyori.text.serializer.ComponentSerializer;
 
+import javax.annotation.Nonnull;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -10,12 +11,14 @@ import javax.persistence.Converter;
 public class ComponentConverter implements AttributeConverter<Component, String> {
 
     @Override
-    public String convertToDatabaseColumn(Component attribute) {
+    @Nonnull
+    public String convertToDatabaseColumn(@Nonnull Component attribute) {
         return ComponentSerializer.serialize(attribute);
     }
 
     @Override
-    public Component convertToEntityAttribute(String dbData) {
+    @Nonnull
+    public Component convertToEntityAttribute(@Nonnull String dbData) {
         return ComponentSerializer.deserialize(dbData);
     }
 }

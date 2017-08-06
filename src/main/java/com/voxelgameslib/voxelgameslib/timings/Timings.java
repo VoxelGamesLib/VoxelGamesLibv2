@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.annotation.Nonnull;
 
 import lombok.extern.java.Log;
 
@@ -19,7 +20,7 @@ public class Timings {
      * @param name     the name of the task
      * @param executor the task to be timed
      */
-    public static void time(String name, TimingsExecutor executor) {
+    public static void time(@Nonnull String name, @Nonnull TimingsExecutor executor) {
         LocalDateTime start = LocalDateTime.now();
         executor.execute();
         LocalDateTime end = LocalDateTime.now();

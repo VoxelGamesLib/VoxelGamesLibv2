@@ -5,6 +5,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
 /**
  * A persistence provider handles loading and saving of all kinds of data
@@ -26,7 +27,7 @@ public interface PersistenceProvider extends Handler {
      *
      * @param user the user data to persist
      */
-    void saveUser(User user);
+    void saveUser(@Nonnull User user);
 
     /**
      * Tries to load the data for a user based on a uuid
@@ -34,5 +35,6 @@ public interface PersistenceProvider extends Handler {
      * @param id the uuid of the user data
      * @return the User, if present
      */
-    Optional<User> loadUser(UUID id);
+    @Nonnull
+    Optional<User> loadUser(@Nonnull UUID id);
 }

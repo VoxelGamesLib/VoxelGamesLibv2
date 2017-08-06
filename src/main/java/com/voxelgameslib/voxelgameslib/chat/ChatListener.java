@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -19,7 +20,7 @@ public class ChatListener implements Listener {
     private UserHandler userHandler;
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void onChat(@Nonnull AsyncPlayerChatEvent event) {
         Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
 
         user.ifPresent(u -> u.getActiveChannel().sendMessage(u, event.getMessage()));

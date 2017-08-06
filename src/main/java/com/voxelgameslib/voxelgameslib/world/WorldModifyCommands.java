@@ -15,6 +15,8 @@ import net.lingala.zip4j.exception.ZipException;
 
 import java.io.File;
 import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import co.aikar.commands.BaseCommand;
@@ -38,14 +40,14 @@ public class WorldModifyCommands extends BaseCommand {
 
     @CommandAlias("modify|help")
     @CommandPermission("%admin")
-    public void modify(User sender) {
+    public void modify(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_MODIFY_HELP);
     }
 
     @Subcommand("start")
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the map you want to modify")
-    public void start(User user, String world) {
+    public void start(@Nonnull User user, @Nonnull String world) {
         if (editor != null) {
             Lang.msg(user, LangKey.WORLD_CREATOR_IN_USE,
                     editor.getDisplayName());
@@ -82,7 +84,7 @@ public class WorldModifyCommands extends BaseCommand {
     @Subcommand("displayname")
     @CommandPermission("%admin")
     @Syntax("[name] - the new display name of the map")
-    public void displayname(User user, @co.aikar.commands.annotation.Optional String name) {
+    public void displayname(@Nonnull User user, @Nullable @co.aikar.commands.annotation.Optional String name) {
         if (!check(user)) return;
         // view
         if (name == null) {
@@ -98,7 +100,7 @@ public class WorldModifyCommands extends BaseCommand {
     @Subcommand("author")
     @CommandPermission("%admin")
     @Syntax("[author] - the new author of the map")
-    public void author(User user, @co.aikar.commands.annotation.Optional String author) {
+    public void author(@Nonnull User user, @Nullable @co.aikar.commands.annotation.Optional String author) {
         if (!check(user)) return;
         // view
         if (author == null) {
@@ -114,7 +116,7 @@ public class WorldModifyCommands extends BaseCommand {
     @Subcommand("radius")
     @CommandPermission("%admin")
     @Syntax("<radius> - the radius of the map")
-    public void radius(User user, @co.aikar.commands.annotation.Optional Integer radius) {
+    public void radius(@Nonnull User user, @Nullable @co.aikar.commands.annotation.Optional Integer radius) {
         if (!check(user)) return;
         // view
         if (radius == null) {
@@ -129,7 +131,7 @@ public class WorldModifyCommands extends BaseCommand {
 
     @Subcommand("center")
     @CommandPermission("%admin")
-    public void center(User user, String set) {
+    public void center(@Nonnull User user, @Nullable @co.aikar.commands.annotation.Optional String set) {
         if (!check(user)) return;
         // view
         if (set == null) {
@@ -145,7 +147,7 @@ public class WorldModifyCommands extends BaseCommand {
     @Subcommand("gamemode")
     @CommandPermission("%admin")
     @Syntax("<gamemode> - the gamesmodes")
-    public void gamemode(User user, @co.aikar.commands.annotation.Optional String gamemode) {
+    public void gamemode(@Nonnull User user, @Nullable @co.aikar.commands.annotation.Optional String gamemode) {
         if (!check(user)) return;
         // remove all
         // add one
@@ -155,7 +157,7 @@ public class WorldModifyCommands extends BaseCommand {
 
     @Subcommand("stop")
     @CommandPermission("%admin")
-    public void stop(User user) {
+    public void stop(@Nonnull User user) {
         if (!check(user)) return;
         worldHandler.finishWorldEditing(editor, map);
 
@@ -163,7 +165,7 @@ public class WorldModifyCommands extends BaseCommand {
         map = null;
     }
 
-    private boolean check(User user) {
+    private boolean check(@Nonnull User user) {
         if (editor == null) {
             Lang.msg(user, LangKey.WORLD_MODIFY_NOT_STARTED);
             return false;

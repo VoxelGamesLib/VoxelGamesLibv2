@@ -8,6 +8,7 @@ import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
 import java.util.Arrays;
+import javax.annotation.Nonnull;
 
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -28,7 +29,7 @@ public class NoBlockBreakFeature extends AbstractFeature {
      *
      * @param whitelist the new whitelist
      */
-    public void setWhitelist(Material[] whitelist) {
+    public void setWhitelist(@Nonnull Material[] whitelist) {
         this.whitelist = whitelist;
     }
 
@@ -39,7 +40,7 @@ public class NoBlockBreakFeature extends AbstractFeature {
      *
      * @param blacklist the new blacklist
      */
-    public void setBlacklist(Material[] blacklist) {
+    public void setBlacklist(@Nonnull Material[] blacklist) {
         this.blacklist = blacklist;
     }
 
@@ -66,13 +67,14 @@ public class NoBlockBreakFeature extends AbstractFeature {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[0];
     }
 
     @SuppressWarnings({"JavaDoc", "Duplicates"})
     @GameEvent
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onBlockBreak(@Nonnull BlockBreakEvent event) {
         if (blacklist.length != 0) {
             if (Arrays.stream(blacklist).anyMatch(m -> m.equals(event.getBlock().getType()))) {
                 event.setCancelled(true);

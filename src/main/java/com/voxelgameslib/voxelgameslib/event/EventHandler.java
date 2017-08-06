@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -55,7 +56,7 @@ public class EventHandler implements Handler, Listener {
     @Inject
     private UserHandler userHandler;
 
-    public void registerEvents(Listener listener, Game game) {
+    public void registerEvents(@Nonnull Listener listener, @Nonnull Game game) {
         Set<Class<Event>> newEvents = new HashSet<>();
         Arrays.stream(listener.getClass().getMethods()).filter((method -> method.isAnnotationPresent(GameEvent.class))).forEach(
                 method -> {
@@ -96,7 +97,7 @@ public class EventHandler implements Handler, Listener {
         Bukkit.getServer().getPluginManager().registerEvents(listener, voxelGamesLib);
     }
 
-    public void unregister(Listener listener, Game game) {
+    public void unregister(@Nonnull Listener listener, @Nonnull Game game) {
         //noinspection unchecked
         Arrays.stream(listener.getClass().getMethods())
                 .filter((method -> method.isAnnotationPresent(GameEvent.class)))
@@ -126,7 +127,7 @@ public class EventHandler implements Handler, Listener {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Event> void callEvent(T event) {
+    public <T extends Event> void callEvent(@Nonnull T event) {
         Class<Event> eventClass = (Class<Event>) event.getClass();
         while (!eventClass.equals(Object.class)) {
             if (activeEvents.containsKey(eventClass)) {
@@ -160,7 +161,8 @@ public class EventHandler implements Handler, Listener {
         }
     }
 
-    private <T extends Event> Optional<User> figureOutUser(T event) {
+    @Nonnull
+    private <T extends Event> Optional<User> figureOutUser(@Nonnull T event) {
         if (event instanceof PlayerEvent) {
             return userHandler.getUser(((PlayerEvent) event).getPlayer().getUniqueId());
         } else if (event instanceof com.voxelgameslib.voxelgameslib.event.events.player.PlayerEvent) {

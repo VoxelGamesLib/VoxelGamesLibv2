@@ -39,53 +39,60 @@ public class GameConsoleUser implements ConsoleUser {
     private ChatChannel activeChannel;
 
     @Override
+    @Nonnull
     public String getRawDisplayName() {
         return "Console";
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
+    @Nonnull
     public Player getPlayer() {
         return null;
     }
 
     @Override
+    public void setPlayer(@Nonnull Player player) {
+        // ignore
+    }
+
+    @Override
+    @Nonnull
     public Locale getLocale() {
         return Locale.ENGLISH;
     }
 
     @Override
-    public void setLocale(Locale locale) {
+    public void setLocale(@Nonnull Locale locale) {
         // ignore
     }
 
     @Override
+    @Nonnull
     public Role getRole() {
         return Role.ADMIN;
     }
 
     @Override
-    public void setRole(Role role) {
+    public void setRole(@Nonnull Role role) {
         // ignore
     }
 
     @Override
-    public Rating getRating(GameMode mode) {
+    @Nonnull
+    public Rating getRating(@Nonnull GameMode mode) {
         return mode.getDefaultRating();
     }
 
     @Override
-    public void saveRating(GameMode mode, Rating rating) {
+    public void saveRating(@Nonnull GameMode mode, @Nonnull Rating rating) {
         // ignore
     }
 
     @Override
+    @Nonnull
     public Map<String, RatingWrapper> getRatings() {
         return new HashMap<>();
-    }
-
-    @Override
-    public void setPlayer(Player player) {
-        // ignore
     }
 
     @Override
@@ -94,33 +101,36 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
-    public void setDisplayName(String displayName) {
-        // ignore
-    }
-
-    @Override
+    @Nonnull
     public Component getPrefix() {
         return TextComponent.of("");
     }
 
     @Override
+    public void setPrefix(@Nonnull Component prefix) {
+        // ignore
+    }
+
+    @Override
+    @Nonnull
     public Component getSuffix() {
         return TextComponent.of("");
     }
 
     @Override
-    public void setPrefix(Component prefix) {
+    public void setSuffix(@Nonnull Component suffix) {
         // ignore
     }
 
     @Override
-    public void setSuffix(Component suffix) {
+    public void setUuid(@Nonnull UUID uuid) {
         // ignore
     }
 
     @Override
-    public void setUuid(UUID uuid) {
-        // ignore
+    @Nonnull
+    public Component getDisplayName() {
+        return TextComponent.of("Console");
     }
 
     @Nonnull
@@ -140,8 +150,8 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
-    public Component getDisplayName() {
-        return TextComponent.of("Console");
+    public void setDisplayName(@Nonnull String displayName) {
+        // ignore
     }
 
     /* elo stuff */
@@ -156,12 +166,13 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
+    @Nonnull
     public List<ChatChannel> getChannels() {
         return channels;
     }
 
     @Override
-    public void addListeningChannel(String identifier) {
+    public void addListeningChannel(@Nonnull String identifier) {
         ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
 
         if (channel != null) {
@@ -171,7 +182,7 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
-    public void removeListeningChannel(String identifier) {
+    public void removeListeningChannel(@Nonnull String identifier) {
         ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
 
         if (channel != null) {
@@ -181,12 +192,13 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
+    @Nonnull
     public ChatChannel getActiveChannel() {
         return activeChannel;
     }
 
     @Override
-    public void setActiveChannel(String identifier) {
+    public void setActiveChannel(@Nonnull String identifier) {
         ChatChannel channel = chatHandler.getChannel(identifier).isPresent() ? chatHandler.getChannel(identifier).get() : null;
 
         if (channel != null) {

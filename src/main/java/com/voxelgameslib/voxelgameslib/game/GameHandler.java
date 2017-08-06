@@ -240,7 +240,7 @@ public class GameHandler implements Handler {
      * @return the game definition that matches the game mode, if present
      */
     @Nonnull
-    public Optional<GameDefinition> getGameDefinition(GameMode mode) {
+    public Optional<GameDefinition> getGameDefinition(@Nonnull GameMode mode) {
         return gameDefinitions.stream()
                 .filter(gameDefinition -> gameDefinition.getGameMode().equals(mode)).findAny();
     }
@@ -251,7 +251,7 @@ public class GameHandler implements Handler {
      *
      * @param game the game to remove
      */
-    public void removeGame(Game game) {
+    public void removeGame(@Nonnull Game game) {
         games.remove(game);
     }
 
@@ -262,7 +262,8 @@ public class GameHandler implements Handler {
      * @param gameMode the gamemode he wants to join
      * @return the game he should join, if present
      */
-    public Optional<Game> findGame(User user, GameMode gameMode) {
+    @Nonnull
+    public Optional<Game> findGame(@Nonnull User user, @Nonnull GameMode gameMode) {
         //TODO replace with a real matchmaking algorithm
         List<Game> matched = games.stream().filter(g -> g.getGameMode().equals(gameMode))
                 .collect(Collectors.toList());

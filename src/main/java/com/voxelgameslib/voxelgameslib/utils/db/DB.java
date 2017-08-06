@@ -17,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 import co.aikar.timings.lib.TimingManager;
 import lombok.extern.java.Log;
 
+@SuppressWarnings("MissingJSR305")
 @Log
 public final class DB {
     private static HikariDataSource pooledDataSource;

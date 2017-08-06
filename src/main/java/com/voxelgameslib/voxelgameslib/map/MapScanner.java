@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -38,7 +39,7 @@ public class MapScanner {
      * @param map    the map to scan
      * @param gameid the id of the game that the map belongs to
      */
-    public void scan(@Nonnull Map map, UUID gameid) {
+    public void scan(@Nonnull Map map, @Nonnull UUID gameid) {
         searchForMarkers(map, map.getCenter(), map.getRadius(), gameid);
 
         List<Marker> errored = new ArrayList<>();
@@ -74,7 +75,7 @@ public class MapScanner {
      * @param center the center location
      * @param range  the range in where to scan
      */
-    public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range, UUID gameid) {
+    public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range, @Nonnull UUID gameid) {
         World world = Bukkit.getWorld(map.getLoadedName(gameid));
         if (world == null) {
             throw new MapException("Could not find world " + map.getLoadedName(gameid) + "(" + map.getInfo().getName() + ")" + ". Is it loaded?");
@@ -131,11 +132,12 @@ public class MapScanner {
         map.setChestMarkers(chestMarkers);
     }
 
-    private void handleSkull(Skull skull) {
+    private void handleSkull(@Nonnull Skull skull) {
 
     }
 
-    private String getMarkerData(Skull skull) {
+    @Nullable
+    private String getMarkerData(@Nonnull Skull skull) {
         if (skull.getOwningPlayer() != null) {
             String markerData = skull.getOwningPlayer().getName();
             if (markerData == null) {

@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import lombok.extern.java.Log;
@@ -40,10 +41,12 @@ public class TeamFeature extends TeamSelectFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }
 
+    @Nonnull
     public List<jskills.Team> getJSkillTeamsOrdered() {
         return new ArrayList<>(); //TODO
     }

@@ -19,12 +19,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerRespawnEvent;
-
-import co.aikar.commands.annotation.Optional;
 
 @FeatureInfo(name = "SpawnFeature", author = "MiniDigger", version = "1.0",
         description = "Handles (re)spawning")
@@ -59,7 +56,8 @@ public class SpawnFeature extends AbstractFeature {
      * @param id the uuid user which wants to spawn
      * @return the location he should spawn
      */
-    public Location getSpawn(@Optional UUID id) {
+    @Nonnull
+    public Location getSpawn(@Nonnull UUID id) {
         //TODO super fancy spawn algorithm
         return spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()))
                 .toLocation(map.getLoadedName(getPhase().getGame().getUuid()));
@@ -73,17 +71,19 @@ public class SpawnFeature extends AbstractFeature {
 
     @SuppressWarnings("JavaDoc")
     @GameEvent
-    public void onJoin(GameJoinEvent e) {
+    public void onJoin(@Nonnull GameJoinEvent e) {
         e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
     }
 
     @Override
+    @Nonnull
     public MarkerDefinition[] getMarkers() {
         return new MarkerDefinition[]{spawnMarker};
     }
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[]{MapFeature.class};
     }

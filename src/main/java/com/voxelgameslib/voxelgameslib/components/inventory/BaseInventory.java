@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public abstract class BaseInventory {
      * @param title  title of new inventory
      * @param size   size/capacity of new inventory
      */
-    public BaseInventory(Player player, String title, int size) {
+    public BaseInventory(@Nonnull Player player, @Nonnull String title, int size) {
         this.identifier = player.getUniqueId();
         this.player = player;
         this.title = title;
@@ -46,6 +47,7 @@ public abstract class BaseInventory {
      *
      * @return the identifier (generally player UUID)
      */
+    @Nonnull
     public UUID getIdentifier() {
         return identifier;
     }
@@ -55,10 +57,12 @@ public abstract class BaseInventory {
      *
      * @return the player
      */
+    @Nonnull
     public Player getPlayer() {
         return player;
     }
 
+    @Nonnull
     public Inventory getBukkitInventory() {
         return bukkitInventory;
     }
@@ -68,7 +72,7 @@ public abstract class BaseInventory {
      *
      * @param action the action to perform
      */
-    public void setOpenAction(Consumer<Player> action) {
+    public void setOpenAction(@Nonnull Consumer<Player> action) {
         openInventoryAction = action;
     }
 
@@ -77,7 +81,7 @@ public abstract class BaseInventory {
      *
      * @param action the action to perform
      */
-    public void setCloseAction(Consumer<Player> action) {
+    public void setCloseAction(@Nonnull Consumer<Player> action) {
         closeInventoryAction = action;
     }
 
@@ -87,7 +91,7 @@ public abstract class BaseInventory {
      * @param is     itemstack to create the click action for
      * @param action the action to perform
      */
-    public void addClickAction(ItemStack is, BiConsumer<ItemStack, InventoryClickEvent> action) {
+    public void addClickAction(@Nonnull ItemStack is, @Nonnull BiConsumer<ItemStack, InventoryClickEvent> action) {
         clickActions.put(is, action);
     }
 
@@ -111,7 +115,7 @@ public abstract class BaseInventory {
      * @param is clicked item
      * @param e  click event
      */
-    public void onClick(ItemStack is, InventoryClickEvent e) {
+    public void onClick(@Nonnull ItemStack is, @Nonnull InventoryClickEvent e) {
         if (clickActions.containsKey(is)) {
             clickActions.get(is).accept(is, e);
         }

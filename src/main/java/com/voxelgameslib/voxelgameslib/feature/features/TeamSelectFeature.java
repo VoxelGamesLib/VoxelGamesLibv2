@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import org.bukkit.ChatColor;
@@ -41,6 +42,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }
@@ -92,6 +94,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
         getPhase().getGame().putGameData(defaultGameData);
     }
 
+    @Nonnull
     private Map<String, Integer> calcSizes() {
         Map<String, Integer> sizes = new HashMap<>();
 
@@ -148,7 +151,8 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
         }
     }
 
-    private String findLargest(Map<String, Integer> sizes) {
+    @Nonnull
+    private String findLargest(@Nonnull Map<String, Integer> sizes) {
         int largest = 0;
         String name = "";
 
@@ -163,7 +167,8 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
         return name;
     }
 
-    private String findSmallest(Map<String, Integer> sizes) {
+    @Nonnull
+    private String findSmallest(@Nonnull Map<String, Integer> sizes) {
         int largest = 100000;
         String name = "";
 
@@ -189,7 +194,8 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
      * @param user the user to check for
      * @return the team of the user, if present
      */
-    public Optional<Team> getTeam(User user) {
+    @Nonnull
+    public Optional<Team> getTeam(@Nonnull User user) {
         return teams.stream().filter(team -> team.contains(user)).findFirst();
     }
 
@@ -199,20 +205,23 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
      * @param name the name of the team
      * @return the team of the user, if present
      */
-    public Optional<Team> getTeam(String name) {
+    @Nonnull
+    public Optional<Team> getTeam(@Nonnull String name) {
         return teams.stream().filter(team -> team.getName().equalsIgnoreCase(name)).findFirst();
     }
 
+    @Nonnull
     public List<Team> getTeams() {
         return teams;
     }
 
     @GameEvent
-    public void onQuit(GameLeaveEvent event) {
+    public void onQuit(@Nonnull GameLeaveEvent event) {
         getTeam(event.getUser()).ifPresent(t -> t.leave(event.getUser()));
     }
 
     @Override
+    @Nonnull
     public Class<? extends AbstractFeatureCommand> getCommandClass() {
         return TeamSelectFeatureCommand.class;
     }
@@ -231,12 +240,12 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
 
         @CommandAlias("team")
         @CommandPermission("%user")
-        public void team(User sender) {
+        public void team(@Nonnull User sender) {
             //TODO message: you are in team x
         }
 
         @CommandAlias("join")
-        public void join(User sender, String team) {
+        public void join(@Nonnull User sender, @Nonnull String team) {
             // TODO join team
         }
     }

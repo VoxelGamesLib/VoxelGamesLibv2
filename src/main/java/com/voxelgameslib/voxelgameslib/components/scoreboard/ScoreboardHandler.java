@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Bukkit;
 
 public class ScoreboardHandler implements Handler {
@@ -16,7 +18,8 @@ public class ScoreboardHandler implements Handler {
 
     }
 
-    public Scoreboard createScoreboard(String name) {
+    @Nonnull
+    public Scoreboard createScoreboard(@Nonnull String name) {
         BukkitScoreboard scoreboard = new BukkitScoreboard();
         scoreboard.setImplObject(Bukkit.getScoreboardManager().getNewScoreboard());
         scoreboard.setTitle(name);

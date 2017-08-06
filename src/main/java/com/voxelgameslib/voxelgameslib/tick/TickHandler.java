@@ -72,7 +72,7 @@ public class TickHandler implements Handler {
      *
      * @param tickable the tickable which should no longer receive ticks
      */
-    public void end(Tickable tickable) {
+    public void end(@Nonnull Tickable tickable) {
         removeQueue.add(tickable);
     }
 }

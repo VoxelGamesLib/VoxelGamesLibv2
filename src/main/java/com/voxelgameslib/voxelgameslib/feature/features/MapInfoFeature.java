@@ -6,6 +6,8 @@ import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.map.Map;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.ChatColor;
 
 @FeatureInfo(name = "MapInfoFeature", author = "MiniDigger", version = "1.0",
@@ -48,6 +50,7 @@ public class MapInfoFeature extends AbstractFeature {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[]{MapFeature.class, ScoreboardFeature.class};
     }

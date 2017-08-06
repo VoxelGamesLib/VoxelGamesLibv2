@@ -13,6 +13,7 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
@@ -117,7 +118,7 @@ public class KitFeature extends AbstractFeature {
      *
      * @param kit kit to add
      */
-    public void addKit(Kit kit) {
+    public void addKit(@Nonnull Kit kit) {
         kits.add(kit);
     }
 
@@ -126,7 +127,7 @@ public class KitFeature extends AbstractFeature {
      *
      * @param kits list containing kits
      */
-    public void setKits(List<Kit> kits) {
+    public void setKits(@Nonnull List<Kit> kits) {
         this.kits = kits;
     }
 
@@ -134,6 +135,7 @@ public class KitFeature extends AbstractFeature {
      * @see AbstractFeature#getDependencies()
      */
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

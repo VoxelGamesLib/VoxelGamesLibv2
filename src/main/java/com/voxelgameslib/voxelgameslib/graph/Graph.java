@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Represents a graph of nodes. Every node is of GraphNode type and it has set a value of the
@@ -39,7 +41,7 @@ public final class Graph<T> {
      *
      * @param listener The callback interface implemented by the user classes
      */
-    public Graph(NodeValueListener<T> listener) {
+    public Graph(@Nonnull NodeValueListener<T> listener) {
         this.listener = listener;
     }
 
@@ -50,7 +52,7 @@ public final class Graph<T> {
      * @param evalFirstValue The parameter that needs to be evaluated first
      * @param evalAfterValue The parameter that needs to be evaluated after
      */
-    public void addDependency(T evalFirstValue, T evalAfterValue) {
+    public void addDependency(@Nonnull T evalFirstValue, @Nonnull T evalAfterValue) {
         GraphNode<T> firstNode;
         GraphNode<T> afterNode;
         if (nodes.containsKey(evalFirstValue)) {
@@ -75,7 +77,8 @@ public final class Graph<T> {
      * @param value The value that is hosted by the node
      * @return a generic GraphNode object
      */
-    private GraphNode<T> createNode(T value) {
+    @Nonnull
+    private GraphNode<T> createNode(@Nonnull T value) {
         GraphNode<T> node = new GraphNode<>();
         node.value = value;
         return node;
@@ -104,7 +107,7 @@ public final class Graph<T> {
      *
      * @param nodes The nodes for which the dependency order order is executed
      */
-    private void generateDependencies(List<GraphNode<T>> nodes) {
+    private void generateDependencies(@Nonnull List<GraphNode<T>> nodes) {
         List<GraphNode<T>> nextNodesToDisplay = null;
         for (GraphNode<T> node : nodes) {
             if (!isAlreadyEvaluated(node)) {
@@ -143,7 +146,7 @@ public final class Graph<T> {
      * @param node The Node to be checked
      * @return The return value represents the node evaluation status
      */
-    private boolean isAlreadyEvaluated(GraphNode<T> node) {
+    private boolean isAlreadyEvaluated(@Nonnull GraphNode<T> node) {
         return evaluatedNodes.contains(node);
     }
 
@@ -154,7 +157,7 @@ public final class Graph<T> {
      * @param nodes The nodes to be checked
      * @return The return value represents the evaluation status for all the nodes
      */
-    private boolean areAlreadyEvaluated(List<GraphNode<T>> nodes) {
+    private boolean areAlreadyEvaluated(@Nonnull List<GraphNode<T>> nodes) {
         return evaluatedNodes.containsAll(nodes);
     }
 
@@ -164,6 +167,7 @@ public final class Graph<T> {
      *
      * @return It returns a list of graph nodes
      */
+    @Nullable
     private List<GraphNode<T>> getOrphanNodes() {
         List<GraphNode<T>> orphanNodes = null;
         Set<T> keys = nodes.keySet();

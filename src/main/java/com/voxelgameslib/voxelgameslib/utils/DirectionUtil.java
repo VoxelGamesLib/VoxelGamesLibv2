@@ -83,7 +83,8 @@ public class DirectionUtil {
      * @param steps     the amount of steps to go
      * @return the direction
      */
-    public static BlockFace getNext(BlockFace direction, int steps) {
+    @Nonnull
+    public static BlockFace getNext(@Nonnull BlockFace direction, int steps) {
         for (int i = 0; i < RADIAL.length; i++) {
             if (RADIAL[i] == direction) {
                 return RADIAL[Math.floorMod(i + steps, RADIAL.length)];

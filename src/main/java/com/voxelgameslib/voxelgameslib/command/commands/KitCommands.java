@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import co.aikar.commands.BaseCommand;
@@ -27,28 +28,28 @@ public class KitCommands extends BaseCommand {
     @UnknownHandler
     @CommandPermission("%user")
     @Subcommand("menu|m")
-    public void showKitMenu(User sender) {
+    public void showKitMenu(@Nonnull User sender) {
         // todo
     }
 
     @Subcommand("select")
     @CommandPermission("%user")
     @Syntax("<kit> - the kit you choose")
-    public void selectKit(User sender, String kit) {
+    public void selectKit(@Nonnull User sender, @Nonnull String kit) {
         // todo
     }
 
     @Subcommand("create")
     @CommandPermission("%admin")
     @Syntax("<kit> - the name of the new kit")
-    public void createKit(User user, String kit) {
+    public void createKit(@Nonnull User user, @Nonnull String kit) {
         // TODO create kit command
     }
 
     @Subcommand("edit")
     @CommandPermission("%admin")
     @Syntax("<kit> - the name of the kit you want to edit")
-    public void editKit(User user, String kit) {
+    public void editKit(@Nonnull User user, @Nonnull String kit) {
         // TODO edit kit command
     }
 }

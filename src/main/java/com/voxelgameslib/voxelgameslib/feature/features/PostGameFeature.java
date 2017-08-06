@@ -6,6 +6,7 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -89,6 +90,7 @@ public class PostGameFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[]{PersonalScoreboardFeature.class};
     }

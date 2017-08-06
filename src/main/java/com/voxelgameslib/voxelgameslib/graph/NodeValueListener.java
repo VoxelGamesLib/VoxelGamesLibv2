@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib.graph;
 
+import javax.annotation.Nonnull;
+
 /**
  * The main mechanism used for notifying the outside of the fact that a node just got its
  * evaluation
@@ -14,5 +16,5 @@ public interface NodeValueListener<T> {
      *
      * @param nodeValue The user set value of the node that just got the evaluation
      */
-    void evaluating(T nodeValue);
+    void evaluating(@Nonnull T nodeValue);
 }

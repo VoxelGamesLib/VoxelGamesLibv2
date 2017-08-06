@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,10 +32,12 @@ public class SignHandler implements Handler {
 
     }
 
+    @Nonnull
     public SignPlaceholders getSignPlaceholders() {
         return signPlaceholders;
     }
 
+    @Nonnull
     public SignButtons getSignButtons() {
         return signButtons;
     }

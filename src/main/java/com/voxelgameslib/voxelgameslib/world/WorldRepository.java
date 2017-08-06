@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,7 +33,7 @@ public class WorldRepository {
         this(defaultRepoURL);
     }
 
-    public WorldRepository(String url) {
+    public WorldRepository(@Nonnull String url) {
         this.url = url;
     }
 
@@ -78,6 +79,7 @@ public class WorldRepository {
         }
     }
 
+    @Nonnull
     public String getURL() {
         return url;
     }

@@ -16,11 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.bukkit.block.Skull;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import lombok.extern.java.Log;
 
@@ -55,7 +55,7 @@ public class TextureHandler implements Handler {
 
     }
 
-    public void fetchSkin(String url) {
+    public void fetchSkin(@Nonnull String url) {
         mineskinClient.generateUrl(url, skin -> {
             loadedSkins.add(skin);
             saveSkin(skin);
@@ -69,7 +69,7 @@ public class TextureHandler implements Handler {
         });
     }
 
-    public void saveSkin(Skin skin) {
+    public void saveSkin(@Nonnull Skin skin) {
         try {
             FileWriter fw = new FileWriter(new File(skinsFolder, skin.name));
             gson.toJson(skin, fw);
@@ -79,7 +79,8 @@ public class TextureHandler implements Handler {
         }
     }
 
-    public Skin loadSkin(String name) {
+    @Nullable
+    public Skin loadSkin(@Nonnull String name) {
         try {
             FileReader fr = new FileReader(new File(skinsFolder, name));
             Skin skin = gson.fromJson(fr, Skin.class);
@@ -93,7 +94,8 @@ public class TextureHandler implements Handler {
         return null;
     }
 
-    public Skull getSkull(Skin skin) {
-
+    @Nullable
+    public Skull getSkull(@Nonnull Skin skin) {
+        return null;
     }
 }

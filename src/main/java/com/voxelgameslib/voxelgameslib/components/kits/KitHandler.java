@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -68,7 +70,8 @@ public class KitHandler implements Handler {
         System.out.println(kit);
     }
 
-    public Optional<Kit> loadKit(String name) {
+    @Nonnull
+    public Optional<Kit> loadKit(@Nonnull String name) {
         if (!availableKits.contains(name)) {
             log.warning("Tried to load unknown kit");
             return Optional.empty();
@@ -81,13 +84,14 @@ public class KitHandler implements Handler {
         }
     }
 
-    public void createKit(Kit kit) {
+    public void createKit(@Nonnull Kit kit) {
         availableKits.add(kit.getName());
         kits.put(kit.getName(), kit);
         saveKit(kit, new File(kitsDir, kit.getName() + ".json"));
     }
 
-    private Kit loadKit(String name, File file) {
+    @Nullable
+    private Kit loadKit(@Nonnull String name, @Nonnull File file) {
         try {
             JsonConfiguration jsonConfiguration = JsonConfiguration.loadConfiguration(file);
             Kit kit = new Kit();
@@ -110,7 +114,7 @@ public class KitHandler implements Handler {
         return null;
     }
 
-    private void saveKit(Kit kit, File file) {
+    private void saveKit(@Nonnull Kit kit, @Nonnull File file) {
         try {
             JsonConfiguration jsonConfiguration = new JsonConfiguration();
             jsonConfiguration.set("name", kit.getName());

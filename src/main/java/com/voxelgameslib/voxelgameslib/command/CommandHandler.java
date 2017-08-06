@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 @Singleton
@@ -20,11 +21,11 @@ public class CommandHandler implements Handler {
 
     }
 
-    public void register(AbstractFeatureCommand cmd, Phase phase) {
-
+    public void register(@Nonnull AbstractFeatureCommand cmd, @Nonnull Phase phase) {
+        //TODO bind commands to a feature
     }
 
-    public void unregister(AbstractFeatureCommand cmd, Phase phase) {
+    public void unregister(@Nonnull AbstractFeatureCommand cmd, @Nonnull Phase phase) {
 
     }
 }

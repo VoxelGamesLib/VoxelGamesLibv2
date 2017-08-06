@@ -4,6 +4,8 @@ import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.event.entity.EntityDamageEvent;
 
 @FeatureInfo(name = "NoDamageFeature", author = "MiniDigger", version = "1.0",
@@ -31,13 +33,14 @@ public class NoDamageFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }
 
     @SuppressWarnings("JavaDoc")
     @GameEvent
-    public void onDmg(EntityDamageEvent event) {
+    public void onDmg(@Nonnull EntityDamageEvent event) {
         event.setCancelled(true);
     }
 }

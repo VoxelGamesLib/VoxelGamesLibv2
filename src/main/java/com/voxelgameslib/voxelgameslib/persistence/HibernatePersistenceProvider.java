@@ -22,6 +22,8 @@ import org.reflections.Reflections;
 
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.Entity;
 
@@ -89,7 +91,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(@Nonnull User user) {
         session(session -> {
             session.saveOrUpdate(user);
             return null;
@@ -97,11 +99,13 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public Optional<User> loadUser(UUID id) {
+    @Nonnull
+    public Optional<User> loadUser(@Nonnull UUID id) {
         return Optional.ofNullable(session(session -> session.get(GamePlayer.class, id)));
     }
 
-    private <T> T session(SessionExecutor<T> executor) {
+    @Nullable
+    private <T> T session(@Nonnull SessionExecutor<T> executor) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -115,7 +119,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @FunctionalInterface
     interface SessionExecutor<T> {
-        T execute(Session session);
+        @Nullable
+        T execute(@Nonnull Session session);
     }
 
     @Override

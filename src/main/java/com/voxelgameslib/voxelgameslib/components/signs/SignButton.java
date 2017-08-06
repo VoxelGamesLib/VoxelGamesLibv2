@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.block.Block;
 
 /**
@@ -15,5 +17,5 @@ public interface SignButton {
      * @param user  the user that pressed this sign
      * @param block the block of this sign
      */
-    void execute(User user, Block block);
+    void execute(@Nonnull User user, @Nonnull Block block);
 }

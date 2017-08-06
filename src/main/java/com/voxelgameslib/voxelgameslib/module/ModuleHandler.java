@@ -33,6 +33,7 @@ public class ModuleHandler implements Handler {
     @Inject
     private Injector injector;
 
+    @Nonnull
     public static Map<Class<Module>, Module> getOfferedModules() {
         return offeredModules;
     }
@@ -82,7 +83,7 @@ public class ModuleHandler implements Handler {
      *
      * @param module the module to add
      */
-    public static void offerModule(Module module) {
+    public static void offerModule(@Nonnull Module module) {
         if (isAcceptingOffers) {
             //noinspection unchecked
             offeredModules.put((Class<Module>) module.getClass(), module);

@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -81,7 +82,7 @@ public class SignPlaceholders implements Listener {
      * @param key         the key to use
      * @param placeHolder the placeholder that will replace the key
      */
-    public void registerPlaceholder(String key, SignPlaceHolder placeHolder) {
+    public void registerPlaceholder(@Nonnull String key, @Nonnull SignPlaceHolder placeHolder) {
         placeHolders.put("[" + key + "]", placeHolder);
     }
 
@@ -90,6 +91,7 @@ public class SignPlaceholders implements Listener {
      *
      * @return all sign placeholders
      */
+    @Nonnull
     public Map<String, SignPlaceHolder> getPlaceHolders() {
         return placeHolders;
     }
@@ -107,7 +109,7 @@ public class SignPlaceholders implements Listener {
         // modify update packets
         protocolManager.addPacketListener(new PacketAdapter(voxelGamesLib, PacketType.Play.Server.TILE_ENTITY_DATA) {
             @Override
-            public void onPacketSending(PacketEvent event) {
+            public void onPacketSending(@Nonnull PacketEvent event) {
                 int action = event.getPacket().getIntegers().read(0);
                 // 9 = set sign text action
                 if (action != 9) {
@@ -173,7 +175,7 @@ public class SignPlaceholders implements Listener {
         }.runTaskTimer(voxelGamesLib, 20, 20);
     }
 
-    private void modifySign(User user, Location location, String[] rawLines, Component[] lines) {
+    private void modifySign(@Nonnull User user, @Nonnull Location location, @Nonnull String[] rawLines, @Nonnull Component[] lines) {
         for (Map.Entry<String, SignPlaceHolder> entry : placeHolders.entrySet()) {
             for (int i = 0; i < lines.length; i++) {
                 String line = ChatUtil.toPlainText(lines[i]);
@@ -210,7 +212,7 @@ public class SignPlaceholders implements Listener {
     }
 
     @EventHandler
-    public void handleInteract(PlayerInteractEvent event) {
+    public void handleInteract(@Nonnull PlayerInteractEvent event) {
         if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
             if (event.getClickedBlock().getState() instanceof Sign) {
                 Sign sign = (Sign) event.getClickedBlock().getState();
@@ -227,7 +229,7 @@ public class SignPlaceholders implements Listener {
     }
 
     @EventHandler
-    public void chunkLoad(ChunkLoadEvent event) {
+    public void chunkLoad(@Nonnull ChunkLoadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
                 .filter(blockState -> blockState instanceof Sign)
                 .map(blockState -> (Sign) blockState)
@@ -235,7 +237,7 @@ public class SignPlaceholders implements Listener {
     }
 
     @EventHandler
-    public void chunkUnload(ChunkUnloadEvent event) {
+    public void chunkUnload(@Nonnull ChunkUnloadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
                 .filter(blockState -> blockState instanceof Sign)
                 .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));

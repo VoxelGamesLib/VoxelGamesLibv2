@@ -155,6 +155,7 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
     }
 
     @Override
+    @Nonnull
     public GlobalConfig get() {
         return globalConfig;
     }

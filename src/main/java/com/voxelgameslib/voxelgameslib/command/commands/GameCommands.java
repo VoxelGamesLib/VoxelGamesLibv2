@@ -13,6 +13,8 @@ import net.kyori.text.TextComponent;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -38,13 +40,13 @@ public class GameCommands extends BaseCommand {
     @Subcommand("help")
     @CommandAlias("game")
     @CommandPermission("%user")
-    public void game(User sender) {
+    public void game(@Nonnull User sender) {
         // todo game help commands, pending a PR to ACF
     }
 
     @Subcommand("list")
     @CommandPermission("%user")
-    public void gameList(User sender) {
+    public void gameList(@Nonnull User sender) {
         Lang.msg(sender, LangKey.GAME_GAMELIST_HEADER);
         for (Game game : gameHandler.getGames()) {
             Lang.msg(sender, LangKey.GAME_GAMELIST_ENTRY,
@@ -56,7 +58,7 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("modes")
     @CommandPermission("%user")
-    public void gameListModes(User sender) {
+    public void gameListModes(@Nonnull User sender) {
         StringBuilder sb = new StringBuilder();
         gameHandler.getGameModes().forEach(m -> sb.append(m.getName()).append(", "));
         sb.replace(sb.length() - 2, sb.length(), ".");
@@ -67,7 +69,7 @@ public class GameCommands extends BaseCommand {
     @CommandCompletion("@gamemodes")
     @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%premium")
-    public void gameStart(User sender, GameMode mode) {
+    public void gameStart(@Nonnull User sender, @Nonnull GameMode mode) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
         if (games.size() != 0) {
             if (games.size() == 1 && games.get(0).getGameMode().equals(gameHandler.getDefaultGame().getGameMode())) {
@@ -95,7 +97,7 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("stop")
     @CommandPermission("%admin")
-    public void gameStop(User sender, @co.aikar.commands.annotation.Optional String gameId) {
+    public void gameStop(@Nonnull User sender, @Nullable @co.aikar.commands.annotation.Optional String gameId) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), false);
         if (games.size() == 0) {
             Lang.msg(sender, LangKey.GAME_STOP_IN_NO_GAME);
@@ -122,7 +124,7 @@ public class GameCommands extends BaseCommand {
     @CommandCompletion("@gamemodes")
     @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%user")
-    public void gameJoin(User sender, GameMode mode) {
+    public void gameJoin(@Nonnull User sender, @Nonnull GameMode mode) {
         Optional<Game> game = gameHandler.findGame(sender, mode);
         if (game.isPresent()) {
             game.get().join(sender);
@@ -135,7 +137,7 @@ public class GameCommands extends BaseCommand {
     @CommandCompletion("@gamemodes")
     @Syntax("<uuid> - the uuid of the game you want to join")
     @CommandPermission("%user")
-    public void gameJoinUUID(User sender, UUID id) {
+    public void gameJoinUUID(@Nonnull User sender, @Nonnull UUID id) {
         Optional<Game> game = gameHandler.getGames().stream().filter(g -> g.getUuid().equals(id)).findAny();
         if (game.isPresent()) {
             game.get().join(sender);
@@ -146,7 +148,7 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("leave")
     @CommandPermission("%user")
-    public void gameLeave(User sender) {
+    public void gameLeave(@Nonnull User sender) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
 
         if (games.size() == 0) {
@@ -162,7 +164,7 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("skip-phase")
     @CommandPermission("%admin")
-    public void skipPhase(User sender, @co.aikar.commands.annotation.Optional Integer id) {
+    public void skipPhase(@Nonnull User sender, @Nullable @co.aikar.commands.annotation.Optional Integer id) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
         if (id == null) {
             if (games.size() > 1) {
@@ -183,7 +185,7 @@ public class GameCommands extends BaseCommand {
 
     @Subcommand("shout")
     @CommandAlias("shout|s")
-    public void shout(User sender, String message) {
+    public void shout(@Nonnull User sender, @Nonnull String message) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
 
         if (games.size() == 0) {

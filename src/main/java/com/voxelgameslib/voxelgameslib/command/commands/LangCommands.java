@@ -6,6 +6,7 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -28,7 +29,7 @@ public class LangCommands extends BaseCommand {
 
     @CommandAlias("lang")
     @CommandPermission("%user")
-    public void lang(User sender) {
+    public void lang(@Nonnull User sender) {
         StringBuilder sb = new StringBuilder();
         for (Locale loc : langHandler.getInstalledLocales()) {
             sb.append(loc.getTag()).append(" (").append(loc.getName()).append("), ");
@@ -42,7 +43,7 @@ public class LangCommands extends BaseCommand {
     @CommandPermission("%user")
     @Syntax("<locale> - the new locale you want to use")
     @CommandCompletion("@locales")
-    public void set(User sender, Locale locale) {
+    public void set(@Nonnull User sender, @Nonnull Locale locale) {
         sender.setLocale(locale);
         Lang.msg(sender, LangKey.LANG_UPDATE, locale.getName());
         if (!langHandler.getInstalledLocales().contains(locale)) {

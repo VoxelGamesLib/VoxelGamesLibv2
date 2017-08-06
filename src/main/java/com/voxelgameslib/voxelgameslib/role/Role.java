@@ -81,7 +81,8 @@ public enum Role {
      * @param name the name to search for
      * @return the role that was found.
      */
-    public static Role fromName(String name) {
+    @Nonnull
+    public static Role fromName(@Nonnull String name) {
         for (Role role : values()) {
             if (role.getName().equalsIgnoreCase(name)) {
                 return role;

@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.game.Game;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -21,7 +22,7 @@ public class RegisteredListener {
     private Method method;
     private List<EventFilter> filters;
 
-    public void addFilter(EventFilter filter) {
+    public void addFilter(@Nonnull EventFilter filter) {
         filters.add(filter);
     }
 }

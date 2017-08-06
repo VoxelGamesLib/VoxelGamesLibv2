@@ -68,6 +68,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.LinkedList;
+import javax.annotation.Nonnull;
 
 import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
 import static org.eclipse.jgit.lib.FileMode.GITLINK;
@@ -91,7 +92,7 @@ public class CustomAddCommand extends GitCommand<DirCache> {
 
     private boolean update = false;
 
-    public CustomAddCommand(Repository repo) {
+    public CustomAddCommand(@Nonnull Repository repo) {
         super(repo);
         filepatterns = new LinkedList<>();
     }
@@ -105,7 +106,8 @@ public class CustomAddCommand extends GitCommand<DirCache> {
      *                    separator)
      * @return {@code this}
      */
-    public CustomAddCommand addFilepattern(String filepattern) {
+    @Nonnull
+    public CustomAddCommand addFilepattern(@Nonnull String filepattern) {
         checkCallable();
         filepatterns.add(filepattern);
         return this;
@@ -117,7 +119,8 @@ public class CustomAddCommand extends GitCommand<DirCache> {
      * @param f f
      * @return {@code this}
      */
-    public CustomAddCommand setWorkingTreeIterator(WorkingTreeIterator f) {
+    @Nonnull
+    public CustomAddCommand setWorkingTreeIterator(@Nonnull WorkingTreeIterator f) {
         workingTreeIterator = f;
         return this;
     }
@@ -129,6 +132,7 @@ public class CustomAddCommand extends GitCommand<DirCache> {
      * @return the DirCache after Add
      */
     @Override
+    @Nonnull
     public DirCache call() throws GitAPIException, NoFilepatternException {
 
         if (filepatterns.isEmpty())
@@ -265,6 +269,7 @@ public class CustomAddCommand extends GitCommand<DirCache> {
      *               no concept of a working directory here.
      * @return {@code this}
      */
+    @Nonnull
     public CustomAddCommand setUpdate(boolean update) {
         this.update = update;
         return this;

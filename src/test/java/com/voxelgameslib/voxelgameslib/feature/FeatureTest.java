@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -25,7 +26,7 @@ public class FeatureTest<F extends Feature> {
 
     private List<User> users = new ArrayList<>();
 
-    public void setup(F f) {
+    public void setup(@Nonnull F f) {
         this.feature = spy(f);
         this.phase = spy(new AbstractPhase() {
         });
@@ -42,11 +43,13 @@ public class FeatureTest<F extends Feature> {
         doAnswer(invocation -> users.add((User) invocation.getArguments()[0])).when(game).join(any());
     }
 
+    @Nonnull
     public F getFeature() {
         return feature;
     }
 
-    public User getMockUser(String name) {
+    @Nonnull
+    public User getMockUser(@Nonnull String name) {
         User user = Mockito.spy(new GamePlayer());
         user.setDisplayName(name);
         return user;

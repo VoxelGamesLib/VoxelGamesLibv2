@@ -6,6 +6,7 @@ import java.util.HashMap;
  * TypeDef alias for results with a template return type getter so casting/implicit getInt type
  * calls are not needed.
  */
+@SuppressWarnings("MissingJSR305")
 public class DbRow extends HashMap<String, Object> {
     /**
      * Get the result as proper type. <p> VALID: Long myLong = row.get("someUnsignedIntColumn");

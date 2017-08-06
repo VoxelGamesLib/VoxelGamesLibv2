@@ -8,6 +8,7 @@ import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ public class SignListener implements Listener {
     private UserHandler userHandler;
 
     @EventHandler
-    public void signBreakEvent(BlockBreakEvent event) {
+    public void signBreakEvent(@Nonnull BlockBreakEvent event) {
         // is block a sign?
         if (event.getBlock().getState() instanceof Sign) {
             User user = userHandler.getUser(event.getPlayer().getUniqueId()).orElseThrow(() -> new UserException(

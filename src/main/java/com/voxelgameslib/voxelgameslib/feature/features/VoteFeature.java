@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -140,6 +141,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @Override
+    @Nonnull
     public Class<? extends AbstractFeatureCommand> getCommandClass() {
         return VoteFeatureCommand.class;
     }
@@ -149,7 +151,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
      *
      * @param user the user that should receive the message
      */
-    public void sendVoteMessage(User user) {
+    public void sendVoteMessage(@Nonnull User user) {
         Lang.msg(user, LangKey.VOTE_MESSAGE_TOP);
         for (int id : availableMaps.keySet()) {
             MapInfo info = availableMaps.get(id);
@@ -158,7 +160,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
     }
 
-    public void giveVoteMenuItem(User user) {
+    public void giveVoteMenuItem(@Nonnull User user) {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -203,7 +205,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     /**
      * Confirms a vote for a map
      */
-    private void confirmVote(User voter, Integer mapId) {
+    private void confirmVote(@Nonnull User voter, @Nonnull Integer mapId) {
         if (votes.containsKey(voter.getUuid())) {
             Lang.msg(voter, LangKey.VOTE_ALREADY_VOTED);
         } else {
@@ -220,6 +222,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[0];
     }
@@ -230,7 +233,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         @CommandAlias("vote")
         @CommandPermission("%user")
         @Syntax("[map] - the map to vote for")
-        public void vote(User sender, @Optional Integer map) {
+        public void vote(@Nonnull User sender, @Nullable @Optional Integer map) {
             if (map == null) {
                 getFeature().sendVoteMessage(sender);
             } else {

@@ -13,6 +13,8 @@ import com.voxelgameslib.voxelgameslib.phase.Phase;
 
 import java.lang.reflect.Type;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -29,7 +31,8 @@ public class GameTypeAdapter implements JsonDeserializer<Phase>, JsonSerializer<
     private Injector injector;
 
     @Override
-    public Phase deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    @Nullable
+    public Phase deserialize(@Nonnull JsonElement json, @Nonnull Type typeOfT, @Nonnull JsonDeserializationContext context) throws JsonParseException {
         try {
             JsonObject jsonObject = json.getAsJsonObject();
 
@@ -47,7 +50,8 @@ public class GameTypeAdapter implements JsonDeserializer<Phase>, JsonSerializer<
     }
 
     @Override
-    public JsonElement serialize(Phase src, Type typeOfSrc, JsonSerializationContext context) {
+    @Nonnull
+    public JsonElement serialize(@Nonnull Phase src, @Nonnull Type typeOfSrc, @Nonnull JsonSerializationContext context) {
         return context.serialize(src, src.getClass());
     }
 }

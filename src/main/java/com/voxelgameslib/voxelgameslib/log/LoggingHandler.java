@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 import co.aikar.commands.BaseCommand;
@@ -34,7 +36,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
         logger = Logger.getLogger("com.voxelgameslib.voxelgameslib");
         handler = new LogHandler() {
             @Override
-            public void publish(LogRecord record) {
+            public void publish(@Nonnull LogRecord record) {
                 record.setMessage("[VoxelGamesLib] " + record.getMessage());
             }
         };
@@ -59,7 +61,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     @CommandAlias("log")
     @Syntax("[level] - if present, the new level")
     @CommandPermission("%admin")
-    public void logcommand(User sender, @Optional String level) {
+    public void logcommand(@Nonnull User sender, @Nullable @Optional String level) {
         if (level == null) {
             Lang.msg(sender, LangKey.LOG_LEVEL_CURRENT, logger.getLevel() == null ? "null" : logger.getLevel().getName());
             return;
@@ -81,15 +83,9 @@ public class LoggingHandler extends BaseCommand implements Handler {
 //                , Level.OFF.getName(), Level.WARNING.getName(), Level.SEVERE.getName());
 //    }TODO add completer for log command
 
-    /**
-     * Changes the log level of the logger for the framework
-     *
-     * @param level the new level
-     */
-    public void setLevel(Level level) {
-        this.level = level;
-        Logger.getLogger("com.voxelgameslib").setLevel(level);
-        log.info("Level changed to " + level.getName());
+    @Nonnull
+    public Level getLevel() {
+        return level;
     }
 
 
@@ -98,8 +94,15 @@ public class LoggingHandler extends BaseCommand implements Handler {
         Logger.getLogger("").removeHandler(handler);
     }
 
-    public Level getLevel() {
-        return level;
+    /**
+     * Changes the log level of the logger for the framework
+     *
+     * @param level the new level
+     */
+    public void setLevel(@Nonnull Level level) {
+        this.level = level;
+        Logger.getLogger("com.voxelgameslib").setLevel(level);
+        log.info("Level changed to " + level.getName());
     }
 
     // used to make the code look more clean

@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.event.events;
 
 import com.voxelgameslib.voxelgameslib.event.VoxelGamesLibEvent;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.event.HandlerList;
 
 /**
@@ -11,12 +13,14 @@ public class VoxelGameLibEnableEvent extends VoxelGamesLibEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    @Override
-    public HandlerList getHandlers() {
+    @Nonnull
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    @Nonnull
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

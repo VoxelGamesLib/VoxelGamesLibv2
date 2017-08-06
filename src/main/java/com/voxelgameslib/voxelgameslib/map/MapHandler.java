@@ -1,7 +1,6 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -55,7 +54,8 @@ public class MapHandler implements Handler {
 
     }
 
-    public MarkerDefinition createMarkerDefinition(String markerData) {
+    @Nonnull
+    public MarkerDefinition createMarkerDefinition(@Nonnull String markerData) {
         Optional<MarkerDefinition> markerDefinition = markerDefinitions.stream().filter(def -> def.matches(markerData)).findFirst();
         MarkerDefinition def = markerDefinition.orElseGet(() -> new BasicMarkerDefinition(markerData.replace("vgl:", "")));
         def.parse(markerData);

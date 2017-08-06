@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
 /**
  * Small util to access the mojang api
@@ -31,7 +32,8 @@ public class MojangUtil {
      * @throws IOException           if something goes wrong
      * @throws VoxelGameLibException if the user has no display name
      */
-    public static String getDisplayName(UUID id) throws IOException, VoxelGameLibException {
+    @Nonnull
+    public static String getDisplayName(@Nonnull UUID id) throws IOException, VoxelGameLibException {
         URL url = new URL(NAME_HISTORY_URL.replace("%1", id.toString().replace("-", "")));
         System.out.println(url.toString());
         Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(url.openStream())));

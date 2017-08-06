@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 /**
@@ -44,7 +45,8 @@ public class ChatHandler implements Handler {
      * @param identifier string identifier of the channel
      * @return the ChatChannel, if present
      */
-    public Optional<ChatChannel> getChannel(String identifier) {
+    @Nonnull
+    public Optional<ChatChannel> getChannel(@Nonnull String identifier) {
         return Optional.ofNullable(activeChannels.get(identifier));
     }
 
@@ -54,7 +56,7 @@ public class ChatHandler implements Handler {
      * @param user    sender the sender of the message
      * @param message message the message to broadcast
      */
-    public void broadcastMessage(User user, String message) {
+    public void broadcastMessage(@Nonnull User user, @Nonnull String message) {
         for (ChatChannel channel : activeChannels.values()) {
             channel.sendMessage(user, message);
         }
@@ -66,7 +68,7 @@ public class ChatHandler implements Handler {
      * @param user      sender the sender of the message
      * @param component message the message to broadcast
      */
-    public void broadcastMessage(User user, Component component) {
+    public void broadcastMessage(@Nonnull User user, @Nonnull Component component) {
         for (ChatChannel channel : activeChannels.values()) {
             channel.sendMessage(user, component);
         }
@@ -78,7 +80,8 @@ public class ChatHandler implements Handler {
      * @param id the id the channel should have
      * @return the created channel
      */
-    public ChatChannel createChannel(String id) {
+    @Nonnull
+    public ChatChannel createChannel(@Nonnull String id) {
         ChatChannel chatChannel = new ChatChannel(id);
         activeChannels.put(id, chatChannel);
         return chatChannel;
@@ -89,7 +92,7 @@ public class ChatHandler implements Handler {
      *
      * @param id the id of the channel that should be removed
      */
-    public void removeChannel(String id) {
+    public void removeChannel(@Nonnull String id) {
         // remove any existing listeners from the channel, set them to the default channel.
         // you should *really* handle this yourself if you're removing a channel
 

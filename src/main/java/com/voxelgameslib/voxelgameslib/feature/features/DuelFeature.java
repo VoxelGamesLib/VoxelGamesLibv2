@@ -6,6 +6,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.annotation.Nonnull;
 
 /**
  * Feature that handles dueling.
@@ -18,6 +19,7 @@ public class DuelFeature extends AbstractFeature {
     /**
      * @return the first user
      */
+    @Nonnull
     public User getOne() {
         return one;
     }
@@ -25,6 +27,7 @@ public class DuelFeature extends AbstractFeature {
     /**
      * @return the second user
      */
+    @Nonnull
     public User getTwo() {
         return two;
     }
@@ -33,7 +36,8 @@ public class DuelFeature extends AbstractFeature {
      * @param user the user to not return
      * @return the user that is not user
      */
-    public User getOther(User user) {
+    @Nonnull
+    public User getOther(@Nonnull User user) {
         if (user.equals(one)) {
             return two;
         } else if (user.equals(two)) {
@@ -46,7 +50,8 @@ public class DuelFeature extends AbstractFeature {
      * @param uniqueId the user to not return
      * @return the user that is not user
      */
-    public User getOther(UUID uniqueId) {
+    @Nonnull
+    public User getOther(@Nonnull UUID uniqueId) {
         if (one.getUuid().equals(uniqueId)) {
             return two;
         } else if (two.getUuid().equals(uniqueId)) {
@@ -90,6 +95,7 @@ public class DuelFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

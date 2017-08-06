@@ -37,7 +37,7 @@ public class PagedInventory extends BaseInventory {
      *
      * @see BaseInventory#BaseInventory(Player, String, int)
      */
-    public PagedInventory(Player player, String title, int size) {
+    public PagedInventory(@Nonnull Player player, @Nonnull String title, int size) {
         super(player, title, size);
 
         addClickAction(forward, (itemStack, clickEvent) -> {
@@ -62,21 +62,36 @@ public class PagedInventory extends BaseInventory {
      *
      * @see BaseInventory#BaseInventory(Player, String, int)
      */
-    public PagedInventory(Player player, String title, boolean dynamicInventory) {
+    public PagedInventory(@Nonnull Player player, @Nonnull String title, boolean dynamicInventory) {
         super(player, title, 54);
         this.dynamicInventory = dynamicInventory;
     }
 
+    @Nonnull
     public ItemStack getForwardItem() {
         return new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();//TODO i18n
     }
 
+    public void setForwardItem(@Nonnull ItemStack item) {
+        forward = item;
+    }
+
+    @Nonnull
     public ItemStack getBackwardItem() {
         return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();//TODO i18n;
     }
 
+    public void setBackwardItem(@Nonnull ItemStack item) {
+        backward = item;
+    }
+
+    @Nonnull
     public ItemStack getCloseItem() {
         return new ItemBuilder(close).name(ChatColor.RED + "Next").build();//TODO i18n
+    }
+
+    public void setCloseItem(@Nonnull ItemStack item) {
+        close = item;
     }
 
     /**
@@ -85,20 +100,8 @@ public class PagedInventory extends BaseInventory {
      *
      * @param titleFormat format
      */
-    public void setTitleFormat(String titleFormat) {
+    public void setTitleFormat(@Nonnull String titleFormat) {
         this.titleFormat = titleFormat;
-    }
-
-    public void setForwardItem(ItemStack item) {
-        forward = item;
-    }
-
-    public void setBackwardItem(ItemStack item) {
-        backward = item;
-    }
-
-    public void setCloseItem(ItemStack item) {
-        close = item;
     }
 
     /**
@@ -106,8 +109,9 @@ public class PagedInventory extends BaseInventory {
      *
      * @param page id of the page
      */
+    @Nonnull
     public Optional<ItemStack[]> getPage(int page) {
-        return Optional.of(pages.get(page));
+        return Optional.ofNullable(pages.get(page));
     }
 
     /**
@@ -179,8 +183,8 @@ public class PagedInventory extends BaseInventory {
     /**
      * Automatically construct pages based off the item stack
      */
-    public void autoConstructPages(ItemStack... items) {
-        // please dont judge me if none of this works. all theoretical code. could be a load of bs for all i know
+    public void autoConstructPages(@Nonnull ItemStack... items) {
+        // TODO please dont judge me if none of this works. all theoretical code. could be a load of bs for all i know
         // such is the talent of a master developur
 
         pages.clear();

@@ -7,6 +7,8 @@ import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.GameMode;
 
 @FeatureInfo(name = "GameModeFeature", author = "MiniDigger", version = "1.0",
@@ -22,7 +24,7 @@ public class GameModeFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onJoin(GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event) {
         event.getUser().getPlayer().setGameMode(mode);
     }
 
@@ -42,6 +44,7 @@ public class GameModeFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }
@@ -51,7 +54,7 @@ public class GameModeFeature extends AbstractFeature {
      *
      * @param gameMode the new gamemode
      */
-    public void setGameMode(GameMode gameMode) {
+    public void setGameMode(@Nonnull GameMode gameMode) {
         this.mode = gameMode;
     }
 }

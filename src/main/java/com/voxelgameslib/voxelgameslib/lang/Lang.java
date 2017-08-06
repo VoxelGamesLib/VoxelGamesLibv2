@@ -348,7 +348,7 @@ public class Lang {
      *
      * @param message the message to send
      */
-    public static void broadcast(Component message) {
+    public static void broadcast(@Nonnull Component message) {
         userHandler.getUsers().forEach(user -> user.sendMessage(message));
         GameConsoleUser.INSTANCE.sendMessage(message);
     }
@@ -359,7 +359,7 @@ public class Lang {
      * @param key  the message to send
      * @param args the args for the message
      */
-    public static void broadcast(Translatable key, Object... args) {
+    public static void broadcast(@Nonnull Translatable key, @Nonnull Object... args) {
         userHandler.getUsers().forEach(user -> Lang.msg(user, key, args));
         GameConsoleUser.INSTANCE.sendMessage(Lang.trans(key, args));
     }

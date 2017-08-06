@@ -130,6 +130,7 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
+    @Nonnull
     public UUID getUuid() {
         return uuid;
     }
@@ -323,7 +324,7 @@ public abstract class AbstractGame implements Game {
         loadMap("Lobby");
     }
 
-    protected void loadMap(String name) {
+    protected void loadMap(@Nonnull String name) {
         // TODO this doesn't respect if a user changed the lobby in the config
         Optional<MapInfo> info = worldHandler.getMapInfo(name);
         if (info.isPresent()) {
@@ -492,9 +493,10 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
+    @Nonnull
     public Duration getDuration() {
         if (duration == null) {
-            return Duration.between(startTime, LocalDateTime.now());
+            return duration = Duration.between(startTime, LocalDateTime.now());
         } else {
             return duration;
         }

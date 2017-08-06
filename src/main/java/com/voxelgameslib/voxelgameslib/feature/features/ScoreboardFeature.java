@@ -8,6 +8,7 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 @FeatureInfo(name = "ScoreboardFeature", author = "MiniDigger", version = "1.0",
@@ -43,19 +44,21 @@ public class ScoreboardFeature extends AbstractFeature {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[0];
     }
 
     @SuppressWarnings("JavaDoc")
     @GameEvent
-    public void onJoin(GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event) {
         scoreboard.addUser(event.getUser());
     }
 
     /**
      * @return the scoreboard instance that will be used for this phase
      */
+    @Nonnull
     public Scoreboard getScoreboard() {
         return scoreboard;
     }

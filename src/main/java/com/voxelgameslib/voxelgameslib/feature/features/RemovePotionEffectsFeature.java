@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 
+import javax.annotation.Nonnull;
+
 public class RemovePotionEffectsFeature extends AbstractFeature {
 
     @Override
@@ -26,6 +28,7 @@ public class RemovePotionEffectsFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

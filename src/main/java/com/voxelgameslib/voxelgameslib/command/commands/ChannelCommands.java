@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -22,13 +23,13 @@ public class ChannelCommands extends BaseCommand {
 
     @Subcommand("create")
     @CommandPermission("%admin")
-    public void createChannel(CommandSender sender) {
-        //
+    public void createChannel(@Nonnull CommandSender sender) {
+        // TODO chat channel commands
     }
 
     @Subcommand("delete")
     @CommandPermission("%admin")
-    public void deleteChannel(CommandSender sender) {
+    public void deleteChannel(@Nonnull CommandSender sender) {
         //
     }
 }

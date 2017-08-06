@@ -4,6 +4,8 @@ import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -34,12 +36,13 @@ public class VoidTeleportFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[]{SpawnFeature.class};
     }
 
     @GameEvent
-    public void onVoidDamage(EntityDamageEvent event) {
+    public void onVoidDamage(@Nonnull EntityDamageEvent event) {
         if (event.getEntityType() != EntityType.PLAYER)
             return;
 
@@ -53,7 +56,7 @@ public class VoidTeleportFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onFellOutOfWorld(PlayerMoveEvent event) {
+    public void onFellOutOfWorld(@Nonnull PlayerMoveEvent event) {
         // just in case damage is disabled
         if (event.getTo().getY() < 0) {
             event.getPlayer().teleport(getPhase().getFeature(SpawnFeature.class).getSpawn(event.getPlayer().getUniqueId()));

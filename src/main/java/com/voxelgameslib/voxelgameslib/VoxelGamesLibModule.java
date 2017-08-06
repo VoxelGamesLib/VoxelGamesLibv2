@@ -26,6 +26,7 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import java.io.File;
 import java.util.Map;
+import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 
@@ -44,6 +45,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
     private File dataFolder;
     private Map<Class<Module>, Module> offeredModules;
 
+    @Nonnull
     public Injector createInjector() {
         return Guice.createInjector(this);
     }
@@ -70,6 +72,8 @@ public final class VoxelGamesLibModule extends AbstractModule {
                 .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
         bind(File.class).annotatedWith(Names.named("KitsFolder"))
                 .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
+        bind(File.class).annotatedWith(Names.named("SkinsFolder"))
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "skins"));
 
         bind(WorldConfig.class).toProvider(WorldHandler.class);
         bind(GlobalConfig.class).toProvider(ConfigHandler.class);
@@ -81,7 +85,8 @@ public final class VoxelGamesLibModule extends AbstractModule {
     }
 
     @Provides
-    public Gson getGson(Injector injector) {
+    @Nonnull
+    public Gson getGson(@Nonnull Injector injector) {
         GsonBuilder builder = new GsonBuilder();
         addTypeAdapters(builder, injector);
         builder.setPrettyPrinting();
@@ -91,14 +96,15 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
     @Provides
     @Named("IgnoreExposedBS")
-    public Gson getGsonWithoutExposed(Injector injector) {
+    @Nonnull
+    public Gson getGsonWithoutExposed(@Nonnull Injector injector) {
         GsonBuilder builder = new GsonBuilder();
         addTypeAdapters(builder, injector);
         builder.setPrettyPrinting();
         return builder.create();
     }
 
-    private void addTypeAdapters(GsonBuilder builder, Injector injector) {
+    private void addTypeAdapters(@Nonnull GsonBuilder builder, @Nonnull Injector injector) {
         builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
         builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
         builder.registerTypeAdapter(Game.class, injector.getInstance(GameTypeAdapter.class));

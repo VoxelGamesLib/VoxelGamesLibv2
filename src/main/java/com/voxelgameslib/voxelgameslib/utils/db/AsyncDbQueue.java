@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import javax.annotation.Nonnull;
 
 import lombok.extern.java.Log;
 
@@ -49,7 +50,7 @@ public class AsyncDbQueue implements Runnable {
         lock.unlock();
     }
 
-    public static boolean queue(AsyncDbStatement stm) {
+    public static boolean queue(@Nonnull AsyncDbStatement stm) {
         return queue.offer(stm);
     }
 

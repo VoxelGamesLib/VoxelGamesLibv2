@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.game;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lombok.extern.java.Log;
 
@@ -85,7 +86,7 @@ public class GameMode extends jskills.GameInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) {
             return true;
         }

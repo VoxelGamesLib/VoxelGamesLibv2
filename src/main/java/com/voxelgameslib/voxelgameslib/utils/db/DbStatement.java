@@ -20,6 +20,7 @@ import static org.bukkit.Bukkit.getServer;
  * statement = null; try { statement = new DbStatement(); // use it } catch (Exception e) { //
  * handle exception } finally { if (statement != null) { statement.close(); } }
  */
+@SuppressWarnings("MissingJSR305")
 @Log
 public class DbStatement implements AutoCloseable {
     private Connection dbConn;

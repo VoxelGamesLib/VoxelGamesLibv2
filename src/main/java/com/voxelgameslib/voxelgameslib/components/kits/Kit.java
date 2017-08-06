@@ -5,6 +5,7 @@ import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Nonnull;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -26,7 +27,7 @@ public class Kit {
      *
      * @param name name of kit
      */
-    public Kit(String name) {
+    public Kit(@Nonnull String name) {
         this(name, new HashMap<>(), new HashMap<>());
     }
 
@@ -36,7 +37,7 @@ public class Kit {
      * @param name  name of kit
      * @param items items the kit contains
      */
-    public Kit(String name, Map<Integer, ItemStack> items) {
+    public Kit(@Nonnull String name, @Nonnull Map<Integer, ItemStack> items) {
         this(name, items, new HashMap<>());
     }
 
@@ -47,17 +48,17 @@ public class Kit {
      * @param items     items the kit contains
      * @param abilities the abilities of this kit
      */
-    public Kit(String name, Map<Integer, ItemStack> items, Map<Integer, Ability> abilities) {
+    public Kit(@Nonnull String name, @Nonnull Map<Integer, ItemStack> items, @Nonnull Map<Integer, Ability> abilities) {
         this.name = name;
         this.items = items;
         this.abilities = abilities;
     }
 
-    public void addItem(int slot, ItemStack is) {
+    public void addItem(int slot, @Nonnull ItemStack is) {
         items.put(slot, is);
     }
 
-    public void addAbility(int slot, Ability is) {
+    public void addAbility(int slot, @Nonnull Ability is) {
         abilities.put(slot, is);
     }
 }

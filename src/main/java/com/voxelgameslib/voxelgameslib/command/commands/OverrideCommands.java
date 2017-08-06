@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class OverrideCommands extends BaseCommand {
 
     @CommandAlias("reload|rl")
     @CommandPermission("bukkit.command.reload") // don't change the access for this command
-    public void reload(CommandSender sender) {
+    public void reload(@Nonnull CommandSender sender) {
         sender.sendMessage(ChatColor.RED + "This command has been disabled by VoxelGamesLib, as it will break the framework from functioning.");
     }
 }

@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.persistence.converter;
 
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 
+import javax.annotation.Nonnull;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -9,12 +10,14 @@ import javax.persistence.Converter;
 public class LocaleConverter implements AttributeConverter<Locale, String> {
 
     @Override
-    public String convertToDatabaseColumn(Locale attribute) {
+    @Nonnull
+    public String convertToDatabaseColumn(@Nonnull Locale attribute) {
         return attribute.getTag();
     }
 
     @Override
-    public Locale convertToEntityAttribute(String dbData) {
+    @Nonnull
+    public Locale convertToEntityAttribute(@Nonnull String dbData) {
         return Locale.fromTag(dbData).orElse(Locale.ENGLISH);
     }
 }

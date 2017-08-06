@@ -4,6 +4,8 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import net.kyori.text.Component;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Location;
 
 /**
@@ -21,5 +23,6 @@ public interface SimpleSignPlaceHolder extends SignPlaceHolder {
      * @param key      the key of this placeholder
      * @return the replacement for the key
      */
-    Component apply(User user, Location location, String[] rawLines, Component[] lines, String key);
+    @Nonnull
+    Component apply(@Nonnull User user, @Nonnull Location location, @Nonnull String[] rawLines, @Nonnull Component[] lines, @Nonnull String key);
 }

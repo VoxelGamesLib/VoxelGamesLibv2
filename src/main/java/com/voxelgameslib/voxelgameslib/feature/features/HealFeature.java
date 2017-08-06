@@ -8,6 +8,8 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
+
 @FeatureInfo(name = "HealFeature", author = "MiniDigger", version = "1.0",
         description = "Small feature that heals and feeds players on join")
 public class HealFeature extends AbstractFeature {
@@ -27,7 +29,7 @@ public class HealFeature extends AbstractFeature {
      *
      * @param user the user
      */
-    public void heal(User user) {
+    public void heal(@Nonnull User user) {
         if (heal) {
             user.getPlayer().setHealth(20.0);
         }
@@ -37,7 +39,7 @@ public class HealFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onJoin(GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event) {
         heal(event.getUser());
     }
 
@@ -57,6 +59,7 @@ public class HealFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

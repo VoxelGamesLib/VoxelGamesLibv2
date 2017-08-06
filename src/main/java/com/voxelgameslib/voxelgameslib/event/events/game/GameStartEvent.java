@@ -20,12 +20,14 @@ public class GameStartEvent extends GameEvent {
         super(game);
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    @Nonnull
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    @Nonnull
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

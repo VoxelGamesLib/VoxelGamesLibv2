@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib.user;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.inventory.ItemStack;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +16,8 @@ public class PlayerState {
     private int exp;
     private float saturation;
 
-    public static PlayerState of(User user) {
+    @Nonnull
+    public static PlayerState of(@Nonnull User user) {
         return new PlayerState(
                 user.getPlayer().getInventory().getContents(),
                 user.getPlayer().getHealth(),
@@ -23,7 +26,7 @@ public class PlayerState {
         );
     }
 
-    public void apply(User user) {
+    public void apply(@Nonnull User user) {
         user.getPlayer().getInventory().setContents(inventory);
         user.getPlayer().updateInventory();
         user.getPlayer().setHealth(health);

@@ -6,6 +6,7 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,13 +25,13 @@ public class WorldRepositoryCommands extends BaseCommand {
     private WorldHandler worldHandler;
 
     @Subcommand("updateRepo")
-    public void updateRepo(User sender) {
+    public void updateRepo(@Nonnull User sender) {
         worldHandler.getWorldRepository().updateRepo();
         sender.sendMessage(TextComponent.of("[VGL] Repositories updated.").color(TextColor.GREEN));
     }
 
     @Subcommand("commitRepo")
-    public void commitRepo(User sender) {
+    public void commitRepo(@Nonnull User sender) {
         worldHandler.getWorldRepository().commitRepo();
         sender.sendMessage(TextComponent.of("[VGL] Created commit.").color(TextColor.GREEN));
     }

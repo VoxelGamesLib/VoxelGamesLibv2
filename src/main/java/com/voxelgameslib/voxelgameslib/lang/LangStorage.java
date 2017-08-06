@@ -38,7 +38,7 @@ public class LangStorage {
 
     private Translatable translatable;
 
-    public void setTranslatable(Translatable translatable) {
+    public void setTranslatable(@Nonnull Translatable translatable) {
         this.translatable = translatable;
     }
 

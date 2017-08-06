@@ -109,13 +109,15 @@ public class LangHandler implements Handler {
         return storages.getOrDefault(loc, defaultStorage);
     }
 
-    public LangStorage getExternalStorage(UUID id, Locale loc) {
+    @Nonnull
+    public LangStorage getExternalStorage(@Nonnull UUID id, @Nonnull Locale loc) {
         return externalStorages.get(id).getOrDefault(loc, externalDefaultStorages.get(id));
     }
 
     /**
      * @return the default lang storage
      */
+    @Nonnull
     public LangStorage getDefaultStorage() {
         return defaultStorage;
     }
@@ -135,7 +137,7 @@ public class LangHandler implements Handler {
      * @param externalTranslatable the new locale key provider
      * @param langFolder           the folder the files for this provider will be stored in
      */
-    public void registerExternalLangProvider(ExternalTranslatable externalTranslatable, File langFolder) {
+    public void registerExternalLangProvider(@Nonnull ExternalTranslatable externalTranslatable, @Nonnull File langFolder) {
         ExternalLangStorage defaultStorage = voxelGameLib.getInjector().getInstance(ExternalLangStorage.class);
         defaultStorage.setTranslatable(externalTranslatable);
         defaultStorage.setLangFolder(langFolder);
@@ -153,7 +155,7 @@ public class LangHandler implements Handler {
      * @param externalTranslatable the provider to create a new storage for
      * @param langFolder           the folder where the file should be stored in
      */
-    public void registerExternalLocale(Locale locale, ExternalTranslatable externalTranslatable, File langFolder) {
+    public void registerExternalLocale(@Nonnull Locale locale, @Nonnull ExternalTranslatable externalTranslatable, @Nonnull File langFolder) {
         ExternalLangStorage storage = voxelGameLib.getInjector().getInstance(ExternalLangStorage.class);
         storage.setLangFolder(langFolder);
         storage.setTranslatable(externalTranslatable);

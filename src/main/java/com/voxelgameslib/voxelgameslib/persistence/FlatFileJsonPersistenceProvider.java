@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -66,7 +67,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(@Nonnull User user) {
         UserMap.put(user.getUuid(), user);
         saveUsers();
     }
@@ -80,7 +81,8 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public Optional<User> loadUser(UUID id) {
+    @Nonnull
+    public Optional<User> loadUser(@Nonnull UUID id) {
         return Optional.ofNullable(UserMap.get(id));
     }
 }

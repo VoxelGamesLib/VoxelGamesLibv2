@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.components.scoreboard;
 import com.google.common.base.Splitter;
 
 import java.util.Iterator;
+import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Team;
@@ -12,23 +13,25 @@ public class BukkitStringScoreboardLine extends StringScoreboardLine {
     private Team team;
     private String entry = "";
 
-    public BukkitStringScoreboardLine(String value, Team team) {
+    public BukkitStringScoreboardLine(@Nonnull String value, @Nonnull Team team) {
         super(value);
         this.team = team;
         setValue(value);
     }
 
+    @Nonnull
     public String getScore() {
         return entry;
     }
 
+    @Nonnull
     public String setScore(int score) {
         return entry = ChatColor.values()[score].toString();
     }
 
     @Override
     // thanks to this random gist https://gist.github.com/mkotb/d99eccdcc78a43ffb707
-    public void setValue(String value) {
+    public void setValue(@Nonnull String value) {
         super.setValue(value);
 
         Iterator<String> iterator = Splitter.fixedLength(16).split(value).iterator();

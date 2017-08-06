@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 
 import com.google.inject.name.Named;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public final class VGLCommands extends BaseCommand {
 
     @Subcommand("version")
     @CommandPermission("%user")
-    public void version(CommandSender sender) {
+    public void version(@Nonnull CommandSender sender) {
         sender.sendMessage("You are using VoxelGamesLib version " + pluginVersion);
     }
 }

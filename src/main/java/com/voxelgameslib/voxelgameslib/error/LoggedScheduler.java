@@ -16,7 +16,7 @@ import org.bukkit.scheduler.BukkitWorker;
  *
  * @author aadnk
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "MissingJSR305"})
 public abstract class LoggedScheduler implements BukkitScheduler {
 
     private class TaskedRunnable implements Runnable {

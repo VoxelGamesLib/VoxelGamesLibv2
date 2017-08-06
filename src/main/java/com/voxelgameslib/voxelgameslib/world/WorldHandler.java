@@ -136,7 +136,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @return the found map info, if present
      */
     @Nonnull
-    public Optional<MapInfo> getMapInfo(String name) {
+    public Optional<MapInfo> getMapInfo(@Nonnull String name) {
         return config.maps.stream().filter(mapInfo -> mapInfo.getName().equalsIgnoreCase(name))
                 .findAny();
     }
@@ -150,7 +150,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param gameid the id of the game this map belongs to
      * @throws WorldException something goes wrong
      */
-    public void loadWorld(@Nonnull Map map, UUID gameid, boolean replaceMarkers) {
+    public void loadWorld(@Nonnull Map map, @Nonnull UUID gameid, boolean replaceMarkers) {
         map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
         log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
 
@@ -179,7 +179,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param map    the map that should be unloaded.
      * @param gameid the id of the game that this map belongs to
      */
-    public void unloadWorld(@Nonnull Map map, UUID gameid) {
+    public void unloadWorld(@Nonnull Map map, @Nonnull UUID gameid) {
         unloadLocalWorld(map.getLoadedName(gameid));
         FileUtils.delete(new File(worldContainer, map.getLoadedName(gameid)));
         map.unload(gameid);
@@ -191,7 +191,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param world the world in which the markers are located
      * @param map   the map defining the markers
      */
-    public void replaceMarkers(World world, Map map) {
+    public void replaceMarkers(@Nonnull World world, @Nonnull Map map) {
         map.getMarkers().forEach(marker -> marker.getLoc().toLocation(world.getName()).getBlock().setType(Material.AIR));
         log.finer("Replaced " + map.getMarkers().size() + " markers with air");
         //TODO chest markers?
@@ -256,6 +256,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @return the loaded world
      * @throws WorldException if the world is not found or something else goes wrong
      */
+    @Nonnull
     public World loadLocalWorld(@Nonnull String name) {
         org.bukkit.WorldCreator wc = new WorldCreator(name);
         wc.environment(World.Environment.NORMAL); //TODO do we need support for environment in maps?
@@ -294,7 +295,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         configHandler.saveConfig(configFile, config);
     }
 
-    public void finishWorldEditing(User editor, Map map) {
+    public void finishWorldEditing(@Nonnull User editor, @Nonnull Map map) {
         World world = Bukkit.getWorld(map.getLoadedName(editor.getUuid()));
         world.setSpawnLocation((int) map.getCenter().getX(), (int) map.getCenter().getY(), (int) map.getCenter().getZ());
         world.setAutoSave(true);

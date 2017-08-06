@@ -45,7 +45,8 @@ public class Permission {
      * @param role the role this permission defaults to
      * @return the new permission object
      */
-    public static Permission register(String perm, Role role) {
+    @Nonnull
+    public static Permission register(@Nonnull String perm, @Nonnull Role role) {
         return roleHandler.registerPermission(perm, role.getName());
     }
 }

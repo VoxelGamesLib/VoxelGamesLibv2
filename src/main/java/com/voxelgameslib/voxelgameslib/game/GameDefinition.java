@@ -4,9 +4,12 @@ import com.google.gson.annotations.Expose;
 
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Holds all important information of a game, ready to be saved to and loaded from json
@@ -23,10 +26,10 @@ public class GameDefinition {
     private int maxPlayers;
 
     @Expose
-    private List<Phase> phases;
+    private List<Phase> phases = new ArrayList<>();
 
     @Expose
-    private Map<Class<GameData>, GameData> gameData;
+    private Map<Class<GameData>, GameData> gameData = new HashMap<>();
 
     /**
      * @return the gamemode for this definition
@@ -73,22 +76,24 @@ public class GameDefinition {
     }
 
     /**
-     * @param gameData the game data map
-     */
-    public void setGameData(Map<Class<GameData>, GameData> gameData) {
-        this.gameData = gameData;
-    }
-
-    /**
      * @return the game data map
      */
+    @Nonnull
     public Map<Class<GameData>, GameData> getGameData() {
         return gameData;
     }
 
     /**
+     * @param gameData the game data map
+     */
+    public void setGameData(@Nonnull Map<Class<GameData>, GameData> gameData) {
+        this.gameData = gameData;
+    }
+
+    /**
      * @return the phases for this game
      */
+    @Nonnull
     public List<Phase> getPhases() {
         return phases;
     }
@@ -96,12 +101,12 @@ public class GameDefinition {
     /**
      * @param phases the phases for this game
      */
-    public void setPhases(List<Phase> phases) {
+    public void setPhases(@Nonnull List<Phase> phases) {
         this.phases = phases;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) {
             return true;
         }
@@ -137,6 +142,7 @@ public class GameDefinition {
     }
 
     @Override
+    @Nonnull
     public String toString() {
         return "GameDefinition{" +
                 "gameMode=" + gameMode +

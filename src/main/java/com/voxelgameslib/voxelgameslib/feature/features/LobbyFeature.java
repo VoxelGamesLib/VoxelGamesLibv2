@@ -10,6 +10,8 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.boss.BossBar;
 
 import lombok.extern.java.Log;
@@ -74,12 +76,13 @@ public class LobbyFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[]{ScoreboardFeature.class, BossBarFeature.class};
     }
 
     @GameEvent
-    public void onJoin(GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event) {
         scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
                 getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers()));
 
@@ -104,7 +107,7 @@ public class LobbyFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onLeave(GameLeaveEvent event) {
+    public void onLeave(@Nonnull GameLeaveEvent event) {
         scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
                 getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers()));
         if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()

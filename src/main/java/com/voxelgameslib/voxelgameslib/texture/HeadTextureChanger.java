@@ -30,20 +30,25 @@ package com.voxelgameslib.voxelgameslib.texture;
 
 import com.google.common.io.BaseEncoding;
 
-import org.bukkit.Location;
-import org.bukkit.block.Skull;
-import org.bukkit.inventory.meta.SkullMeta;
-
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.reflection.minecraft.Minecraft;
-import org.inventivetalent.reflection.resolver.*;
+import org.inventivetalent.reflection.resolver.ClassResolver;
+import org.inventivetalent.reflection.resolver.ConstructorResolver;
+import org.inventivetalent.reflection.resolver.FieldResolver;
+import org.inventivetalent.reflection.resolver.MethodResolver;
+import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
 
+import org.bukkit.Location;
+import org.bukkit.block.Skull;
+import org.bukkit.inventory.meta.SkullMeta;
+
+@SuppressWarnings("MissingJSR305")
 public class HeadTextureChanger {
 
     static final ClassResolver classResolver = new ClassResolver();

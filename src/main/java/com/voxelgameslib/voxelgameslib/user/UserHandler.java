@@ -146,7 +146,8 @@ public class UserHandler implements Handler {
      * @param displayname the display name of the user
      * @return the user with that display name, if present
      */
-    public Optional<User> getUser(String displayname) {
+    @Nonnull
+    public Optional<User> getUser(@Nonnull String displayname) {
         if (displayname.equalsIgnoreCase("CONSOLE")) {
             return Optional.of(GameConsoleUser.INSTANCE);
         } else {
@@ -157,6 +158,7 @@ public class UserHandler implements Handler {
     /**
      * @return all users currently online
      */
+    @Nonnull
     public Collection<User> getUsers() {
         return users.values();
     }

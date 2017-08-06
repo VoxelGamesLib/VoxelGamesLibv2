@@ -195,6 +195,7 @@ public enum LangKey implements Translatable {
     }
 
     @Override
+    @Nonnull
     public Translatable[] getValues() {
         return values();
     }

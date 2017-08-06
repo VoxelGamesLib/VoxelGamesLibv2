@@ -77,7 +77,7 @@ public class Vector3D implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) {
             return true;
         }
@@ -221,6 +221,7 @@ public class Vector3D implements Cloneable {
      * @param angle the angle in radians
      * @return a new, rotated vector
      */
+    @Nonnull
     public final Vector3D rotateAroundY(double angle) {
         return new Vector3D(
                 x * Math.cos(angle) - z * Math.sin(angle),
@@ -265,7 +266,8 @@ public class Vector3D implements Cloneable {
      * @param world the world the location is located in
      * @return the created location
      */
-    public Location toLocation(String world) {
+    @Nonnull
+    public Location toLocation(@Nonnull String world) {
         return new Location(Bukkit.getWorld(world), x, y, z);
     }
 }

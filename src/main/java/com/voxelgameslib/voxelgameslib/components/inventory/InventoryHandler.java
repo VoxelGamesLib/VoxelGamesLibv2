@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.components.inventory;
 import com.google.inject.Injector;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -62,15 +64,15 @@ public class InventoryHandler implements Handler, Listener {
      * @param size          size of inventory space
      * @return the created inventory
      */
-    public <T extends BaseInventory> T createInventory(Class<T> inventoryType, Player player, String title, int size) {
+    @Nonnull
+    public <T extends BaseInventory> T createInventory(@Nonnull Class<T> inventoryType, @Nonnull Player player, @Nonnull String title, int size) {
         T instance = null;
 
         try {
             instance = inventoryType.getDeclaredConstructor(Player.class, String.class, int.class).newInstance(player, title, size);
             injector.injectMembers(instance);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            log.severe("Error creating new inventory (VGL Inventory API): " + e.getMessage());
-            e.printStackTrace();
+            throw new VoxelGameLibException("Error creating new inventory (VGL Inventory API): " + e.getMessage(), e);
         }
 
         inventories.put(player.getUniqueId(), instance);
@@ -83,29 +85,30 @@ public class InventoryHandler implements Handler, Listener {
      *
      * @param inventoryId UUID of the inventory (same as the player's UUID generally)
      */
-    public void removeInventory(UUID inventoryId) {
+    public void removeInventory(@Nonnull UUID inventoryId) {
         inventories.remove(inventoryId);
     }
 
     @EventHandler
-    public void onOpenListener(InventoryOpenEvent event) {
+    public void onOpenListener(@Nonnull InventoryOpenEvent event) {
         this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onOpen);
     }
 
     @EventHandler
-    public void onCloseListener(InventoryCloseEvent event) {
+    public void onCloseListener(@Nonnull InventoryCloseEvent event) {
         this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onClose);
     }
 
     @EventHandler
-    public void onClickListener(InventoryClickEvent event) {
+    public void onClickListener(@Nonnull InventoryClickEvent event) {
         this.getInventory(event.getWhoClicked()).ifPresent(inventory -> {
             event.setCancelled(true);
             inventory.onClick(event.getCurrentItem(), event);
         });
     }
 
-    private Optional<BaseInventory> getInventory(final HumanEntity player) {
+    @Nonnull
+    private Optional<BaseInventory> getInventory(@Nonnull final HumanEntity player) {
         return Optional.ofNullable(this.inventories.get(player.getUniqueId()));
     }
 }

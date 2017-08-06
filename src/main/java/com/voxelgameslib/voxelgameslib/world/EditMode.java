@@ -48,13 +48,13 @@ public class EditMode extends BaseCommand {
 
     @CommandAlias("editmode")
     @CommandPermission("%admin")
-    public void editmode(User sender) {
+    public void editmode(@Nonnull User sender) {
         //TODO info about edit mode
     }
 
     @Subcommand("on")
     @CommandPermission("%admin")
-    public void on(User sender) {
+    public void on(@Nonnull User sender) {
         if (!editMode.contains(sender.getUuid())) {
             editMode.add(sender.getUuid());
             //TODO item for editmode
@@ -66,7 +66,7 @@ public class EditMode extends BaseCommand {
 
     @Subcommand("off")
     @CommandPermission("%admin")
-    public void off(User sender) {
+    public void off(@Nonnull User sender) {
         if (editMode.contains(sender.getUuid())) {
             editMode.remove(sender.getUuid());
             Lang.msg(sender, LangKey.EDITMODE_DISABLED);
@@ -78,7 +78,7 @@ public class EditMode extends BaseCommand {
     @Subcommand("skull")
     @CommandPermission("%admin")
     @Syntax("<name> - the name of the skull")
-    public void skull(User sender, String name) {
+    public void skull(@Nonnull User sender, @Nonnull String name) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
                     .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(name))).build();
@@ -91,7 +91,7 @@ public class EditMode extends BaseCommand {
     @Subcommand("chest")
     @CommandPermission("%admin")
     @Syntax("<name> - the name of the chest")
-    public void chest(User sender, String name) {
+    public void chest(@Nonnull User sender, @Nonnull String name) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack chest = new ItemBuilder(Material.CHEST).name(name).build();
             sender.getPlayer().getInventory().setItemInMainHand(chest);
@@ -102,7 +102,7 @@ public class EditMode extends BaseCommand {
 
     @Subcommand("gui")
     @CommandPermission("%admin")
-    public void gui(User sender) {
+    public void gui(@Nonnull User sender) {
         if (editMode.contains(sender.getUuid())) {
             PagedInventory inventory = inventoryHandler.createInventory(PagedInventory.class, sender.getPlayer(), "Markers", 9); //TODO i18n
 

@@ -7,6 +7,9 @@ import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class ComponentTypeDescriptor extends AbstractTypeDescriptor<Component> {
 
     public static ComponentTypeDescriptor INSTANCE = new ComponentTypeDescriptor();
@@ -17,18 +20,21 @@ public class ComponentTypeDescriptor extends AbstractTypeDescriptor<Component> {
     }
 
     @Override
-    public String toString(Component value) {
+    @Nonnull
+    public String toString(@Nonnull Component value) {
         return ComponentSerializer.serialize(value);
     }
 
     @Override
-    public Component fromString(String string) {
+    @Nonnull
+    public Component fromString(@Nonnull String string) {
         return ComponentSerializer.deserialize(string);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <X> X unwrap(Component value, Class<X> type, WrapperOptions options) {
+    @Nullable
+    public <X> X unwrap(@Nullable Component value, @Nonnull Class<X> type, @Nonnull WrapperOptions options) {
         if (value == null) {
             return null;
         }
@@ -41,7 +47,8 @@ public class ComponentTypeDescriptor extends AbstractTypeDescriptor<Component> {
     }
 
     @Override
-    public <X> Component wrap(X value, WrapperOptions options) {
+    @Nullable
+    public <X> Component wrap(@Nullable X value, @Nonnull WrapperOptions options) {
         if (value == null) {
             return null;
         }

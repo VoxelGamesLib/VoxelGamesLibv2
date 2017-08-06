@@ -7,6 +7,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -41,14 +42,14 @@ public class WorldCommands extends BaseCommand {
     @UnknownHandler
     @Subcommand("help")
     @CommandPermission("%admin")
-    public void world(User sender) {
+    public void world(@Nonnull User sender) {
         //CommandUtil.printHelp(sender, getCommandHelp());TODO comment back in once https://github.com/aikar/commands/pull/60 is merged
     }
 
     @Subcommand("info")
     @CommandPermission("%admin")
     //@Description("Shows some basic info about your current world")
-    public void worldInfo(User sender) {
+    public void worldInfo(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_INFO, sender.getPlayer().getLocation().getWorld().getName());
     }
 
@@ -56,7 +57,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     @Syntax("<mapname> - the name of the map to load")
     //@Description("Loads a map onto the server")
-    public void load(User sender, String mapName) {
+    public void load(@Nonnull User sender, @Nonnull String mapName) {
         Optional<Map> o = handler.getMap(mapName);
         Map map = o.orElseGet(() -> handler.loadMap(mapName));
 
@@ -67,7 +68,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     @Syntax("<mapname> - the name of the map to unload")
     //@Description("Unloads a map from the server")
-    public void unload(User sender, String mapName) {
+    public void unload(@Nonnull User sender, @Nonnull String mapName) {
         Optional<Map> o = handler.getMap(mapName);
         if (o.isPresent()) {
             handler.unloadWorld(o.get(), sender.getUuid());
@@ -80,7 +81,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to load")
     //@Description("Loads a local world onto the server")
-    public void loadLocal(User sender, String world) {
+    public void loadLocal(@Nonnull User sender, @Nonnull String world) {
         handler.loadLocalWorld(world);
     }
 
@@ -88,7 +89,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to unload")
     //@Description("Unloads a local world from the server")
-    public void unloadLocal(User sender, String world) {
+    public void unloadLocal(@Nonnull User sender, @Nonnull String world) {
         handler.unloadLocalWorld(world);
     }
 
@@ -96,7 +97,7 @@ public class WorldCommands extends BaseCommand {
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the world to tp to")
     //@Description("Teleports you to a world")
-    public void tp(User sender, String world) {
+    public void tp(@Nonnull User sender, @Nonnull String world) {
         Optional<Map> o = handler.getMap(world);
         if (o.isPresent()) {
             Map map = o.get();

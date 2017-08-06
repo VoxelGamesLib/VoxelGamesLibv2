@@ -3,6 +3,8 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
+import javax.annotation.Nonnull;
+
 /**
  * This feature allows the ability for multiple channels in phases, e.g. for team based chats. It
  * simply saves you the headache of doing it all manually.
@@ -32,6 +34,7 @@ public class ChannelFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }

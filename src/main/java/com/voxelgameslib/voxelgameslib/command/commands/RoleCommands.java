@@ -6,6 +6,8 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,14 +33,14 @@ public class RoleCommands extends BaseCommand {
 
     @Default
     @CommandPermission("%user")
-    public void role(User sender) {
+    public void role(@Nonnull User sender) {
         Lang.msg(sender, LangKey.ROLE_SELF, sender.getRole().getName());
     }
 
     @UnknownHandler
     @CommandPermission("%moderator")
     @Syntax("[user] - the user which role you wanna get")
-    public void role(User sender, @co.aikar.commands.annotation.Optional User user) {
+    public void role(@Nonnull User sender, @Nullable @co.aikar.commands.annotation.Optional User user) {
         if (user == null) {
             Lang.msg(sender, LangKey.ROLE_SELF, sender.getRole().getName());
             return;
@@ -52,7 +54,7 @@ public class RoleCommands extends BaseCommand {
             + "<role> - the new role")
     @CommandPermission("%admin")
     @CommandCompletion("@players @roles")
-    public void set(User sender, User user, Role role) {
+    public void set(@Nonnull User sender, @Nonnull User user, @Nonnull Role role) {
         user.setRole(role);
         user.applyRolePrefix();
         user.applyRoleSuffix();

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -67,26 +68,28 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     }
 
     @Override
+    @Nonnull
     public Class[] getDependencies() {
         return new Class[0];
     }
 
     @GameEvent
-    public void onJoin(GameJoinEvent event) {
+    public void onJoin(@Nonnull GameJoinEvent event) {
         Scoreboard scoreboard = scoreboardHandler.createScoreboard(getPhase().getGame().getGameMode().getName());
         scoreboard.addUser(event.getUser());
         scoreboards.put(event.getUser(), scoreboard);
     }
 
     @GameEvent
-    public void onQuit(GameLeaveEvent event) {
+    public void onQuit(@Nonnull GameLeaveEvent event) {
         Scoreboard scoreboard = scoreboards.get(event.getUser());
         scoreboard.removeAllLines();
         scoreboard.removeAllUsers();
         scoreboards.remove(event.getUser());
     }
 
-    public Scoreboard getScoreboardForUser(User user) {
+    @Nonnull
+    public Scoreboard getScoreboardForUser(@Nonnull User user) {
         return scoreboards.get(user);
     }
 
@@ -97,7 +100,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
 
         private Collection<Scoreboard> scoreboards;
 
-        GlobalScoreboard(Collection<Scoreboard> scoreboards) {
+        GlobalScoreboard(@Nonnull Collection<Scoreboard> scoreboards) {
             this.scoreboards = scoreboards;
         }
 
@@ -135,6 +138,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
             return Optional.empty();
         }
 
+        @Nonnull
         public List<ScoreboardLine> getLines(int key) {
             List<ScoreboardLine> lines = new ArrayList<>();
 
@@ -203,26 +207,29 @@ public class PersonalScoreboardFeature extends AbstractFeature {
         }
 
         @Override
-        public void setImplObject(org.bukkit.scoreboard.Scoreboard object) {
+        public void setImplObject(@Nonnull org.bukkit.scoreboard.Scoreboard object) {
             //
         }
 
         @Override
-        public StringScoreboardLine createAndAddLine(String content) {
+        @Nullable
+        public StringScoreboardLine createAndAddLine(@Nonnull String content) {
             scoreboards.forEach(scoreboard -> scoreboard.createAndAddLine(content));
 
             return null; // get the line again if you want to do something with it
         }
 
         @Override
-        public StringScoreboardLine createAndAddLine(String key, String content) {
+        @Nullable
+        public StringScoreboardLine createAndAddLine(@Nonnull String key, @Nonnull String content) {
             scoreboards.forEach(scoreboard -> scoreboard.createAndAddLine(key, content));
 
             return null; // get the line again if you want to do something with it
         }
 
         @Override
-        public StringScoreboardLine createAndAddLine(int pos, String content) {
+        @Nullable
+        public StringScoreboardLine createAndAddLine(int pos, @Nonnull String content) {
             scoreboards.forEach(scoreboard -> scoreboard.createAndAddLine(pos, content));
 
             return null; // get the line again if you want to do something with it

@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
 
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -60,7 +61,7 @@ public class Map {
      *
      * @param mapHandler the maphandler that provides the marker definitions
      */
-    public void initMarkers(MapHandler mapHandler) {
+    public void initMarkers(@Nonnull MapHandler mapHandler) {
         markers.forEach(marker -> marker.setMarkerDefinition(mapHandler.createMarkerDefinition(marker.getData())));
     }
 
@@ -87,14 +88,16 @@ public class Map {
         //TODO print summery of map
     }
 
-    public String getLoadedName(UUID gameid) {
+    @Nonnull
+    public String getLoadedName(@Nonnull UUID gameid) {
         if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
-        return loadedNames.get(gameid);
+        return Optional.ofNullable(loadedNames.get(gameid))
+                .orElseThrow(() -> new VoxelGameLibException("Map " + worldName + " was never loaded for game " + gameid));
     }
 
-    public void load(UUID gameid, String name) {
+    public void load(@Nonnull UUID gameid, @Nonnull String name) {
         if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
@@ -103,7 +106,7 @@ public class Map {
         }
     }
 
-    public boolean isLoaded(UUID gameid) {
+    public boolean isLoaded(@Nonnull UUID gameid) {
         log.finer("Is  " + info.getName() + " loaded?");
         if (loadedNames == null) {
             log.finer("Loaded names = null");
@@ -112,14 +115,15 @@ public class Map {
         return loadedNames.containsKey(gameid);
     }
 
-    public void unload(UUID gameid) {
+    public void unload(@Nonnull UUID gameid) {
         if (loadedNames == null) {
             loadedNames = new HashMap<>();
         }
         loadedNames.remove(gameid);
     }
 
-    public List<Marker> getMarkers(MarkerDefinition spawnMarker) {
+    @Nonnull
+    public List<Marker> getMarkers(@Nonnull MarkerDefinition spawnMarker) {
         return markers.stream().filter(marker -> spawnMarker.isOfSameType(marker.getMarkerDefinition())).collect(Collectors.toList());
     }
 }

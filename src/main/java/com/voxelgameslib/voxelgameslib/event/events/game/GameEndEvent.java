@@ -25,7 +25,7 @@ public class GameEndEvent extends GameEvent {
      * @param duration   the duration the game run for
      * @param wasAborted if the game was aborted (server shutdown, all players leave, by command)
      */
-    public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, Duration duration,
+    public GameEndEvent(@Nonnull Game game, @Nonnull List<User> winners, @Nonnull Duration duration,
                         boolean wasAborted) {
         super(game);
         this.winners = winners;
@@ -56,12 +56,14 @@ public class GameEndEvent extends GameEvent {
         return wasAborted;
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    @Nonnull
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    @Nonnull
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

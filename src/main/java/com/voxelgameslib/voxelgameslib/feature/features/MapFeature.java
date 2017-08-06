@@ -80,6 +80,7 @@ public class MapFeature extends AbstractFeature {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Nonnull
     public Class<? extends Feature>[] getDependencies() {
         return new Class[0];
     }
@@ -87,6 +88,7 @@ public class MapFeature extends AbstractFeature {
     /**
      * @return the type of this map feature
      */
+    @Nonnull
     public Type getType() {
         return type;
     }
@@ -96,7 +98,7 @@ public class MapFeature extends AbstractFeature {
      *
      * @param type the new type
      */
-    public void setType(Type type) {
+    public void setType(@Nonnull Type type) {
         this.type = type;
     }
 

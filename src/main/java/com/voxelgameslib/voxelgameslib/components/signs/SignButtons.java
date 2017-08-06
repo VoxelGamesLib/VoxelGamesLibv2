@@ -8,6 +8,7 @@ import net.kyori.text.TextComponent;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -38,7 +39,7 @@ public class SignButtons implements Listener {
      * @param key    the key to use
      * @param button the button that should be triggered
      */
-    public void registerButton(String key, SignButton button) {
+    public void registerButton(@Nonnull String key, @Nonnull SignButton button) {
         buttons.put(key, button);
     }
 
@@ -47,13 +48,14 @@ public class SignButtons implements Listener {
      *
      * @return all sign buttons
      */
+    @Nonnull
     public Map<String, SignButton> getButtons() {
         return buttons;
     }
 
 
     @EventHandler
-    public void signInteract(PlayerInteractEvent event) {
+    public void signInteract(@Nonnull PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock() == null) {
             return;
         }

@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -50,7 +51,7 @@ public class ErrorHandler implements Handler {
     private boolean enableBugsnag = false;
 
     // No guice since we enable on Load
-    public ErrorHandler(VoxelGamesLib voxelGamesLib) {
+    public ErrorHandler(@Nonnull VoxelGamesLib voxelGamesLib) {
         this.voxelGamesLib = voxelGamesLib;
     }
 
@@ -141,7 +142,7 @@ public class ErrorHandler implements Handler {
                 }
 
                 @Override
-                protected void customHandler(Throwable e) {
+                protected void customHandler(@Nonnull Throwable e) {
                     if (enableBugsnag) {
                         bugsnag.notify(e.getCause(), Severity.ERROR);
                     }
@@ -150,7 +151,7 @@ public class ErrorHandler implements Handler {
                 }
 
                 @Override
-                protected void customHandler(Event event, Throwable e) {
+                protected void customHandler(@Nonnull Event event, @Nonnull Throwable e) {
                     if (enableBugsnag) {
                         bugsnag.notify(e.getCause(), Severity.ERROR, (report -> {
                             report.addToTab(EVENT_INFO_TAB, "Event Name", event.getEventName());
@@ -223,7 +224,7 @@ public class ErrorHandler implements Handler {
 //    }
     }
 
-    public void handle(Exception ex, Severity severity) {
+    public void handle(@Nonnull Exception ex, @Nonnull Severity severity) {
         if (enableBugsnag) {
             bugsnag.notify(ex, severity);
         }
@@ -231,7 +232,7 @@ public class ErrorHandler implements Handler {
                 "Caught exception with level " + severity.getValue(), ex);
     }
 
-    public void handle(CommandIssuer sender, List<String> args, Throwable e) {
+    public void handle(@Nonnull CommandIssuer sender, @Nonnull List<String> args, @Nonnull Throwable e) {
         if (enableBugsnag) {
             bugsnag.notify(e, Severity.ERROR, (report) -> {
                 report.addToTab(COMMAND_INFO_TAB, "sender", ((CommandSender) sender.getIssuer()).getName());

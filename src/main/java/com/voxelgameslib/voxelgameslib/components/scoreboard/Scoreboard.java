@@ -41,7 +41,7 @@ public interface Scoreboard {
      * @param line the new line
      * @return the position of the line on the scoreboard
      */
-    int addLine(String key, @Nonnull ScoreboardLine line);
+    int addLine(@Nonnull String key, @Nonnull ScoreboardLine line);
 
     /**
      * Adds a new line to this scoreboard. <br> A new line is will always be added on the top.
@@ -127,7 +127,7 @@ public interface Scoreboard {
      *
      * @param object the servers implementation of
      */
-    void setImplObject(org.bukkit.scoreboard.Scoreboard object);
+    void setImplObject(@Nonnull org.bukkit.scoreboard.Scoreboard object);
 
     /**
      * Creates a new simple scoreboard line and adds it automatically
@@ -135,7 +135,8 @@ public interface Scoreboard {
      * @param content the content of the line
      * @return the newly created line
      */
-    StringScoreboardLine createAndAddLine(String content);
+    @Nonnull
+    StringScoreboardLine createAndAddLine(@Nonnull String content);
 
     /**
      * Creates a new simple scoreboard line and adds it automatically
@@ -144,7 +145,8 @@ public interface Scoreboard {
      * @param key     the key of the line
      * @return the newly created line
      */
-    StringScoreboardLine createAndAddLine(String key, String content);
+    @Nonnull
+    StringScoreboardLine createAndAddLine(@Nonnull String key, @Nonnull String content);
 
     /**
      * Creates a new simple scoreboard line and adds it automatically
@@ -153,5 +155,6 @@ public interface Scoreboard {
      * @param pos     the position of the line
      * @return the newly created line
      */
-    StringScoreboardLine createAndAddLine(int pos, String content);
+    @Nonnull
+    StringScoreboardLine createAndAddLine(int pos, @Nonnull String content);
 }

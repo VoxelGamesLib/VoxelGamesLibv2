@@ -11,6 +11,7 @@ import lombok.extern.java.Log;
  * overridden to receive all DB Results back on main thread, by calling getResultsSync() on the
  * Async run(DbStatement) call.
  */
+@SuppressWarnings("MissingJSR305")
 @Log
 public abstract class AsyncDbStatement {
     protected String query;

@@ -8,6 +8,7 @@ import net.kyori.text.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class ChatChannel {
      *
      * @param identifier a unique identifier for this channel
      */
-    ChatChannel(String identifier, @Nullable Component prefix) {
+    ChatChannel(@Nonnull String identifier, @Nullable Component prefix) {
         this.identifier = identifier;
         this.listeners = new ArrayList<>();
         this.prefix = prefix;
@@ -42,7 +43,7 @@ public class ChatChannel {
      *
      * @param identifier a unique identifier for this channel
      */
-    ChatChannel(String identifier) {
+    ChatChannel(@Nonnull String identifier) {
         this(identifier, null);
     }
 
@@ -52,7 +53,7 @@ public class ChatChannel {
      *
      * @param user the new listener
      */
-    public void addListener(User user) {
+    public void addListener(@Nonnull User user) {
         listeners.add(user);
     }
 
@@ -61,7 +62,7 @@ public class ChatChannel {
      *
      * @param user the listener to remove
      */
-    public void removeListener(User user) {
+    public void removeListener(@Nonnull User user) {
         listeners.remove(user);
     }
 
@@ -71,7 +72,7 @@ public class ChatChannel {
      * @param byUser  sender
      * @param message message
      */
-    public void sendMessage(User byUser, String message) {
+    public void sendMessage(@Nonnull User byUser, @Nonnull String message) {
         sendMessage(byUser, TextComponent.of(message));
     }
 
@@ -81,7 +82,7 @@ public class ChatChannel {
      * @param byUser  sender
      * @param message the message to send
      */
-    public void sendMessage(User byUser, Component message) {
+    public void sendMessage(@Nonnull User byUser, @Nonnull Component message) {
         listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(this, byUser.getDisplayName(), message)));
     }
 }

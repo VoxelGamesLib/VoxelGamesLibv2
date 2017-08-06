@@ -31,7 +31,7 @@ public class Marker {
      * @param yaw  the yaw for this marker
      * @param data the data of this marker
      */
-    public Marker(@Nonnull Vector3D loc, double yaw, @Nonnull String data, MarkerDefinition markerDefinition) {
+    public Marker(@Nonnull Vector3D loc, double yaw, @Nonnull String data, @Nonnull MarkerDefinition markerDefinition) {
         this.loc = loc;
         this.yaw = yaw;
         this.data = data;
