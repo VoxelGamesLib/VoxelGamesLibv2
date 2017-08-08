@@ -272,6 +272,7 @@ public abstract class AbstractPhase implements Phase {
     private boolean checkDependencies() {
         List<Class<? extends Feature>> orderedFeatures = new ArrayList<>();
         List<Class<? extends Feature>> added = new ArrayList<>();
+        List<Class<? extends Feature>> missingSoftDependencies = new ArrayList<>();
         try {
             Graph<Class<? extends Feature>> graph = new Graph<>(orderedFeatures::add);
 
@@ -307,6 +308,12 @@ public abstract class AbstractPhase implements Phase {
 
                     added.add(feature.getClass());
                     added.add(dependency);
+
+                    try {
+                        getFeature(dependency);
+                    } catch (NoSuchFeatureException ex) {
+                        missingSoftDependencies.add(dependency);
+                    }
                 }
             }
 
@@ -325,6 +332,10 @@ public abstract class AbstractPhase implements Phase {
             ex.printStackTrace();
             return false;
         }
+
+
+        // no need to keep stuff that isn't present
+        orderedFeatures.removeAll(missingSoftDependencies);
 
         if (features.size() != orderedFeatures.size()) {
             throw new RuntimeException(
