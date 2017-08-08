@@ -171,17 +171,25 @@ public class EventHandler implements Handler, Listener {
 
         // search for method to get player
         if (!reflectionCachePlayer.containsKey(event.getClass()) && !reflectionCacheUser.containsKey(event.getClass()) && !reflectionCacheEntity.containsKey(event.getClass())) {
+            Method entityMethod = null;
+            boolean found = false;
             for (Method m : event.getClass().getMethods()) {
                 if (m.getReturnType().equals(User.class)) {
                     reflectionCacheUser.put(event.getClass(), m);
+                    found = true;
                     break;
                 } else if (m.getReturnType().equals(Player.class)) {
                     reflectionCachePlayer.put(event.getClass(), m);
+                    found = true;
                     break;
                 } else if (Entity.class.isAssignableFrom(m.getReturnType())) {
-                    reflectionCacheEntity.put(event.getClass(), m);
-                    break;
+                    entityMethod = m;
                 }
+            }
+
+            // entity should be fallback, if there is something better don't use it
+            if (!found && entityMethod != null) {
+                reflectionCacheEntity.put(event.getClass(), entityMethod);
             }
         }
 

@@ -5,6 +5,10 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender;
+
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -16,6 +20,7 @@ import javax.inject.Singleton;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
@@ -30,6 +35,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     private LogHandler handler;
     private Logger logger;
     private Level level = Level.INFO;
+    private RollingRandomAccessFileAppender log4jAppender;
 
     @Override
     public void start() {
@@ -52,7 +58,16 @@ public class LoggingHandler extends BaseCommand implements Handler {
             global.removeHandler(handler);
         }
 
-        global.addHandler(new TheFuckYouForwardHandler());
+        org.apache.logging.log4j.core.Logger log4j = (org.apache.logging.log4j.core.Logger) LogManager.getLogger("Minecraft");
+        java.util.Optional<Appender> appender = log4j.getContext().getConfiguration().getAppenders().values().stream()
+                .filter(app -> app instanceof RollingRandomAccessFileAppender).findAny();
+        if (appender.isPresent()) {
+            log4jAppender = (RollingRandomAccessFileAppender) appender.get();
+        } else {
+            log.warning("COULD NOT FIND LOG4j APPENDER! FILE LOGGING IS DISABLED!");
+        }
+
+        global.addHandler(new TheFuckYouForwardHandler(log4jAppender));
         System.setOut(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
         System.setErr(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
     }
@@ -61,6 +76,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     @CommandAlias("log")
     @Syntax("[level] - if present, the new level")
     @CommandPermission("%admin")
+    @CommandCompletion("ALL|CONFIG|FINE|FINER|FINEST|INFO|OFF|WARNING|SEVERE")
     public void logcommand(@Nonnull User sender, @Nullable @Optional String level) {
         if (level == null) {
             Lang.msg(sender, LangKey.LOG_LEVEL_CURRENT, logger.getLevel() == null ? "null" : logger.getLevel().getName());
@@ -74,14 +90,6 @@ public class LoggingHandler extends BaseCommand implements Handler {
             Lang.msg(sender, LangKey.LOG_LEVEL_UNKNOWN, level);
         }
     }
-
-//    @SuppressWarnings("JavaDoc")
-//    @CompleterInfo(name = "log")
-//    public List<String> logcompleter(CommandArguments arguments) {
-//        return CommandUtil.filterTabCompletions(arguments.getArg(0), Level.ALL.getName(), Level.CONFIG.getName(),
-//                Level.FINE.getName(), Level.FINER.getName(), Level.FINEST.getName(), Level.INFO.getName()
-//                , Level.OFF.getName(), Level.WARNING.getName(), Level.SEVERE.getName());
-//    }TODO add completer for log command
 
     @Nonnull
     public Level getLevel() {
