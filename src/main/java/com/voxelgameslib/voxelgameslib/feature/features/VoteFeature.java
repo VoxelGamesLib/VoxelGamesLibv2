@@ -126,7 +126,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
         gameData.voteWinner = winner;
         getPhase().getGame().putGameData(gameData);
-        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), Math.min(max, 0));
+        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), Math.max(max, 0));
     }
 
     @Override
