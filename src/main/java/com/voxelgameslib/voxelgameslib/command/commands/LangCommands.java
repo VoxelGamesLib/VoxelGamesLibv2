@@ -48,6 +48,7 @@ public class LangCommands extends BaseCommand {
         sb.setLength(sb.length() - 1);
         Lang.msg(sender, LangKey.LANG_INSTALLED, sb.toString());
         Lang.msg(sender, LangKey.LANG_CURRENT, sender.getLocale().getName());
+        Lang.msg(sender, LangKey.TRANSLATED_BY);
     }
 
     @Subcommand("set")
