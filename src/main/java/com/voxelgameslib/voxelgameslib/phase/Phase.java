@@ -7,6 +7,7 @@ import com.voxelgameslib.voxelgameslib.tick.Tickable;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,6 +73,16 @@ public interface Phase extends Tickable {
      */
     @Nonnull
     <T extends Feature> T getFeature(@Nonnull Class<T> clazz);
+
+    /**
+     * Searched for a instance of the specified class.
+     *
+     * @param clazz the class of the {@link Feature}
+     * @param <T>   the type of the feature
+     * @return the instance of the class, if present.
+     */
+    @Nonnull
+    <T extends Feature> Optional<T> getOptionalFeature(@Nonnull Class<T> clazz);
 
     /**
      * @return a list with all {@link Feature}s that are present in this {@link Phase}

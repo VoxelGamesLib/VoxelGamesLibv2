@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -122,6 +123,13 @@ public abstract class AbstractPhase implements Phase {
     public <T extends Feature> T getFeature(@Nonnull Class<T> clazz) {
         return (T) features.stream().filter(f -> f.getClass().equals(clazz)).findFirst()
                 .orElseThrow(() -> new NoSuchFeatureException(clazz));
+    }
+
+    @Nonnull
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends Feature> Optional<T> getOptionalFeature(@Nonnull Class<T> clazz) {
+        return (Optional<T>) features.stream().filter(f -> f.getClass().equals(clazz)).findFirst();
     }
 
     @Nonnull
