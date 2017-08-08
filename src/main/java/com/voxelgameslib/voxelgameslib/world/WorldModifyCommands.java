@@ -8,6 +8,7 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.utils.FileUtils;
 
 import net.lingala.zip4j.core.ZipFile;
@@ -22,8 +23,10 @@ import javax.inject.Inject;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
 import lombok.extern.java.Log;
 
 @Log
@@ -38,7 +41,15 @@ public class WorldModifyCommands extends BaseCommand {
     private User editor;
     private Map map;
 
-    @CommandAlias("modify|help")
+    @Default
+    @UnknownHandler
+    @Subcommand("help")
+    @CommandPermission("%user")
+    public void help(@Nonnull User sender) {
+        CommandUtil.printHelp(sender, getCommandHelp());
+    }
+
+    @CommandAlias("modify")
     @CommandPermission("%admin")
     public void modify(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_MODIFY_HELP);

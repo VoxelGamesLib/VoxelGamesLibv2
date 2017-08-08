@@ -7,6 +7,7 @@ import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import net.kyori.text.TextComponent;
 
@@ -22,8 +23,10 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
 import lombok.extern.java.Log;
 
 @Singleton
@@ -37,11 +40,12 @@ public class GameCommands extends BaseCommand {
     @Inject
     private GlobalConfig config;
 
+    @Default
+    @UnknownHandler
     @Subcommand("help")
-    @CommandAlias("game")
     @CommandPermission("%user")
-    public void game(@Nonnull User sender) {
-        // todo game help commands, pending a PR to ACF
+    public void help(@Nonnull User sender) {
+        CommandUtil.printHelp(sender, getCommandHelp());
     }
 
     @Subcommand("list")

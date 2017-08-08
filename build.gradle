@@ -43,7 +43,7 @@ repositories {
     maven { url "http://repo.inventivetalent.org/content/repositories/snapshots/" }
 }
 dependencies {
-    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT', changing: false
+    compile group: 'co.aikar', name: 'acf-bukkit-vgl', version: '0.5.0-SNAPSHOT', changing: false
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'

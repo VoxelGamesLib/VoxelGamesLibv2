@@ -5,6 +5,7 @@ import com.voxelgameslib.voxelgameslib.lang.LangHandler;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -14,8 +15,10 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Handles all commands related to lang and i18n
@@ -26,6 +29,14 @@ public class LangCommands extends BaseCommand {
 
     @Inject
     private LangHandler langHandler;
+
+    @Default
+    @UnknownHandler
+    @Subcommand("help")
+    @CommandPermission("%user")
+    public void help(@Nonnull User sender) {
+        CommandUtil.printHelp(sender, getCommandHelp());
+    }
 
     @CommandAlias("lang")
     @CommandPermission("%user")

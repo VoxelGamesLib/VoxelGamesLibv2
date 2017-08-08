@@ -127,8 +127,6 @@ public enum LangKey implements Translatable {
             "{click:suggest_command:{command}}{aqua}Click here and enter the name of the world that you want to create.{/click}", "command"),
     WORLD_CREATOR_GAMEMODE_ADDED("{green}Added gamemode, press another or press done to continue."),
     WORLD_CREATOR_GAMEMODE_DONE_BUTTON("{gold}Done."),
-    WORLD_CREATOR_INFO(
-            "TODO: Enter a nice info message about the world creator"),//TODO world creator info
     WORLD_CREATOR_IN_USE("{red}The user {yellow}{user}{red} is currently using the world creator!",
             "user"),
     WORLD_CREATOR_MAP_SUMMARY(

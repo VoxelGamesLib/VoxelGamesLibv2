@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import java.util.Optional;
@@ -37,13 +38,12 @@ public class WorldCommands extends BaseCommand {
     @Inject
     private WorldHandler handler;
 
-
     @Default
     @UnknownHandler
     @Subcommand("help")
     @CommandPermission("%admin")
     public void world(@Nonnull User sender) {
-        //CommandUtil.printHelp(sender, getCommandHelp());TODO comment back in once https://github.com/aikar/commands/pull/60 is merged
+        CommandUtil.printHelp(sender, getCommandHelp());
     }
 
     @Subcommand("info")

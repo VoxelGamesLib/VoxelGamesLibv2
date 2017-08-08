@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 
 import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
@@ -26,6 +27,12 @@ public class KitCommands extends BaseCommand {
 
     @Default
     @UnknownHandler
+    @Subcommand("help")
+    @CommandPermission("%user")
+    public void help(@Nonnull User sender) {
+        CommandUtil.printHelp(sender, getCommandHelp());
+    }
+
     @CommandPermission("%user")
     @Subcommand("menu|m")
     public void showKitMenu(@Nonnull User sender) {

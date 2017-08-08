@@ -5,6 +5,7 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,12 +33,14 @@ public class RoleCommands extends BaseCommand {
     private PersistenceHandler persistenceHandler;
 
     @Default
+    @UnknownHandler
+    @Subcommand("help")
     @CommandPermission("%user")
-    public void role(@Nonnull User sender) {
+    public void help(@Nonnull User sender) {
         Lang.msg(sender, LangKey.ROLE_SELF, sender.getRole().getName());
+        CommandUtil.printHelp(sender, getCommandHelp());
     }
 
-    @UnknownHandler
     @CommandPermission("%moderator")
     @Syntax("[user] - the user which role you wanna get")
     public void role(@Nonnull User sender, @Nullable @co.aikar.commands.annotation.Optional User user) {

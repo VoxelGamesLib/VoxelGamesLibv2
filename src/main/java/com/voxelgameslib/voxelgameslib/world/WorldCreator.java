@@ -10,6 +10,7 @@ import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
@@ -25,7 +26,9 @@ import org.bukkit.Bukkit;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.UnknownHandler;
 import lombok.extern.java.Log;
 
 /**
@@ -58,9 +61,12 @@ public class WorldCreator extends BaseCommand {
 
     private Map map;
 
+    @Default
+    @UnknownHandler
+    @Subcommand("help")
     @CommandPermission("%admin")
-    public void worldcreator(@Nonnull User sender) {
-        Lang.msg(sender, LangKey.WORLD_CREATOR_INFO);
+    public void help(@Nonnull User sender) {
+        CommandUtil.printHelp(sender, getCommandHelp());
     }
 
     @Subcommand("start")
