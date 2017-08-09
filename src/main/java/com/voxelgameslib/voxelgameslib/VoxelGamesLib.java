@@ -140,7 +140,6 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-            getServer().getPluginManager().callEvent(new VoxelGamesLibEnableEvent());
             // logging first, only changes prefixes anyways
             loggingHandler = new LoggingHandler();
             loggingHandler.start();
@@ -208,6 +207,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         moduleHandler.start();
 
         gameHandler.startDefaultGame();
+
+        getServer().getPluginManager().callEvent(new VoxelGamesLibEnableEvent());
     }
 
     @Override
