@@ -26,12 +26,6 @@ public final class VGLCommands extends BaseCommand {
 
     @Default
     @UnknownHandler
-    @Subcommand("help")
-    @CommandPermission("%user")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
-    }
-
     @Subcommand("version")
     @CommandPermission("%user")
     public void version(@Nonnull CommandSender sender) {
