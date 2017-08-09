@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when this plugin was enabled
  */
-public class VoxelGameLibEnableEvent extends VoxelGamesLibEvent {
+public class VoxelGamesLibEnableEvent extends VoxelGamesLibEvent {
 
     private static final HandlerList handlers = new HandlerList();
 

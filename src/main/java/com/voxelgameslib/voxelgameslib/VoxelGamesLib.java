@@ -25,6 +25,7 @@ import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.elo.EloHandler;
 import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
+import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibEnableEvent;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
@@ -139,6 +140,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
+            getServer().getPluginManager().callEvent(new VoxelGamesLibEnableEvent());
             // logging first, only changes prefixes anyways
             loggingHandler = new LoggingHandler();
             loggingHandler.start();
