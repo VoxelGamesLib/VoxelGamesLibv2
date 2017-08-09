@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-public class TheFuckYouLoggerOutputStream extends ByteArrayOutputStream {
+public class LoggerOutputStream extends ByteArrayOutputStream {
     private final String separator = System.getProperty("line.separator");
     private final Logger logger = LogManager.getLogManager().getLogger("");
 

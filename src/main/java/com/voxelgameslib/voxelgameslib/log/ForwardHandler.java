@@ -19,7 +19,7 @@ import java.util.logging.LogRecord;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TheFuckYouForwardHandler extends ConsoleHandler {
+public class ForwardHandler extends ConsoleHandler {
 
     //    private static final SimpleDateFormat hourFormat = new SimpleDateFormat("kk:mm:ss:SSS");
     //maybe change vanilla log format to include millis too <-- hell no
@@ -27,7 +27,7 @@ public class TheFuckYouForwardHandler extends ConsoleHandler {
     private final PrintStream sout = new PrintStream(new FileOutputStream(FileDescriptor.out));
     private final RollingRandomAccessFileAppender log4jAppender;
 
-    public TheFuckYouForwardHandler(@Nullable RollingRandomAccessFileAppender log4jAppender) {
+    public ForwardHandler(@Nullable RollingRandomAccessFileAppender log4jAppender) {
         this.log4jAppender = log4jAppender;
     }
 

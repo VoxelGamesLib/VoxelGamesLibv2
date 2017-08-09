@@ -67,9 +67,9 @@ public class LoggingHandler extends BaseCommand implements Handler {
             log.warning("COULD NOT FIND LOG4j APPENDER! FILE LOGGING IS DISABLED!");
         }
 
-        global.addHandler(new TheFuckYouForwardHandler(log4jAppender));
-        System.setOut(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
-        System.setErr(new PrintStream(new TheFuckYouLoggerOutputStream(), true));
+        global.addHandler(new ForwardHandler(log4jAppender));
+        System.setOut(new PrintStream(new LoggerOutputStream(), true));
+        System.setErr(new PrintStream(new LoggerOutputStream(), true));
     }
 
     @Subcommand("log")
