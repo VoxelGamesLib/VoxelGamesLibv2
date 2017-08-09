@@ -12,6 +12,7 @@ import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
+import net.kyori.text.format.TextDecoration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,6 +101,7 @@ public class Lang {
         TextComponent componentBuilder = TextComponent.of("");
         String[] tokens = string.split("[{}]");
         TextColor savedColor = TextColor.WHITE;
+        TextDecoration savedFormat = null;
         ClickEvent clickEvent = null;
         boolean addClick = false;
         HoverEvent hoverEvent = null;
@@ -168,10 +170,23 @@ public class Lang {
                         continue outer;
                     }
                 }
+                for (TextDecoration format : TextDecoration.values()) {
+                    if (format.name().equalsIgnoreCase(token)) {
+                        savedFormat = format;
+                        continue outer;
+                    }
+                }
+                if (token.equals("reset")) {
+                    savedFormat = null;
+                    continue;
+                }
             }
 
             // put it together
             componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
+            if (savedFormat != null) {
+                componentBuilder = componentBuilder.decoration(savedFormat, true);
+            }
             if (addClick) {
                 componentBuilder = componentBuilder.clickEvent(clickEvent);
                 clickEvent = null;

@@ -11,6 +11,7 @@ import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.LangCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.OverrideCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.RoleCommands;
+import com.voxelgameslib.voxelgameslib.command.commands.TestCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.TextureCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
@@ -25,8 +26,8 @@ import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.elo.EloHandler;
 import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
-import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibEnableEvent;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
+import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibEnableEvent;
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
@@ -305,6 +306,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(LoggingHandler.class));
         commandManager.registerCommand(injector.getInstance(KitCommands.class));
         commandManager.registerCommand(injector.getInstance(TextureCommands.class));
+        commandManager.registerCommand(injector.getInstance(TestCommands.class));
     }
 
     private void registerListeners() {

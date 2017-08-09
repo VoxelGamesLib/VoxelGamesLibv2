@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 public enum LangKey implements Translatable {
 
     DUMMY(""),
+    TEST_KEY("{bold}BOLD! {yellow}YELLOW BOLD {reset} ONLY YELLOW"),
     TRANSLATED_BY("{aqua}This translation is provided by {yellow}MiniDigger {aqua}and {yellow}aphelion"),
 
     COMMAND_NO_PERMISSION("{red}You need to be {yellow}{role}{red} to execute this command!", "role"),
