@@ -1,9 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'net.sf.proguard:proguard-gradle:5.3.2'
+        classpath 'org.ajoberstar:grgit:1.1.0'
     }
 }
 
@@ -25,6 +27,11 @@ targetCompatibility = 1.8
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+ext{
+    git = org.ajoberstar.grgit.Grgit.open(file('.'))
+    revision = git.head().abbreviatedId
 }
 
 repositories {
@@ -70,15 +77,6 @@ dependencies {
     compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
 }
 
-def getGitHash = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--short', 'HEAD'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
-
 shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
@@ -86,7 +84,7 @@ shadowJar {
     //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
 
     manifest {
-        attributes 'Implementation-Version': project.version + "-" + getGitHash
+        attributes 'Implementation-Version': project.version + "-" + revision
     }
 }
 
@@ -94,7 +92,7 @@ build.dependsOn shadowJar
 
 processResources {
     filter ReplaceTokens, tokens: [
-            'version': project.version
+            'version': project.version + "-" + revision
     ]
 }
 
@@ -102,6 +100,7 @@ task copyToServer(dependsOn: 'jar', type: Copy) {
     from 'build/libs/voxelgameslib-' + project.version + '-all.jar'
     into '../testserver/plugins/'
 }
+
 javadoc {
     options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
 }

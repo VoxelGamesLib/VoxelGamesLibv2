@@ -53,7 +53,7 @@ public class Lang {
      * @return the created component builder
      */
     @Nonnull
-    public static TextComponent trans(@Nonnull Translatable key, @Nullable Object... args) {
+    public static TextComponent transVar(@Nonnull Translatable key, @Nullable Object... args) {
         return trans(key, handler.getDefaultLocale(), args);
     }
 
@@ -244,7 +244,7 @@ public class Lang {
      * @param key  the lang key that should be translated
      */
     public static void msg(@Nonnull User user, @Nonnull Translatable key) {
-        user.sendMessage(trans(key));
+        user.sendMessage(trans(key, user.getLocale()));
     }
 
     /**
@@ -256,7 +256,7 @@ public class Lang {
      * @param args the args that should be replacing placeholders
      */
     public static void msg(@Nonnull User user, @Nonnull Translatable key, @Nullable Object... args) {
-        user.sendMessage(trans(key, args));
+        user.sendMessage(trans(key, user.getLocale(), args));
     }
 
     /**
@@ -376,6 +376,6 @@ public class Lang {
      */
     public static void broadcast(@Nonnull Translatable key, @Nonnull Object... args) {
         userHandler.getUsers().forEach(user -> Lang.msg(user, key, args));
-        GameConsoleUser.INSTANCE.sendMessage(Lang.trans(key, args));
+        GameConsoleUser.INSTANCE.sendMessage(Lang.transVar(key, args));
     }
 }
