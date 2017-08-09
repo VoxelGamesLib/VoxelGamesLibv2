@@ -164,7 +164,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // guice
             VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
-                    commandManager, getDescription().getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
+                    commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
             injector = module.createInjector();
             injector.injectMembers(this);
 
@@ -342,5 +342,9 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Nonnull
     public Injector getInjector() {
         return injector;
+    }
+
+    public String getVersion() {
+        return (VoxelGamesLib.class.getPackage().getImplementationVersion() == null) ? getDescription().getVersion() + "-unknown" : VoxelGamesLib.class.getPackage().getImplementationVersion();
     }
 }

@@ -70,11 +70,24 @@ dependencies {
     compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
 }
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
 
     //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
+
+    manifest {
+        attributes 'Implementation-Version': project.version + "-" + getGitHash
+    }
 }
 
 build.dependsOn shadowJar
