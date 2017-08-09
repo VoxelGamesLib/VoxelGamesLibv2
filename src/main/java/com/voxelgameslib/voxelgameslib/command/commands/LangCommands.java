@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangHandler;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
@@ -24,21 +25,17 @@ import co.aikar.commands.annotation.UnknownHandler;
  * Handles all commands related to lang and i18n
  */
 @Singleton
+@CommandAlias("lang")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class LangCommands extends BaseCommand {
 
     @Inject
     private LangHandler langHandler;
+    @Inject
+    private PersistenceHandler persistenceHandler;
 
     @Default
     @UnknownHandler
-    @Subcommand("help")
-    @CommandPermission("%user")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
-    }
-
-    @CommandAlias("lang")
     @CommandPermission("%user")
     public void lang(@Nonnull User sender) {
         StringBuilder sb = new StringBuilder();
@@ -62,6 +59,6 @@ public class LangCommands extends BaseCommand {
             Lang.msg(sender, LangKey.LANG_NOT_ENABLED, locale.getName());
         }
 
-        //TODO force user data save
+        persistenceHandler.getProvider().saveUser(sender);
     }
 }

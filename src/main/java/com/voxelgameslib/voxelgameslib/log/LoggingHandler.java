@@ -77,7 +77,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     @Syntax("[level] - if present, the new level")
     @CommandPermission("%admin")
     @CommandCompletion("ALL|CONFIG|FINE|FINER|FINEST|INFO|OFF|WARNING|SEVERE")
-    public void logcommand(@Nonnull User sender, @Nullable @Optional String level) {
+    public void logCommand(@Nonnull User sender, @Nullable @Optional String level) {
         if (level == null) {
             Lang.msg(sender, LangKey.LOG_LEVEL_CURRENT, logger.getLevel() == null ? "null" : logger.getLevel().getName());
             return;
