@@ -9,19 +9,22 @@ import net.kyori.text.format.TextColor;
 import net.kyori.text.format.TextDecoration;
 import net.kyori.text.serializer.ComponentSerializer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 import javax.annotation.Nonnull;
 
-@SuppressWarnings("Duplicates")
 public class LangFormatter {
 
     @Nonnull
     public static TextComponent parseFormat(@Nonnull String string) {
+        System.out.println("parse format " + string);
         TextComponent.Builder builder = TextComponent.builder("");
         TextComponent.Builder current = TextComponent.builder("");
 
-        String[] tokens = string.split("[{}]");
+        List<String> tokens = tokenize(string);
+        System.out.println(tokens);
 
         Stack<ClickEvent> clickEvents = new Stack<>();
         Stack<HoverEvent> hoverEvents = new Stack<>();
@@ -99,6 +102,7 @@ public class LangFormatter {
     }
 
     public static void main(String[] args) {
+        System.out.println("simple mix");
         String test = "{yellow}{name}{/yellow}{aqua} has started a new round of {/aqua}{yellow}{mode}.{/yellow}" +
                 " {click:run_command:{command}}{aqua}Click here to join!{/aqua}{/click}";
         test = test.replace("{name}", "MiniDigger");
@@ -106,10 +110,16 @@ public class LangFormatter {
         test = test.replace("{command}", "/game join ssss");
         System.out.println(ComponentSerializer.serialize(parseFormat(test)));
 
+        System.out.println("color + deco");
         test = "{bold}BOLD! {yellow}YELLOW BOLD {/bold}ONLY YELLOW{/yellow}";
         System.out.println(ComponentSerializer.serialize(parseFormat(test)));
 
+        System.out.println("nested color");
         test = "{bold}BOLD! {yellow}YELLOW {blue}BOLD {/bold}ONLY{/blue} YELLOW{/yellow}";
+        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+
+        System.out.println("RECURSION HELL!");
+        test = "{yellow}{hover:show_text:\"{red}test{/red}\"}test{/yellow}";
         System.out.println(ComponentSerializer.serialize(parseFormat(test)));
     }
 
@@ -147,13 +157,13 @@ public class LangFormatter {
             throw new VoxelGameLibException("Can't parse hover action (too few args) " + token);
         switch (args[1]) {
             case "show_text":
-                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text:", "")));
+                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, parseFormat(token.replace("hover:show_text:", "")));
                 break;
             case "show_item":
-                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, TextComponent.of(token.replace("hover:show_item:", "")));
+                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, parseFormat(token.replace("hover:show_item:", "")));
                 break;
             case "show_entity":
-                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, TextComponent.of(token.replace("hover:show_entity:", "")));
+                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, parseFormat(token.replace("hover:show_entity:", "")));
                 break;
             default:
                 throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + token);
@@ -187,5 +197,60 @@ public class LangFormatter {
         } catch (IllegalArgumentException ex) {
             return Optional.empty();
         }
+    }
+
+    @Nonnull
+    private static List<String> tokenize(@Nonnull String input) {
+        List<String> result = new ArrayList<>();
+        StringBuilder buffer = new StringBuilder();
+        boolean skip = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '"') {
+                if (i > 0 && input.charAt(i - 1) == '}'
+                        || i < input.length() - 1 && input.charAt(i + 1) == '{') {
+                    // don't add the surrounding "s
+                    continue;
+                }
+            }
+
+            if (input.charAt(i) == '{') {
+                if (i > 0 && input.charAt(i - 1) == '"') {
+                    // we found a nested value, lets skip the next brackets till we find the end of the nesting
+                    skip = true;
+                    buffer.append('{');
+                    continue;
+                } else {
+                    if (!skip) {
+                        // split at {
+                        result.add(buffer.toString());
+                        buffer = new StringBuilder();
+                        continue;
+                    }
+                }
+            } else if (input.charAt(i) == '}') {
+                if (i < input.length() - 1 && input.charAt(i + 1) == '"') {
+                    // the end of the nesting was found, time to stop skipping
+                    skip = false;
+                    buffer.append('}');
+                    continue;
+                } else {
+                    if (!skip) {
+                        // split at }
+                        result.add(buffer.toString());
+                        buffer = new StringBuilder();
+                        continue;
+                    }
+                }
+            }
+
+            // normal char, lets add it
+            buffer.append(input.charAt(i));
+        }
+
+        // add rest
+        result.add(buffer.toString());
+
+        return result;
     }
 }
