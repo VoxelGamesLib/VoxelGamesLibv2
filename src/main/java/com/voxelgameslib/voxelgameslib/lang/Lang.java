@@ -1,7 +1,6 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
 import com.voxelgameslib.voxelgameslib.exception.LangException;
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
@@ -9,10 +8,7 @@ import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
-import net.kyori.text.event.ClickEvent;
-import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
-import net.kyori.text.format.TextDecoration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -98,113 +94,114 @@ public class Lang {
      */
     @Nonnull
     public static TextComponent parseFormat(@Nonnull String string) {
-        TextComponent componentBuilder = TextComponent.of("");
-        String[] tokens = string.split("[{}]");
-        TextColor savedColor = TextColor.WHITE;
-        TextDecoration savedFormat = null;
-        ClickEvent clickEvent = null;
-        boolean addClick = false;
-        HoverEvent hoverEvent = null;
-        boolean addHover = false;
-        outer:
-        for (String token : tokens) {
-            // actions
-            if (token.startsWith("click")) {
-                addClick = false;
-                if (clickEvent != null)
-                    throw new VoxelGameLibException("Can't parse click action (nested) " + string);
-                String[] args = token.split(":");
-                if (args.length < 2)
-                    throw new VoxelGameLibException("Can't parse click action (too few args) " + string);
-                switch (args[1]) {
-                    case "run_command":
-                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command:", ""));
-                        break;
-                    case "suggest_command":
-                        clickEvent = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, token.replace("click:suggest_command:", ""));
-                        break;
-                    case "open_url":
-                        clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, token.replace("click:open_url:", ""));
-                        break;
-                    case "change_page":
-                        clickEvent = new ClickEvent(ClickEvent.Action.CHANGE_PAGE, token.replace("click:change_page:", ""));
-                        break;
-                    default:
-                        throw new VoxelGameLibException("Can't parse click action (invalid type " + args[1] + ") " + string);
-                }
-                continue;
-            } else if (token.equals("/click")) {
-                addClick = true;
-                token = "";
-            } else if (token.startsWith("hover")) {
-                addHover = false;
-                if (hoverEvent != null)
-                    //TODO nested hover events?
-                    throw new VoxelGameLibException("Can't parse hover action (nested) " + string);
-                String[] args = token.split(":");
-                if (args.length < 2)
-                    throw new VoxelGameLibException("Can't parse hover action (too few args) " + string);
-                switch (args[1]) {
-                    case "show_text":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text:", "")));
-                        break;
-                    case "show_item":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, TextComponent.of(token.replace("hover:show_item:", "")));
-                        break;
-                    case "show_entity":
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, TextComponent.of(token.replace("hover:show_entity:", "")));
-                        break;
-                    default:
-                        throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + string);
-                }
-                continue;
-            } else if (token.equals("/hover")) {
-                addHover = true;
-                token = "";
-            }
-            // color stuff
-            else {
-                for (TextColor color : TextColor.values()) {
-                    if (color.name().equalsIgnoreCase(token)) {
-                        savedColor = color;
-                        continue outer;
-                    }
-                }
-                for (TextDecoration format : TextDecoration.values()) {
-                    if (format.name().equalsIgnoreCase(token)) {
-                        savedFormat = format;
-                        continue outer;
-                    }
-                }
-                if (token.equals("reset")) {
-                    savedFormat = null;
-                    continue;
-                }
-            }
-
-            // put it together
-            componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
-            if (savedFormat != null) {
-                componentBuilder = componentBuilder.decoration(savedFormat, true);
-            }
-            if (addClick) {
-                componentBuilder = componentBuilder.clickEvent(clickEvent);
-                clickEvent = null;
-            }
-            if (addHover) {
-                componentBuilder = componentBuilder.hoverEvent(hoverEvent);
-                hoverEvent = null;
-            }
-        }
-
-        if (clickEvent != null) {
-            throw new VoxelGameLibException("Unfinished click tag " + string);
-        }
-        if (hoverEvent != null) {
-            throw new VoxelGameLibException("Unfinished hover tag " + string);
-        }
-
-        return componentBuilder;
+//        TextComponent componentBuilder = TextComponent.of("");
+//        String[] tokens = string.split("[{}]");
+//        TextColor savedColor = TextColor.WHITE;
+//        TextDecoration savedFormat = null;
+//        ClickEvent clickEvent = null;
+//        boolean addClick = false;
+//        HoverEvent hoverEvent = null;
+//        boolean addHover = false;
+//        outer:
+//        for (String token : tokens) {
+//            // actions
+//            if (token.startsWith("click")) {
+//                addClick = false;
+//                if (clickEvent != null)
+//                    throw new VoxelGameLibException("Can't parse click action (nested) " + string);
+//                String[] args = token.split(":");
+//                if (args.length < 2)
+//                    throw new VoxelGameLibException("Can't parse click action (too few args) " + string);
+//                switch (args[1]) {
+//                    case "run_command":
+//                        clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, token.replace("click:run_command:", ""));
+//                        break;
+//                    case "suggest_command":
+//                        clickEvent = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, token.replace("click:suggest_command:", ""));
+//                        break;
+//                    case "open_url":
+//                        clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, token.replace("click:open_url:", ""));
+//                        break;
+//                    case "change_page":
+//                        clickEvent = new ClickEvent(ClickEvent.Action.CHANGE_PAGE, token.replace("click:change_page:", ""));
+//                        break;
+//                    default:
+//                        throw new VoxelGameLibException("Can't parse click action (invalid type " + args[1] + ") " + string);
+//                }
+//                continue;
+//            } else if (token.equals("/click")) {
+//                addClick = true;
+//                token = "";
+//            } else if (token.startsWith("hover")) {
+//                addHover = false;
+//                if (hoverEvent != null)
+//                    //TODO nested hover events?
+//                    throw new VoxelGameLibException("Can't parse hover action (nested) " + string);
+//                String[] args = token.split(":");
+//                if (args.length < 2)
+//                    throw new VoxelGameLibException("Can't parse hover action (too few args) " + string);
+//                switch (args[1]) {
+//                    case "show_text":
+//                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.of(token.replace("hover:show_text:", "")));
+//                        break;
+//                    case "show_item":
+//                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, TextComponent.of(token.replace("hover:show_item:", "")));
+//                        break;
+//                    case "show_entity":
+//                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, TextComponent.of(token.replace("hover:show_entity:", "")));
+//                        break;
+//                    default:
+//                        throw new VoxelGameLibException("Can't parse hover action (invalid type " + args[1] + ") " + string);
+//                }
+//                continue;
+//            } else if (token.equals("/hover")) {
+//                addHover = true;
+//                token = "";
+//            }
+//            // color stuff
+//            else {
+//                for (TextColor color : TextColor.values()) {
+//                    if (color.name().equalsIgnoreCase(token)) {
+//                        savedColor = color;
+//                        continue outer;
+//                    }
+//                }
+//                for (TextDecoration format : TextDecoration.values()) {
+//                    if (format.name().equalsIgnoreCase(token)) {
+//                        savedFormat = format;
+//                        continue outer;
+//                    }
+//                }
+//                if (token.equals("reset")) {
+//                    savedFormat = null;
+//                    continue;
+//                }
+//            }
+//
+//            // put it together
+//            componentBuilder = componentBuilder.append(TextComponent.of(token).color(savedColor));
+//            if (savedFormat != null) {
+//                componentBuilder = componentBuilder.decoration(savedFormat, true);
+//            }
+//            if (addClick) {
+//                componentBuilder = componentBuilder.clickEvent(clickEvent);
+//                clickEvent = null;
+//            }
+//            if (addHover) {
+//                componentBuilder = componentBuilder.hoverEvent(hoverEvent);
+//                hoverEvent = null;
+//            }
+//        }
+//
+//        if (clickEvent != null) {
+//            throw new VoxelGameLibException("Unfinished click tag " + string);
+//        }
+//        if (hoverEvent != null) {
+//            throw new VoxelGameLibException("Unfinished hover tag " + string);
+//        }
+//
+//        return componentBuilder;
+        return LangFormatter.parseFormat(string);
     }
 
     /**
