@@ -121,6 +121,10 @@ public class LangFormatter {
         System.out.println("RECURSION HELL!");
         test = "{yellow}{hover:show_text:\"{red}test{/red}\"}test{/yellow}";
         System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+
+        System.out.println("RECURSION HELLv2!");
+        test = "{yellow}{hover:show_text:\"{red}test{/red}\"}test{/yellow}";
+        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
     }
 
     @Nonnull
@@ -150,7 +154,6 @@ public class LangFormatter {
 
     @Nonnull
     private static HoverEvent handleHover(@Nonnull String token) {
-        //TODO do we want to allow full components in a hover text? We could just use recursion...
         String[] args = token.split(":");
         HoverEvent hoverEvent;
         if (args.length < 2)
@@ -206,15 +209,14 @@ public class LangFormatter {
         boolean skip = false;
 
         for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == '"') {
+            char cI = input.charAt(i);
+            if (cI == '"') {
                 if (i > 0 && input.charAt(i - 1) == '}'
                         || i < input.length() - 1 && input.charAt(i + 1) == '{') {
                     // don't add the surrounding "s
                     continue;
                 }
-            }
-
-            if (input.charAt(i) == '{') {
+            } else if (cI == '{') {
                 if (i > 0 && input.charAt(i - 1) == '"') {
                     // we found a nested value, lets skip the next brackets till we find the end of the nesting
                     skip = true;
@@ -228,7 +230,7 @@ public class LangFormatter {
                         continue;
                     }
                 }
-            } else if (input.charAt(i) == '}') {
+            } else if (cI == '}') {
                 if (i < input.length() - 1 && input.charAt(i + 1) == '"') {
                     // the end of the nesting was found, time to stop skipping
                     skip = false;
@@ -245,7 +247,7 @@ public class LangFormatter {
             }
 
             // normal char, lets add it
-            buffer.append(input.charAt(i));
+            buffer.append(cI);
         }
 
         // add rest
