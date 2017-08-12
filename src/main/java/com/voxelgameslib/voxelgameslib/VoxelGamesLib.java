@@ -55,6 +55,7 @@ import com.voxelgameslib.voxelgameslib.timings.Timings;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.user.UserListener;
+import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import java.util.Arrays;
@@ -172,6 +173,9 @@ public final class VoxelGamesLib extends JavaPlugin {
             injector = module.createInjector();
             injector.injectMembers(this);
 
+            // initialise raw database utils
+            DB.initialize(this, configHandler.get());
+
             // then enable all VGL stuff
             Timings.time("EnableAllHandlers", () -> {
                 eventHandler.start();
@@ -253,6 +257,9 @@ public final class VoxelGamesLib extends JavaPlugin {
         } catch (Exception ex) {
             errorHandler.handle(ex, Severity.ERROR);
         }
+
+        // close db
+        DB.close();
     }
 
     private void registerCommandContexts() {

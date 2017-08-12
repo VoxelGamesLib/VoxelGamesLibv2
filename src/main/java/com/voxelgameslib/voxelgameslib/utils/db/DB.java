@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -40,19 +41,17 @@ public final class DB {
      * Called in onEnable, initializes the pool and configures it and opens the first connection to
      * spawn the pool.
      */
-    public static void initialize(Plugin plugin) {
+    public static void initialize(Plugin plugin, GlobalConfig globalConfig) {
         try {
             DB.plugin = plugin;
             timingManager = TimingManager.of(plugin);
             HikariConfig config = new HikariConfig();
             config.setPoolName("VGL-Client");
 
-            String jdbc = plugin.getConfig().getString("db.jdbc");
-            log.info("Connecting to Database: " + jdbc);
             config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-            config.addDataSourceProperty("url", "jdbc:mysql://" + jdbc + "/" + plugin.getConfig().getString("db.name"));
-            config.addDataSourceProperty("user", plugin.getConfig().getString("db.username"));
-            config.addDataSourceProperty("password", plugin.getConfig().getString("db.password"));
+            config.addDataSourceProperty("url", globalConfig.persistence.url);
+            config.addDataSourceProperty("user", globalConfig.persistence.user);
+            config.addDataSourceProperty("password", globalConfig.persistence.pass);
             config.addDataSourceProperty("cachePrepStmts", true);
             config.addDataSourceProperty("prepStmtCacheSize", 250);
             config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
@@ -77,7 +76,6 @@ public final class DB {
             pooledDataSource = null;
             log.severe("Error creating database pool");
             ex.printStackTrace();
-            //Bukkit.getServer().shutdown(); // let's not...
         }
     }
 
