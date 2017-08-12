@@ -88,7 +88,6 @@ public class MobFeature extends AbstractFeature {
             return;
         }
 
-        System.out.println("spawn " + event.getEntityType());
         if (blacklist.length != 0) {
             if (Arrays.stream(blacklist).anyMatch(m -> m.equals(event.getEntityType()))) {
                 event.setCancelled(true);
