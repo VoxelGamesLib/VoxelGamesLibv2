@@ -3,6 +3,9 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 import com.google.gson.annotations.Expose;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.utils.EntityUtil;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
 import javax.annotation.Nonnull;
@@ -25,12 +28,24 @@ public class MobFeature extends AbstractFeature {
 
     private String worldName;
 
-    public void setWhitelist(@Nonnull EntityType[] whitelist) {
+    public MobFeature() {
+        setWhitelist(EntityUtil.getAll(EntityUtil.Type.OTHER, EntityUtil.Type.UTILITY, EntityUtil.Type.PROJECTILE));
+    }
+
+    public void setWhitelist(@Nonnull EntityType... whitelist) {
         this.whitelist = whitelist;
     }
 
-    public void setBlacklist(@Nonnull EntityType[] blacklist) {
+    public void addWhitelist(@Nonnull EntityType... whitelist) {
+        ArrayUtils.addAll(this.whitelist, whitelist);
+    }
+
+    public void setBlacklist(@Nonnull EntityType... blacklist) {
         this.blacklist = blacklist;
+    }
+
+    public void addBlacklist(@Nonnull EntityType... blacklist) {
+        ArrayUtils.addAll(this.blacklist, blacklist);
     }
 
     @Override
@@ -73,6 +88,7 @@ public class MobFeature extends AbstractFeature {
             return;
         }
 
+        System.out.println("spawn " + event.getEntityType());
         if (blacklist.length != 0) {
             if (Arrays.stream(blacklist).anyMatch(m -> m.equals(event.getEntityType()))) {
                 event.setCancelled(true);
