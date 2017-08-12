@@ -29,7 +29,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-ext{
+ext {
     git = org.ajoberstar.grgit.Grgit.open(file('.'))
     revision = git.head().abbreviatedId
 }
@@ -71,8 +71,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
 
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12-R0.1-SNAPSHOT'
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12-R0.1-SNAPSHOT'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12.1-R0.1-SNAPSHOT'
+    //compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.1-R0.1-SNAPSHOT'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
     compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
 }
@@ -84,7 +84,7 @@ shadowJar {
     //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
 
     manifest {
-        attributes 'Implementation-Version': project.version + "-" + revision
+        attributes 'Implementation-Version': project.version + "@" + revision
     }
 }
 
@@ -92,7 +92,7 @@ build.dependsOn shadowJar
 
 processResources {
     filter ReplaceTokens, tokens: [
-            'version': project.version + "-" + revision
+            'version': project.version + "@" + revision
     ]
 }
 
