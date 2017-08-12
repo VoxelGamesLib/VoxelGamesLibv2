@@ -148,9 +148,11 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      *
      * @param map    the map that should be loaded
      * @param gameid the id of the game this map belongs to
+     * @return the loaded world
      * @throws WorldException something goes wrong
      */
-    public void loadWorld(@Nonnull Map map, @Nonnull UUID gameid, boolean replaceMarkers) {
+    @Nonnull
+    public World loadWorld(@Nonnull Map map, @Nonnull UUID gameid, boolean replaceMarkers) {
         map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
         log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
 
@@ -169,6 +171,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         if (replaceMarkers) {
             replaceMarkers(world, map);
         }
+
+        return world;
     }
 
     /**

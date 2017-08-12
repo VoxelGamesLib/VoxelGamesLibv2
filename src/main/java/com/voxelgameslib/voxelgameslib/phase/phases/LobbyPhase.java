@@ -6,6 +6,7 @@ import com.voxelgameslib.voxelgameslib.feature.features.GameModeFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.HealFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.LobbyFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
+import com.voxelgameslib.voxelgameslib.feature.features.MobFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.NoBlockBreakFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.NoBlockPlaceFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.NoDamageFeature;
@@ -71,5 +72,8 @@ public class LobbyPhase extends AbstractPhase {
 
         BossBarFeature bossBarFeature = getGame().createFeature(BossBarFeature.class, this);
         addFeature(bossBarFeature);
+
+        MobFeature mobFeature = getGame().createFeature(MobFeature.class, this);
+        addFeature(mobFeature);
     }
 }
