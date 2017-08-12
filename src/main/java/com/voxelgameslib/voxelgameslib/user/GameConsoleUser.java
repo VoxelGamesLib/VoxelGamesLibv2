@@ -96,6 +96,21 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
+    public Map<GameMode, Map<String, Integer>> getPoints() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, Integer> getPoints(GameMode gameMode) {
+        return new HashMap<>();
+    }
+
+    @Override
+    public void setPoint(GameMode gameMode, String pointId, int value) {
+        // ignore
+    }
+
+    @Override
     public void refreshDisplayName() {
         // ignore
     }

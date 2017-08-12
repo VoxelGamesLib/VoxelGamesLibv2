@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.user;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
+import com.voxelgameslib.voxelgameslib.components.points.Point;
 import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
@@ -137,6 +138,25 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      */
     @Nonnull
     Map<String, RatingWrapper> getRatings();
+
+    /**
+     * @return all the points for a user
+     */
+    Map<GameMode, Map<String, Integer>> getPoints();
+
+    /**
+     * @return all the points for a user, for a GameMode
+     */
+    Map<String, Integer> getPoints(GameMode gameMode);
+
+    /**
+     * Set the value of a point for a user
+     *
+     * @param gameMode gamemode the point applies for
+     * @param pointId  the point name
+     * @param value    the new value to set
+     */
+    void setPoint(GameMode gameMode, String pointId, int value);
 
     /**
      * @return the prefix for this user
