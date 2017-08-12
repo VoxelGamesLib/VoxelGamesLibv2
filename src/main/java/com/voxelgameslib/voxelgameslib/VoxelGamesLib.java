@@ -18,6 +18,7 @@ import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldRepositoryCommands;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
+import com.voxelgameslib.voxelgameslib.components.points.PointHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignButtons;
 import com.voxelgameslib.voxelgameslib.components.signs.SignHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignListener;
@@ -44,7 +45,7 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
-import com.voxelgameslib.voxelgameslib.team.TeamHandler;
+import com.voxelgameslib.voxelgameslib.components.team.TeamHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -125,6 +126,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Inject
     private EventHandler eventHandler;
     @Inject
+    private PointHandler pointHandler;
+    @Inject
     private KitHandler kitHandler;
     @Inject
     private CommandHandler commandHandler;
@@ -170,7 +173,7 @@ public final class VoxelGamesLib extends JavaPlugin {
             injector.injectMembers(this);
 
             // then enable all VGL stuff
-            Timings.time("EnableAllHandler", () -> {
+            Timings.time("EnableAllHandlers", () -> {
                 eventHandler.start();
                 configHandler.start();
                 persistenceHandler.start();
@@ -187,6 +190,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 matchmakingHandler.start();
                 signHandler.start();
                 metricHandler.start();
+                pointHandler.start();
                 kitHandler.start();
                 commandHandler.start();
                 textureHandler.start();
@@ -216,7 +220,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     public void onDisable() {
         try {
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
-            Timings.time("DisableAllHandler", () -> {
+            Timings.time("DisableAllHandlers", () -> {
                 configHandler.stop();
                 langHandler.stop();
                 tickHandler.stop();
@@ -232,6 +236,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 signHandler.stop();
                 metricHandler.stop();
                 kitHandler.stop();
+                pointHandler.stop();
                 commandHandler.stop();
                 textureHandler.stop();
 

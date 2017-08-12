@@ -1,4 +1,4 @@
-package com.voxelgameslib.voxelgameslib.team;
+package com.voxelgameslib.voxelgameslib.components.team;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
