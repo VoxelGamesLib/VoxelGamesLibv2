@@ -25,6 +25,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.persistence.Entity;
 
 import lombok.extern.java.Log;
@@ -33,6 +34,7 @@ import lombok.extern.java.Log;
  * A implementation of the persistence provider based on hibernate
  */
 @Log
+@Singleton
 public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @Inject
@@ -79,7 +81,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
         MetadataSources sources = new MetadataSources(registry);
 
         Timings.time("RegisterDBEntities", () ->
-                new Reflections("com.voxelgameslib.voxelgameslib").getTypesAnnotatedWith(Entity.class).forEach(sources::addAnnotatedClass));
+                new Reflections("").getTypesAnnotatedWith(Entity.class).forEach(sources::addAnnotatedClass));
 
         try {
             Metadata metadata = sources.buildMetadata();
@@ -105,7 +107,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Nullable
-    private <T> T session(@Nonnull SessionExecutor<T> executor) {
+    public <T> T session(@Nonnull SessionExecutor<T> executor) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -118,7 +120,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @FunctionalInterface
-    interface SessionExecutor<T> {
+    public interface SessionExecutor<T> {
         @Nullable
         T execute(@Nonnull Session session);
     }

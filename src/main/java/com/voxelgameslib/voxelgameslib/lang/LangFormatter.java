@@ -19,12 +19,12 @@ public class LangFormatter {
 
     @Nonnull
     public static TextComponent parseFormat(@Nonnull String string) {
-        System.out.println("parse format " + string);
+        //%replace%System.out.println("parse format " + string);
         TextComponent.Builder builder = TextComponent.builder("");
         TextComponent.Builder current = TextComponent.builder("");
 
         List<String> tokens = tokenize(string);
-        System.out.println(tokens);
+        //%replace%System.out.println(tokens);
 
         Stack<ClickEvent> clickEvents = new Stack<>();
         Stack<HoverEvent> hoverEvents = new Stack<>();

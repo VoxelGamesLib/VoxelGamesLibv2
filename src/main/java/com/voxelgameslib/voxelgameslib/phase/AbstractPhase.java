@@ -333,8 +333,10 @@ public abstract class AbstractPhase implements Phase {
             }
             added.clear();
 
-            // do the magic!
-            graph.generateDependencies();
+            if (graph.size() != 0) {
+                // do the magic! (but only if there are actually nodes on the graph)
+                graph.generateDependencies();
+            }
         } catch (DependencyGraphException ex) {
             log.severe("error while trying to generate dependency graph: " + ex.getMessage());
             ex.printStackTrace();

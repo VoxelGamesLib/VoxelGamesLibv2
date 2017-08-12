@@ -1,8 +1,12 @@
-package com.voxelgameslib.voxelgameslib.world;
+package com.voxelgameslib.voxelgameslib.editmode;
 
 import com.google.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.exception.WorldException;
+import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
+import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
+import com.voxelgameslib.voxelgameslib.game.Game;
+import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
@@ -10,6 +14,7 @@ import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.utils.FileUtils;
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -37,8 +42,11 @@ public class WorldModifyCommands extends BaseCommand {
 
     @Inject
     private WorldHandler worldHandler;
+    @Inject
+    private GameHandler gameHandler;
 
     private User editor;
+    private Game game;
     private Map map;
 
     @Default
@@ -87,6 +95,16 @@ public class WorldModifyCommands extends BaseCommand {
 
         // tp
         user.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName(user.getUuid())));
+
+        if (gameHandler.getDefaultGame().isParticipating(editor.getUuid())) {
+            gameHandler.getDefaultGame().leave(editor);
+        }
+        game = gameHandler.startGame(EditModeGame.GAMEMODE);
+        game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(map.getCenter());
+        game.getActivePhase().getNextPhase().getFeature(MapFeature.class).setMap(map);
+        map.load(game.getUuid(), map.getWorldName());
+        game.join(editor);
+        game.endPhase();
 
         Lang.msg(user, LangKey.WORLD_MODIFY_START);
         //TODO use inventory for world creator
@@ -163,7 +181,7 @@ public class WorldModifyCommands extends BaseCommand {
         // remove all
         // add one
         // save
-        //TODO lets do this later
+        //TODO lets do this later, we need a nice inventory here
     }
 
     @Subcommand("stop")
@@ -171,6 +189,12 @@ public class WorldModifyCommands extends BaseCommand {
     public void stop(@Nonnull User user) {
         if (!check(user)) return;
         worldHandler.finishWorldEditing(editor, map);
+
+        game.abortGame();
+        if (gameHandler.getDefaultGame() != null) {
+            gameHandler.getDefaultGame().join(editor);
+        }
+        game = null;
 
         editor = null;
         map = null;

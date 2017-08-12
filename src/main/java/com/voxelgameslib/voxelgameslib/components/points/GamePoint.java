@@ -1,12 +1,12 @@
 package com.voxelgameslib.voxelgameslib.components.points;
 
 import com.voxelgameslib.voxelgameslib.game.GameMode;
-import lombok.AllArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
+import lombok.AllArgsConstructor;
+
+//@Entity
 @AllArgsConstructor
 @Table(name = "point_definition")
 public class GamePoint implements Point {
