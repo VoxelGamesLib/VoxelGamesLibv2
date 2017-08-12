@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
@@ -18,17 +19,20 @@ import lombok.extern.java.Log;
 public class MysqlPersistenceProvider implements PersistenceProvider {
     @Inject
     private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private GlobalConfig config;
 
     @Override
     public void start() {
-        DB.initialize(voxelGamesLib);
+        // commented out since VGL autoloads this regardless
+        //DB.initialize(voxelGamesLib, config);
 
         initialise();
     }
 
     @Override
     public void stop() {
-        DB.close();
+        //DB.close();
     }
 
     @Override
