@@ -106,6 +106,11 @@ public class GameConsoleUser implements ConsoleUser {
     }
 
     @Override
+    public int getPoint(GameMode gameMode, String pointId) {
+        return 0;
+    }
+
+    @Override
     public void setPoint(GameMode gameMode, String pointId, int value) {
         // ignore
     }
