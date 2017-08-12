@@ -9,6 +9,7 @@ import com.voxelgameslib.voxelgameslib.feature.features.JumpPadFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.MobFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
+import com.voxelgameslib.voxelgameslib.feature.features.TimeFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.VoidTeleportFeature;
 import com.voxelgameslib.voxelgameslib.phase.AbstractPhase;
 
@@ -55,5 +56,8 @@ public class EditModePhase extends AbstractPhase {
         MobFeature mobFeature = getGame().createFeature(MobFeature.class, this);
         mobFeature.setRemoveExisting(false);
         addFeature(mobFeature);
+
+        TimeFeature timeFeature = getGame().createFeature(TimeFeature.class, this);
+        addFeature(timeFeature);
     }
 }
