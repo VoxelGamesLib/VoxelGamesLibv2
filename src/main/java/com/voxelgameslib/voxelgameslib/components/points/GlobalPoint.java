@@ -1,11 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.points;
 
-import lombok.AllArgsConstructor;
-
-import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
+import lombok.AllArgsConstructor;
+
+//@Entity
 @AllArgsConstructor
 @Table(name = "point_definition")
 public class GlobalPoint implements Point {
