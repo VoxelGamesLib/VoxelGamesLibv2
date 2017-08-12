@@ -1,26 +1,22 @@
 package com.voxelgameslib.voxelgameslib.user;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
-import com.voxelgameslib.voxelgameslib.components.points.Point;
 import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
-
-import net.kyori.text.Component;
-
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-
-import org.bukkit.entity.Player;
-
 import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
 import jskills.Rating;
+import net.kyori.text.Component;
+import org.bukkit.entity.Player;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * A Users represents an abstract player of the game. There are implementations for every server mod
@@ -150,7 +146,16 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     Map<String, Integer> getPoints(GameMode gameMode);
 
     /**
-     * Set the value of a point for a user
+     * Get the value of a point
+     *
+     * @param gameMode gamemode the point applies for
+     * @param pointId  the point name
+     * @return the value
+     */
+    int getPoint(GameMode gameMode, String pointId);
+
+    /**
+     * Set the value of a point
      *
      * @param gameMode gamemode the point applies for
      * @param pointId  the point name

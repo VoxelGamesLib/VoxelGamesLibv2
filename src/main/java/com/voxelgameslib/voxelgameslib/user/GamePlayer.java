@@ -227,6 +227,11 @@ public class GamePlayer implements User {
     }
 
     @Override
+    public int getPoint(GameMode gameMode, String pointId) {
+        return points.get(gameMode).get(pointId);
+    }
+
+    @Override
     public void setPoint(GameMode gameMode, String pointId, int value) {
         Integer point = points.get(gameMode).get(pointId);
 
