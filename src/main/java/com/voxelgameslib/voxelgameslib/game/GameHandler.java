@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.Injector;
 
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.editmode.EditModeGame;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
 import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
 import com.voxelgameslib.voxelgameslib.exception.GameStartException;
@@ -69,6 +70,8 @@ public class GameHandler implements Handler {
         } else {
             log.info("Game definitions are deactivated");
         }
+
+        registerGameMode(EditModeGame.GAMEMODE);
     }
 
     @Override

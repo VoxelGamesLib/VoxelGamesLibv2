@@ -1,4 +1,4 @@
-package com.voxelgameslib.voxelgameslib.world;
+package com.voxelgameslib.voxelgameslib.editmode;
 
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;

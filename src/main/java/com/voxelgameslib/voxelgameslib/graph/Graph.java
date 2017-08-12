@@ -182,4 +182,8 @@ public final class Graph<T> {
         }
         return orphanNodes;
     }
+
+    public int size() {
+        return nodes.size();
+    }
 }

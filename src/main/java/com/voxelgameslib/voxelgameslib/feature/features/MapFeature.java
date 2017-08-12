@@ -35,6 +35,9 @@ public class MapFeature extends AbstractFeature {
 
     @Override
     public void start() {
+        // we already set the map externally, no need to do anything of the following
+        if (map != null) return;
+
         DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
         if ((type == Type.LOBBY && gameData.lobbyMap == null) || (type == Type.VOTEWINNER && gameData.voteWinner == null)) {
             throw new GameStartException(getPhase().getGame().getGameMode(), "No map data was stored!");
@@ -104,5 +107,9 @@ public class MapFeature extends AbstractFeature {
     @Nonnull
     public Map getMap() {
         return map;
+    }
+
+    public void setMap(@Nonnull Map map) {
+        this.map = map;
     }
 }

@@ -1,7 +1,9 @@
-package com.voxelgameslib.voxelgameslib.world;
+package com.voxelgameslib.voxelgameslib.editmode;
 
 import com.google.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
+import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
@@ -11,6 +13,7 @@ import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
@@ -22,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -49,6 +53,7 @@ public class WorldCreator extends BaseCommand {
     private GameHandler gameHandler;
 
     private User editor;
+    private Game game;
 
     private int step = 0;
 
@@ -97,7 +102,14 @@ public class WorldCreator extends BaseCommand {
         this.worldName = worldName;
 
         worldHandler.loadLocalWorld(worldName);
-        sender.getPlayer().teleport(Bukkit.getWorld(worldName).getSpawnLocation());
+        Location spawnLoc = Bukkit.getWorld(worldName).getSpawnLocation();
+        sender.getPlayer().teleport(spawnLoc);
+
+        game = gameHandler.startGame(EditModeGame.GAMEMODE);
+        game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(new Vector3D(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ()));
+        game.join(editor);
+        //TODO this is not implemented properly, need to speficy map and loaded name
+        game.endPhase();
 
         Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_CENTER, "/worldcreator center");
 
@@ -223,6 +235,12 @@ public class WorldCreator extends BaseCommand {
         }
 
         worldHandler.finishWorldEditing(editor, map);
+
+        game.abortGame();
+        if (gameHandler.getDefaultGame() != null) {
+            gameHandler.getDefaultGame().join(editor);
+        }
+        game = null;
 
         editor = null;
         step = 0;

@@ -50,6 +50,10 @@ public class SpawnFeature extends AbstractFeature {
         }
     }
 
+    public void addSpawn(@Nonnull Vector3D spawn) {
+        spawns.add(spawn);
+    }
+
     /**
      * Generates a spawn location for that user
      *
