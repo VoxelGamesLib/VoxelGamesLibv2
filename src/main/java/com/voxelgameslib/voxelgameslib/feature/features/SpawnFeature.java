@@ -64,7 +64,7 @@ public class SpawnFeature extends AbstractFeature {
     public Location getSpawn(@Nonnull UUID id) {
         //TODO super fancy spawn algorithm
         return spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()))
-                .toLocation(map.getLoadedName(getPhase().getGame().getUuid()));
+                .toLocation(map.getLoadedName(getPhase().getGame().getUuid())).add(0.5, 0, 0.5);
     }
 
     @SuppressWarnings("JavaDoc")
