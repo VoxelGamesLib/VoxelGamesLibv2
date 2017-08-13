@@ -41,8 +41,9 @@ public class PagedInventory extends BaseInventory {
      * @see BaseInventory#BaseInventory(User, String, int)
      */
     public PagedInventory(@Nonnull User user, @Nonnull String title, int size) {
-        super(user, title, size);
-        init();
+        //super(user, title, size);
+        //init();
+        this(user, title);
     }
 
     /**
@@ -59,7 +60,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getForwardItem() {
-        return new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();//TODO i18n
+        return forward;
     }
 
     public void setForwardItem(@Nonnull ItemStack item) {
@@ -68,7 +69,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getBackwardItem() {
-        return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();//TODO i18n;
+        return backward;
     }
 
     public void setBackwardItem(@Nonnull ItemStack item) {
@@ -77,7 +78,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getCloseItem() {
-        return new ItemBuilder(close).name(ChatColor.RED + "Next").build();//TODO i18n
+        return close;
     }
 
     public void setCloseItem(@Nonnull ItemStack item) {
@@ -246,6 +247,10 @@ public class PagedInventory extends BaseInventory {
     }
 
     private void init() {
+        forward = new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();//TODO i18n
+        backward = new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();//TODO i18n;
+        close = new ItemBuilder(close).name(ChatColor.RED + "Next").build();//TODO i18n
+
         addClickAction(forward, (itemStack, clickEvent) -> {
             setPage(++currentPage);
         });
