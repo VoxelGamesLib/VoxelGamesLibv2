@@ -120,6 +120,15 @@ public class PagedInventory extends BaseInventory {
             throw new ComponentException("Tried to have too many ItemStacks when creating a new page", getClass().getSimpleName());
         }
 
+        if (contents.length % 9 != 0) {
+            int fill = 9 - contents.length % 9;
+            ItemStack[] filler = new ItemStack[fill];
+            for (int i = 0; i < fill; i++) {
+                filler[i] = new ItemStack(Material.AIR);
+            }
+            contents = (ItemStack[]) ArrayUtils.addAll(contents, filler);
+        }
+
         // todo, condense code down, this is ugly
 
         ItemStack[] navigation = new ItemStack[9];
@@ -133,6 +142,7 @@ public class PagedInventory extends BaseInventory {
         navigation[7] = new ItemStack(Material.AIR);
         navigation[8] = new ItemStack(Material.AIR);
 
+        System.out.println("create page with" + contents.length + " items");
         ItemStack[] finalContents = (ItemStack[]) ArrayUtils.addAll(contents, navigation);
 
         if (page == null) {
@@ -212,14 +222,12 @@ public class PagedInventory extends BaseInventory {
                 } else {
                     Arrays.fill(currentPageItems, null);
                 }
-            } else if (page == pagesToFill && count == sizeOfLast) {
+            } else if (page == pagesToFill - 1 && count == sizeOfLast) {
                 createOrEditPage(currentPageItems, page);
             }
         }
 
         setPage(0);
-        updateTitle();
-        constructNewInventory();
     }
 
     /**
