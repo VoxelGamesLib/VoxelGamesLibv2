@@ -30,7 +30,6 @@ public class PagedInventory extends BaseInventory {
     private int currentPage;
     private boolean dynamicInventory = true;
     private String titleFormat = "%title% - Page %page%";
-    private String activeTitle;
     private Map<Integer, ItemStack[]> pages = new HashMap<>();
 
     private boolean open;
@@ -156,7 +155,7 @@ public class PagedInventory extends BaseInventory {
                 currentPage = newPage;
 
                 if (dynamicInventory) {
-                    size = contents.length;
+                    this.size = pageChangeEvent.getContents().length;
                 }
 
                 updateTitle();
@@ -241,9 +240,9 @@ public class PagedInventory extends BaseInventory {
     }
 
     private void updateTitle() {
-        activeTitle = titleFormat
+        title = titleFormat
                 .replace("%title%", title)
-                .replace("%page%", currentPage + "");
+                .replace("%page%", (currentPage + 1) + "");
     }
 
     private void init() {
