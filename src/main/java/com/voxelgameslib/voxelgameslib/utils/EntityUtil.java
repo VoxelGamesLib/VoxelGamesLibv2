@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimap;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
@@ -130,6 +132,10 @@ public class EntityUtil {
 
     @Nonnull
     public static EntityType[] getAll(@Nonnull final Type... types) {
-        return Arrays.stream(types).map(TYPE_TO_ENTITY_TYPES::get).toArray(EntityType[]::new);
+        return Arrays.stream(types)
+                .map(TYPE_TO_ENTITY_TYPES::get)
+                .flatMap(Collection::stream)
+                .sorted(Comparator.comparing(Enum::name))
+                .toArray(EntityType[]::new);
     }
 }

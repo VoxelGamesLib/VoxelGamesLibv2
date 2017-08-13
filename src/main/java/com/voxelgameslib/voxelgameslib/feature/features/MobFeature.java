@@ -30,6 +30,7 @@ public class MobFeature extends AbstractFeature {
 
     public MobFeature() {
         setWhitelist(EntityUtil.getAll(EntityUtil.Type.OTHER, EntityUtil.Type.UTILITY, EntityUtil.Type.PROJECTILE));
+        Arrays.stream(whitelist).forEachOrdered(System.out::println);
     }
 
     public void setWhitelist(@Nonnull EntityType... whitelist) {
@@ -38,6 +39,7 @@ public class MobFeature extends AbstractFeature {
 
     public void addWhitelist(@Nonnull EntityType... whitelist) {
         ArrayUtils.addAll(this.whitelist, whitelist);
+        Arrays.stream(whitelist).forEachOrdered(System.out::println);
     }
 
     public void setBlacklist(@Nonnull EntityType... blacklist) {
