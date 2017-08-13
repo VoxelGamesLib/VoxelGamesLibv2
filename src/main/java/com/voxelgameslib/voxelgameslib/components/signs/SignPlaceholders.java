@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -53,7 +54,7 @@ public class SignPlaceholders implements Listener {
 
     private Map<String, SignPlaceHolder> placeHolders = new HashMap<>();
 
-    private Map<Location, Sign> lastSeenSigns = new HashMap<>();
+    private final Map<Location, Sign> lastSeenSigns = new ConcurrentHashMap<>();
 
     /**
      * registers the default sign placeholders
