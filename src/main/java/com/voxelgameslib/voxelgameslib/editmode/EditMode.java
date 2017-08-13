@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import co.aikar.commands.annotation.*;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
@@ -23,10 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
 
 /**
  * Commands related to the edit mode
@@ -44,7 +41,7 @@ public class EditMode extends BaseCommand {
     @Nonnull
     private List<UUID> editMode = new ArrayList<>();
 
-    @CommandAlias("editmode")
+    @Default
     @CommandPermission("%admin")
     public void editmode(@Nonnull User sender) {
         //TODO info about edit mode
