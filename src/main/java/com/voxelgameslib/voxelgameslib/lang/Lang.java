@@ -1,20 +1,23 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
+import net.kyori.text.Component;
+import net.kyori.text.LegacyComponent;
+import net.kyori.text.TextComponent;
+import net.kyori.text.format.TextColor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-import lombok.extern.java.Log;
-import net.kyori.text.Component;
-import net.kyori.text.LegacyComponent;
-import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
+
 import org.bukkit.ChatColor;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
+import lombok.extern.java.Log;
 
 /**
  * Gives quick access to the lang storage and translation and stuff
@@ -39,8 +42,8 @@ public class Lang {
     }
 
     /**
-     * Creates an ComponentBuilder based on that Translatable<br> The specified arguments are used
-     * to fill out placeholders
+     * Creates an ComponentBuilder based on that Translatable<br> The specified arguments are used to fill out
+     * placeholders
      *
      * @param key  the lang key that should be translated
      * @param args the arguments that should be replaying placeholders
@@ -52,8 +55,8 @@ public class Lang {
     }
 
     /**
-     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that
-     * should be used to translate
+     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that should be used to
+     * translate
      *
      * @param key the lang key that should be translated
      * @param loc the locale that should be used to translate the key
@@ -65,8 +68,8 @@ public class Lang {
     }
 
     /**
-     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that
-     * should be used to translate<br> The specified arguments are used to fill out placeholders
+     * Creates an ComponentBuilder based on that Translatable<br> Allows to specify a locale that should be used to
+     * translate<br> The specified arguments are used to fill out placeholders
      *
      * @param key  the lang key that should be translated
      * @param loc  the locale that should be used to translate the key
@@ -84,8 +87,8 @@ public class Lang {
     }
 
     /**
-     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve
-     * version compatible with Minecraft
+     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve version compatible
+     * with Minecraft
      *
      * @param key the lang key that should be translated
      * @return string form of the component by the key
@@ -96,8 +99,8 @@ public class Lang {
     }
 
     /**
-     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve
-     * version compatible with Minecraft
+     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve version compatible
+     * with Minecraft
      *
      * @param key  the lang key that should be translated
      * @param args the arguments for replacements
@@ -109,8 +112,7 @@ public class Lang {
     }
 
     /**
-     * Parses a string into a component builder.<br> Takes care of {color} variables and handles
-     * click and hover events
+     * Parses a string into a component builder.<br> Takes care of {color} variables and handles click and hover events
      *
      * @param string the input string
      * @return the outputted and properly filled component builder
@@ -228,8 +230,8 @@ public class Lang {
     }
 
     /**
-     * Parses a string into the legacy chat format that is still used for some sutff in
-     * minecraft...<br> Mostly handles color variables
+     * Parses a string into the legacy chat format that is still used for some sutff in minecraft...<br> Mostly handles
+     * color variables
      *
      * @param string the input string
      * @return the properly formatted legacy string
@@ -257,8 +259,7 @@ public class Lang {
     }
 
     /**
-     * Sends the user a message that contains the translated version (using his local) of the
-     * specified key
+     * Sends the user a message that contains the translated version (using his local) of the specified key
      *
      * @param user the user that should receive the message
      * @param key  the lang key that should be translated
@@ -268,8 +269,8 @@ public class Lang {
     }
 
     /**
-     * Sends the user a message that contains the translated version (using his local) of the
-     * specified key<br> The specified arguments are used to fill out placeholders
+     * Sends the user a message that contains the translated version (using his local) of the specified key<br> The
+     * specified arguments are used to fill out placeholders
      *
      * @param user the user that should receive the message
      * @param key  the lang key that should be translated
@@ -291,8 +292,7 @@ public class Lang {
     }
 
     /**
-     * Translates the specified lang key into a string<br> The specified arguments are used to fill
-     * out placeholders
+     * Translates the specified lang key into a string<br> The specified arguments are used to fill out placeholders
      *
      * @param key  the key to translate
      * @param args the args that should be replacing placeholders
@@ -304,8 +304,7 @@ public class Lang {
     }
 
     /**
-     * Translates the specified lang key into a string<br> Allows to specify a locale that should be
-     * used to translate
+     * Translates the specified lang key into a string<br> Allows to specify a locale that should be used to translate
      *
      * @param key the key to translate
      * @param loc the locale that should be used to translate the key
@@ -317,8 +316,8 @@ public class Lang {
     }
 
     /**
-     * Translates the specified lang key into a string<br> Allows to specify a locale that should be
-     * used to translate<br> The specified arguments are used to fill out placeholders
+     * Translates the specified lang key into a string<br> Allows to specify a locale that should be used to
+     * translate<br> The specified arguments are used to fill out placeholders
      *
      * @param key  the key to translate
      * @param loc  the locale that should be used to translate the key

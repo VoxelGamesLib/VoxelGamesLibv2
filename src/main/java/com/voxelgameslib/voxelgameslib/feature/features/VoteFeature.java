@@ -1,10 +1,15 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Optional;
-import co.aikar.commands.annotation.Syntax;
 import com.google.gson.annotations.Expose;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.components.inventory.BasicInventory;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
@@ -22,9 +27,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.java.Log;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -32,18 +35,20 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.java.Log;
+
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Syntax;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
 @Log
 public class VoteFeature extends AbstractFeature implements FeatureCommandImplementor {
+
     //TODO add scoreboard
     @Getter
     @Setter
@@ -148,6 +153,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
 
     public void giveVoteMenuItem(@Nonnull User user) {
         new BukkitRunnable() {
+
             @Override
             public void run() {
                 if (!getPhase().isRunning()) return;

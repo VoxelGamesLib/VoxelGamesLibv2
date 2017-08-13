@@ -1,11 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.inventory.events;
 
-import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
-
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
 import com.voxelgameslib.voxelgameslib.user.User;
-import org.bukkit.entity.Player;
+
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 
 public class PageChangeEvent extends Event implements Cancellable {
+
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private PagedInventory inventory;
