@@ -186,7 +186,6 @@ public abstract class AbstractPhase implements Phase {
                 //noinspection unchecked
                 cmd.setFeature(feature);
                 commandHandler.register(cmd, this);
-                commandManager.registerCommand(cmd);
             }
 
             startedFeatures.add(feature);
@@ -217,7 +216,6 @@ public abstract class AbstractPhase implements Phase {
             if (feature instanceof FeatureCommandImplementor) {
                 AbstractFeatureCommand cmd = injector.getInstance(((FeatureCommandImplementor) feature).getCommandClass());
                 commandHandler.unregister(cmd, this);
-                commandManager.unregisterCommand(cmd);
             }
         }
 

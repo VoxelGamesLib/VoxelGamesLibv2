@@ -331,6 +331,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         pm.registerEvents(injector.getInstance(ChatListener.class), this);
         pm.registerEvents(injector.getInstance(SignPlaceholders.class), this);
         pm.registerEvents(injector.getInstance(SignButtons.class), this);
+        pm.registerEvents(injector.getInstance(CommandHandler.class), this);
     }
 
 
