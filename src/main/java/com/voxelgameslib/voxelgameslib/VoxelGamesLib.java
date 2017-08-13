@@ -175,9 +175,6 @@ public final class VoxelGamesLib extends JavaPlugin {
             injector = module.createInjector();
             injector.injectMembers(this);
 
-            // initialise raw database utils
-            DB.initialize(this, configHandler.get());
-
             // then enable all VGL stuff
             Timings.time("EnableAllHandlers", () -> {
                 eventHandler.start();
@@ -203,6 +200,9 @@ public final class VoxelGamesLib extends JavaPlugin {
 
                 gameHandler.start();
             });
+
+            // initialise raw database utils
+            DB.initialize(this, configHandler.get());
 
             registerListeners();
         } catch (Exception ex) {
