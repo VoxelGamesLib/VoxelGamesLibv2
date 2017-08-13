@@ -1,6 +1,5 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -12,15 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import co.aikar.timings.lib.TimingManager;
 import lombok.extern.java.Log;
+
+import co.aikar.timings.lib.TimingManager;
 
 @SuppressWarnings("MissingJSR305")
 @Log
 public final class DB {
+
     private static HikariDataSource pooledDataSource;
     static TimingManager timingManager;
     static Plugin plugin;
@@ -38,8 +41,7 @@ public final class DB {
     }
 
     /**
-     * Called in onEnable, initializes the pool and configures it and opens the first connection to
-     * spawn the pool.
+     * Called in onEnable, initializes the pool and configures it and opens the first connection to spawn the pool.
      */
     public static void initialize(Plugin plugin, GlobalConfig globalConfig) {
         try {
@@ -80,16 +82,16 @@ public final class DB {
     }
 
     /**
-     * Initiates a new DbStatement and prepares the first query. <p> YOU MUST MANUALLY CLOSE THIS
-     * STATEMENT IN A finally {} BLOCK!
+     * Initiates a new DbStatement and prepares the first query. <p> YOU MUST MANUALLY CLOSE THIS STATEMENT IN A finally
+     * {} BLOCK!
      */
     public static DbStatement query(@Language("MySQL") String query) throws SQLException {
         return (new DbStatement()).query(query);
     }
 
     /**
-     * Utility method to execute a query and retrieve the first row, then close statement. You
-     * should ensure result will only return 1 row for maximum performance.
+     * Utility method to execute a query and retrieve the first row, then close statement. You should ensure result will
+     * only return 1 row for maximum performance.
      *
      * @param query  The query to run
      * @param params The parameters to execute the statement with
@@ -102,8 +104,8 @@ public final class DB {
     }
 
     /**
-     * Utility method to execute a query and retrieve the first column of the first row, then close
-     * statement. You should ensure result will only return 1 row for maximum performance.
+     * Utility method to execute a query and retrieve the first column of the first row, then close statement. You
+     * should ensure result will only return 1 row for maximum performance.
      *
      * @param query  The query to run
      * @param params The parameters to execute the statement with
@@ -116,8 +118,8 @@ public final class DB {
     }
 
     /**
-     * Utility method to execute a query and retrieve first column of all results, then close
-     * statement. <p> Meant for single queries that will not use the statement multiple times.
+     * Utility method to execute a query and retrieve first column of all results, then close statement. <p> Meant for
+     * single queries that will not use the statement multiple times.
      */
     public static <T> List<T> getFirstColumnResults(@Language("MySQL") String query, Object... params) throws SQLException {
         List<T> dbRows = new ArrayList<>();
@@ -131,8 +133,8 @@ public final class DB {
     }
 
     /**
-     * Utility method to execute a query and retrieve all results, then close statement. <p> Meant
-     * for single queries that will not use the statement multiple times.
+     * Utility method to execute a query and retrieve all results, then close statement. <p> Meant for single queries
+     * that will not use the statement multiple times.
      *
      * @param query  The query to run
      * @param params The parameters to execute the statement with
@@ -145,8 +147,8 @@ public final class DB {
     }
 
     /**
-     * Utility method for executing an update synchronously that does an insert, closes the
-     * statement, and returns the last insert ID.
+     * Utility method for executing an update synchronously that does an insert, closes the statement, and returns the
+     * last insert ID.
      *
      * @param query  Query to run
      * @param params Params to execute the statement with.
@@ -183,6 +185,7 @@ public final class DB {
      */
     public static void executeUpdateAsync(@Language("MySQL") String query, final Object... params) {
         new AsyncDbStatement(query) {
+
             @Override
             public void run(DbStatement statement) throws SQLException {
                 statement.executeUpdate(params);
@@ -232,6 +235,7 @@ public final class DB {
     }
 
     public interface TransactionCallback extends Function<DbStatement, Boolean> {
+
         @Override
         default Boolean apply(DbStatement dbStatement) {
             try {

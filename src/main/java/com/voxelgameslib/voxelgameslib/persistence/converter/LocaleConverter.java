@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.persistence.converter;
 
-import com.voxelgameslib.voxelgameslib.lang.Locale;
-
 import javax.annotation.Nonnull;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.voxelgameslib.voxelgameslib.lang.Locale;
 
 @Converter
 public class LocaleConverter implements AttributeConverter<Locale, String> {

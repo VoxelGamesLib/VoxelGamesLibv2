@@ -11,6 +11,7 @@ import lombok.extern.java.Log;
 
 @Log
 public class AsyncDbQueue implements Runnable {
+
     private static final Queue<AsyncDbStatement> queue = new ConcurrentLinkedQueue<>();
     private static final Lock lock = new ReentrantLock();
 

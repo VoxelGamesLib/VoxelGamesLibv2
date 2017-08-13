@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Table(name = "point_definition")
 public class GlobalPoint implements Point {
+
     private String name;
     private boolean persist;
 

@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import net.kyori.text.TextComponent;
 
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import co.aikar.commands.CommandHelp;
 

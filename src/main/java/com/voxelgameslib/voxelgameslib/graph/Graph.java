@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.graph;
 
-import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +8,14 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
+
 /**
- * Represents a graph of nodes. Every node is of GraphNode type and it has set a value of the
- * generic type T. It basically derives an evaluation order out of its nodes. A node gets the chance
- * to be evaluated when all the incoming nodes were previously evaluated. The evaluating method of
- * the NodeValueListener is used to notify the outside of the fact that a node just got the chance
- * to be evaluated. A value of the node that is of the generic type T is passed as argument to the
- * evaluating method.
+ * Represents a graph of nodes. Every node is of GraphNode type and it has set a value of the generic type T. It
+ * basically derives an evaluation order out of its nodes. A node gets the chance to be evaluated when all the incoming
+ * nodes were previously evaluated. The evaluating method of the NodeValueListener is used to notify the outside of the
+ * fact that a node just got the chance to be evaluated. A value of the node that is of the generic type T is passed as
+ * argument to the evaluating method.
  *
  * @author nicolae caralicea
  */
@@ -36,8 +35,8 @@ public final class Graph<T> {
     private List<GraphNode<T>> evaluatedNodes = new ArrayList<>();
 
     /**
-     * The main constructor that has one parameter representing the callback mechanism used by this
-     * class to notify when a node gets the evaluation.
+     * The main constructor that has one parameter representing the callback mechanism used by this class to notify when
+     * a node gets the evaluation.
      *
      * @param listener The callback interface implemented by the user classes
      */
@@ -46,8 +45,7 @@ public final class Graph<T> {
     }
 
     /**
-     * Allows adding of new dependencies to the graph. "evalFirstValue" needs to be evaluated before
-     * "evalAfterValue"
+     * Allows adding of new dependencies to the graph. "evalFirstValue" needs to be evaluated before "evalAfterValue"
      *
      * @param evalFirstValue The parameter that needs to be evaluated first
      * @param evalAfterValue The parameter that needs to be evaluated after
@@ -140,8 +138,8 @@ public final class Graph<T> {
     }
 
     /**
-     * Checks to see if the passed in node was aready evaluated A node defined as already evaluated
-     * means that its incoming nodes were already evaluated as well
+     * Checks to see if the passed in node was aready evaluated A node defined as already evaluated means that its
+     * incoming nodes were already evaluated as well
      *
      * @param node The Node to be checked
      * @return The return value represents the node evaluation status
@@ -151,8 +149,8 @@ public final class Graph<T> {
     }
 
     /**
-     * Check to see if all the passed nodes were already evaluated. This could be thought as an and
-     * logic between every node evaluation status
+     * Check to see if all the passed nodes were already evaluated. This could be thought as an and logic between every
+     * node evaluation status
      *
      * @param nodes The nodes to be checked
      * @return The return value represents the evaluation status for all the nodes
@@ -162,8 +160,8 @@ public final class Graph<T> {
     }
 
     /**
-     * These nodes represent the starting nodes. They are firstly evaluated. They have no incoming
-     * nodes. The order they are evaluated does not matter.
+     * These nodes represent the starting nodes. They are firstly evaluated. They have no incoming nodes. The order they
+     * are evaluated does not matter.
      *
      * @return It returns a list of graph nodes
      */

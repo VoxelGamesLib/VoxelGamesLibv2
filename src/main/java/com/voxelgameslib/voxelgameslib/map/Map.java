@@ -2,11 +2,6 @@ package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
 
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +10,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.user.User;
+
 import lombok.Data;
 import lombok.extern.java.Log;
 
 /**
- * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a
- * world.
+ * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a world.
  */
 @Log
 @Data

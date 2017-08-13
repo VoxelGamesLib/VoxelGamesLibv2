@@ -6,8 +6,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.block.BlockFace;
 
 /**
- * Small util for direction and yaw conversation <br> Modified version of
- * https://github.com/bergerkiller/BKCommonLib/blob/master/src/main/java/com/bergerkiller/bukkit/common/utils/FaceUtil.java
+ * Small util for direction and yaw conversation <br> Modified version of https://github.com/bergerkiller/BKCommonLib/blob/master/src/main/java/com/bergerkiller/bukkit/common/utils/FaceUtil.java
  */
 public class DirectionUtil {
 
@@ -27,8 +26,8 @@ public class DirectionUtil {
     }
 
     /**
-     * Gets the Notch integer representation of a BlockFace<br> <b>These are the horizontal
-     * directions, which exclude up and down</b>
+     * Gets the Notch integer representation of a BlockFace<br> <b>These are the horizontal directions, which exclude up
+     * and down</b>
      *
      * @param face to get
      * @return Notch of the face
@@ -49,8 +48,7 @@ public class DirectionUtil {
     }
 
     /**
-     * Gets the horizontal BlockFace from a given yaw angle<br> This includes the NORTH_WEST
-     * directions
+     * Gets the horizontal BlockFace from a given yaw angle<br> This includes the NORTH_WEST directions
      *
      * @param yaw angle
      * @return The direction of the angle

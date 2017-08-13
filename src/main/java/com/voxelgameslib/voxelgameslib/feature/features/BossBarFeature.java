@@ -2,12 +2,12 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-
-import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;

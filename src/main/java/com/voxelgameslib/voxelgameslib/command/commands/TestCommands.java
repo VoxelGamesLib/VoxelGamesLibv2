@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import javax.annotation.Nonnull;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;

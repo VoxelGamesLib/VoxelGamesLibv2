@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-
 import net.kyori.text.TextComponent;
 import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;
@@ -14,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 
 public class LangFormatter {
 

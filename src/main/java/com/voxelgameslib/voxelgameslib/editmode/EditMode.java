@@ -1,13 +1,5 @@
 package com.voxelgameslib.voxelgameslib.editmode;
 
-import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
-import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.map.MapHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +9,14 @@ import java.util.function.BiConsumer;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
+import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.MapHandler;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

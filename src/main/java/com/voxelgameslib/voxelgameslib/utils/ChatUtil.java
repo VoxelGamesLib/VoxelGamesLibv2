@@ -1,8 +1,5 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
-import com.voxelgameslib.voxelgameslib.user.GamePlayer;
-
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
@@ -10,6 +7,9 @@ import net.kyori.text.serializer.ComponentSerializer;
 
 import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
+import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 
 import org.bukkit.Bukkit;
 

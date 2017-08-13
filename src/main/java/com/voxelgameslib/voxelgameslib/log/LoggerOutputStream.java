@@ -6,6 +6,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class LoggerOutputStream extends ByteArrayOutputStream {
+
     private final String separator = System.getProperty("line.separator");
     private final Logger logger = LogManager.getLogManager().getLogger("");
 

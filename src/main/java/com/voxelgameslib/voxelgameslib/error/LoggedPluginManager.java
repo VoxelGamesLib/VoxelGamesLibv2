@@ -101,6 +101,7 @@ public abstract class LoggedPluginManager implements PluginManager {
                 RegisteredListener customListener = new RegisteredListener(delegate.getListener(),
                         nullExecutor, delegate.getPriority(), delegate.getPlugin(),
                         delegate.isIgnoringCancelled()) {
+
                     @Override
                     public void callEvent(Event event) throws EventException {
                         try {

@@ -2,12 +2,12 @@ package com.voxelgameslib.voxelgameslib.world;
 
 import com.google.gson.annotations.Expose;
 
-import com.voxelgameslib.voxelgameslib.config.Config;
-import com.voxelgameslib.voxelgameslib.map.MapInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.config.Config;
+import com.voxelgameslib.voxelgameslib.map.MapInfo;
 
 /**
  * The config that knows about all world/maps that are playable

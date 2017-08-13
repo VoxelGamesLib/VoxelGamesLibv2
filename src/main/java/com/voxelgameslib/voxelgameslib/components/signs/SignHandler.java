@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 import lombok.extern.java.Log;
 

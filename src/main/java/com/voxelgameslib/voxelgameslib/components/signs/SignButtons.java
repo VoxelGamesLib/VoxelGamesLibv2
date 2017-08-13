@@ -1,9 +1,5 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
-import com.voxelgameslib.voxelgameslib.exception.UserException;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-
 import net.kyori.text.TextComponent;
 
 import java.util.HashMap;
@@ -11,6 +7,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.exception.UserException;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;

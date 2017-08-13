@@ -1,5 +1,11 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
@@ -7,16 +13,11 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.utils.db.DbRow;
 
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
 import lombok.extern.java.Log;
 
 @Log
 public class MysqlPersistenceProvider implements PersistenceProvider {
+
     @Inject
     private VoxelGamesLib voxelGamesLib;
     @Inject

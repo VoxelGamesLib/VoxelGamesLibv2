@@ -3,9 +3,6 @@ package com.voxelgameslib.voxelgameslib.texture;
 import com.google.gson.Gson;
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
 import org.mineskin.MineskinClient;
 import org.mineskin.Model;
 import org.mineskin.SkinOptions;
@@ -25,6 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

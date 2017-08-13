@@ -16,6 +16,7 @@ import com.voxelgameslib.voxelgameslib.phase.AbstractPhase;
 import org.bukkit.boss.BarColor;
 
 public class EditModePhase extends AbstractPhase {
+
     @Override
     public void init() {
         setName("EditMode");

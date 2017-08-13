@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.components.kits;
 
-import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
-
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.components.ability.Ability;
+import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.inventory.ItemStack;
 

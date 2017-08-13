@@ -6,9 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import jskills.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import jskills.Rating;
 
 @Data
 @Entity

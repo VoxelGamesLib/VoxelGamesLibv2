@@ -1,12 +1,12 @@
 package com.voxelgameslib.voxelgameslib.chat;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

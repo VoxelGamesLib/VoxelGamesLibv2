@@ -7,8 +7,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A chest marker is a marker that is a chest (uh)<br> it is used to save kits or layout for chest
- * locations in the map
+ * A chest marker is a marker that is a chest (uh)<br> it is used to save kits or layout for chest locations in the map
  */
 public class ChestMarker extends Marker {
 

@@ -15,14 +15,15 @@ import lombok.extern.java.Log;
 import static org.bukkit.Bukkit.getServer;
 
 /**
- * Manages a connection to the database pool and lets you work with an active prepared statement.
- * <p> Must close after you are done with it, preferably wrapping in a try/catch/finally DbStatement
- * statement = null; try { statement = new DbStatement(); // use it } catch (Exception e) { //
- * handle exception } finally { if (statement != null) { statement.close(); } }
+ * Manages a connection to the database pool and lets you work with an active prepared statement. <p> Must close after
+ * you are done with it, preferably wrapping in a try/catch/finally DbStatement statement = null; try { statement = new
+ * DbStatement(); // use it } catch (Exception e) { // handle exception } finally { if (statement != null) {
+ * statement.close(); } }
  */
 @SuppressWarnings("MissingJSR305")
 @Log
 public class DbStatement implements AutoCloseable {
+
     private Connection dbConn;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;

@@ -1,8 +1,7 @@
 package com.voxelgameslib.voxelgameslib.module;
 
 /**
- * A module as a extension to the framework. it could be a servermod implementation, a gamemode or
- * just a general lib.
+ * A module as a extension to the framework. it could be a servermod implementation, a gamemode or just a general lib.
  */
 public interface Module {
 

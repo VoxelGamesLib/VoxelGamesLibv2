@@ -5,15 +5,15 @@ import java.sql.SQLException;
 import lombok.extern.java.Log;
 
 /**
- * Template class for user to override. Will run on a different thread so you can run SQL queries
- * safely without impacting main thread. <p> Will automatically close the connection once run() is
- * done! <p> Calls onError when a SQLException is fired, and provides an onResultsSync method to be
- * overridden to receive all DB Results back on main thread, by calling getResultsSync() on the
- * Async run(DbStatement) call.
+ * Template class for user to override. Will run on a different thread so you can run SQL queries safely without
+ * impacting main thread. <p> Will automatically close the connection once run() is done! <p> Calls onError when a
+ * SQLException is fired, and provides an onResultsSync method to be overridden to receive all DB Results back on main
+ * thread, by calling getResultsSync() on the Async run(DbStatement) call.
  */
 @SuppressWarnings("MissingJSR305")
 @Log
 public abstract class AsyncDbStatement {
+
     protected String query;
     private boolean done = false;
 
@@ -26,8 +26,8 @@ public abstract class AsyncDbStatement {
     }
 
     /**
-     * Schedules this async statement to run on anther thread. This is the only method that should
-     * be called on the main thread and it should only be called once.
+     * Schedules this async statement to run on anther thread. This is the only method that should be called on the main
+     * thread and it should only be called once.
      */
     private void queue(final String query) {
         this.query = query;

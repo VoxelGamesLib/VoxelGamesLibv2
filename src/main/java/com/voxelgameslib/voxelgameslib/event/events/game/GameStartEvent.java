@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.event.events.game;
 
-import com.voxelgameslib.voxelgameslib.game.Game;
-
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.game.Game;
 
 import org.bukkit.event.HandlerList;
 

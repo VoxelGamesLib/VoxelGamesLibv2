@@ -2,15 +2,15 @@ package com.voxelgameslib.voxelgameslib.components.ability;
 
 import com.google.inject.Injector;
 
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.game.GameHandler;
-import com.voxelgameslib.voxelgameslib.tick.Tickable;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import com.voxelgameslib.voxelgameslib.game.Game;
+import com.voxelgameslib.voxelgameslib.game.GameHandler;
+import com.voxelgameslib.voxelgameslib.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import lombok.Getter;
 
 public abstract class Ability implements Listener, Tickable {
+
     @Inject
     private Injector injector;
 

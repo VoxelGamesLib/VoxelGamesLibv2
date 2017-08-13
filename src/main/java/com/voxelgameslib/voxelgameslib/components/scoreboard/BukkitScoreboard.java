@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.RandomUtil;
-
 import java.util.Optional;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.RandomUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;

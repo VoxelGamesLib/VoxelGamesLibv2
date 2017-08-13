@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 /**
- * It represents the node of the graph. It holds a user value that is passed back to the user when a
- * node gets the chance to be evaluated.
+ * It represents the node of the graph. It holds a user value that is passed back to the user when a node gets the
+ * chance to be evaluated.
  *
  * @author nicolae caralicea
  */

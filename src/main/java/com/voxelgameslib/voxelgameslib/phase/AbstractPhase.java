@@ -3,18 +3,6 @@ package com.voxelgameslib.voxelgameslib.phase;
 import com.google.gson.annotations.Expose;
 import com.google.inject.Injector;
 
-import com.voxelgameslib.voxelgameslib.command.CommandHandler;
-import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-import com.voxelgameslib.voxelgameslib.event.EventHandler;
-import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
-import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.graph.Graph;
-import com.voxelgameslib.voxelgameslib.tick.Tickable;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,10 +18,23 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import com.voxelgameslib.voxelgameslib.command.CommandHandler;
+import com.voxelgameslib.voxelgameslib.components.ability.Ability;
+import com.voxelgameslib.voxelgameslib.event.EventHandler;
+import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
+import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
+import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
+import com.voxelgameslib.voxelgameslib.game.Game;
+import com.voxelgameslib.voxelgameslib.graph.Graph;
+import com.voxelgameslib.voxelgameslib.tick.Tickable;
+
 import org.bukkit.event.Listener;
 
-import co.aikar.commands.BukkitCommandManager;
 import lombok.extern.java.Log;
+
+import co.aikar.commands.BukkitCommandManager;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.

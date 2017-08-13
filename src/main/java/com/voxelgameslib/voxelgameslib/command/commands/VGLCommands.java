@@ -2,9 +2,6 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 

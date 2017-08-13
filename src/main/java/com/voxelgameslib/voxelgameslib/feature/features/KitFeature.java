@@ -3,6 +3,12 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 import com.google.gson.annotations.Expose;
 import com.google.inject.Injector;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
 import com.voxelgameslib.voxelgameslib.components.ability.Ability;
@@ -10,19 +16,14 @@ import com.voxelgameslib.voxelgameslib.components.kits.Kit;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
-import co.aikar.commands.BukkitCommandManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
+
+import co.aikar.commands.BukkitCommandManager;
 
 /**
  * This feature allows the use of kits and abilities
@@ -96,6 +97,7 @@ public class KitFeature extends AbstractFeature {
             }
         });
     }
+
     /**
      * Adds a kit to the feature
      *

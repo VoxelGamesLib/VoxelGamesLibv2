@@ -1,17 +1,17 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
+import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.game.AbstractGame;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.phase.AbstractPhase;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nonnull;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -29,8 +29,10 @@ public class FeatureTest<F extends Feature> {
     public void setup(@Nonnull F f) {
         this.feature = spy(f);
         this.phase = spy(new AbstractPhase() {
+
         });
         this.game = spy(new AbstractGame() {
+
             @Override
             public void initGameFromModule() {
 

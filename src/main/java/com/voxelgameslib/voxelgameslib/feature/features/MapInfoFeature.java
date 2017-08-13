@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.map.Map;
-
-import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
 

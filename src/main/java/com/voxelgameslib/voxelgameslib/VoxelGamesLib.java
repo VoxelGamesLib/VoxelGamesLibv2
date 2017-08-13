@@ -3,6 +3,13 @@ package com.voxelgameslib.voxelgameslib;
 import com.google.inject.Injector;
 
 import com.bugsnag.Severity;
+
+import java.util.Arrays;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.chat.ChatListener;
 import com.voxelgameslib.voxelgameslib.command.CommandHandler;
@@ -23,6 +30,7 @@ import com.voxelgameslib.voxelgameslib.components.signs.SignButtons;
 import com.voxelgameslib.voxelgameslib.components.signs.SignHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignListener;
 import com.voxelgameslib.voxelgameslib.components.signs.SignPlaceholders;
+import com.voxelgameslib.voxelgameslib.components.team.TeamHandler;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.editmode.EditMode;
 import com.voxelgameslib.voxelgameslib.editmode.WorldCreator;
@@ -48,7 +56,6 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
-import com.voxelgameslib.voxelgameslib.components.team.TeamHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -58,14 +65,10 @@ import com.voxelgameslib.voxelgameslib.user.UserListener;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
-import java.util.Arrays;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import lombok.extern.java.Log;
 
 import co.aikar.commands.BukkitCommandCompletionContext;
 import co.aikar.commands.BukkitCommandExecutionContext;
@@ -77,7 +80,6 @@ import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
-import lombok.extern.java.Log;
 
 @Log
 public final class VoxelGamesLib extends JavaPlugin {

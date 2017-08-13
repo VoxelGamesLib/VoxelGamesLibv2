@@ -2,9 +2,9 @@ package com.voxelgameslib.voxelgameslib.components.signs;
 
 import com.google.gson.annotations.Expose;
 
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

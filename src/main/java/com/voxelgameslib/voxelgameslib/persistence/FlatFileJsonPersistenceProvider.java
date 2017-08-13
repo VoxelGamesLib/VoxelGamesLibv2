@@ -2,8 +2,6 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.gson.Gson;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,9 +15,11 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.voxelgameslib.voxelgameslib.user.User;
+
 /**
- * Simple persistence provider which uses gson to save the stuff as json to a flat file<br> <b>NOT
- * RECOMMENDED FOR PRODUCTION</b>
+ * Simple persistence provider which uses gson to save the stuff as json to a flat file<br> <b>NOT RECOMMENDED FOR
+ * PRODUCTION</b>
  */
 public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 

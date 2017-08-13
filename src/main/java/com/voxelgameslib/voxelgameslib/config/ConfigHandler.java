@@ -6,10 +6,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.exception.ConfigException;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -19,6 +15,10 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.exception.ConfigException;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
 
 import lombok.extern.java.Log;
 

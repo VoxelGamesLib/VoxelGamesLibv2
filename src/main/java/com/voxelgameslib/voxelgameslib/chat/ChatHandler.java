@@ -1,8 +1,5 @@
 package com.voxelgameslib.voxelgameslib.chat;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import net.kyori.text.Component;
 
 import java.util.HashMap;
@@ -12,11 +9,15 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.user.User;
+
 /**
  * Handles everything related to chat
  */
 @Singleton
 public class ChatHandler implements Handler {
+
     public ChatChannel defaultChannel;
     public Map<String, ChatChannel> activeChannels;
 

@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.exception;
 import javax.annotation.Nonnull;
 
 public class ComponentException extends RuntimeException {
+
     /**
      * This exception is thrown by components, typically when an invalid value is passed to them
      *

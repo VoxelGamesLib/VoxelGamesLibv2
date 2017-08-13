@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.components.points;
 
-import com.voxelgameslib.voxelgameslib.game.GameMode;
-
 import javax.persistence.Table;
+
+import com.voxelgameslib.voxelgameslib.game.GameMode;
 
 import lombok.AllArgsConstructor;
 
@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Table(name = "point_definition")
 public class GamePoint implements Point {
+
     private String name;
     private boolean persist;
 

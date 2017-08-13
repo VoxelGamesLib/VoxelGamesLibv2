@@ -2,9 +2,6 @@ package com.voxelgameslib.voxelgameslib.lang;
 
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.exception.LangException;
-import com.voxelgameslib.voxelgameslib.utils.OrderedProperties;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -13,6 +10,9 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+
+import com.voxelgameslib.voxelgameslib.exception.LangException;
+import com.voxelgameslib.voxelgameslib.utils.OrderedProperties;
 
 import lombok.extern.java.Log;
 
@@ -61,8 +61,8 @@ public class LangStorage {
     }
 
     /**
-     * sets the parent storage for this storage. the parent storage is used to get keys that are not
-     * translated in this storage.
+     * sets the parent storage for this storage. the parent storage is used to get keys that are not translated in this
+     * storage.
      *
      * @param parentStorage the new parent storage
      */
@@ -136,9 +136,8 @@ public class LangStorage {
     }
 
     /**
-     * Gets the value for a key. it this storage does not have a translation for that key, the
-     * parent storage is used. If parent has no translation for that key, the default value is
-     * used.
+     * Gets the value for a key. it this storage does not have a translation for that key, the parent storage is used.
+     * If parent has no translation for that key, the default value is used.
      *
      * @param key the key that should be translated
      * @return the translation for that key

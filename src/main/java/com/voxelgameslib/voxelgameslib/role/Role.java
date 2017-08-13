@@ -10,8 +10,8 @@ import javax.annotation.Nullable;
 import lombok.Getter;
 
 /**
- * A role is part of the simplified permission system. all permissions are assigned to roles by
- * default so there is no permission setup needed.
+ * A role is part of the simplified permission system. all permissions are assigned to roles by default so there is no
+ * permission setup needed.
  */
 public enum Role {
 
@@ -75,8 +75,7 @@ public enum Role {
     }
 
     /**
-     * Searches for the role with the given. throws a illegal argument exception if the role doesn't
-     * exist.
+     * Searches for the role with the given. throws a illegal argument exception if the role doesn't exist.
      *
      * @param name the name to search for
      * @return the role that was found.

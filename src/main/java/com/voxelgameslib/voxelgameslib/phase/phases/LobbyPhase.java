@@ -18,8 +18,8 @@ import com.voxelgameslib.voxelgameslib.phase.AbstractPhase;
 import org.bukkit.GameMode;
 
 /**
- * The lobby phase is the phase that part before the game starts. players can do cool activities
- * while they wait for more players to join.
+ * The lobby phase is the phase that part before the game starts. players can do cool activities while they wait for
+ * more players to join.
  */
 public class LobbyPhase extends AbstractPhase {
 

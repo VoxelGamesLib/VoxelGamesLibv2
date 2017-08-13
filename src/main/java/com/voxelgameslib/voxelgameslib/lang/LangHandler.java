@@ -1,10 +1,5 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +9,11 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 import lombok.extern.java.Log;
 
@@ -98,8 +98,7 @@ public class LangHandler implements Handler {
     }
 
     /**
-     * Gets the storage for that lang. if there is no storage for that lang, the default storage is
-     * returned;
+     * Gets the storage for that lang. if there is no storage for that lang, the default storage is returned;
      *
      * @param loc the locale to get the storage from
      * @return the storage for that locale, or the default storage if the locale was not loaded
@@ -131,8 +130,7 @@ public class LangHandler implements Handler {
     }
 
     /**
-     * Registers a new external provider for translation keys, will also try to register all known
-     * locales
+     * Registers a new external provider for translation keys, will also try to register all known locales
      *
      * @param externalTranslatable the new locale key provider
      * @param langFolder           the folder the files for this provider will be stored in

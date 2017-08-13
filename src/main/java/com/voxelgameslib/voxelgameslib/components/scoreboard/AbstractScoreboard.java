@@ -1,8 +1,5 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
-import com.voxelgameslib.voxelgameslib.exception.ScoreboardException;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.exception.ScoreboardException;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
  * Abstract implementation of a scoreboard, implements some limited functionality

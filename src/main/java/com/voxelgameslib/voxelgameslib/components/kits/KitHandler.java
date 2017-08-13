@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
 import com.dumptruckman.bukkit.configuration.json.JsonConfiguration;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,6 +18,9 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

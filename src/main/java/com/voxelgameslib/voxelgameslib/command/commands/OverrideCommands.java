@@ -6,10 +6,11 @@ import javax.inject.Singleton;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+import lombok.extern.java.Log;
+
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
-import lombok.extern.java.Log;
 
 /**
  * This class overrides core Bukkit commands as necessary.

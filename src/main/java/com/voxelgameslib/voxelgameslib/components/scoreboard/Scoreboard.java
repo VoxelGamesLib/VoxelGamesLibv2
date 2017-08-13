@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
  * Represents a scoreboard, a sidebar used to display information.
@@ -25,8 +25,8 @@ public interface Scoreboard {
     void setTitle(@Nonnull String title);
 
     /**
-     * adds a new line to this scoreboard. the key specifies the position, higher key being higher
-     * "rank" on the board<br> if there is a line with that key already, it gets overridden!
+     * adds a new line to this scoreboard. the key specifies the position, higher key being higher "rank" on the
+     * board<br> if there is a line with that key already, it gets overridden!
      *
      * @param key  the position of the line
      * @param line the line to add
@@ -34,8 +34,8 @@ public interface Scoreboard {
     void addLine(int key, @Nonnull ScoreboardLine line);
 
     /**
-     * adds a new line to this socreboard, named key for easy access.<br> A new line will always be
-     * added on the top.<br> if there is a line with that key already, it gets overridden!
+     * adds a new line to this socreboard, named key for easy access.<br> A new line will always be added on the
+     * top.<br> if there is a line with that key already, it gets overridden!
      *
      * @param key  the name of this line, for easy access
      * @param line the new line

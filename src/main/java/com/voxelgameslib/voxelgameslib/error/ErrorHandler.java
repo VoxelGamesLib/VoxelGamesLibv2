@@ -2,8 +2,6 @@ package com.voxelgameslib.voxelgameslib.error;
 
 import com.bugsnag.Bugsnag;
 import com.bugsnag.Severity;
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -17,6 +15,9 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandMap;
@@ -28,9 +29,10 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 
+import lombok.extern.java.Log;
+
 import co.aikar.commands.ACFUtil;
 import co.aikar.commands.CommandIssuer;
-import lombok.extern.java.Log;
 
 @Log
 public class ErrorHandler implements Handler {
@@ -128,6 +130,7 @@ public class ErrorHandler implements Handler {
                 modifierField.set(pluginManagerField, pluginManagerField.getModifiers() & ~Modifier.FINAL);
             }
             pluginManagerField.set(Bukkit.getServer(), new LoggedPluginManager(voxelGamesLib) {
+
                 private Object timings;
                 private final Map<String, Permission> permissions = new HashMap<>();
                 private final Map<Boolean, Set<Permission>> defaultPerms = new LinkedHashMap<>();

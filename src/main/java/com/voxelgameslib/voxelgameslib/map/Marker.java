@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import lombok.Data;
 
 /**
- * A marker marks a special position in the world. they are most of the time implemented by tile
- * entities so that the scanning process is easier/faster.
+ * A marker marks a special position in the world. they are most of the time implemented by tile entities so that the
+ * scanning process is easier/faster.
  */
 @Data
 public class Marker {

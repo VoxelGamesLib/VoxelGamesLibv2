@@ -1,14 +1,14 @@
 package com.voxelgameslib.voxelgameslib.game;
 
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
-
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
  * A persistence provider handles loading and saving of all kinds of data

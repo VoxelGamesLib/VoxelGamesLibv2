@@ -1,8 +1,5 @@
 package com.voxelgameslib.voxelgameslib.map;
 
-import com.voxelgameslib.voxelgameslib.exception.MapException;
-import com.voxelgameslib.voxelgameslib.utils.DirectionUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +7,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.exception.MapException;
+import com.voxelgameslib.voxelgameslib.utils.DirectionUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -68,8 +68,7 @@ public class MapScanner {
     }
 
     /**
-     * Searches the map for "markers". Most of the time these are implemented as tile entities
-     * (skulls)
+     * Searches the map for "markers". Most of the time these are implemented as tile entities (skulls)
      *
      * @param map    the map to scan
      * @param center the center location

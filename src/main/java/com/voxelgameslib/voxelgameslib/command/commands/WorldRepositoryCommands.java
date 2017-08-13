@@ -1,15 +1,15 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
-import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
+import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;

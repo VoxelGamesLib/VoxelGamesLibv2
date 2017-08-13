@@ -1,14 +1,5 @@
 package com.voxelgameslib.voxelgameslib.user;
 
-import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
-import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
-import com.voxelgameslib.voxelgameslib.game.GameMode;
-import com.voxelgameslib.voxelgameslib.lang.Locale;
-import com.voxelgameslib.voxelgameslib.role.Permission;
-import com.voxelgameslib.voxelgameslib.role.Role;
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 
@@ -18,6 +9,15 @@ import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
+import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
+import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
+import com.voxelgameslib.voxelgameslib.game.GameMode;
+import com.voxelgameslib.voxelgameslib.lang.Locale;
+import com.voxelgameslib.voxelgameslib.role.Permission;
+import com.voxelgameslib.voxelgameslib.role.Role;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

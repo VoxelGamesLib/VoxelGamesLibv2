@@ -4,16 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Injector;
 
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.editmode.EditModeGame;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
-import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
-import com.voxelgameslib.voxelgameslib.exception.GameStartException;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-import com.voxelgameslib.voxelgameslib.tick.TickHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,6 +19,16 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.editmode.EditModeGame;
+import com.voxelgameslib.voxelgameslib.event.events.game.GameStartEvent;
+import com.voxelgameslib.voxelgameslib.exception.GameModeNotAvailableException;
+import com.voxelgameslib.voxelgameslib.exception.GameStartException;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
+import com.voxelgameslib.voxelgameslib.tick.TickHandler;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.Bukkit;
 
@@ -95,8 +95,8 @@ public class GameHandler implements Handler {
     }
 
     /**
-     * Loads all game definitions that are found in the game definition folder and registers a new,
-     * custom gamemode if needed
+     * Loads all game definitions that are found in the game definition folder and registers a new, custom gamemode if
+     * needed
      */
     public void loadGameDefinitons() {
         if (!gameDefinitionFolder.exists()) {
@@ -129,8 +129,7 @@ public class GameHandler implements Handler {
     }
 
     /**
-     * Registers a new {@link GameMode}. Fails silently if that {@link GameMode} is already
-     * registered.<br>
+     * Registers a new {@link GameMode}. Fails silently if that {@link GameMode} is already registered.<br>
      *
      * @param mode the new mode to be registered
      */
@@ -145,8 +144,7 @@ public class GameHandler implements Handler {
      *
      * @param mode the {@link GameMode} that should be started.
      * @return the started {@link Game}
-     * @throws GameModeNotAvailableException if that {@link GameMode} is not registered on this
-     *                                       server
+     * @throws GameModeNotAvailableException if that {@link GameMode} is not registered on this server
      * @throws GameStartException            if something goes wrong while starting
      */
     @Nonnull

@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.event;
 
-import com.voxelgameslib.voxelgameslib.game.Game;
-
 import java.lang.reflect.Method;
 import java.util.List;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.game.Game;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;

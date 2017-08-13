@@ -1,10 +1,10 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import net.kyori.text.Component;
 
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.Location;
 

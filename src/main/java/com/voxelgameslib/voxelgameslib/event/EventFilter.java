@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.event;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import java.util.Optional;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.event.Event;
 

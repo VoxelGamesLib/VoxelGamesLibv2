@@ -2,13 +2,13 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import javax.annotation.Nonnull;
 
 @FeatureInfo(name = "HealFeature", author = "MiniDigger", version = "1.0",
         description = "Small feature that heals and feeds players on join")

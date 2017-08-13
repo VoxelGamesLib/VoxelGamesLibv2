@@ -9,6 +9,10 @@ import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
+import java.io.File;
+import java.util.Map;
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
@@ -24,15 +28,12 @@ import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
-import java.io.File;
-import java.util.Map;
-import javax.annotation.Nonnull;
-
 import org.bukkit.Bukkit;
+
+import lombok.AllArgsConstructor;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public final class VoxelGamesLibModule extends AbstractModule {

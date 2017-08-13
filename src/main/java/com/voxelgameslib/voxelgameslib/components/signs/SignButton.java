@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.block.Block;
 

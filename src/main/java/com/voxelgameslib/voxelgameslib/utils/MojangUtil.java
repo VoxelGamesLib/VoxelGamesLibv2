@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +12,8 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 
 /**
  * Small util to access the mojang api

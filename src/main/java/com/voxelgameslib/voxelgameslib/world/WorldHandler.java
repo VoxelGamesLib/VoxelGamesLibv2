@@ -6,21 +6,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.exception.MapException;
-import com.voxelgameslib.voxelgameslib.exception.WorldException;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.map.Map;
-import com.voxelgameslib.voxelgameslib.map.MapHandler;
-import com.voxelgameslib.voxelgameslib.map.MapInfo;
-import com.voxelgameslib.voxelgameslib.map.MapScanner;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.FileUtils;
-import com.voxelgameslib.voxelgameslib.utils.NMSUtil;
-import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
-
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
@@ -38,6 +23,21 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.exception.MapException;
+import com.voxelgameslib.voxelgameslib.exception.WorldException;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.map.Map;
+import com.voxelgameslib.voxelgameslib.map.MapHandler;
+import com.voxelgameslib.voxelgameslib.map.MapInfo;
+import com.voxelgameslib.voxelgameslib.map.MapScanner;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.FileUtils;
+import com.voxelgameslib.voxelgameslib.utils.NMSUtil;
+import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -142,9 +142,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     }
 
     /**
-     * Loads a world. Needs to copy the file from the repo, unzip it and let the implementation load
-     * it <br><b>Always needs to call super! Super needs to be called first (because it copies the
-     * world)</b>
+     * Loads a world. Needs to copy the file from the repo, unzip it and let the implementation load it <br><b>Always
+     * needs to call super! Super needs to be called first (because it copies the world)</b>
      *
      * @param map    the map that should be loaded
      * @param gameid the id of the game this map belongs to
@@ -176,9 +175,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     }
 
     /**
-     * Unloads a world. Needs to lets the implementation unload the world and delete the folder
-     * <br><b>Always needs to call super! Super needs to be called last (because it deletes the
-     * world folder)</b>
+     * Unloads a world. Needs to lets the implementation unload the world and delete the folder <br><b>Always needs to
+     * call super! Super needs to be called last (because it deletes the world folder)</b>
      *
      * @param map    the map that should be unloaded.
      * @param gameid the id of the game that this map belongs to
@@ -284,8 +282,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     }
 
     /**
-     * @return the folder where the playerable worlds are saved in (think about it as a repo for
-     * worlds/maps)
+     * @return the folder where the playerable worlds are saved in (think about it as a repo for worlds/maps)
      */
     @Nonnull
     public File getWorldsFolder() {

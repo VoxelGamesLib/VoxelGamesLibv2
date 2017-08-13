@@ -1,10 +1,5 @@
 package com.voxelgameslib.voxelgameslib.map;
 
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.game.GameHandler;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
-
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -16,6 +11,11 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.game.GameHandler;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.timings.Timings;
 
 import lombok.Getter;
 import lombok.extern.java.Log;

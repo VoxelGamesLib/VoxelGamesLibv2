@@ -1,10 +1,5 @@
 package com.voxelgameslib.voxelgameslib.phase;
 
-import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.tick.Tickable;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +7,14 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.game.Game;
+import com.voxelgameslib.voxelgameslib.tick.Tickable;
+
 /**
- * A {@link Phase} is directly tied to a {@link Game}. A {@link Phase} is a collection of {@link
- * Feature}. A {@link Phase} is directly linked to the next {@link Phase}.
+ * A {@link Phase} is directly tied to a {@link Game}. A {@link Phase} is a collection of {@link Feature}. A {@link
+ * Phase} is directly linked to the next {@link Phase}.
  */
 public interface Phase extends Tickable {
 
@@ -133,8 +133,7 @@ public interface Phase extends Tickable {
     boolean isRunning();
 
     /**
-     * if running: get the duration between start and now.<br> else: get the duration this phase has
-     * run
+     * if running: get the duration between start and now.<br> else: get the duration this phase has run
      *
      * @return the duration
      */

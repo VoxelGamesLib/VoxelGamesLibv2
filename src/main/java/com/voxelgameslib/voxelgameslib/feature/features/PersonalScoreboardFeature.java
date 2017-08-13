@@ -2,6 +2,16 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.common.collect.Iterables;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.components.scoreboard.AbstractScoreboard;
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
@@ -13,16 +23,6 @@ import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
 
 import lombok.Getter;
 

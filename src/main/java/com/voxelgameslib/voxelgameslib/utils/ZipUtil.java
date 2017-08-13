@@ -13,8 +13,7 @@ import javax.annotation.Nonnull;
 public class ZipUtil {
 
     /**
-     * Creates a zip from all files and folders in the specified folder. DOES NOT INCLUDE THE FOLDER
-     * ITSELF!
+     * Creates a zip from all files and folders in the specified folder. DOES NOT INCLUDE THE FOLDER ITSELF!
      *
      * @param file the folder which content should be zipped
      * @return the created zip

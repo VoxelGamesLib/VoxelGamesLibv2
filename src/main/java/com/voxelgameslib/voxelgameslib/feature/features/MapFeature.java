@@ -2,6 +2,9 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import com.voxelgameslib.voxelgameslib.exception.GameStartException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
@@ -9,9 +12,6 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -34,7 +34,7 @@ public class MapFeature extends AbstractFeature {
     private Type type = Type.VOTEWINNER;
 
     public enum Type {
-        LOBBY, VOTEWINNER;
+        LOBBY, VOTEWINNER
     }
 
     @Override

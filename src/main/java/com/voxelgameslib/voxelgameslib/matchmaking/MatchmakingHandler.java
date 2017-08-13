@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.matchmaking;
 
-import com.voxelgameslib.voxelgameslib.game.GameMode;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.game.GameMode;
+import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 @Singleton
 public class MatchmakingHandler implements Handler {

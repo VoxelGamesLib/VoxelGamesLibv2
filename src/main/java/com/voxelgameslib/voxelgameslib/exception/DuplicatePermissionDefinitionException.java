@@ -1,12 +1,11 @@
 package com.voxelgameslib.voxelgameslib.exception;
 
-import com.voxelgameslib.voxelgameslib.role.Permission;
-
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.role.Permission;
+
 /**
- * Thrown when something tries to register a new permission for a permission that already exist with
- * a different role
+ * Thrown when something tries to register a new permission for a permission that already exist with a different role
  */
 public class DuplicatePermissionDefinitionException extends VoxelGameLibException {
 

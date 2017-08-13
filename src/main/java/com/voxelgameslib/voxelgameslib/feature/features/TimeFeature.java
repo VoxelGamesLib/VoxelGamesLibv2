@@ -2,9 +2,9 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 
 import org.bukkit.World;
 

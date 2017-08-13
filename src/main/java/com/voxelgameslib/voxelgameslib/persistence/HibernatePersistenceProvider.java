@@ -1,11 +1,5 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
-import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
-import com.voxelgameslib.voxelgameslib.user.GamePlayer;
-import com.voxelgameslib.voxelgameslib.user.User;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.Log_$logger;
@@ -27,6 +21,12 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.persistence.Entity;
+
+import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.user.GamePlayer;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import lombok.extern.java.Log;
 
@@ -121,6 +121,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @FunctionalInterface
     public interface SessionExecutor<T> {
+
         @Nullable
         T execute(@Nonnull Session session);
     }

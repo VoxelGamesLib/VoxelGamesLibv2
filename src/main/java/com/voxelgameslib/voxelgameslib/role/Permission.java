@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 /**
- * A permission is the ability to do something. a user can get a permission to do something via his
- * role or manually via the string.
+ * A permission is the ability to do something. a user can get a permission to do something via his role or manually via
+ * the string.
  */
 public class Permission {
 

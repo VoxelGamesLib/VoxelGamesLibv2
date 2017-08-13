@@ -1,16 +1,16 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;

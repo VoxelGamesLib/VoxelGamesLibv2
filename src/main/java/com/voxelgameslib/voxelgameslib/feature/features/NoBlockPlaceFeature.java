@@ -2,12 +2,12 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Arrays;
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
-
-import java.util.Arrays;
-import javax.annotation.Nonnull;
 
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -22,9 +22,8 @@ public class NoBlockPlaceFeature extends AbstractFeature {
     private Material[] blacklist = new Material[0];
 
     /**
-     * Sets the list with whitelisted materials. Enabling the whitelist means that ppl are allowed
-     * to place only materials which are on the whitelist. to disabled the whitelist, pass an empty
-     * array.
+     * Sets the list with whitelisted materials. Enabling the whitelist means that ppl are allowed to place only
+     * materials which are on the whitelist. to disabled the whitelist, pass an empty array.
      *
      * @param whitelist the new whitelist
      */
@@ -33,9 +32,8 @@ public class NoBlockPlaceFeature extends AbstractFeature {
     }
 
     /**
-     * Sets the list with blacklisted materials. Enabling the blacklist means that ppl are allowed
-     * to place every material other than those on the blacklist. to disabled the blacklist, pass an
-     * empty array
+     * Sets the list with blacklisted materials. Enabling the blacklist means that ppl are allowed to place every
+     * material other than those on the blacklist. to disabled the blacklist, pass an empty array
      *
      * @param blacklist the new blacklist
      */

@@ -6,8 +6,8 @@ package com.voxelgameslib.voxelgameslib.utils;
 public class MathUtil {
 
     /**
-     * calculates and returns the inverse of a modulo n, both of which should be positive.  If the
-     * inverse does not exist, 0 is returned.
+     * calculates and returns the inverse of a modulo n, both of which should be positive.  If the inverse does not
+     * exist, 0 is returned.
      *
      * @param a a
      * @param n n

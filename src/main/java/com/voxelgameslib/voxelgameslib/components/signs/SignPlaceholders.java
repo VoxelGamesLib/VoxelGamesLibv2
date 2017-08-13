@@ -6,10 +6,6 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
@@ -24,6 +20,11 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -108,6 +109,7 @@ public class SignPlaceholders implements Listener {
 
         // modify update packets
         protocolManager.addPacketListener(new PacketAdapter(voxelGamesLib, PacketType.Play.Server.TILE_ENTITY_DATA) {
+
             @Override
             public void onPacketSending(@Nonnull PacketEvent event) {
                 int action = event.getPacket().getIntegers().read(0);
@@ -168,6 +170,7 @@ public class SignPlaceholders implements Listener {
 
         // update task
         new BukkitRunnable() {
+
             @Override
             public void run() {
                 lastSeenSigns.forEach((loc, sign) -> sign.update());

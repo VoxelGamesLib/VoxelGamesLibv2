@@ -1,26 +1,28 @@
 package com.voxelgameslib.voxelgameslib.user;
 
+import net.kyori.text.Component;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
+
+import org.bukkit.entity.Player;
+
 import jskills.IPlayer;
 import jskills.ISupportPartialPlay;
 import jskills.ISupportPartialUpdate;
 import jskills.Rating;
-import net.kyori.text.Component;
-import org.bukkit.entity.Player;
-
-import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
- * A Users represents an abstract player of the game. There are implementations for every server mod
- * available.<br>
+ * A Users represents an abstract player of the game. There are implementations for every server mod available.<br>
  */
 public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdate {
 
@@ -88,8 +90,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
     Locale getLocale();
 
     /**
-     * sets the players locale. locale doesn't need to be installed, will default to default server
-     * locale
+     * sets the players locale. locale doesn't need to be installed, will default to default server locale
      *
      * @param locale the new locale
      */
@@ -110,8 +111,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
 
     /**
      * @param mode the mode to get the rating for
-     * @return the rating of this player for gamemode mode. will return default values if not
-     * present
+     * @return the rating of this player for gamemode mode. will return default values if not present
      */
     @Nonnull
     Rating getRating(@Nonnull GameMode mode);

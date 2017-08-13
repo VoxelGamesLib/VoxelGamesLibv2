@@ -15,6 +15,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public abstract class BaseInventory {
+
     private UUID identifier;
     private User user;
     protected Inventory bukkitInventory;
@@ -43,8 +44,7 @@ public abstract class BaseInventory {
     }
 
     /**
-     * <p>Get the inventory's identifier</p> <p> <p>This should be the same as the UUID of the
-     * player opening it.</p>
+     * <p>Get the inventory's identifier</p> <p> <p>This should be the same as the UUID of the player opening it.</p>
      *
      * @return the identifier (generally player UUID)
      */

@@ -17,8 +17,8 @@ import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 import org.bukkit.GameMode;
 
 /**
- * The grace phase is the phase before the real action starts. pvp is disabled, players are expected
- * to run away, hide or collect stuff.
+ * The grace phase is the phase before the real action starts. pvp is disabled, players are expected to run away, hide
+ * or collect stuff.
  */
 public class GracePhase extends TimedPhase {
 

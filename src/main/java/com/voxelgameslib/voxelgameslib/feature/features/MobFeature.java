@@ -2,13 +2,13 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.utils.EntityUtil;
-
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.utils.EntityUtil;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;

@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.components.scoreboard;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.handler.Handler;
 
 import org.bukkit.Bukkit;
 

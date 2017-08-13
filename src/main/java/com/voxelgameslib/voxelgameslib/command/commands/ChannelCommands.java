@@ -1,14 +1,16 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
-import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
+import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
+
 import org.bukkit.command.CommandSender;
+
+import lombok.extern.java.Log;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -16,12 +18,12 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.UnknownHandler;
-import lombok.extern.java.Log;
 
 @Log
 @Singleton
 @CommandAlias("channel")
 public class ChannelCommands extends BaseCommand {
+
     @Inject
     private ChatHandler chatHandler;
 
