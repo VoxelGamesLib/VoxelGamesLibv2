@@ -96,7 +96,10 @@ public class InventoryHandler implements Handler, Listener {
 
     @EventHandler
     public void onCloseListener(@Nonnull InventoryCloseEvent event) {
-        this.getInventory(event.getPlayer()).ifPresent(BaseInventory::onClose);
+        this.getInventory(event.getPlayer()).ifPresent(inv -> {
+            inv.onClose();
+            removeInventory(inv.getIdentifier()); // destroy it
+        });
     }
 
     @EventHandler

@@ -93,6 +93,7 @@ public abstract class BaseInventory {
      * @param action the action to perform
      */
     public void addClickAction(@Nonnull ItemStack is, @Nonnull BiConsumer<ItemStack, User> action) {
+        bukkitInventory.addItem(is);
         clickActions.put(is, action);
     }
 

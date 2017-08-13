@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.components.inventory;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +20,9 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A PagedInventory is a type of inventory. <p> It has support for pagination, so you can have a multi-paged inventory.
+ * A PagedInventory is a type of inventory.
+ *
+ * It has support for pagination, so you can have a multi-paged inventory.
  */
 public class PagedInventory extends BaseInventory {
 
@@ -39,21 +42,7 @@ public class PagedInventory extends BaseInventory {
      */
     public PagedInventory(@Nonnull User user, @Nonnull String title, int size) {
         super(user, title, size);
-
-        addClickAction(forward, (itemStack, clickEvent) -> {
-            setPage(++currentPage);
-        });
-
-        addClickAction(backward, (itemStack, clickEvent) -> {
-            setPage(--currentPage);
-        });
-
-        addClickAction(close, ((itemStack, clickEvent) -> {
-            close();
-        }));
-
-        updateTitle();
-        constructNewInventory();
+        init();
     }
 
     /**
@@ -62,9 +51,10 @@ public class PagedInventory extends BaseInventory {
      *
      * @see BaseInventory#BaseInventory(User, String, int)
      */
-    public PagedInventory(@Nonnull User user, @Nonnull String title, boolean dynamicInventory) {
+    public PagedInventory(@Nonnull User user, @Nonnull String title) {
         super(user, title, 54);
-        this.dynamicInventory = dynamicInventory;
+        this.dynamicInventory = true;
+        init();
     }
 
     @Nonnull
@@ -126,7 +116,7 @@ public class PagedInventory extends BaseInventory {
         }
 
         if (contents.length > 54 - 9) {
-            throw new ComponentException("Tried to have too many itemstacks", getClass().getSimpleName());
+            throw new ComponentException("Tried to have too many ItemStacks when creating a new page", getClass().getSimpleName());
         }
 
         // todo, condense code down, this is ugly
@@ -212,20 +202,21 @@ public class PagedInventory extends BaseInventory {
             count++;
 
             if (count == 54 - 9) {
-                // todo add navigation to page
-                pages.put(page, currentPageItems);
+                createOrEditPage(currentPageItems, page);
 
                 page++;
 
                 if (page == pagesToFill) {
                     currentPageItems = new ItemStack[sizeOfLast];
+                } else {
+                    Arrays.fill(currentPageItems, null);
                 }
             } else if (page == pagesToFill && count == sizeOfLast) {
-                pages.put(page, currentPageItems);
+                createOrEditPage(currentPageItems, page);
             }
         }
 
-        this.currentPage = 0;
+        setPage(0);
         updateTitle();
         constructNewInventory();
     }
@@ -252,5 +243,23 @@ public class PagedInventory extends BaseInventory {
         activeTitle = titleFormat
                 .replace("%title%", title)
                 .replace("%page%", currentPage + "");
+    }
+
+    private void init() {
+        addClickAction(forward, (itemStack, clickEvent) -> {
+            setPage(++currentPage);
+        });
+
+        addClickAction(backward, (itemStack, clickEvent) -> {
+            setPage(--currentPage);
+        });
+
+        addClickAction(close, ((itemStack, clickEvent) -> {
+            close();
+        }));
+
+        setPage(0);
+        updateTitle();
+        constructNewInventory();
     }
 }
