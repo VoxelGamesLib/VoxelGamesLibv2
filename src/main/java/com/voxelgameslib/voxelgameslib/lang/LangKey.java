@@ -21,6 +21,10 @@ public enum LangKey implements Translatable {
             "min", "actual"),
     COMMAND_USAGE("{red}Usage: {usage}", "usage"),
 
+    COMPONENT_INVENTORY_NEXT("{gold}Next"),
+    COMPONENT_INVENTORY_BACK("{gold}Back"),
+    COMPONENT_INVENTORY_CLOSE("{red}Close"),
+
     DATA_NOT_LOADED("{red}Your data has not been loaded, please join again!"),
 
     EDITMODE_ALREADY_ENABLED("{red}Edit mode already enabled!"),
@@ -62,6 +66,8 @@ public enum LangKey implements Translatable {
     GENERAL_INVALID_ARGUMENT("{red}u w00t m8? {yellow}{arg}{red} is not an valid argument!", "arg"),
     GENERAL_INVALID_NUMBER("{yellow}{num}{red} is not a valid number!", "num"),
     GENERAL_INVALID_USER_NAME("{red}Unknown user {yellow}{user}{red}!", "user"),
+
+    INV_MARKER("Markers"),
 
     LANG_CURRENT(
             "{aqua}You are currently using language {yellow}{lang}{aqua}, use {yellow}/lang set <language>{aqua} to set it to another language.",

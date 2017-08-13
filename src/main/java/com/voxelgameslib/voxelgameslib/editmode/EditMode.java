@@ -102,11 +102,10 @@ public class EditMode extends BaseCommand {
     @CommandPermission("%admin")
     public void gui(@Nonnull User sender) {
         if (editMode.contains(sender.getUuid())) {
-            PagedInventory inventory = inventoryHandler.createInventory(PagedInventory.class, sender, "Markers", 9); //TODO i18n
+            PagedInventory inventory = inventoryHandler.createInventory(PagedInventory.class, sender, Lang.legacy(LangKey.INV_MARKER), 9);
 
             Map<ItemStack, BiConsumer<ItemStack, User>> content = new HashMap<>();
             mapHandler.getMarkerDefinitions().forEach(markerDefinition -> {
-                System.out.println("add marker");
                 ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
                         .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
                 content.put(is, (item, user) -> user.getPlayer().performCommand("editmode skull " + is.getItemMeta().getDisplayName()));

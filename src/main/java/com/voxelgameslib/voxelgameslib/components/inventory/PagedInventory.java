@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
@@ -59,7 +61,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getForwardItem() {
-        return new ItemBuilder(forward).name(ChatColor.GOLD + "Next").build();//TODO i18n
+        return new ItemBuilder(forward).name(Lang.legacy(LangKey.COMPONENT_INVENTORY_CLOSE)).build();//TODO i18n
     }
 
     public void setForwardItem(@Nonnull ItemStack item) {
@@ -68,7 +70,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getBackwardItem() {
-        return new ItemBuilder(backward).name(ChatColor.GOLD + "Back").build();//TODO i18n;
+        return new ItemBuilder(backward).name(Lang.legacy(LangKey.COMPONENT_INVENTORY_CLOSE)).build();//TODO i18n;
     }
 
     public void setBackwardItem(@Nonnull ItemStack item) {
@@ -77,7 +79,7 @@ public class PagedInventory extends BaseInventory {
 
     @Nonnull
     public ItemStack getCloseItem() {
-        return new ItemBuilder(close).name(ChatColor.RED + "Next").build();//TODO i18n
+        return new ItemBuilder(close).name(Lang.legacy(LangKey.COMPONENT_INVENTORY_CLOSE)).build();//TODO i18n
     }
 
     public void setCloseItem(@Nonnull ItemStack item) {
