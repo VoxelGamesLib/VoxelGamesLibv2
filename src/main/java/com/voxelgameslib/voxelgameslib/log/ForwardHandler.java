@@ -53,10 +53,9 @@ public class ForwardHandler extends ConsoleHandler {
                 log4jAppender.append(log4jEvent);
             }
         }
-
-        super.publish(record);
     }
 
+    @Nonnull
     private org.apache.logging.log4j.Level toLog4j(@Nonnull Level level) {
         switch (level.getName()) {
             case "SEVERE":
