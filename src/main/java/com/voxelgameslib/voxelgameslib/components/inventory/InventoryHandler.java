@@ -1,20 +1,11 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
 import com.google.inject.Injector;
-
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import com.voxelgameslib.voxelgameslib.user.User;
+import lombok.extern.java.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -25,7 +16,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
 @Log
@@ -59,23 +57,23 @@ public class InventoryHandler implements Handler, Listener {
      * Creates a new inventory for a player
      *
      * @param inventoryType Type of inventory to use
-     * @param player        player to create the inventory for
+     * @param user          player to create the inventory for
      * @param title         inventory title
      * @param size          size of inventory space
      * @return the created inventory
      */
     @Nonnull
-    public <T extends BaseInventory> T createInventory(@Nonnull Class<T> inventoryType, @Nonnull Player player, @Nonnull String title, int size) {
+    public <T extends BaseInventory> T createInventory(@Nonnull Class<T> inventoryType, @Nonnull User user, @Nonnull String title, int size) {
         T instance = null;
 
         try {
-            instance = inventoryType.getDeclaredConstructor(Player.class, String.class, int.class).newInstance(player, title, size);
+            instance = inventoryType.getDeclaredConstructor(User.class, String.class, int.class).newInstance(user, title, size);
             injector.injectMembers(instance);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new VoxelGameLibException("Error creating new inventory (VGL Inventory API): " + e.getMessage(), e);
         }
 
-        inventories.put(player.getUniqueId(), instance);
+        inventories.put(user.getUuid(), instance);
 
         return instance;
     }

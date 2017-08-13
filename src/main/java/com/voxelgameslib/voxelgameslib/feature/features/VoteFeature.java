@@ -1,7 +1,10 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Syntax;
 import com.google.gson.annotations.Expose;
-
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.components.inventory.BasicInventory;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
@@ -19,15 +22,9 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.java.Log;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -35,13 +32,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Optional;
-import co.aikar.commands.annotation.Syntax;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.java.Log;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
@@ -169,26 +166,24 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @GameEvent
-    public void openVoteMenu(@Nonnull PlayerInteractEvent event) {
-        userHandler.getUser(event.getPlayer().getUniqueId()).ifPresent(user -> {
-            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
-                int pos = 0;
-                BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, event.getPlayer(), "Vote for a map", availableMaps.size());
-                for (int id : availableMaps.keySet()) {
-                    MapInfo info = availableMaps.get(id);
-                    ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
-                    basicInventory.getBukkitInventory().setItem(pos++, item);
-                    basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> {
-                        confirmVote(user, id);
-                        basicInventory.close();
+    public void openVoteMenu(@Nonnull PlayerInteractEvent event, User user) {
+        if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && openMenuItem.equals(event.getItem())) {
+            int pos = 0;
+            BasicInventory basicInventory = inventoryHandler.createInventory(BasicInventory.class, user, "Vote for a map", availableMaps.size());
+            for (int id : availableMaps.keySet()) {
+                MapInfo info = availableMaps.get(id);
+                ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
+                basicInventory.getBukkitInventory().setItem(pos++, item);
+                basicInventory.addClickAction(item, ((itemStack, inventoryClickEvent) -> {
+                    confirmVote(user, id);
+                    basicInventory.close();
 
-                        // Destroy the inventory, we don't need it anymore
-                        inventoryHandler.removeInventory(basicInventory.getIdentifier());
-                    }));
-                }
-                user.getPlayer().openInventory(basicInventory.getBukkitInventory());
+                    // Destroy the inventory, we don't need it anymore
+                    inventoryHandler.removeInventory(basicInventory.getIdentifier());
+                }));
             }
-        });
+            user.getPlayer().openInventory(basicInventory.getBukkitInventory());
+        }
     }
 
     /**

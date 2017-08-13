@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.components.inventory;
 
 import com.voxelgameslib.voxelgameslib.components.inventory.events.PageChangeEvent;
 import com.voxelgameslib.voxelgameslib.exception.ComponentException;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -35,10 +36,10 @@ public class PagedInventory extends BaseInventory {
     /**
      * Creates a new PagedInventory
      *
-     * @see BaseInventory#BaseInventory(Player, String, int)
+     * @see BaseInventory#BaseInventory(User, String, int)
      */
-    public PagedInventory(@Nonnull Player player, @Nonnull String title, int size) {
-        super(player, title, size);
+    public PagedInventory(@Nonnull User user, @Nonnull String title, int size) {
+        super(user, title, size);
 
         addClickAction(forward, (itemStack, clickEvent) -> {
             setPage(++currentPage);
@@ -60,10 +61,10 @@ public class PagedInventory extends BaseInventory {
      * Creates a new PagedInventory <p> Has the ability to specify if the inventory is dynamic (size
      * determined by contents)
      *
-     * @see BaseInventory#BaseInventory(Player, String, int)
+     * @see BaseInventory#BaseInventory(User, String, int)
      */
-    public PagedInventory(@Nonnull Player player, @Nonnull String title, boolean dynamicInventory) {
-        super(player, title, 54);
+    public PagedInventory(@Nonnull User user, @Nonnull String title, boolean dynamicInventory) {
+        super(user, title, 54);
         this.dynamicInventory = dynamicInventory;
     }
 

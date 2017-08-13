@@ -4,6 +4,7 @@ import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
 
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -38,8 +39,8 @@ public class PageChangeEvent extends Event implements Cancellable {
     }
 
     @Nonnull
-    public Player getPlayer() {
-        return inventory.getPlayer();
+    public User getUser() {
+        return inventory.getUser();
     }
 
     @Nonnull

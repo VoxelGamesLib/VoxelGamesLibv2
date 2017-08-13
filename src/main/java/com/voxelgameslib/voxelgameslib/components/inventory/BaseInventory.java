@@ -1,40 +1,41 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
-
+import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 public abstract class BaseInventory {
     private UUID identifier;
-    private Player player;
+    private User user;
     protected Inventory bukkitInventory;
     protected String title;
     protected int size;
-    protected Consumer<Player> openInventoryAction = (p) -> {
+    protected Consumer<User> openInventoryAction = (p) -> {
     };
-    protected Consumer<Player> closeInventoryAction = (p) -> {
+    protected Consumer<User> closeInventoryAction = (p) -> {
     };
-    protected Map<ItemStack, BiConsumer<ItemStack, InventoryClickEvent>> clickActions = new HashMap<>();
+    protected Map<ItemStack, BiConsumer<ItemStack, User>> clickActions = new HashMap<>();
 
     /**
      * Creates a new BaseInventory
      *
-     * @param player the player to create the inventory on
-     * @param title  title of new inventory
-     * @param size   size/capacity of new inventory
+     * @param user  the player to create the inventory on
+     * @param title title of new inventory
+     * @param size  size/capacity of new inventory
      */
-    public BaseInventory(@Nonnull Player player, @Nonnull String title, int size) {
-        this.identifier = player.getUniqueId();
-        this.player = player;
+    public BaseInventory(@Nonnull User user, @Nonnull String title, int size) {
+        this.identifier = user.getUuid();
+        this.user = user;
         this.title = title;
         this.size = Math.min(9, (int) (Math.ceil((double) size / 9)) * 9);
 
@@ -58,8 +59,8 @@ public abstract class BaseInventory {
      * @return the player
      */
     @Nonnull
-    public Player getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 
     @Nonnull
@@ -72,7 +73,7 @@ public abstract class BaseInventory {
      *
      * @param action the action to perform
      */
-    public void setOpenAction(@Nonnull Consumer<Player> action) {
+    public void setOpenAction(@Nonnull Consumer<User> action) {
         openInventoryAction = action;
     }
 
@@ -81,7 +82,7 @@ public abstract class BaseInventory {
      *
      * @param action the action to perform
      */
-    public void setCloseAction(@Nonnull Consumer<Player> action) {
+    public void setCloseAction(@Nonnull Consumer<User> action) {
         closeInventoryAction = action;
     }
 
@@ -91,7 +92,7 @@ public abstract class BaseInventory {
      * @param is     itemstack to create the click action for
      * @param action the action to perform
      */
-    public void addClickAction(@Nonnull ItemStack is, @Nonnull BiConsumer<ItemStack, InventoryClickEvent> action) {
+    public void addClickAction(@Nonnull ItemStack is, @Nonnull BiConsumer<ItemStack, User> action) {
         clickActions.put(is, action);
     }
 
@@ -99,14 +100,14 @@ public abstract class BaseInventory {
      * Perform the defined action when an inventory is opened by a player
      */
     public void onOpen() {
-        openInventoryAction.accept(player);
+        openInventoryAction.accept(user);
     }
 
     /**
      * Perform the defined action when an inventory is opened by a player
      */
     public void onClose() {
-        closeInventoryAction.accept(player);
+        closeInventoryAction.accept(user);
     }
 
     /**
@@ -117,7 +118,7 @@ public abstract class BaseInventory {
      */
     public void onClick(@Nonnull ItemStack is, @Nonnull InventoryClickEvent e) {
         if (clickActions.containsKey(is)) {
-            clickActions.get(is).accept(is, e);
+            clickActions.get(is).accept(is, user);
         }
     }
 
@@ -125,14 +126,14 @@ public abstract class BaseInventory {
      * Make the player open the inventory
      */
     public void open() {
-        player.openInventory(bukkitInventory);
+        user.getPlayer().openInventory(bukkitInventory);
     }
 
     /**
      * Make the player close the inventory
      */
     public void close() {
-        player.closeInventory();
+        user.getPlayer().closeInventory();
     }
 
     protected void constructNewInventory() {
