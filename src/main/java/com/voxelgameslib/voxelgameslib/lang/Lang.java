@@ -5,18 +5,16 @@ import com.voxelgameslib.voxelgameslib.user.GameConsoleUser;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-
+import lombok.extern.java.Log;
 import net.kyori.text.Component;
+import net.kyori.text.LegacyComponent;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
+import org.bukkit.ChatColor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-
-import org.bukkit.ChatColor;
-
-import lombok.extern.java.Log;
 
 /**
  * Gives quick access to the lang storage and translation and stuff
@@ -83,6 +81,31 @@ public class Lang {
         }
 
         return parseFormat(string(key, loc, args));
+    }
+
+    /**
+     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve
+     * version compatible with Minecraft
+     *
+     * @param key the lang key that should be translated
+     * @return string form of the component by the key
+     */
+    @Nonnull
+    public static String legacy(@Nonnull Translatable key) {
+        return LegacyComponent.to(trans(key));
+    }
+
+    /**
+     * Returns a String created by LegacyComponent, which makes a Component into a ready-to-serve
+     * version compatible with Minecraft
+     *
+     * @param key  the lang key that should be translated
+     * @param args the arguments for replacements
+     * @return string form of the component by the key
+     */
+    @Nonnull
+    public static String legacy(@Nonnull Translatable key, @Nullable Object... args) {
+        return LegacyComponent.to(transVar(key, args));
     }
 
     /**
