@@ -109,7 +109,7 @@ public class EditMode extends BaseCommand {
                 System.out.println("add marker");
                 ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
                         .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
-                content.put(is, (item, user) -> user.getPlayer().performCommand("/editmode skull " + is.getItemMeta().getDisplayName()));
+                content.put(is, (item, user) -> user.getPlayer().performCommand("editmode skull " + is.getItemMeta().getDisplayName()));
             });
             inventory.autoConstructPages(content.keySet().toArray(new ItemStack[content.size()]));
             content.forEach(inventory::addClickAction);
