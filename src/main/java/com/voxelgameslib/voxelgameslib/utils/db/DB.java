@@ -72,6 +72,8 @@ public final class DB {
             pooledDataSource.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
 
             Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new AsyncDbQueue(), 0, 1);
+
+            log.info("Started database pool to " + globalConfig.persistence.url);
         } catch (Exception ex) {
             pooledDataSource = null;
             log.severe("Error creating database pool");
