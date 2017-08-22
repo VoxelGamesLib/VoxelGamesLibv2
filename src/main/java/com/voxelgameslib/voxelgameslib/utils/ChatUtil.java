@@ -3,7 +3,7 @@ package com.voxelgameslib.voxelgameslib.utils;
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
-import net.kyori.text.serializer.ComponentSerializer;
+import net.kyori.text.serializer.ComponentSerializers;
 
 import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
@@ -75,7 +75,7 @@ public class ChatUtil {
     public static void sendMessage(@Nonnull GamePlayer gameUser, @Nonnull Component message) {
         try {
             ENTITYPLAYER_SENDMESSAGE_METHOD.invoke(CRAFTPLAYER_GETHANDLE_METHOD.invoke(gameUser.getPlayer()),
-                    CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializer.serialize(message)));
+                    CHATSERIALIZER_A_METHOD.invoke(null, ComponentSerializers.JSON.serialize(message)));
         } catch (Exception e) {
             throw new RuntimeException("wut", e);
         }

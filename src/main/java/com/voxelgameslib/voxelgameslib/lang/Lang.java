@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
 import net.kyori.text.Component;
-import net.kyori.text.LegacyComponent;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
+import net.kyori.text.serializer.ComponentSerializers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -95,7 +95,7 @@ public class Lang {
      */
     @Nonnull
     public static String legacy(@Nonnull Translatable key) {
-        return LegacyComponent.to(trans(key));
+        return ComponentSerializers.LEGACY.serialize(trans(key));
     }
 
     /**
@@ -108,7 +108,7 @@ public class Lang {
      */
     @Nonnull
     public static String legacy(@Nonnull Translatable key, @Nullable Object... args) {
-        return LegacyComponent.to(transVar(key, args));
+        return ComponentSerializers.LEGACY.serialize(transVar(key, args));
     }
 
     /**

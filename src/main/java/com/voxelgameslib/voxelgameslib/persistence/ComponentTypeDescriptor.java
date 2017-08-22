@@ -1,7 +1,7 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
 import net.kyori.text.Component;
-import net.kyori.text.serializer.ComponentSerializer;
+import net.kyori.text.serializer.ComponentSerializers;
 
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
@@ -22,13 +22,13 @@ public class ComponentTypeDescriptor extends AbstractTypeDescriptor<Component> {
     @Override
     @Nonnull
     public String toString(@Nonnull Component value) {
-        return ComponentSerializer.serialize(value);
+        return ComponentSerializers.JSON.serialize(value);
     }
 
     @Override
     @Nonnull
     public Component fromString(@Nonnull String string) {
-        return ComponentSerializer.deserialize(string);
+        return ComponentSerializers.JSON.deserialize(string);
     }
 
     @Override

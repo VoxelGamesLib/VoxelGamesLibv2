@@ -9,7 +9,7 @@ import com.comphenix.protocol.wrappers.nbt.NbtCompound;
 
 import net.kyori.text.Component;
 import net.kyori.text.TextComponent;
-import net.kyori.text.serializer.ComponentSerializer;
+import net.kyori.text.serializer.ComponentSerializers;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -124,7 +124,7 @@ public class SignPlaceholders implements Listener {
                 Component[] lines = new Component[4];
                 String[] rawLines = new String[4];
                 for (int i = 0; i < lines.length; i++) {
-                    lines[i] = ComponentSerializer.deserialize(data.getString("Text" + (i + 1)));
+                    lines[i] = ComponentSerializers.JSON.deserialize(data.getString("Text" + (i + 1)));
                     rawLines[i] = ChatUtil.toPlainText(lines[i]);
                 }
 
@@ -164,7 +164,7 @@ public class SignPlaceholders implements Listener {
 
                 // modify packet
                 for (int i = 0; i < lines.length; i++) {
-                    data.put("Text" + (i + 1), ComponentSerializer.serialize(lines[i]));
+                    data.put("Text" + (i + 1), ComponentSerializers.JSON.serialize(lines[i]));
                 }
             }
         });

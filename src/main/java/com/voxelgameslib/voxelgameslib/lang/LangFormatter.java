@@ -5,7 +5,7 @@ import net.kyori.text.event.ClickEvent;
 import net.kyori.text.event.HoverEvent;
 import net.kyori.text.format.TextColor;
 import net.kyori.text.format.TextDecoration;
-import net.kyori.text.serializer.ComponentSerializer;
+import net.kyori.text.serializer.ComponentSerializers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,23 +108,23 @@ public class LangFormatter {
         test = test.replace("{name}", "MiniDigger");
         test = test.replace("{mode}", "1vs1");
         test = test.replace("{command}", "/game join ssss");
-        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+        System.out.println(ComponentSerializers.JSON.serialize(parseFormat(test)));
 
         System.out.println("color + deco");
         test = "{bold}BOLD! {yellow}YELLOW BOLD {/bold}ONLY YELLOW{/yellow}";
-        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+        System.out.println(ComponentSerializers.JSON.serialize(parseFormat(test)));
 
         System.out.println("nested color");
         test = "{bold}BOLD! {yellow}YELLOW {blue}BOLD {/bold}ONLY{/blue} YELLOW{/yellow}";
-        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+        System.out.println(ComponentSerializers.JSON.serialize(parseFormat(test)));
 
         System.out.println("RECURSION HELL!");
         test = "{yellow}{hover:show_text:\"{red}test{/red}\"}test{/yellow}";
-        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+        System.out.println(ComponentSerializers.JSON.serialize(parseFormat(test)));
 
         System.out.println("RECURSION HELLv2!");
         test = "{yellow}{hover:show_text:\"{red}test{/red}\"}test{/yellow}";
-        System.out.println(ComponentSerializer.serialize(parseFormat(test)));
+        System.out.println(ComponentSerializers.JSON.serialize(parseFormat(test)));
     }
 
     @Nonnull
