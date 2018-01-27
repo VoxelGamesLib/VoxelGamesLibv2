@@ -11,9 +11,9 @@ import co.aikar.commands.CommandHelp;
 public class CommandUtil {
 
     public static void printHelp(@Nonnull User user, @Nonnull CommandHelp help) {
-        help.getCommandHelp().stream()
-                .map(h -> "/" + h.getCommand() + " " + h.getSyntax() +
-                        ((h.getHelpText() != null && !h.getHelpText().isEmpty() ? " - " + h.getHelpText() : "")))
+        help.getHelpEntries().stream()
+                .map(h -> "/" + h.getCommand() + " " + h.getParameterSyntax() +
+                        ((h.getDescription() != null && !h.getDescription().isEmpty() ? " - " + h.getDescription() : "")))
                 .forEach(s -> user.sendMessage(TextComponent.of(s)));
     }
 }

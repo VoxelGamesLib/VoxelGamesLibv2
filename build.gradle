@@ -38,10 +38,9 @@ ext {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://nexus.indices.io/content/groups/public/" }
     maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
     maven { url "https://oss.sonatype.org/content/groups/public/" }
-    maven { url "https://ci.emc.gs/nexus/content/groups/aikar/" }
+    maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/" }
     maven { url "http://dl.bintray.com/etienne/java-utilities" }
     maven { url "http://repo.bstats.org/content/repositories/releases/" }
@@ -51,7 +50,7 @@ repositories {
     maven { url "http://repo.inventivetalent.org/content/repositories/snapshots/" }
 }
 dependencies {
-    compile group: 'co.aikar', name: 'acf-bukkit-vgl', version: '0.5.0-SNAPSHOT', changing: false
+    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT'
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
@@ -74,7 +73,7 @@ dependencies {
 
     compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12.1-R0.1-SNAPSHOT'
     compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.1-R0.1-SNAPSHOT'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
     compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
 }
 
