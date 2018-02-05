@@ -8,11 +8,11 @@ import javax.inject.Inject;
 import org.bukkit.command.CommandSender;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CatchAll;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.UnknownHandler;
 
 @CommandAlias("vgl|voxelgameslib")
 public final class VGLCommands extends BaseCommand {
@@ -22,7 +22,7 @@ public final class VGLCommands extends BaseCommand {
     private String pluginVersion;
 
     @Default
-    @UnknownHandler
+    @CatchAll
     @Subcommand("version")
     @CommandPermission("%user")
     public void version(@Nonnull CommandSender sender) {

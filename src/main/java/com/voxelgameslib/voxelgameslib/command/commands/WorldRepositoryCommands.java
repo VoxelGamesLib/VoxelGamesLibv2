@@ -8,15 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.UnknownHandler;
 
 @Singleton
 @CommandAlias("worldrepository|wr")
@@ -27,12 +26,10 @@ public class WorldRepositoryCommands extends BaseCommand {
     @Inject
     private WorldHandler worldHandler;
 
-    @Default
-    @UnknownHandler
-    @Subcommand("help")
+    @HelpCommand
     @CommandPermission("%admin")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
+        help.showHelp();
     }
 
     @Subcommand("updateRepo")

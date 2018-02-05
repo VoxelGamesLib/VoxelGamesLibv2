@@ -8,16 +8,15 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import org.bukkit.inventory.ItemStack;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.UnknownHandler;
 
 @Singleton
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
@@ -27,12 +26,10 @@ public class TextureCommands extends BaseCommand {
     @Inject
     private TextureHandler textureHandler;
 
-    @Default
-    @UnknownHandler
-    @Subcommand("help")
+    @HelpCommand
     @CommandPermission("%admin")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
+        help.showHelp();
     }
 
     @Subcommand("get")

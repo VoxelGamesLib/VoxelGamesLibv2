@@ -10,16 +10,15 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
-import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Handles all commands related to roles
@@ -32,13 +31,11 @@ public class RoleCommands extends BaseCommand {
     @Inject
     private PersistenceHandler persistenceHandler;
 
-    @Default
-    @UnknownHandler
-    @Subcommand("help")
+    @HelpCommand
     @CommandPermission("%user")
-    public void help(@Nonnull User sender) {
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
         Lang.msg(sender, LangKey.ROLE_SELF, sender.getRole().getName());
-        CommandUtil.printHelp(sender, getCommandHelp());
+        help.showHelp();
     }
 
     @CommandPermission("%moderator")

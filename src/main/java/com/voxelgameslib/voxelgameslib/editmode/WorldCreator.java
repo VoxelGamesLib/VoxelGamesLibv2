@@ -21,7 +21,6 @@ import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
@@ -30,11 +29,11 @@ import org.bukkit.Location;
 import lombok.extern.java.Log;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Handles creation of new worlds/maps
@@ -67,12 +66,10 @@ public class WorldCreator extends BaseCommand {
 
     private Map map;
 
-    @Default
-    @UnknownHandler
-    @Subcommand("help")
+    @HelpCommand
     @CommandPermission("%admin")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
+        help.showHelp();
     }
 
     @Subcommand("start")

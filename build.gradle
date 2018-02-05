@@ -122,6 +122,11 @@ if (!project.hasProperty("dev")) {
     }
 }
 
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+}
+
 signing {
     required {
         !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives')

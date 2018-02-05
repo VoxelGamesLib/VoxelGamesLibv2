@@ -6,18 +6,17 @@ import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.CommandUtil;
 
 import org.bukkit.command.CommandSender;
 
 import lombok.extern.java.Log;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.UnknownHandler;
 
 @Log
 @Singleton
@@ -27,12 +26,10 @@ public class ChannelCommands extends BaseCommand {
     @Inject
     private ChatHandler chatHandler;
 
-    @Default
-    @UnknownHandler
-    @Subcommand("help")
+    @HelpCommand
     @CommandPermission("%user")
-    public void help(@Nonnull User sender) {
-        CommandUtil.printHelp(sender, getCommandHelp());
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
+        help.showHelp();
     }
 
     @Subcommand("create")

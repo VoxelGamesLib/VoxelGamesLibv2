@@ -12,13 +12,14 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
-import co.aikar.commands.annotation.UnknownHandler;
 
 /**
  * Handles all commands related to lang and i18n
@@ -34,7 +35,6 @@ public class LangCommands extends BaseCommand {
     private PersistenceHandler persistenceHandler;
 
     @Default
-    @UnknownHandler
     @CommandPermission("%user")
     public void lang(@Nonnull User sender) {
         StringBuilder sb = new StringBuilder();
@@ -45,6 +45,12 @@ public class LangCommands extends BaseCommand {
         Lang.msg(sender, LangKey.LANG_INSTALLED, sb.toString());
         Lang.msg(sender, LangKey.LANG_CURRENT, sender.getLocale().getName());
         Lang.msg(sender, LangKey.TRANSLATED_BY);
+    }
+
+    @HelpCommand
+    @CommandPermission("%user")
+    public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
+        help.showHelp();
     }
 
     @Subcommand("set")
