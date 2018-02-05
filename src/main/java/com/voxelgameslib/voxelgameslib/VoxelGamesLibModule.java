@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib;
 
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
@@ -8,11 +10,6 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
-
-import java.io.File;
-import java.util.Map;
-import javax.annotation.Nonnull;
-
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
@@ -27,13 +24,13 @@ import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
-import org.bukkit.Bukkit;
-
 import lombok.AllArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.timings.lib.TimingManager;
+import javax.annotation.Nonnull;
+import java.io.File;
+import java.util.Map;
 
 @AllArgsConstructor
 public final class VoxelGamesLibModule extends AbstractModule {
@@ -53,6 +50,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(Plugin.class).toInstance(voxelGamesLib);
         bind(VoxelGamesLib.class).toInstance(voxelGamesLib);
         bind(TimingManager.class).toInstance(timingManager);
         bind(BukkitCommandManager.class).toInstance(commandManager);

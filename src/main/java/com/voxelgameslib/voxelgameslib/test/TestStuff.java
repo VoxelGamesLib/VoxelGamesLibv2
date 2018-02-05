@@ -1,9 +1,5 @@
 package com.voxelgameslib.voxelgameslib.test;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -15,16 +11,16 @@ public class TestStuff implements Listener {
     private Plugin plugin;
 
     public void test() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Client.POSITION, PacketType.Play.Client.POSITION_LOOK) {
-
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                if (event.getPacket().getType() == PacketType.Play.Client.POSITION) {
-                    WrapperPlayClientPosition pos = new WrapperPlayClientPosition(event.getPacket());
-                    pos.setY(pos.getY() + 100);
-                    event.setPacket(pos.getHandle());
-                }
-            }
-        });
+//        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, PacketType.Play.Client.POSITION, PacketType.Play.Client.POSITION_LOOK) {
+//
+//            @Override
+//            public void onPacketReceiving(PacketEvent event) {
+//                if (event.getPacket().getType() == PacketType.Play.Client.POSITION) {
+//                    WrapperPlayClientPosition pos = new WrapperPlayClientPosition(event.getPacket());
+//                    pos.setY(pos.getY() + 100);
+//                    event.setPacket(pos.getHandle());
+//                }
+//            }
+//        });
     }
 }
