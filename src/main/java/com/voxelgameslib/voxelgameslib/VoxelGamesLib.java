@@ -1,28 +1,16 @@
 package com.voxelgameslib.voxelgameslib;
 
-import com.google.inject.Injector;
-
+import co.aikar.commands.*;
+import co.aikar.taskchain.BukkitTaskChainFactory;
+import co.aikar.taskchain.TaskChain;
+import co.aikar.taskchain.TaskChainFactory;
+import co.aikar.timings.lib.TimingManager;
 import com.bugsnag.Severity;
-
-import java.util.Arrays;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-
+import com.google.inject.Injector;
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.chat.ChatListener;
 import com.voxelgameslib.voxelgameslib.command.CommandHandler;
-import com.voxelgameslib.voxelgameslib.command.commands.GameCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.LangCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.OverrideCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.RoleCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.TestCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.TextureCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
-import com.voxelgameslib.voxelgameslib.command.commands.WorldRepositoryCommands;
+import com.voxelgameslib.voxelgameslib.command.commands.*;
 import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
 import com.voxelgameslib.voxelgameslib.components.points.PointHandler;
@@ -56,6 +44,7 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
+import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -64,22 +53,15 @@ import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.user.UserListener;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-
+import lombok.extern.java.Log;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lombok.extern.java.Log;
-
-import co.aikar.commands.BukkitCommandCompletionContext;
-import co.aikar.commands.BukkitCommandExecutionContext;
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.CommandCompletions;
-import co.aikar.commands.CommandContexts;
-import co.aikar.commands.CommandReplacements;
-import co.aikar.taskchain.BukkitTaskChainFactory;
-import co.aikar.taskchain.TaskChain;
-import co.aikar.taskchain.TaskChainFactory;
-import co.aikar.timings.lib.TimingManager;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Log
 public final class VoxelGamesLib extends JavaPlugin {
@@ -137,6 +119,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Inject
     private TextureHandler textureHandler;
 
+    @Inject
+    private TestStuff testStuff;
 
     @Override
     public void onLoad() {
@@ -220,6 +204,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         gameHandler.startDefaultGame();
 
         getServer().getPluginManager().callEvent(new VoxelGamesLibEnableEvent());
+
+        testStuff.test();
     }
 
     @Override
