@@ -1,14 +1,13 @@
 package com.voxelgameslib.voxelgameslib.lang;
 
 import com.google.gson.annotations.Expose;
-
-import java.io.Serializable;
-import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import javax.annotation.Nonnull;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Represents a language a player can select to get all messages in that language
@@ -27,7 +26,7 @@ public class Locale implements Serializable {
     public static final Locale SWEDISH = new Locale("swedish", "sv");
     public static final Locale TURKISH = new Locale("turkish", "tr");
     public static final Locale DUTCH = new Locale("dutch", "nl");
-    public static final Locale BRAZILIAN_PORTUGESE = new Locale("brazilian portuguese", "pt-br");
+    public static final Locale BRAZILIAN_PORTUGUESE = new Locale("brazilian portuguese", "pt-br");
 
     private String name;
     @Expose
@@ -44,7 +43,7 @@ public class Locale implements Serializable {
     @Nonnull
     public static Locale[] values() {
         return new Locale[]{ENGLISH, FRENCH, GERMAN, ITALIAN, PORTUGUESE, RUSSIAN, SPANISH, SWEDISH,
-                TURKISH, DUTCH, BRAZILIAN_PORTUGESE};
+                            TURKISH, DUTCH, BRAZILIAN_PORTUGUESE};
     }
 
     /**
