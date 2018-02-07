@@ -24,5 +24,6 @@ deploy:
   script: scripts/deploy-build-results.sh
   on:
     branch: master
+  skip_cleanup: true
 install: "gradle assemble"
 script: "gradle build dependencyUpdates"
