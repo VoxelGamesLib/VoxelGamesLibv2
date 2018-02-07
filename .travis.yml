@@ -28,6 +28,6 @@ deploy:
   file: 
     - "build/dependencyUpdates/*"
   on:
-    branch: gh-pages
+    branch: master
 install: "gradle assemble"
 script: "gradle build dependencyUpdates"
