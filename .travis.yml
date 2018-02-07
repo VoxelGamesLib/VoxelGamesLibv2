@@ -6,7 +6,7 @@ notifications:
   email: false
   irc:
     channels:
-      - "irc.spi.gt#minidigger"
+      - "ircs://irc.spi.gt:6697/#minidigger"
     on_success: always
     on_failure: always
     skip_join: true
