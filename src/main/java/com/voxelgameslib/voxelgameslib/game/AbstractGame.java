@@ -349,6 +349,12 @@ public abstract class AbstractGame implements Game {
         return activePhase;
     }
 
+    // Temporary, might need change
+    public void setActivePhase(@Nonnull Phase phase) {
+        this.activePhase = phase;
+    }
+
+
     @Override
     public boolean join(@Nonnull User user) {
         if (!getActivePhase().allowJoin() || getMaxPlayers() == players.size()) {
