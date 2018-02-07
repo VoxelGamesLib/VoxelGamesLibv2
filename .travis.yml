@@ -13,4 +13,4 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.m2
 install: "gradle assemble"
-script: "gradle build"
+script: "gradle build dependencyUpdates"
