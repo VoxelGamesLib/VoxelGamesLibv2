@@ -2,14 +2,14 @@ language: java
 jdk:
   - oraclejdk8
 sudo: false
-notifications:
-  email: false
-  irc:
-    channels:
-      - "ircs://irc.spi.gt:6697/#minidigger"
-    on_success: always
-    on_failure: always
-    skip_join: false
+notifications: {
+  "email": false,
+  "irc": {
+    "channels": ["ircs://irc.spi.gt:6697/#MiniDigger"],
+    "on_success": "always",
+    "on_failure": "always"
+  }
+}
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
