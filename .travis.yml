@@ -9,7 +9,7 @@ notifications:
       - "ircs://irc.spi.gt:6697/#minidigger"
     on_success: always
     on_failure: always
-    skip_join: true
+    skip_join: false
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
