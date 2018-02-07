@@ -5,8 +5,8 @@ mkdir deploy-stuff
 
 # config
 echo "setup git"
-git config --global user.email "nobody@nobody.org"
-git config --global user.name "Travis CI"
+git config --global user.email "vglbot@minidigger.me"
+git config --global user.name "VoxelGamesLibBot"
 
 # copy over stuff we want to deploy
 echo "copy stuff to deploy"
