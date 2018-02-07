@@ -4,6 +4,12 @@ jdk:
 sudo: false
 notifications:
   email: false
+  irc:
+    channels:
+      - "irc.spi.gt#minidigger"
+    on_success: always
+    on_failure: always
+    skip_join: true
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
