@@ -24,7 +24,9 @@ deploy:
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
   keep-history: true
-  file: build/dependencyUpdates/*
+  file_glob: true
+  file: 
+    - "build/dependencyUpdates/*"
   on:
     branch: gh-pages
 install: "gradle assemble"
