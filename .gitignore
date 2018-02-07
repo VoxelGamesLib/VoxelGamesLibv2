@@ -15,6 +15,9 @@ build/
 # JRebel <3
 rebel.xml
 
+# allow gradle wrapper
+!*gradle-wrapper.jar 
+
 # Test server
 /testserver/world
 /testserver/world_nether
