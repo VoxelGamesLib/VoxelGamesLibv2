@@ -8,13 +8,12 @@ Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
 
 # Download
 
-You can always download the latest version [here](https://ci.indices.io/job/VoxelGamesLibv2/lastSuccessfulBuild/artifact/target/voxelgameslib-2.0-SNAPSHOT.jar).
+You can always download the latest version [here](https://github.com/VoxelGamesLib/VoxelGamesLibv2/blob/gh-pages/voxelgameslib-2.0-SNAPSHOT-all.jar?raw=true).
 
 # Documentation
 
 Documentation is located [here](https://voxelgameslib.github.io/docs/)  
-Javadocs can be found [here](https://ci.indices.io/job/VoxelGamesLibv2/javadoc/index.html)  
-Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/report.txt)  
+Javadocs can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/)  
 
 # Building
 
@@ -33,6 +32,9 @@ You can find the active contributors on IRC. irc.spi.gt #minidigger (or [webchat
 The main point of the repository is to encourage developers to participate in the development of VoxelGamesLib. All development happens in the open, here on GitHub. We are grateful to all contributors for new features, bug fixes and other improvements.
 
 For contributing information, see: [Contributing.md](CONTRIBUTING.md)
+
+Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/report.txt)  
+Test results can be found here [here](https://voxelgameslib.github.io/VoxelGamesLibv2/tests/test/)  
 
 # License
 
