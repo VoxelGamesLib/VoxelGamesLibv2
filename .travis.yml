@@ -20,13 +20,8 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.m2
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
-  keep-history: true
-  file_glob: true
-  file: 
-    - "build/dependencyUpdates/*"
+  provider: script
+  script: scripts/deploy-build-results.sh
   on:
     branch: master
 install: "gradle assemble"
