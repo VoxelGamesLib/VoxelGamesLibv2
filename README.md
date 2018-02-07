@@ -13,8 +13,8 @@ You can always download the latest version [here](https://ci.indices.io/job/Voxe
 # Documentation
 
 Documentation is located [here](https://voxelgameslib.github.io/docs/)  
-Javadocs can be found [here](https://ci.indices.io/job/VoxelGamesLibv2/javadoc/index.html)
-Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/report.txt)
+Javadocs can be found [here](https://ci.indices.io/job/VoxelGamesLibv2/javadoc/index.html)  
+Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/report.txt)  
 
 # Building
 
