@@ -1,6 +1,4 @@
 #!/bin/bash
-set -o errexit
-
 rm -rf deploy-stuff
 mkdir deploy-stuff
 
