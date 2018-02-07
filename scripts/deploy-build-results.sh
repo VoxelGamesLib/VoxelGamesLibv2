@@ -20,4 +20,4 @@ git add .
 echo "commit"
 git commit -m "Deploy to Github Pages"
 echo "push"
-git push --force --quiet "https://${GITHUB_TOKEN}@$github.com/VoxelGamesLib/VoxelGamesLibv2.git" master:gh-pages > /dev/null 2>&1
+git push --force "https://${GITHUB_TOKEN}@github.com/VoxelGamesLib/VoxelGamesLibv2.git" master:gh-pages
