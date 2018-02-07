@@ -7,7 +7,8 @@ notifications: {
   "irc": {
     "channels": ["ircs://irc.spi.gt:6697/#MiniDigger"],
     "on_success": "always",
-    "on_failure": "always"
+    "on_failure": "always",
+    "skip_join": true
   }
 }
 before_cache:
