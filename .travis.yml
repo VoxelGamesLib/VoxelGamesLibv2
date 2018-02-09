@@ -25,5 +25,5 @@ deploy:
   on:
     branch: master
   skip_cleanup: true
-install: "gradle assemble"
+install: "gradle -version"
 script: "gradle build dependencyUpdates createPom"

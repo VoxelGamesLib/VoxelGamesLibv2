@@ -134,7 +134,7 @@ task createPom << {
     pom {
         project {
             groupId 'com.voxelgameslib'
-            artifactId 'VoxelGamesLib'
+            artifactId 'voxelgameslib'
             version version
 
             inceptionYear '2015'
