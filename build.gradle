@@ -17,6 +17,8 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
+apply plugin: 'maven'
+
 import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
@@ -82,7 +84,7 @@ shadowJar {
     mergeServiceFiles()
     configurations = [project.configurations.compile]
 
-    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics'
+    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
 
     manifest {
         attributes 'Implementation-Version': project.version + "@" + revision
@@ -128,58 +130,34 @@ compileJava {
     options.fork = true
 }
 
-signing {
-    required {
-        !project.version.endsWith('-SNAPSHOT') && gradle.taskGraph.hasTask('uploadArchives')
-    }
-    sign configurations.archives
-}
+task createPom << {
+    pom {
+        project {
+            groupId 'com.voxelgameslib'
+            artifactId 'VoxelGamesLib'
+            version version
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            if (project.hasProperty('indicesUsername') && project.hasProperty('indicesPassword')) {
-                repository(url: 'https://nexus.indices.io/content/repositories/releases/') {
-                    authentication(userName: indicesUsername, password: indicesPassword)
+            inceptionYear '2015'
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/blob/master/LICENSE'
+                    distribution 'repo'
                 }
-
-                snapshotRepository(url: 'https://nexus.indices.io/content/repositories/snapshots/') {
-                    authentication(userName: indicesUsername, password: indicesPassword)
-                }
-            } else {
-                snapshotRepository(url: mavenLocal().url)
             }
 
-            pom.project {
-                name project.name
+            issueManagement {
+                system 'GitHub Issues'
+                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
+            }
 
-                repositories {
-                    project.repositories.each { repo ->
-                        if (repo.name == 'MavenRepo' || repo.name == 'MavenLocal') {
-                            return
-                        }
-                        repository {
-                            id repo.name
-                            url repo.url
-                        }
-                    }
-                }
-
-                issueManagement {
-                    system 'GitHub Issues'
-                    url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
-                }
-
-                scm {
-                    connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                    developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                    url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
-                }
+            scm {
+                connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
             }
         }
-    }
+    }.writeTo("pom.xml")
 }
 
 task proguard(type: ProGuardTask) {

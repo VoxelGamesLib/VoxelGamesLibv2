@@ -20,6 +20,10 @@ rebel.xml
 
 # ignore ci stuff
 /deploy-stuff
+.gradletasknamecache
+
+#nobody likes you mvn ;)
+pom.xml
 
 # Test server
 /testserver/world
