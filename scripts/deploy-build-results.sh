@@ -16,7 +16,7 @@ cp -R build/reports/. deploy-stuff/
 cp -R build/libs/. deploy-stuff/
 
 # create mvn repo
-mvn install:install-file -Dfile=build/libs/voxelgameslib-2.0-SNAPSHOT.jar -DpomFile=pom.xml  -DlocalRepositoryPath=deploy-stuff/mvn-repo
+mvn deploy:deploy-file -Dfile=build/libs/voxelgameslib-2.0-SNAPSHOT.jar -DpomFile=pom.xml  -Durl=file://deploy-stuff/mvn-repo
 
 # deploy
 echo "create repo"
