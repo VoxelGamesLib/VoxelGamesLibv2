@@ -1,11 +1,11 @@
 package com.voxelgameslib.voxelgameslib.map;
 
-import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import javax.annotation.Nonnull;
@@ -20,6 +20,8 @@ import com.voxelgameslib.voxelgameslib.timings.Timings;
 import lombok.Getter;
 import lombok.extern.java.Log;
 
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+
 /**
  * Created by Martin on 04.10.2016.
  */
@@ -30,6 +32,7 @@ public class MapHandler implements Handler {
     @Inject
     private GameHandler gameHandler;
 
+    //TODO implement chests
     @Nonnull
     private HashMap<String, ChestMarker> chests = new HashMap<>();
 
@@ -39,7 +42,15 @@ public class MapHandler implements Handler {
     @Override
     public void start() {
         Timings.time("ScanningFeatures", () ->
-                new Reflections("").getSubTypesOf(AbstractFeature.class).forEach(clazz -> {
+                new FastClasspathScanner().scan().getNamesOfSubclassesOf(AbstractFeature.class).stream().map(n -> {
+                    try {
+                        //noinspection unchecked
+                        return (Class<AbstractFeature>) Class.forName(n);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).filter(Objects::nonNull).forEach(clazz -> {
                     try {
                         markerDefinitions.addAll(Arrays.asList(clazz.newInstance().getMarkers()));
                     } catch (InstantiationException | IllegalAccessException e) {

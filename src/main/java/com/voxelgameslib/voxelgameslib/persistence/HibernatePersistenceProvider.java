@@ -12,8 +12,8 @@ import org.hibernate.internal.EntityManagerMessageLogger_$logger;
 import org.hibernate.internal.log.ConnectionAccessLogger_$logger;
 import org.hibernate.internal.log.ConnectionPoolingLogger_$logger;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
-import org.reflections.Reflections;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -29,6 +29,8 @@ import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 import lombok.extern.java.Log;
+
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 /**
  * A implementation of the persistence provider based on hibernate
@@ -80,8 +82,14 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
         MetadataSources sources = new MetadataSources(registry);
 
-        Timings.time("RegisterDBEntities", () ->
-                new Reflections("").getTypesAnnotatedWith(Entity.class).forEach(sources::addAnnotatedClass));
+        Timings.time("RegisterDBEntities", () -> new FastClasspathScanner().scan().getNamesOfClassesWithAnnotation(Entity.class).stream().map(n -> {
+            try {
+                return Class.forName(n);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).filter(Objects::nonNull).forEach(sources::addAnnotatedClass));
 
         try {
             Metadata metadata = sources.buildMetadata();
