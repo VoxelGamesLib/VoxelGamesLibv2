@@ -130,7 +130,7 @@ compileJava {
     options.fork = true
 }
 
-task createPom << {
+task createPom() {
     pom {
         project {
             groupId 'com.voxelgameslib'
@@ -165,6 +165,12 @@ task proguard(type: ProGuardTask) {
 
     injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
     outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
+}
+
+task runTestServer(type: JavaExec) {
+    main="-jar"
+    args = ["../testserver/paperclip.jar"]
+    workingDir = "../testserver/"
 }
 
 configurations.all {
