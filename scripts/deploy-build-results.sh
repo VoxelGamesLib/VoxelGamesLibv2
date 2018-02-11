@@ -22,7 +22,7 @@ mvn deploy:deploy-file -Dfile=build/libs/voxelgameslib-2.0-SNAPSHOT.jar -DpomFil
 
 # create index
 sudo pip install mako
-python scripts/make_index.py --header "VGL Deployments"
+python scripts/make_index.py --header "VGL Deployments" deploy-stuff
 
 # deploy
 echo "commit repo"
