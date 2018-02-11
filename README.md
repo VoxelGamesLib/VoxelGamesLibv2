@@ -13,7 +13,7 @@ You can always download the latest version [here](https://github.com/VoxelGamesL
 # Documentation
 
 Documentation is located [here](https://voxelgameslib.github.io/docs/)  
-Javadocs can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/)  
+Javadocs can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL/javadoc/)  
 
 # Building
 
@@ -33,8 +33,8 @@ The main point of the repository is to encourage developers to participate in th
 
 For contributing information, see: [Contributing.md](CONTRIBUTING.md)
 
-Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/report.txt)  
-Test results can be found here [here](https://voxelgameslib.github.io/VoxelGamesLibv2/tests/test/)  
+Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL/report.txt)  
+Test results can be found here [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL/tests/test/)  
 
 # License
 
