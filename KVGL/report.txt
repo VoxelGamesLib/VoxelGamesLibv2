@@ -1,0 +1,17 @@
+
+------------------------------------------------------------
+: Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.github.ben-manes:gradle-versions-plugin:0.17.0
+ - org.jetbrains.kotlin:kotlin-annotation-processing-gradle:1.2.21
+ - org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.21
+
+The following dependencies have later milestone versions:
+ - com.github.jengelman.gradle.plugins:shadow [2.0.1 -> 2.0.2]
+
+Failed to determine the latest version for the following dependencies (use --info for details):
+ - org.spigotmc:spigot
+ - com.voxelgameslib:voxelgameslib
