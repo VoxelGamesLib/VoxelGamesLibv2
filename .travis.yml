@@ -26,4 +26,4 @@ deploy:
     branch: master
   skip_cleanup: true
 install: "gradle -version"
-script: "gradle build dependencyUpdates createPom"
+script: "gradle build dependencyUpdates createPom javadoc"
