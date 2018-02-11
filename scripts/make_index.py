@@ -84,9 +84,10 @@ def fun(dir,rootdir):
             if fname not in EXCLUDED  ]
     dirnames = [fname for fname in dirnames if fname not in filenames]
 #    header = os.path.basename(dir)
-    f = open(dir+'/index.html','w')
-    print(Template(INDEX_TEMPLATE).render(dirnames=dirnames,filenames=filenames, header=dir,ROOTDIR=rootdir,time=time.ctime(os.path.getctime(dir))),file=f)
-    f.close()
+    if not os.path.isfile(dir+'/index.html'):
+        f = open(dir+'/index.html','w')
+        print(Template(INDEX_TEMPLATE).render(dirnames=dirnames,filenames=filenames, header=dir,ROOTDIR=rootdir,time=time.ctime(os.path.getctime(dir))),file=f)
+        f.close()
     for subdir in dirnames:
         try:
             fun(dir+subdir+"/",rootdir+'../')
