@@ -167,12 +167,6 @@ task proguard(type: ProGuardTask) {
     outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
 }
 
-task runTestServer(type: JavaExec) {
-    main="-jar"
-    args = ["../testserver/paperclip.jar"]
-    workingDir = "../testserver/"
-}
-
 configurations.all {
     // Check for updates every build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'

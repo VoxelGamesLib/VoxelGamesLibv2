@@ -32,14 +32,14 @@ You will need to grab a Spigot jar to run. You can set up the server as such, in
 
 ### Maven Repository
 
-VoxelGamesLib can be found on the [indices.io repository](https://nexus.indices.io).
+VoxelGamesLib can be found on the https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo
 
 Maven:
 ```
 <repositories>
     <repository>
-        <id>indices</id>
-        <url>https://nexus.indices.io/content/groups/public/</url>
+        <id>VGL</id>
+        <url>https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo/</url>
     </repository>
 </repositories>
 
@@ -56,7 +56,7 @@ Maven:
 Gradle:
 ```
 repositories {
-    maven { url 'https://nexus.indices.io/content/groups/public/' }
+    maven { url "https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo" }
 }
 
 dependencies {
