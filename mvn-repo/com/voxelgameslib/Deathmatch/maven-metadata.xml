@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.voxelgameslib</groupId>
+  <artifactId>Deathmatch</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20180211155339</lastUpdated>
+  </versioning>
+</metadata>
