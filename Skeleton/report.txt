@@ -1,0 +1,14 @@
+
+------------------------------------------------------------
+: Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.github.ben-manes:gradle-versions-plugin:0.17.0
+ - junit:junit:4.12
+
+The following dependencies exceed the version found at the milestone revision level:
+ - org.spigotmc:spigot-api [1.12-R0.1-SNAPSHOT <- 1.5.1-R0.2]
+
+Failed to determine the latest version for the following dependencies (use --info for details):
+ - com.voxelgameslib:voxelgameslib
