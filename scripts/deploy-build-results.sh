@@ -21,6 +21,7 @@ mkdir deploy-stuff/mvn-repo/
 mvn deploy:deploy-file -Dfile=build/libs/voxelgameslib-2.0-SNAPSHOT.jar -DpomFile=pom.xml  -Durl=file://${TRAVIS_BUILD_DIR}/deploy-stuff/mvn-repo
 
 # create index
+pip install mako
 python scripts/make_index.py --header "VGL Deployments"
 
 # deploy
