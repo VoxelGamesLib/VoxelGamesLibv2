@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.voxelgameslib</groupId>
+  <artifactId>voxelgameslib</artifactId>
+  <version>2.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20180211.154513</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20180211154513</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>2.0-20180211.154513-1</value>
+        <updated>20180211154513</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>2.0-20180211.154513-1</value>
+        <updated>20180211154513</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
