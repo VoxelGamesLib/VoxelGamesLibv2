@@ -1,9 +1,12 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.map.Map;
 
@@ -34,7 +37,7 @@ public class MapInfoFeature extends AbstractFeature {
 
     @Override
     @Nonnull
-    public Class[] getDependencies() {
-        return new Class[]{MapFeature.class, ScoreboardFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Arrays.asList(MapFeature.class, ScoreboardFeature.class);
     }
 }

@@ -1,9 +1,12 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 
 import org.bukkit.entity.EntityType;
@@ -17,8 +20,8 @@ public class VoidTeleportFeature extends AbstractFeature {
 
     @Override
     @Nonnull
-    public Class[] getDependencies() {
-        return new Class[]{SpawnFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Collections.singletonList(SpawnFeature.class);
     }
 
     @GameEvent

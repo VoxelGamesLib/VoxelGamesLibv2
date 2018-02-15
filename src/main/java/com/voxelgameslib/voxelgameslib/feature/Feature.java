@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib.feature;
 
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.game.GameMode;
@@ -42,8 +44,8 @@ public interface Feature extends Tickable {
      * dependencies are required to be active
      */
     @Nonnull
-    default Class[] getDependencies() {
-        return new Class[0];
+    default List<Class<? extends Feature>> getDependencies() {
+        return Collections.emptyList();
     }
 
     /**
@@ -51,8 +53,8 @@ public interface Feature extends Tickable {
      * the dependencies are not required to be active
      */
     @Nonnull
-    default Class[] getSoftDependencies() {
-        return new Class[0];
+    default List<Class<? extends Feature>> getSoftDependencies() {
+        return Collections.emptyList();
     }
 
     /**

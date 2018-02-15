@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -88,8 +89,8 @@ public class SpawnFeature extends AbstractFeature {
     @Override
     @SuppressWarnings("unchecked")
     @Nonnull
-    public Class<? extends Feature>[] getDependencies() {
-        return new Class[]{MapFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Collections.singletonList(MapFeature.class);
     }
 
     /**

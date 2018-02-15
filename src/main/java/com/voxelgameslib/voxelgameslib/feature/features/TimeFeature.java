@@ -2,9 +2,12 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 
 import org.bukkit.World;
 
@@ -24,7 +27,7 @@ public class TimeFeature extends AbstractFeature {
 
     @Nonnull
     @Override
-    public Class[] getDependencies() {
-        return new Class[]{MapFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Collections.singletonList(MapFeature.class);
     }
 }
