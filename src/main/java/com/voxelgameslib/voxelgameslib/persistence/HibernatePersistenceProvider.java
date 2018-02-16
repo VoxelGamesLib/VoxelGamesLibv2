@@ -15,6 +15,7 @@ import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -27,17 +28,15 @@ import com.voxelgameslib.voxelgameslib.timings.Timings;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
 
-import lombok.extern.java.Log;
-
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 /**
  * A implementation of the persistence provider based on hibernate
  */
-@Log
 @Singleton
 public class HibernatePersistenceProvider implements PersistenceProvider {
 
+    private static final Logger log = Logger.getLogger(HibernatePersistenceProvider.class.getName());
     @Inject
     private GlobalConfig config;
     @Inject

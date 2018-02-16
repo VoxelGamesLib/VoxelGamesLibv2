@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,15 +21,13 @@ import com.voxelgameslib.voxelgameslib.exception.ConfigException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
 
-import lombok.extern.java.Log;
-
 /**
  * the config handler handles all configs (uhh)
  */
-@Log
 @Singleton
 public class ConfigHandler implements Handler, Provider<GlobalConfig> {
 
+    private static final Logger log = Logger.getLogger(ConfigHandler.class.getName());
     @Inject
     @Named("ConfigFolder")
     private File configFolder;

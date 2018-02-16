@@ -4,10 +4,7 @@ import javax.persistence.Table;
 
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 
-import lombok.AllArgsConstructor;
-
 //@Entity
-@AllArgsConstructor
 @Table(name = "point_definition")
 public class GamePoint implements Point {
 
@@ -15,6 +12,13 @@ public class GamePoint implements Point {
     private boolean persist;
 
     private GameMode gameMode;
+
+    @java.beans.ConstructorProperties({"name", "persist", "gameMode"})
+    public GamePoint(String name, boolean persist, GameMode gameMode) {
+        this.name = name;
+        this.persist = persist;
+        this.gameMode = gameMode;
+    }
 
     @Override
     public String getName() {

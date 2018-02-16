@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -21,15 +22,13 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.extern.java.Log;
-
 /**
  * Scans the map for markers.
  */
-@Log
 @Singleton
 public class MapScanner {
 
+    private static final Logger log = Logger.getLogger(MapScanner.class.getName());
     @Inject
     private MapHandler mapHandler;
 

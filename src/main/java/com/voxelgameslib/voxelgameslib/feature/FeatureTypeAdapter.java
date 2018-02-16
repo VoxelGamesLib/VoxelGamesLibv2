@@ -11,21 +11,20 @@ import com.google.inject.Injector;
 
 import java.lang.reflect.Type;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import lombok.extern.java.Log;
-
 /**
  * TypeAdapter for the Feature class, redirects gson to the right Feature implementation
  */
-@Log
 @Singleton
 public class FeatureTypeAdapter implements JsonDeserializer<Feature>, JsonSerializer<Feature> {
 
     public static final String DEFAULT_PATH = "com.voxelgameslib.voxelgameslib.feature.features";
+    private static final Logger log = Logger.getLogger(FeatureTypeAdapter.class.getName());
 
     @Inject
     private Injector injector;

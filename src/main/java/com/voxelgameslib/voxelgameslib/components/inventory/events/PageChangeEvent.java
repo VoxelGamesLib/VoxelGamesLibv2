@@ -10,15 +10,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.Getter;
-
 public class PageChangeEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private PagedInventory inventory;
     private ItemStack[] contents;
-    @Getter
     private int oldPage, newPage;
 
     public PageChangeEvent(@Nonnull PagedInventory inventory, int oldPage, int newPage, @Nonnull ItemStack[] contents) {
@@ -66,5 +63,13 @@ public class PageChangeEvent extends Event implements Cancellable {
     @Nonnull
     public HandlerList getHandlers() {
         return handlers;
+    }
+
+    public int getOldPage() {
+        return this.oldPage;
+    }
+
+    public int getNewPage() {
+        return this.newPage;
     }
 }

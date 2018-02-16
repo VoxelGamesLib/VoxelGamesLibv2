@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -28,12 +29,10 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class KitHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(KitHandler.class.getName());
     @Inject
     @Named("KitsFolder")
     private File kitsDir;

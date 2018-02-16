@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.persistence;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -13,11 +14,9 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.utils.db.DbRow;
 
-import lombok.extern.java.Log;
-
-@Log
 public class MysqlPersistenceProvider implements PersistenceProvider {
 
+    private static final Logger log = Logger.getLogger(MysqlPersistenceProvider.class.getName());
     @Inject
     private VoxelGamesLib voxelGamesLib;
     @Inject

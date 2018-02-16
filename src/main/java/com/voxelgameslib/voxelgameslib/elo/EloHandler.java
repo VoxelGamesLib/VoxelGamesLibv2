@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 
@@ -12,8 +13,6 @@ import com.voxelgameslib.voxelgameslib.feature.features.TeamFeature;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import lombok.extern.java.Log;
 
 import jskills.IPlayer;
 import jskills.ITeam;
@@ -24,9 +23,9 @@ import jskills.trueskill.FactorGraphTrueSkillCalculator;
 /**
  * Handles the calculation of "skill" for players
  */
-@Log
 public class EloHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(EloHandler.class.getName());
     private SkillCalculator calculator = new FactorGraphTrueSkillCalculator();
 
     @Override

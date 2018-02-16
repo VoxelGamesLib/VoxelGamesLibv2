@@ -7,8 +7,6 @@ import net.kyori.text.format.TextColor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import lombok.Getter;
-
 /**
  * A role is part of the simplified permission system. all permissions are assigned to roles by default so there is no
  * permission setup needed.
@@ -25,10 +23,8 @@ public enum Role {
     @Nullable
     private final Role parent;
     @Nullable
-    @Getter
     private final Component prefix;
     @Nullable
-    @Getter
     private final Component suffix;
 
     Role(@Nonnull String name, @Nullable Role parent, @Nullable Component prefix, @Nullable Component suffix) {
@@ -88,5 +84,15 @@ public enum Role {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    @Nullable
+    public Component getPrefix() {
+        return this.prefix;
+    }
+
+    @Nullable
+    public Component getSuffix() {
+        return this.suffix;
     }
 }

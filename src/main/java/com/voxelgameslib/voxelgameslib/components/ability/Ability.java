@@ -15,14 +15,11 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import lombok.Getter;
-
 public abstract class Ability implements Listener, Tickable {
 
     @Inject
     private Injector injector;
 
-    @Getter
     protected UUID identifier;
     protected User affected;
 
@@ -51,5 +48,9 @@ public abstract class Ability implements Listener, Tickable {
                 game.getActivePhase().removeTickable(identifier);
             }
         }
+    }
+
+    public UUID getIdentifier() {
+        return this.identifier;
     }
 }

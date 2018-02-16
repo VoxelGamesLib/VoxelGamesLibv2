@@ -24,8 +24,6 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
 
-import lombok.Getter;
-
 @FeatureInfo(name = "PersonalScoreboard", author = "aphel", version = "1.0",
         description = "Each player has their own individual scoreboard")
 public class PersonalScoreboardFeature extends AbstractFeature {
@@ -33,9 +31,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     @Inject
     private ScoreboardHandler scoreboardHandler;
 
-    @Getter
     private GlobalScoreboard globalScoreboard;
-    @Getter
     private Map<User, Scoreboard> scoreboards = new HashMap<>();
 
     @Override
@@ -76,6 +72,14 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     @Nonnull
     public Scoreboard getScoreboardForUser(@Nonnull User user) {
         return scoreboards.get(user);
+    }
+
+    public GlobalScoreboard getGlobalScoreboard() {
+        return this.globalScoreboard;
+    }
+
+    public Map<User, Scoreboard> getScoreboards() {
+        return this.scoreboards;
     }
 
     /**

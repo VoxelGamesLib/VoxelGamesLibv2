@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -20,12 +21,10 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 
 import org.bukkit.entity.Player;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class UserHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(UserHandler.class.getName());
     @Inject
     private GameHandler gameHandler;
     @Inject

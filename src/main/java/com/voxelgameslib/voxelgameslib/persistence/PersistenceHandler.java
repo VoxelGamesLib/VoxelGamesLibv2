@@ -2,21 +2,20 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.inject.Injector;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
-import lombok.extern.java.Log;
-
 /**
  * Handles saving and loading of data into numerous formats
  */
-@Log
 @Singleton
 public class PersistenceHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(PersistenceHandler.class.getName());
     @Inject
     private Injector injector;
 

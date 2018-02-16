@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,14 +34,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.plugin.EventExecutor;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class EventHandler implements Handler, Listener {
 
     private static final EventFilter filterPlayers = (event, registeredListener, user) ->
             user.filter(user1 -> registeredListener.getGame().isPlaying(user1.getUuid())).isPresent();
+    private static final Logger log = Logger.getLogger(EventHandler.class.getName());
 
     private final EventExecutor eventExecutor = (listener, event) -> callEvent(event);
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
@@ -23,14 +24,12 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.ChatColor;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 
-@Log
 public class TeamSelectFeature extends AbstractFeature implements FeatureCommandImplementor {
 
+    private static final Logger log = Logger.getLogger(TeamSelectFeature.class.getName());
     protected List<Team> teams = new ArrayList<>();
     @Expose
     private int teamSize = 4;

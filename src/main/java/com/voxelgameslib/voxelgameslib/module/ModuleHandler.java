@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -15,15 +16,13 @@ import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 
-import lombok.extern.java.Log;
-
 /**
  * The module handler takes care of all modules.
  */
-@Log
 @Singleton
 public class ModuleHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(ModuleHandler.class.getName());
     private static Map<Class<Module>, Module> offeredModules = new HashMap<>();
     private static boolean isAcceptingOffers = true;
 

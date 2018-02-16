@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -44,16 +45,14 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
 
-import lombok.extern.java.Log;
-
 /**
  * Abstract implementation of a {@link Game}. Handles broadcasting, ticking and user management.
  */
-@Log
 @Entity(name = "Game")
 @Table(name = "games")
 public abstract class AbstractGame implements Game {
 
+    private static final Logger log = Logger.getLogger(AbstractGame.class.getName());
     @Inject
     @Transient
     private Injector injector;

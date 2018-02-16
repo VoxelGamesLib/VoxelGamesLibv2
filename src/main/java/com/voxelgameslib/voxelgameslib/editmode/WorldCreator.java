@@ -8,6 +8,7 @@ import net.kyori.text.format.TextColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -27,8 +28,6 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
@@ -39,11 +38,11 @@ import co.aikar.commands.annotation.Subcommand;
 /**
  * Handles creation of new worlds/maps
  */
-@Log
 @Singleton
 @CommandAlias("worldcreator|wc")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class WorldCreator extends BaseCommand {
+    private static final Logger log = Logger.getLogger(WorldCreator.class.getName());
 
     //TODO world creator completer
 

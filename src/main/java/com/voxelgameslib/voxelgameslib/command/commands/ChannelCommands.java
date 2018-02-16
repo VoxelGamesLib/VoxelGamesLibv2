@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,8 +10,6 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.command.CommandSender;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
@@ -18,11 +17,11 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 
-@Log
 @Singleton
 @CommandAlias("channel")
 public class ChannelCommands extends BaseCommand {
 
+    private static final Logger log = Logger.getLogger(ChannelCommands.class.getName());
     @Inject
     private ChatHandler chatHandler;
 

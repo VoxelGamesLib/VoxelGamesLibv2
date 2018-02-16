@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
@@ -15,11 +16,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
-import lombok.extern.java.Log;
-
-@Log
 @FeatureInfo(name = "JumpPad", author = "MiniDigger", version = "1.0", description = "Lets players use pressure plates to get launched up in the sky")
 public class JumpPadFeature extends AbstractFeature {
+
+    private static final Logger log = Logger.getLogger(JumpPadFeature.class.getName());
 
     @GameEvent
     public void onStep(@Nonnull PlayerInteractEvent event) {

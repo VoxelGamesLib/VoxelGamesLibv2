@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -14,14 +15,12 @@ import javax.inject.Inject;
 import com.voxelgameslib.voxelgameslib.exception.LangException;
 import com.voxelgameslib.voxelgameslib.utils.OrderedProperties;
 
-import lombok.extern.java.Log;
-
 /**
  * A lang storage holds all lang keys (and their translations) that are translated into one locale
  */
-@Log
 public class LangStorage {
 
+    private static final Logger log = Logger.getLogger(LangStorage.class.getName());
     @Inject
     @Named("LangFolder")
     protected File langFolder;

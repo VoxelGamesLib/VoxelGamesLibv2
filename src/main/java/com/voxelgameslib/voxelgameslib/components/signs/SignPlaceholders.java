@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,12 +40,10 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class SignPlaceholders implements Listener {
 
+    private static final Logger log = Logger.getLogger(SignPlaceholders.class.getName());
     @Inject
     private VoxelGamesLib voxelGamesLib;
     @Inject

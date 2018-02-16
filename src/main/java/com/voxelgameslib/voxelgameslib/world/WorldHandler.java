@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -45,20 +46,16 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
-import lombok.Getter;
-import lombok.extern.java.Log;
-
 /**
  * Handles the worlds (loading, unloading etc)
  */
-@Log
 @Singleton
 public class WorldHandler implements Handler, Provider<WorldConfig> {
 
+    private static final Logger log = Logger.getLogger(WorldHandler.class.getName());
     @Inject
     @Named("WorldsFolder")
     private File worldsFolder;
-    @Getter
     @Inject
     @Named("WorldContainer")
     private File worldContainer;
@@ -68,7 +65,6 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     private Gson gson;
     @Inject
     private MapScanner mapScanner;
-    @Getter
     @Inject
     private WorldRepository worldRepository;
     @Inject
@@ -349,5 +345,13 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         getWorldRepository().commitRepo();
 
         Lang.msg(editor, LangKey.WORLD_CREATOR_DONE);
+    }
+
+    public File getWorldContainer() {
+        return this.worldContainer;
+    }
+
+    public WorldRepository getWorldRepository() {
+        return this.worldRepository;
     }
 }

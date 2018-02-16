@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib;
 
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.timings.lib.TimingManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
@@ -10,6 +8,11 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
+
+import java.io.File;
+import java.util.Map;
+import javax.annotation.Nonnull;
+
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
@@ -24,15 +27,13 @@ import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
-import lombok.AllArgsConstructor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nonnull;
-import java.io.File;
-import java.util.Map;
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.timings.lib.TimingManager;
 
-@AllArgsConstructor
 public final class VoxelGamesLibModule extends AbstractModule {
 
     private VoxelGamesLib voxelGamesLib;
@@ -42,6 +43,17 @@ public final class VoxelGamesLibModule extends AbstractModule {
     private String pluginVersion;
     private File dataFolder;
     private Map<Class<Module>, Module> offeredModules;
+
+    @java.beans.ConstructorProperties({"voxelGamesLib", "loggingHandler", "timingManager", "commandManager", "pluginVersion", "dataFolder", "offeredModules"})
+    public VoxelGamesLibModule(VoxelGamesLib voxelGamesLib, LoggingHandler loggingHandler, TimingManager timingManager, BukkitCommandManager commandManager, String pluginVersion, File dataFolder, Map<Class<Module>, Module> offeredModules) {
+        this.voxelGamesLib = voxelGamesLib;
+        this.loggingHandler = loggingHandler;
+        this.timingManager = timingManager;
+        this.commandManager = commandManager;
+        this.pluginVersion = pluginVersion;
+        this.dataFolder = dataFolder;
+        this.offeredModules = offeredModules;
+    }
 
     @Nonnull
     public Injector createInjector() {

@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.components.inventory;
 
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
@@ -13,11 +11,12 @@ import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.components.inventory.events.PageChangeEvent;
 import com.voxelgameslib.voxelgameslib.exception.ComponentException;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

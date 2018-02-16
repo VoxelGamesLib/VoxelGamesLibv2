@@ -3,9 +3,6 @@ package com.voxelgameslib.voxelgameslib.map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import lombok.Getter;
-
-@Getter
 public class BasicMarkerDefinition implements MarkerDefinition {
 
     private String prefix;
@@ -34,5 +31,13 @@ public class BasicMarkerDefinition implements MarkerDefinition {
     @Override
     public boolean isOfSameType(@Nullable MarkerDefinition markerDefinition) {
         return markerDefinition != null && markerDefinition.getPrefix().equals(getPrefix());
+    }
+
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    public String getData() {
+        return this.data;
     }
 }

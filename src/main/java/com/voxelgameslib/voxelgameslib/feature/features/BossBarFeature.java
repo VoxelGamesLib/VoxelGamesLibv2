@@ -14,24 +14,15 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Provides a boss bar instance for other features
  */
 public class BossBarFeature extends AbstractFeature {
 
-    @Setter
-    @Getter
     @Expose
     private String message = "";
-    @Setter
-    @Getter
     @Expose
     private BarColor color = BarColor.BLUE;
-    @Setter
-    @Getter
     @Expose
     private BarStyle style = BarStyle.SEGMENTED_20;
 
@@ -65,5 +56,29 @@ public class BossBarFeature extends AbstractFeature {
     @GameEvent
     public void onGameLeave(@Nonnull GameLeaveEvent event) {
         bossBar.removePlayer(event.getUser().getPlayer());
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public BarColor getColor() {
+        return this.color;
+    }
+
+    public BarStyle getStyle() {
+        return this.style;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setColor(BarColor color) {
+        this.color = color;
+    }
+
+    public void setStyle(BarStyle style) {
+        this.style = style;
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
@@ -17,14 +18,12 @@ import com.voxelgameslib.voxelgameslib.lang.LangKey;
 
 import org.bukkit.boss.BossBar;
 
-import lombok.extern.java.Log;
-
 /**
  * Small feature that handles stuff related to the lobby phase
  */
-@Log
 public class LobbyFeature extends AbstractFeature {
 
+    private static final Logger log = Logger.getLogger(LobbyFeature.class.getName());
     private Scoreboard scoreboard;
     private boolean starting = false;
     @Expose

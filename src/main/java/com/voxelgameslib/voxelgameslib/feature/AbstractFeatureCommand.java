@@ -5,16 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.BukkitRootCommand;
 
 public abstract class AbstractFeatureCommand<T extends Feature> extends BaseCommand {
 
-    @Getter
-    @Setter
     private T feature;
 
     private static Field registeredCommand;
@@ -37,5 +32,13 @@ public abstract class AbstractFeatureCommand<T extends Feature> extends BaseComm
             e.printStackTrace();
             return new HashMap<>();
         }
+    }
+
+    public T getFeature() {
+        return this.feature;
+    }
+
+    public void setFeature(T feature) {
+        this.feature = feature;
     }
 }

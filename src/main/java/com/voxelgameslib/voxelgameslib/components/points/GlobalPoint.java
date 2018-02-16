@@ -2,15 +2,18 @@ package com.voxelgameslib.voxelgameslib.components.points;
 
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-
 //@Entity
-@AllArgsConstructor
 @Table(name = "point_definition")
 public class GlobalPoint implements Point {
 
     private String name;
     private boolean persist;
+
+    @java.beans.ConstructorProperties({"name", "persist"})
+    public GlobalPoint(String name, boolean persist) {
+        this.name = name;
+        this.persist = persist;
+    }
 
     @Override
     public String getName() {

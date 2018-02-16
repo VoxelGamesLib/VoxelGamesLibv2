@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -19,18 +20,14 @@ import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BukkitCommandManager;
 
 /**
  * This feature allows the use of kits and abilities
  */
-@Log
 public class KitFeature extends AbstractFeature {
 
+    private static final Logger log = Logger.getLogger(KitFeature.class.getName());
     @Inject
     private VoxelGamesLib voxelGamesLib;
     @Inject
@@ -44,8 +41,6 @@ public class KitFeature extends AbstractFeature {
     private List<String> allowedKits = new ArrayList<>();
 
     private List<Kit> kits = new ArrayList<>();
-    @Getter
-    @Setter
     private boolean registerCommands;
 
     /**
@@ -114,5 +109,13 @@ public class KitFeature extends AbstractFeature {
      */
     public void setKits(@Nonnull List<Kit> kits) {
         this.kits = kits;
+    }
+
+    public boolean isRegisterCommands() {
+        return this.registerCommands;
+    }
+
+    public void setRegisterCommands(boolean registerCommands) {
+        this.registerCommands = registerCommands;
     }
 }

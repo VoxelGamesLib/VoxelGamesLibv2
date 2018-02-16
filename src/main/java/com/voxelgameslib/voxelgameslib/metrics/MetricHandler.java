@@ -4,6 +4,7 @@ import org.bstats.bukkit.Metrics;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -11,12 +12,10 @@ import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class MetricHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(MetricHandler.class.getName());
     private Metrics metrics;
 
     @Inject

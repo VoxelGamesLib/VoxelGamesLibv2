@@ -7,6 +7,7 @@ import net.lingala.zip4j.exception.ZipException;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -24,8 +25,6 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.FileUtils;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
@@ -34,12 +33,12 @@ import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 
-@Log
 @Singleton
 @CommandAlias("worldcreator|wc")
 @Subcommand("modify|m")
 public class WorldModifyCommands extends BaseCommand {
 
+    private static final Logger log = Logger.getLogger(WorldModifyCommands.class.getName());
     @Inject
     private WorldHandler worldHandler;
     @Inject

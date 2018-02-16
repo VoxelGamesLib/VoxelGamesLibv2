@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.components.signs;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -17,12 +18,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import lombok.extern.java.Log;
-
-@Log
 @SuppressWarnings({"JavaDoc", "Duplicates"})
 public class SignListener implements Listener {
 
+    private static final Logger log = Logger.getLogger(SignListener.class.getName());
     private Permission placeHolderSignPlace = Permission
             .register("sign.placeholder.place", Role.MODERATOR);
     private Permission placeHolderSignBreak = Permission

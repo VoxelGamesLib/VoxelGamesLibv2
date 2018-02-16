@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,15 +16,13 @@ import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 
-import lombok.extern.java.Log;
-
 /**
  * Handles the languages. holds all lang storages and registered languages.
  */
-@Log
 @Singleton
 public class LangHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(LangHandler.class.getName());
     private Locale defaultLocale;
 
     private Map<Locale, LangStorage> storages = new HashMap<>();

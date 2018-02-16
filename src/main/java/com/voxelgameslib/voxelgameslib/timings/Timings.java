@@ -4,15 +4,15 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-
-import lombok.extern.java.Log;
 
 /**
  * Small class that helps with timing stuff
  */
-@Log
 public class Timings {
+
+    private static final Logger log = Logger.getLogger(Timings.class.getName());
 
     /**
      * Times a task, will print the result with log level finer

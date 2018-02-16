@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
@@ -29,12 +30,9 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.ACFUtil;
 import co.aikar.commands.CommandIssuer;
 
-@Log
 public class ErrorHandler implements Handler {
 
     public static final String BUKKIT_INFO_TAB = "Bukkit Info";
@@ -42,6 +40,7 @@ public class ErrorHandler implements Handler {
     public static final String EVENT_INFO_TAB = "Event Info";
     public static final String TASK_INFO_TAB = "Task Info";
     public static final String COMMAND_INFO_TAB = "Command Info";
+    private static final Logger log = Logger.getLogger(ErrorHandler.class.getName());
 
     private VoxelGamesLib voxelGamesLib;
 

@@ -6,6 +6,7 @@ import com.bugsnag.Severity;
 
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -69,8 +70,6 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BukkitCommandCompletionContext;
 import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.BukkitCommandManager;
@@ -83,9 +82,9 @@ import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 
-@Log
 public final class VoxelGamesLib extends JavaPlugin {
 
+    private static final Logger log = Logger.getLogger(VoxelGamesLib.class.getName());
     private static TaskChainFactory taskChainFactory;
 
     private TimingManager timingManager;

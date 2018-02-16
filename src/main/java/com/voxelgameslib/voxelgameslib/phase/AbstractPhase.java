@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,16 +33,14 @@ import com.voxelgameslib.voxelgameslib.tick.Tickable;
 
 import org.bukkit.event.Listener;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BukkitCommandManager;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
  */
-@Log
 public abstract class AbstractPhase implements Phase {
 
+    private static final Logger log = Logger.getLogger(AbstractPhase.class.getName());
     @Inject
     private EventHandler eventHandler;
     @Inject

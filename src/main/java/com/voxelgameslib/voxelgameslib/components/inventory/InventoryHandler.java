@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,12 +26,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
-import lombok.extern.java.Log;
-
 @Singleton
-@Log
 public class InventoryHandler implements Handler, Listener {
 
+    private static final Logger log = Logger.getLogger(InventoryHandler.class.getName());
     @Inject
     private VoxelGamesLib voxelGamesLib;
     @Inject

@@ -2,16 +2,16 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.game.DefaultGameData;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class TeamFeature extends TeamSelectFeature {
+
+    private static final Logger log = Logger.getLogger(TeamFeature.class.getName());
 
     @Override
     public void start() {

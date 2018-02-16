@@ -1,9 +1,9 @@
 package com.voxelgameslib.voxelgameslib.test;
 
+import javax.inject.Inject;
+
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-
-import javax.inject.Inject;
 
 public class TestStuff implements Listener {
 

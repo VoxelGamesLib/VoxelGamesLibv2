@@ -1,5 +1,6 @@
 package com.voxelgameslib.voxelgameslib.game;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -16,12 +17,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import lombok.extern.java.Log;
-
-@Log
 @SuppressWarnings("JavaDoc")
 public class GameListener implements Listener {
 
+    private static final Logger log = Logger.getLogger(GameListener.class.getName());
     @Inject
     private GameHandler gameHandler;
     @Inject

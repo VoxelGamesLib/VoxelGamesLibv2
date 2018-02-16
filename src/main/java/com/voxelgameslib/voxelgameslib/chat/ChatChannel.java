@@ -11,14 +11,9 @@ import javax.annotation.Nullable;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * A chat channel represents a collection of listeners who are able to receive messages send into this channel
  */
-@Getter
-@Setter
 public class ChatChannel {
 
     private String identifier;
@@ -83,5 +78,30 @@ public class ChatChannel {
      */
     public void sendMessage(@Nonnull User byUser, @Nonnull Component message) {
         listeners.forEach(listener -> listener.sendMessage(ChatUtil.formatChannelMessage(this, byUser.getDisplayName(), message)));
+    }
+
+    public String getIdentifier() {
+        return this.identifier;
+    }
+
+    public List<User> getListeners() {
+        return this.listeners;
+    }
+
+    @Nullable
+    public Component getPrefix() {
+        return this.prefix;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setListeners(List<User> listeners) {
+        this.listeners = listeners;
+    }
+
+    public void setPrefix(@Nullable Component prefix) {
+        this.prefix = prefix;
     }
 }

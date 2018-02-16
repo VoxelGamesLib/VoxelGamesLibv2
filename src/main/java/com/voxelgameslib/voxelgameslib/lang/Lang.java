@@ -5,6 +5,7 @@ import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 import net.kyori.text.serializer.ComponentSerializers;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -17,14 +18,12 @@ import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
 
 import org.bukkit.ChatColor;
 
-import lombok.extern.java.Log;
-
 /**
  * Gives quick access to the lang storage and translation and stuff
  */
-@Log
 public class Lang {
 
+    private static final Logger log = Logger.getLogger(Lang.class.getName());
     @Inject
     private static LangHandler handler;
     @Inject

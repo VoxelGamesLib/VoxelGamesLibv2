@@ -2,18 +2,17 @@ package com.voxelgameslib.voxelgameslib.game;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import lombok.extern.java.Log;
 
 /**
  * A {@link GameMode} is a identifier for the type of a {@link Game}.
  */
-@Log
 public class GameMode extends jskills.GameInfo {
 
     private static final jskills.GameInfo defaultGameInfo = jskills.GameInfo.getDefaultGameInfo();
+    private static final Logger log = Logger.getLogger(GameMode.class.getName());
 
     @Expose
     private String name;

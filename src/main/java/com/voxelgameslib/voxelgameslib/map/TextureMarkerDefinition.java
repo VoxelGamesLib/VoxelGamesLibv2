@@ -2,9 +2,6 @@ package com.voxelgameslib.voxelgameslib.map;
 
 import javax.annotation.Nonnull;
 
-import lombok.Getter;
-
-@Getter
 public class TextureMarkerDefinition extends BasicMarkerDefinition {
 
     private String texture;
@@ -12,5 +9,9 @@ public class TextureMarkerDefinition extends BasicMarkerDefinition {
     public TextureMarkerDefinition(@Nonnull String prefix, @Nonnull String texture) {
         super(prefix);
         this.texture = texture;
+    }
+
+    public String getTexture() {
+        return this.texture;
     }
 }

@@ -5,13 +5,12 @@ import com.bugsnag.Severity;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.WeakHashMap;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
-import lombok.extern.java.Log;
-
-@Log
 public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
+    private static final Logger log = Logger.getLogger(LoggedUncaughtExceptionHandler.class.getName());
     private final UncaughtExceptionHandler originalHandler;
     private final WeakHashMap<Bugsnag, Boolean> clientMap = new WeakHashMap<Bugsnag, Boolean>();
 

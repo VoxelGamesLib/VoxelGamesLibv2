@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.user;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,13 +19,11 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 @SuppressWarnings("JavaDoc")// no need for javadoc on event listeners
 public class UserListener implements Listener {
 
+    private static final Logger log = Logger.getLogger(UserListener.class.getName());
     @Inject
     private UserHandler handler;
     @Inject

@@ -1,12 +1,8 @@
 package com.voxelgameslib.voxelgameslib.utils.db;
 
-import co.aikar.timings.lib.TimingManager;
-import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.java.Log;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+
 import org.intellij.lang.annotations.Language;
 
 import java.sql.Connection;
@@ -14,11 +10,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.logging.Logger;
+
+import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
+import co.aikar.timings.lib.TimingManager;
 
 @SuppressWarnings("MissingJSR305")
-@Log
 public final class DB {
 
+    private static final Logger log = Logger.getLogger(DB.class.getName());
     private static HikariDataSource pooledDataSource;
     static TimingManager timingManager;
     static Plugin plugin;

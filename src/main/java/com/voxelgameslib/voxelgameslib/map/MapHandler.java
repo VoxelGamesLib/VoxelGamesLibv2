@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,18 +18,15 @@ import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 
-import lombok.Getter;
-import lombok.extern.java.Log;
-
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 /**
  * Created by Martin on 04.10.2016.
  */
-@Log
 @Singleton
 public class MapHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(MapHandler.class.getName());
     @Inject
     private GameHandler gameHandler;
 
@@ -36,7 +34,6 @@ public class MapHandler implements Handler {
     @Nonnull
     private HashMap<String, ChestMarker> chests = new HashMap<>();
 
-    @Getter
     private List<MarkerDefinition> markerDefinitions = new ArrayList<>();
 
     @Override
@@ -71,5 +68,9 @@ public class MapHandler implements Handler {
         MarkerDefinition def = markerDefinition.orElseGet(() -> new BasicMarkerDefinition(markerData.replace("vgl:", "")));
         def.parse(markerData);
         return def;
+    }
+
+    public List<MarkerDefinition> getMarkerDefinitions() {
+        return this.markerDefinitions;
     }
 }

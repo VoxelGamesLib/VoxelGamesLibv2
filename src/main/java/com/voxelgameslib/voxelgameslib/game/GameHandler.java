@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -32,16 +33,13 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.Bukkit;
 
-import lombok.Getter;
-import lombok.extern.java.Log;
-
 /**
  * Handles all {@link Game} instances and all {@link GameMode}s.
  */
-@Log
 @Singleton
 public class GameHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(GameHandler.class.getName());
     @Inject
     private TickHandler tickHandler;
     @Inject
@@ -56,7 +54,6 @@ public class GameHandler implements Handler {
     @Inject
     private ConfigHandler configHandler;
 
-    @Getter
     private Game defaultGame;
 
     private final List<Game> games = new ArrayList<>();
@@ -297,5 +294,9 @@ public class GameHandler implements Handler {
         }
 
         return Optional.of(matched.get(0));
+    }
+
+    public Game getDefaultGame() {
+        return this.defaultGame;
     }
 }

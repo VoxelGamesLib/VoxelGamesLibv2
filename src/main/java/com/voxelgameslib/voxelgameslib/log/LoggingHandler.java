@@ -18,8 +18,6 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.user.User;
 
-import lombok.extern.java.Log;
-
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
@@ -28,11 +26,11 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 
-@Log
 @Subcommand("log")
 @Singleton
 public class LoggingHandler extends BaseCommand implements Handler {
 
+    private static final Logger log = Logger.getLogger(LoggingHandler.class.getName());
     private LogHandler handler;
     private Logger logger;
     private Level level = Level.INFO;

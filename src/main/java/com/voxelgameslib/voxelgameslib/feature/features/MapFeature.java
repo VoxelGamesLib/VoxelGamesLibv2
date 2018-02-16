@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -16,13 +17,11 @@ import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import lombok.extern.java.Log;
-
-@Log
 @FeatureInfo(name = "MapFeature", author = "MiniDigger", version = "1.0",
         description = "Handles loading and unloading of the map for this phase")
 public class MapFeature extends AbstractFeature {
 
+    private static final Logger log = Logger.getLogger(MapFeature.class.getName());
     @Inject
     private WorldHandler worldHandler;
 

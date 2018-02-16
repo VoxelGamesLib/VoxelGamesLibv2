@@ -9,17 +9,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.extern.java.Log;
-
-@Log
 public class WorldRepository {
 
     private static final String defaultRepoURL = "https://github.com/VoxelGamesLib/maps.git";
+    private static final Logger log = Logger.getLogger(WorldRepository.class.getName());
 
     //TODO finish world repo stuff
 

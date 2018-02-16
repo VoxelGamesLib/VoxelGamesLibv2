@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -35,10 +36,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.java.Log;
-
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Optional;
@@ -46,12 +43,10 @@ import co.aikar.commands.annotation.Syntax;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
         description = "Allow players to vote on maps")
-@Log
 public class VoteFeature extends AbstractFeature implements FeatureCommandImplementor {
 
+    private static final Logger log = Logger.getLogger(VoteFeature.class.getName());
     //TODO add scoreboard
-    @Getter
-    @Setter
     @Expose
     private int maxMaps = 3;
 
@@ -67,12 +62,8 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     private Map<UUID, Integer> votes = new HashMap<>();
     private Map<Integer, MapInfo> availableMaps = new HashMap<>();
 
-    @Getter
-    @Setter
     @Expose
     private boolean enableVoteMenu = true;
-    @Getter
-    @Setter
     //@Expose TODO figure out how we want to expose items
     private ItemStack openMenuItem = new ItemBuilder(Material.PAPER).amount(1).name(ChatColor.GOLD + "Vote for a map").build();
 
@@ -208,6 +199,30 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             votes.put(voter.getUuid(), mapId);
             Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapInfo.getName(), mapId);
         }
+    }
+
+    public int getMaxMaps() {
+        return this.maxMaps;
+    }
+
+    public boolean isEnableVoteMenu() {
+        return this.enableVoteMenu;
+    }
+
+    public ItemStack getOpenMenuItem() {
+        return this.openMenuItem;
+    }
+
+    public void setMaxMaps(int maxMaps) {
+        this.maxMaps = maxMaps;
+    }
+
+    public void setEnableVoteMenu(boolean enableVoteMenu) {
+        this.enableVoteMenu = enableVoteMenu;
+    }
+
+    public void setOpenMenuItem(ItemStack openMenuItem) {
+        this.openMenuItem = openMenuItem;
     }
 
     @Singleton

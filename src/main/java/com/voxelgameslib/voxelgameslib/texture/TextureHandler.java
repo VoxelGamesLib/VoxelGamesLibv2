@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -29,12 +30,10 @@ import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.extern.java.Log;
-
-@Log
 @Singleton
 public class TextureHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(TextureHandler.class.getName());
     private List<Skin> loadedSkins = new ArrayList<>();
 
     @Inject

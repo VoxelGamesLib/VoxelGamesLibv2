@@ -1,12 +1,11 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
-
-import lombok.extern.java.Log;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
@@ -20,10 +19,11 @@ import co.aikar.commands.annotation.Syntax;
  * Handles commands relating to kits. <p> This is only registered if the {@link KitFeature} requests for it to be
  * enabled.
  */
-@Log
 @Singleton
 @CommandAlias("kit|k")
 public class KitCommands extends BaseCommand {
+
+    private static final Logger log = Logger.getLogger(KitCommands.class.getName());
 
     @HelpCommand
     @CommandPermission("%user")
