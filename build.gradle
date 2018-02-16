@@ -83,7 +83,7 @@ allprojects {
         compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.3'
         compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
         compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-        compile group: 'com.dumptruckman.minecraft', name: 'JsonConfiguration', version: '1.1-SNAPSHOT'
+        compile group: 'com.dumptruckman.minecraft', name: 'JsonConfiguration', version: '1.1'
         compile group: 'org.mineskin', name: 'java-client', version: '1.0.1-SNAPSHOT'
         compile group: 'org.inventivetalent', name: 'reflectionhelper', version: '1.13.0-SNAPSHOT'
         compile group: 'org.inventivetalent', name: 'mc-wrappers', version: '1.0.3-SNAPSHOT'
