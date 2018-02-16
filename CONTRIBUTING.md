@@ -11,6 +11,7 @@ Feel free to PR any new locale resource files.
 ### Guidelines
 
 * Code style: Use the formatting style located in the root of the project.
+* Intellij inspections: there is a inspection profile in the root of the project, use that.
 * Javadocs: Every public method needs to have javadoc annotations
 * Comments: Please throw in comments in your code where appropriate so other developers can understand it better.
 
