@@ -81,6 +81,7 @@ import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 import co.aikar.timings.lib.TimingManager;
+import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 
 @Log
 public final class VoxelGamesLib extends JavaPlugin {
@@ -174,6 +175,9 @@ public final class VoxelGamesLib extends JavaPlugin {
                 e.printStackTrace();
             });
 
+            // chat menu api
+            ChatMenuAPI.init(this);
+
             // guice
             VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
                     commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
@@ -232,6 +236,9 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
+            // chat menu api
+            ChatMenuAPI.disable();
+
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
             Timings.time("DisableAllHandlers", () -> {
                 configHandler.stop();
