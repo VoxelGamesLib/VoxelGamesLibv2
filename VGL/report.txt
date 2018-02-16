@@ -4,6 +4,7 @@
 ------------------------------------------------------------
 
 The following dependencies are using the latest milestone version:
+ - com.dumptruckman.minecraft:JsonConfiguration:1.1
  - org.bstats:bstats-bukkit:1.2
  - commons-cli:commons-cli:1.4
  - io.github.lukehutch:fast-classpath-scanner:2.18.1
@@ -27,7 +28,6 @@ The following dependencies exceed the version found at the milestone revision le
 
 The following dependencies have later milestone versions:
  - com.zaxxer:HikariCP [2.6.3 -> 2.7.7]
- - com.dumptruckman.minecraft:JsonConfiguration [1.1-SNAPSHOT -> 1.1]
  - com.bugsnag:bugsnag [3.0.2 -> 3.1.4]
  - org.hibernate:hibernate-core [5.2.10.Final -> 5.3.0.CR1]
  - org.mockito:mockito-core [2.8.47 -> 2.15.0]
