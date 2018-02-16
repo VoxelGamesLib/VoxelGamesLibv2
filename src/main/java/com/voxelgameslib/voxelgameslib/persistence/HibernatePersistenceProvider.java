@@ -13,7 +13,6 @@ import org.hibernate.internal.log.ConnectionAccessLogger_$logger;
 import org.hibernate.internal.log.ConnectionPoolingLogger_$logger;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -50,7 +49,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     public void start() {
         // don't judge me, bukkit doesn't want to resolve those so we need to manually load them
         Class[] iDontEvenKnow = new Class[]{CoreMessageLogger_$logger.class, Log_$logger.class,
-                ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class};
+                ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class, GamePlayer.class};
 
         boolean shouldCreateTable = config.persistence.initialTableCreation;
         if (shouldCreateTable) {
@@ -82,18 +81,14 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
         MetadataSources sources = new MetadataSources(registry);
 
-        Timings.time("RegisterDBEntities", () -> new FastClasspathScanner().scan().getNamesOfClassesWithAnnotation(Entity.class).stream().map(n -> {
-            try {
-                return Class.forName(n);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).filter(Objects::nonNull).forEach(sources::addAnnotatedClass));
+        Timings.time("RegisterDBEntities",
+                () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
+                        .matchClassesWithAnnotation(Entity.class, sources::addAnnotatedClass).scan());
 
         try {
             Metadata metadata = sources.buildMetadata();
             sessionFactory = metadata.buildSessionFactory();
+            log.info("Build HibernationSessionFactory with " + sources.getAnnotatedClasses().size() + " entities.");
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             e.printStackTrace();
