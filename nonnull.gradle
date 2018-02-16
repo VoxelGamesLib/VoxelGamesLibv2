@@ -1,0 +1,54 @@
+import groovy.transform.Field
+
+@Field
+def slash = File.separator
+
+task generateNonNullJavaFiles(dependsOn: "assembleDebug", type: Copy) {
+    group = "Copying"
+    description = "Generate package-info.java classes"
+
+    def infoFileContentHeader = getFileContentHeader()
+    def infoFileContentFooter = getFileContentFooter()
+
+    def sourceDir = file("$projectDir${slash}src${slash}main${slash}java")
+
+    sourceDir.eachDirRecurse { dir ->
+
+        if (dir.listFiles().any { it.name.endsWith("java") }) {
+
+            def infoFilePath = "${dir.absolutePath}${slash}package-info.java"
+
+            if (!file(infoFilePath).exists()) {
+                def infoFileContentPackage = getFileContentPackage(dir.getAbsolutePath())
+                new File(infoFilePath).write(infoFileContentHeader + infoFileContentPackage + infoFileContentFooter)
+
+                println "[dir] " + infoFilePath + "  created"
+            }
+        }
+    }
+
+    println "[SUCCESS] NonNull generator: package-info.java files checked"
+}
+
+def getFileContentPackage(path) {
+    def mainSrcPhrase = "src${slash}main${slash}java${slash}"
+    def mainSrcPhraseIndex = path.indexOf(mainSrcPhrase)
+    def output = path.substring(mainSrcPhraseIndex)
+
+    // Win hotfix
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        output = output.replace("\\", "/")
+        mainSrcPhrase = mainSrcPhrase.replace("\\", "/")
+    }
+
+    return "package ${output.replaceAll(mainSrcPhrase, "").replaceAll("/", ".")};\n"
+}
+
+
+static def getFileContentHeader() {
+    return "@ParametersAreNonnullByDefault\n"
+}
+
+static def getFileContentFooter() {
+    return "\nimport javax.annotation.ParametersAreNonnullByDefault;"
+}

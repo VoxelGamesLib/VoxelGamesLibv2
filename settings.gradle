@@ -1,1 +1,13 @@
 rootProject.name = 'voxelgameslib'
+
+// Games
+include '/games/1vs1'
+include '/games/Deathmatch'
+include '/games/Hub'
+
+// tools
+include '/tools/ChatMenuAPI'
+include '/tools/commandline-tools'
+include '/tools/KVGL'
+include '/tools/skeleton'
+include '/tools/skeletonkt'

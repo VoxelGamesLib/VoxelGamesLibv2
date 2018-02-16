@@ -1,0 +1,24 @@
+[submodule "games/1vs1"]
+	path = games/1vs1
+	url = https://github.com/VoxelGamesLib/1vs1.git
+[submodule "games/Deathmatch"]
+	path = games/Deathmatch
+	url = https://github.com/VoxelGamesLib/Deathmatch.git
+[submodule "games/Hub"]
+	path = games/Hub
+	url = https://github.com/VoxelGamesLib/Hub.git
+[submodule "tools/ChatMenuAPI"]
+	path = tools/ChatMenuAPI
+	url = https://github.com/VoxelGamesLib/ChatMenuAPI.git
+[submodule "tools/commandline-tools"]
+	path = tools/commandline-tools
+	url = https://github.com/VoxelGamesLib/commandline-tools.git
+[submodule "tools/KVGL"]
+	path = tools/KVGL
+	url = https://github.com/VoxelGamesLib/KVGL.git
+[submodule "tools/skeleton"]
+	path = tools/skeleton
+	url = https://github.com/VoxelGamesLib/skeleton.git
+[submodule "tools/skeletonkt"]
+	path = tools/skeletonkt
+	url = https://github.com/VoxelGamesLib/skeletonkt.git

@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath 'net.sf.proguard:proguard-gradle:5.3.2'
         classpath 'org.ajoberstar:grgit:1.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21"
     }
 }
 
@@ -13,116 +14,146 @@ plugins {
     id 'java'
     id 'maven'
     id 'signing'
+    id 'idea'
     id 'com.github.johnrengelman.shadow' version '2.0.1'
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
-apply plugin: 'maven'
+group = 'com.voxelgameslib'
+version = '2.0-SNAPSHOT'
 
 import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
-group = 'com.voxelgameslib'
-version = '2.0-SNAPSHOT'
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+    apply plugin: 'kotlin'
+    //TODO fix  apply from: "${rootProject.rootDir}/nonnull.gradle"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+    defaultTasks 'clean', 'build'
 
-ext {
-    git = Grgit.open(file('.'))
-    revision = git.head().abbreviatedId
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
-    maven { url "https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo" }
-    maven { url "https://oss.sonatype.org/content/groups/public/" }
-    maven { url "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url "https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/" }
-    maven { url "http://dl.bintray.com/etienne/java-utilities" }
-    maven { url "http://repo.bstats.org/content/repositories/releases/" }
-    maven { url "http://repo.dmulloy2.net/content/groups/public/" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-    maven { url "http://repo.onarandombox.com/content/groups/public/" }
-    maven { url "http://repo.inventivetalent.org/content/repositories/snapshots/" }
-}
-dependencies {
-    compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT'
-    compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
-    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-    compile group: 'de.davidbilge', name: 'jskill', version: '1.1-SNAPSHOT'
-    compile group: 'net.lingala.zip4j', name: 'zip4j', version: '1.3.2'
-    compile group: 'co.aikar', name: 'taskchain-bukkit', version: '3.6.0'
-    compile group: 'net.kyori', name: 'text', version: '1.12-SNAPSHOT'
-    compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.2'
-    compile group: 'com.bugsnag', name: 'bugsnag', version: '3.0.2'
-    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.3'
-    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-    compile group: 'com.dumptruckman.minecraft', name: 'JsonConfiguration', version: '1.1-SNAPSHOT'
-    compile group: 'org.mineskin', name: 'java-client', version: '1.0.1-SNAPSHOT'
-    compile group: 'org.inventivetalent', name: 'reflectionhelper', version: '1.13.0-SNAPSHOT'
-    compile group: 'org.inventivetalent', name: 'mc-wrappers', version: '1.0.3-SNAPSHOT'
-    compile group: 'io.github.lukehutch', name: 'fast-classpath-scanner', version: '2.18.1'
-    compile group: 'com.voxelgameslib', name: 'chatmenuapi', version: '1.0-SNAPSHOT', changing: true
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
-
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12.1-R0.1-SNAPSHOT'
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.1-R0.1-SNAPSHOT'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
-    compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.2.1'
-}
-
-shadowJar {
-    mergeServiceFiles()
-    configurations = [project.configurations.compile]
-
-    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
-
-    manifest {
-        attributes 'Implementation-Version': project.version + "@" + revision
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
     }
-}
 
-build.dependsOn shadowJar
+    ext {
+        git = Grgit.open(file('.'))
+        revision = git.head().abbreviatedId
+    }
 
-processResources {
-    filter ReplaceTokens, tokens: [
-            'version': project.version + "@" + revision
-    ]
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+        maven { url "https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo" }
+        maven { url "https://oss.sonatype.org/content/groups/public/" }
+        maven { url "https://repo.aikar.co/content/groups/aikar/" }
+        maven { url "https://raw.githubusercontent.com/allanmc/JSkills/mvn-repo/" }
+        maven { url "http://dl.bintray.com/etienne/java-utilities" }
+        maven { url "http://repo.bstats.org/content/repositories/releases/" }
+        maven { url "http://repo.dmulloy2.net/content/groups/public/" }
+        maven { url "http://repo.maven.apache.org/maven2" }
+        maven { url "http://repo.onarandombox.com/content/groups/public/" }
+        maven { url "http://repo.inventivetalent.org/content/repositories/snapshots/" }
+    }
+
+    dependencies {
+        compile group: 'co.aikar', name: 'acf-bukkit', version: '0.5.0-SNAPSHOT'
+        compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+        compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+        compile group: 'de.davidbilge', name: 'jskill', version: '1.1-SNAPSHOT'
+        compile group: 'net.lingala.zip4j', name: 'zip4j', version: '1.3.2'
+        compile group: 'co.aikar', name: 'taskchain-bukkit', version: '3.6.0'
+        compile group: 'net.kyori', name: 'text', version: '1.12-SNAPSHOT'
+        compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.2'
+        compile group: 'com.bugsnag', name: 'bugsnag', version: '3.0.2'
+        compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.3'
+        compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
+        compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
+        compile group: 'com.dumptruckman.minecraft', name: 'JsonConfiguration', version: '1.1-SNAPSHOT'
+        compile group: 'org.mineskin', name: 'java-client', version: '1.0.1-SNAPSHOT'
+        compile group: 'org.inventivetalent', name: 'reflectionhelper', version: '1.13.0-SNAPSHOT'
+        compile group: 'org.inventivetalent', name: 'mc-wrappers', version: '1.0.3-SNAPSHOT'
+        compile group: 'io.github.lukehutch', name: 'fast-classpath-scanner', version: '2.18.1'
+        compile group: 'com.voxelgameslib', name: 'chatmenuapi', version: '1.0-SNAPSHOT', changing: true
+        compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.21'
+
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
+
+        compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.12.1-R0.1-SNAPSHOT'
+        compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.1-R0.1-SNAPSHOT'
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+        compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.4.0-SNAPSHOT'
+    }
+
+    shadowJar {
+        mergeServiceFiles()
+        configurations = [project.configurations.compile]
+
+        //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
+
+        manifest {
+            attributes 'Implementation-Version': project.version + "@" + revision
+        }
+    }
+
+    build.dependsOn shadowJar
+
+    processResources {
+        filter ReplaceTokens, tokens: [
+                'version': project.version + "@" + revision
+        ]
+    }
+
+    task javadocJar(type: Jar) {
+        classifier 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+
+    compileJava {
+        options.compilerArgs += ["-parameters"]
+        options.fork = true
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    javadoc {
+        options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
+    }
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    configurations.all {
+        // Check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
 }
 
 task copyToServer(dependsOn: 'jar', type: Copy) {
     from 'build/libs/voxelgameslib-' + project.version + '-all.jar'
     into '../testserver/plugins/'
-}
-
-javadoc {
-    options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
-}
-
-task javadocJar(type: Jar) {
-    classifier 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-compileJava {
-    options.compilerArgs += ["-parameters"]
-    options.fork = true
 }
 
 task createPom() {
@@ -160,9 +191,4 @@ task proguard(type: ProGuardTask) {
 
     injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
     outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
-}
-
-configurations.all {
-    // Check for updates every build
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
