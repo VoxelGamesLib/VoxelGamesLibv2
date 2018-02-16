@@ -11,6 +11,7 @@ task generateNonNullJavaFiles(dependsOn: "assembleDebug", type: Copy) {
     def infoFileContentFooter = getFileContentFooter()
 
     def sourceDir = file("$projectDir${slash}src${slash}main${slash}java")
+    if (!sourceDir.exists()) return
 
     sourceDir.eachDirRecurse { dir ->
 
