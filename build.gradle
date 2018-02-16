@@ -31,6 +31,8 @@ ext {
     git = Grgit.open(file('.'))//TODO use git on subprojects
     revision = git.head().abbreviatedId
     revision = 'FAILED'
+
+    testServerFolder = "${rootProject.rootDir}/testserver/plugins"
 }
 
 allprojects {
@@ -154,11 +156,18 @@ allprojects {
         // Check for updates every build
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
+
+    if(project.name.startsWith("/games")){
+        task copyToServer(type: Copy) {
+            from jar
+            into testServerFolder
+        }
+    }
 }
 
 task copyToServer(type: Copy) {
     from shadowJar
-    into '../testserver/plugins/'
+    into testServerFolder
 }
 
 task createPom() {
