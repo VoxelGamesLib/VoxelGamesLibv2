@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
@@ -101,12 +102,16 @@ public class WorldCreator extends BaseCommand {
 
         worldHandler.loadLocalWorld(worldName);
         Location spawnLoc = Bukkit.getWorld(worldName).getSpawnLocation();
+        Vector3D spawn = new Vector3D(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ());
         sender.getPlayer().teleport(spawnLoc);
 
+
         game = gameHandler.startGame(EditModeGame.GAMEMODE);
-        game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(new Vector3D(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ()));
+        game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(spawn);
+        Map map = new Map(null, worldName, spawn, 100);
+        map.load(game.getUuid(), worldName);
+        game.getActivePhase().getNextPhase().getFeature(MapFeature.class).setMap(map);
         game.join(editor);
-        //TODO this is not implemented properly, need to speficy map and loaded name
         game.endPhase();
 
         Lang.msg(sender, LangKey.WORLD_CREATOR_ENTER_CENTER, "/worldcreator center");
