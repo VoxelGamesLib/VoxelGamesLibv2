@@ -8,6 +8,6 @@ include '/games/Hub'
 // tools
 include '/tools/ChatMenuAPI'
 include '/tools/commandline-tools'
-//include '/tools/KVGL' TODO reenable
-//include '/tools/skeleton'
-//include '/tools/skeletonkt'
+include '/tools/KVGL'
+include '/tools/skeleton'
+include '/tools/skeletonkt'
