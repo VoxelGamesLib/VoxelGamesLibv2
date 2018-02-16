@@ -1,10 +1,13 @@
 package com.voxelgameslib.voxelgameslib.feature.features;
 
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -80,7 +83,7 @@ public class PostGameFeature extends AbstractFeature {
 
     @Override
     @Nonnull
-    public Class[] getDependencies() {
-        return new Class[]{PersonalScoreboardFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Collections.singletonList(PersonalScoreboardFeature.class);
     }
 }

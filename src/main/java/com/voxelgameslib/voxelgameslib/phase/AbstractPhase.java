@@ -285,8 +285,7 @@ public abstract class AbstractPhase implements Phase {
 
             // add all dependencies to the graph
             for (Feature feature : getFeatures()) {
-                for (@SuppressWarnings("unchecked") Class<? extends Feature> dependency : feature
-                        .getDependencies()) {
+                for (Class<? extends Feature> dependency : feature.getDependencies()) {
                     if (dependency.equals(feature.getClass())) {
                         log.severe(feature.getName() + " tried to depend on itself...");
                         continue;
@@ -305,8 +304,7 @@ public abstract class AbstractPhase implements Phase {
                     }
                 }
 
-                for (@SuppressWarnings("unchecked") Class<? extends Feature> dependency : feature
-                        .getSoftDependencies()) {
+                for (Class<? extends Feature> dependency : feature.getSoftDependencies()) {
                     if (dependency.equals(feature.getClass())) {
                         log.severe(feature.getName() + " tried to depend on itself...");
                         continue;

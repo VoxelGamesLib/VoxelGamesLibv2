@@ -5,9 +5,12 @@ import com.google.gson.annotations.Expose;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.utils.EntityUtil;
 
 import org.bukkit.entity.Entity;
@@ -71,8 +74,8 @@ public class MobFeature extends AbstractFeature {
 
     @Nonnull
     @Override
-    public Class[] getDependencies() {
-        return new Class[]{MapFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Collections.singletonList(MapFeature.class);
     }
 
     @EventHandler

@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.feature.features;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
@@ -9,6 +11,7 @@ import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 
@@ -67,8 +70,8 @@ public class LobbyFeature extends AbstractFeature {
 
     @Override
     @Nonnull
-    public Class[] getDependencies() {
-        return new Class[]{ScoreboardFeature.class, BossBarFeature.class};
+    public List<Class<? extends Feature>> getDependencies() {
+        return Arrays.asList(ScoreboardFeature.class, BossBarFeature.class);
     }
 
     @GameEvent

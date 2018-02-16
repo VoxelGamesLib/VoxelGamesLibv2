@@ -118,13 +118,6 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-if (!project.hasProperty("dev")) {
-    artifacts {
-        archives javadocJar
-        archives sourcesJar
-    }
-}
-
 compileJava {
     options.compilerArgs += ["-parameters"]
     options.fork = true
