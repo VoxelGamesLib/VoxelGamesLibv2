@@ -25,6 +25,9 @@ rebel.xml
 #nobody likes you mvn ;)
 pom.xml
 
+# these are generated and are unneccesarry
+package-info.java
+
 # Test server
 /testserver/world
 /testserver/world_nether
