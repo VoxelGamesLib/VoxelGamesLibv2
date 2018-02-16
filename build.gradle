@@ -26,12 +26,19 @@ import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
+
+ext {
+    git = Grgit.open(file('.'))//TODO use git on subprojects
+    revision = git.head().abbreviatedId
+    revision = 'FAILED'
+}
+
 allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'idea'
     apply plugin: 'kotlin'
-    //TODO fix  apply from: "${rootProject.rootDir}/nonnull.gradle"
+    apply from: "${rootProject.rootDir}/nonnull.gradle"
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -40,11 +47,6 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
-    }
-
-    ext {
-        git = Grgit.open(file('.'))
-        revision = git.head().abbreviatedId
     }
 
     repositories {
@@ -135,7 +137,7 @@ allprojects {
     }
 
     javadoc {
-        options.stylesheetFile = new File(projectDir, "src/main/javadocs/javadoc_stylesheet.css")
+        options.stylesheetFile = new File(rootProject.rootDir, "src/main/javadocs/javadoc_stylesheet.css")
     }
 
     idea {
