@@ -27,12 +27,12 @@ public class CommandHandler implements Handler, Listener {
     private BukkitCommandManager commandManager;
 
     @Override
-    public void start() {
+    public void enable() {
 
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

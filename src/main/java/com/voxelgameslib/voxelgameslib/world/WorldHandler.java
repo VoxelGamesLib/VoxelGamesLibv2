@@ -200,7 +200,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         cleanup();
 
         //worldRepository.setURL();// TODO make url configurable
@@ -230,7 +230,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         cleanup();
     }
 

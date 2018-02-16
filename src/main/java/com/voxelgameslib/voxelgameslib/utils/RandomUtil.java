@@ -67,7 +67,7 @@ public class RandomUtil {
     }
 
     /**
-     * Generates a random in from start (inclusive) to end (exclusive)
+     * Generates a random in from enable (inclusive) to end (exclusive)
      *
      * @param start the min val (inclusive)
      * @param end   the max val (exclusive)

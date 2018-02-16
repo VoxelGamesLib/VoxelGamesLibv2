@@ -28,9 +28,9 @@ public class LobbyFeature extends AbstractFeature {
     private Scoreboard scoreboard;
     private boolean starting = false;
     @Expose
-    private int startDelay = 120 * 20; // long start delay
+    private int startDelay = 120 * 20; // long enable delay
     @Expose
-    private int fastStartDelay = 15 * 20; // short start delay
+    private int fastStartDelay = 15 * 20; // short enable delay
     private double curr;
     private BossBar bossBar;
 

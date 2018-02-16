@@ -24,7 +24,7 @@ public class MysqlPersistenceProvider implements PersistenceProvider {
     private GlobalConfig config;
 
     @Override
-    public void start() {
+    public void enable() {
         // commented out since VGL autoloads this regardless
         //DB.initialize(voxelGamesLib, config);
 
@@ -32,7 +32,7 @@ public class MysqlPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         //DB.close();
     }
 

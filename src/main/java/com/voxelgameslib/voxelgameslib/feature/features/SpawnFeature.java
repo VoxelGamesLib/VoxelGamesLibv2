@@ -108,14 +108,14 @@ public class SpawnFeature extends AbstractFeature {
     }
 
     /**
-     * @return if true, players will be spawned at the start of this phase
+     * @return if true, players will be spawned at the enable of this phase
      */
     public boolean isInitialSpawn() {
         return isInitialSpawn;
     }
 
     /**
-     * @param initialSpawn if true, players will be spawned at the start of this phase
+     * @param initialSpawn if true, players will be spawned at the enable of this phase
      */
     public void setInitialSpawn(boolean initialSpawn) {
         isInitialSpawn = initialSpawn;

@@ -13,13 +13,13 @@ public class MatchmakingHandler implements Handler {
     private Map<GameMode, Queue> queues;
 
     @Override
-    public void start() {
+    public void enable() {
         queues = new HashMap<>();
         //TODO match making
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         queues.clear();
         queues = null;
     }

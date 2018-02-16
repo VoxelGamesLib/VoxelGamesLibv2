@@ -15,12 +15,12 @@ public interface PersistenceProvider extends Handler {
     /**
      * Called when a provider is started
      */
-    void start();
+    void enable();
 
     /**
      * Called when a provider is stopped
      */
-    void stop();
+    void disable();
 
     /**
      * Persists the data of a user

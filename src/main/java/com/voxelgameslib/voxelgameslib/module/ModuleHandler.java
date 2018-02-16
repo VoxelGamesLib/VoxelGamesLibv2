@@ -39,7 +39,7 @@ public class ModuleHandler implements Handler {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         log.info("Loading modules");
         findModules();
 
@@ -47,7 +47,7 @@ public class ModuleHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         modules.forEach(Module::disable);
         modules.clear();
     }

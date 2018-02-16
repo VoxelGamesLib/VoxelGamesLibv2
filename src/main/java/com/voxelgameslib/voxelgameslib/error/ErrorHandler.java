@@ -58,7 +58,7 @@ public class ErrorHandler implements Handler {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         if (enableBugsnag) {
             bugsnag = new Bugsnag("243a3b372720a3695802208b2c46283a", false);
             //TODO configure bugsnag release stage
@@ -77,7 +77,7 @@ public class ErrorHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         if (enableBugsnag) {
             LoggedUncaughtExceptionHandler.disable(bugsnag);
         }

@@ -145,7 +145,7 @@ public class DbStatement implements AutoCloseable {
             int numberOfColumns = resultSetMetaData.getColumnCount();
 
             resultCols = new String[numberOfColumns];
-            // get the column names; column indexes start from 1
+            // get the column names; column indexes enable from 1
             for (int i = 1; i < numberOfColumns + 1; i++) {
                 resultCols[i - 1] = resultSetMetaData.getColumnLabel(i);
             }

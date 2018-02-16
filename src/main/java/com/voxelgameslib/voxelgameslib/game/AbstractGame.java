@@ -160,7 +160,7 @@ public abstract class AbstractGame implements Game {
     @Deprecated
     @Override
     public void stop() {
-        // ignore stop from tick handler, we only need to care about that stop if server shuts down
+        // ignore disable from tick handler, we only need to care about that disable if server shuts down
         // and then we know about it via the game handler and endGame() anyways
     }
 
@@ -234,7 +234,7 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void endGame(@Nullable Team winnerTeam, @Nullable User winnerUser) {
-        // stop timer
+        // disable timer
         duration = Duration.between(startTime, LocalDateTime.now());
 
         log.finer("end game");
@@ -376,7 +376,7 @@ public abstract class AbstractGame implements Game {
         }
 
         // todo: perhaps consider having this handled by phases instead
-        user.removeListeningChannel(chatHandler.defaultChannel.getIdentifier()); // stop listening to global messages
+        user.removeListeningChannel(chatHandler.defaultChannel.getIdentifier()); // disable listening to global messages
         user.addListeningChannel(chatChannel.getIdentifier()); // local channel
         user.setActiveChannel(chatChannel.getIdentifier());
         return true;

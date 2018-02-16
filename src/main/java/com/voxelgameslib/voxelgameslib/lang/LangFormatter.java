@@ -31,7 +31,7 @@ public class LangFormatter {
         Stack<TextColor> colors = new Stack<>();
         Stack<TextDecoration> decorations = new Stack<>();
 
-        //%replace%System.out.println("start parsing");
+        //%replace%System.out.println("enable parsing");
         for (String token : tokens) {
             // click
             if (token.startsWith("click")) {
@@ -88,7 +88,7 @@ public class LangFormatter {
                 }
 
                 //%replace%System.out.println("add text " + token);
-                // add to main builder and start new component
+                // add to main builder and enable new component
                 builder.append(current.content(token).build());
                 current = TextComponent.builder();
             }
@@ -232,7 +232,7 @@ public class LangFormatter {
                 }
             } else if (cI == '}') {
                 if (i < input.length() - 1 && input.charAt(i + 1) == '"') {
-                    // the end of the nesting was found, time to stop skipping
+                    // the end of the nesting was found, time to disable skipping
                     skip = false;
                     buffer.append('}');
                     continue;

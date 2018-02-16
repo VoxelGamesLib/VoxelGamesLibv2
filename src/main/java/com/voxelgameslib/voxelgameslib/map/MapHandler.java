@@ -40,7 +40,7 @@ public class MapHandler implements Handler {
     private List<MarkerDefinition> markerDefinitions = new ArrayList<>();
 
     @Override
-    public void start() {
+    public void enable() {
         Timings.time("ScanningFeatures", () ->
                 new FastClasspathScanner().scan().getNamesOfSubclassesOf(AbstractFeature.class).stream().map(n -> {
                     try {
@@ -61,7 +61,7 @@ public class MapHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

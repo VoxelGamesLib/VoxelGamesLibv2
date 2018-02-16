@@ -145,7 +145,7 @@ public final class VoxelGamesLib extends JavaPlugin {
     @Override
     public void onLoad() {
         errorHandler = new ErrorHandler(this);
-        errorHandler.start();
+        errorHandler.enable();
     }
 
     @Override
@@ -153,8 +153,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         try {
             // logging first, only changes prefixes anyways
             loggingHandler = new LoggingHandler();
-            loggingHandler.start();
-            // start by enabling external stuff. they don't require any VGL stuff
+            loggingHandler.enable();
+            // enable by enabling external stuff. they don't require any VGL stuff
 
             // timings
             timingManager = TimingManager.of(this);
@@ -186,28 +186,28 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // then enable all VGL stuff
             Timings.time("EnableAllHandlers", () -> {
-                eventHandler.start();
-                configHandler.start();
-                persistenceHandler.start();
-                langHandler.start();
-                tickHandler.start();
-                chatHandler.start();
-                userHandler.start();
-                roleHandler.start();
-                inventoryHandler.start();
-                mapHandler.start();
-                worldHandler.start();
-                teamHandler.start();
-                eloHandler.start();
-                matchmakingHandler.start();
-                signHandler.start();
-                metricHandler.start();
-                pointHandler.start();
-                kitHandler.start();
-                commandHandler.start();
-                textureHandler.start();
+                eventHandler.enable();
+                configHandler.enable();
+                persistenceHandler.enable();
+                langHandler.enable();
+                tickHandler.enable();
+                chatHandler.enable();
+                userHandler.enable();
+                roleHandler.enable();
+                inventoryHandler.enable();
+                mapHandler.enable();
+                worldHandler.enable();
+                teamHandler.enable();
+                eloHandler.enable();
+                matchmakingHandler.enable();
+                signHandler.enable();
+                metricHandler.enable();
+                pointHandler.enable();
+                kitHandler.enable();
+                commandHandler.enable();
+                textureHandler.enable();
 
-                gameHandler.start();
+                gameHandler.enable();
             });
 
             // initialise raw database utils
@@ -224,7 +224,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         registerCommands();
         registerCommandCompletions();
 
-        moduleHandler.start();
+        moduleHandler.enable();
 
         gameHandler.startDefaultGame();
 
@@ -241,32 +241,32 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
             Timings.time("DisableAllHandlers", () -> {
-                configHandler.stop();
-                langHandler.stop();
-                tickHandler.stop();
-                chatHandler.stop();
-                userHandler.stop();
-                roleHandler.stop();
-                inventoryHandler.stop();
-                mapHandler.stop();
-                worldHandler.stop();
-                teamHandler.stop();
-                eloHandler.stop();
-                matchmakingHandler.stop();
-                signHandler.stop();
-                metricHandler.stop();
-                kitHandler.stop();
-                pointHandler.stop();
-                commandHandler.stop();
-                textureHandler.stop();
+                configHandler.disable();
+                langHandler.disable();
+                tickHandler.disable();
+                chatHandler.disable();
+                userHandler.disable();
+                roleHandler.disable();
+                inventoryHandler.disable();
+                mapHandler.disable();
+                worldHandler.disable();
+                teamHandler.disable();
+                eloHandler.disable();
+                matchmakingHandler.disable();
+                signHandler.disable();
+                metricHandler.disable();
+                kitHandler.disable();
+                pointHandler.disable();
+                commandHandler.disable();
+                textureHandler.disable();
 
-                gameHandler.stop();
-                moduleHandler.stop();
-                eventHandler.stop();
+                gameHandler.disable();
+                moduleHandler.disable();
+                eventHandler.disable();
 
-                persistenceHandler.stop();
-                errorHandler.stop();
-                loggingHandler.stop();
+                persistenceHandler.disable();
+                errorHandler.disable();
+                loggingHandler.disable();
 
                 injector = null;
             });

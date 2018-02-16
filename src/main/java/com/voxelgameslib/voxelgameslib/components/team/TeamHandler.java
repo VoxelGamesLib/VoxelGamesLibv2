@@ -8,12 +8,12 @@ import com.voxelgameslib.voxelgameslib.handler.Handler;
 public class TeamHandler implements Handler {
 
     @Override
-    public void start() {
+    public void enable() {
 
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 }

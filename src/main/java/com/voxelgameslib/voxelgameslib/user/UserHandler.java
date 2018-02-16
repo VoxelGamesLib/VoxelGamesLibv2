@@ -39,13 +39,13 @@ public class UserHandler implements Handler {
     private Map<UUID, User> tempData;
 
     @Override
-    public void start() {
+    public void enable() {
         users = new HashMap<>();
         tempData = new ConcurrentHashMap<>();
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         users.clear();
         tempData.clear();
     }

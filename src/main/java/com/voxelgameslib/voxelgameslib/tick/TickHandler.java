@@ -33,7 +33,7 @@ public class TickHandler implements Handler {
      * Called when the underlying server mod calls a tick. Causes all {@link Tickable}s to tick
      */
     public void tick() {
-        // stop old stuff
+        // disable old stuff
         removeQueue.forEach(Tickable::stop);
         tickables.removeAll(removeQueue);
         removeQueue.clear();
@@ -44,7 +44,7 @@ public class TickHandler implements Handler {
     /**
      * Starts the ticker
      */
-    public void start() {
+    public void enable() {
         Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
     }
 
@@ -52,7 +52,7 @@ public class TickHandler implements Handler {
      * Stops every {@link Tickable} from ticking and does some cleanup
      */
     @Override
-    public void stop() {
+    public void disable() {
         tickables.forEach(Tickable::stop);
         tickables.clear();
     }

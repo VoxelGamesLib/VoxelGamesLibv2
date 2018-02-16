@@ -39,18 +39,18 @@ public class InventoryHandler implements Handler, Listener {
     private Map<UUID, BaseInventory> inventories = new HashMap<>();
 
     /**
-     * @see Handler#start()
+     * @see Handler#enable()
      */
     @Override
-    public void start() {
+    public void enable() {
         Bukkit.getPluginManager().registerEvents(this, voxelGamesLib);
     }
 
     /**
-     * @see Handler#stop()
+     * @see Handler#disable()
      */
     @Override
-    public void stop() {
+    public void disable() {
         HandlerList.unregisterAll(this);
     }
 

@@ -21,14 +21,14 @@ public class SignHandler implements Handler {
     private SignPlaceholders signPlaceholders;
 
     @Override
-    public void start() {
+    public void enable() {
         signButtons.registerButtons();
 
         signPlaceholders.init();
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

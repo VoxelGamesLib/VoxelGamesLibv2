@@ -73,7 +73,7 @@ public class WorldCreator extends BaseCommand {
         help.showHelp();
     }
 
-    @Subcommand("start")
+    @Subcommand("enable")
     @CommandPermission("%admin")
     public void start(@Nonnull User sender) {
         if (editor != null) {

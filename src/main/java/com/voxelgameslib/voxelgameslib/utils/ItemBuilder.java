@@ -29,7 +29,7 @@ public class ItemBuilder {
     /**
      * Inits the builder with the given {@link Material}
      *
-     * @param mat the {@link Material} to start the builder from
+     * @param mat the {@link Material} to enable the builder from
      * @since 1.0
      */
     public ItemBuilder(@Nonnull final Material mat) {
@@ -39,7 +39,7 @@ public class ItemBuilder {
     /**
      * Inits the builder with the given {@link ItemStack}
      *
-     * @param is the {@link ItemStack} to start the builder from
+     * @param is the {@link ItemStack} to enable the builder from
      * @since 1.0
      */
     public ItemBuilder(@Nonnull final ItemStack is) {

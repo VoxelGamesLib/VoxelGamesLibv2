@@ -64,7 +64,7 @@ public class GameHandler implements Handler {
     private final List<GameDefinition> gameDefinitions = new ArrayList<>();
 
     @Override
-    public void start() {
+    public void enable() {
         if (configHandler.get().loadGameDefinitions) {
             loadGameDefinitons();
         } else {
@@ -75,7 +75,7 @@ public class GameHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         games.forEach(Game::stop);
         games.clear();
     }
@@ -187,7 +187,7 @@ public class GameHandler implements Handler {
             }
         }
 
-        // registering calles start
+        // registering calles enable
         tickHandler.registerTickable(game);
 
         Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent(game));

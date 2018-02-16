@@ -42,7 +42,7 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
     private GlobalConfig globalConfig;
 
     @Override
-    public void start() {
+    public void enable() {
         globalConfigFile = new File(configFolder, "config.json");
         if (!globalConfigFile.exists()) {
             log.warning("Did not found global config, saving default");
@@ -100,7 +100,7 @@ public class ConfigHandler implements Handler, Provider<GlobalConfig> {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

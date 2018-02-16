@@ -23,7 +23,7 @@ public abstract class TimedPhase extends AbstractPhase {
     private boolean started;
 
     /**
-     * Sets the amount of ticks this phase should tick, can be modified after start
+     * Sets the amount of ticks this phase should tick, can be modified after enable
      *
      * @param ticks the amount of ticks this phase should tick
      */
@@ -45,7 +45,7 @@ public abstract class TimedPhase extends AbstractPhase {
 
         originalTicks = ticks;
 
-        log.finer("start timed phase with name " + getName());
+        log.finer("enable timed phase with name " + getName());
         bossBar = Bukkit.createBossBar(getName(), BarColor.BLUE, BarStyle.SEGMENTED_20);
 
         getGame().getPlayers().forEach(u -> bossBar.addPlayer(u.getPlayer()));

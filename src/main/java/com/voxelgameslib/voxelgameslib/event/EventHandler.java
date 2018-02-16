@@ -117,12 +117,12 @@ public class EventHandler implements Handler, Listener {
     }
 
     @Override
-    public void start() {
+    public void enable() {
 
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

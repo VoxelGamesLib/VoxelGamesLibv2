@@ -133,7 +133,7 @@ public interface Phase extends Tickable {
     boolean isRunning();
 
     /**
-     * if running: get the duration between start and now.<br> else: get the duration this phase has run
+     * if running: get the duration between enable and now.<br> else: get the duration this phase has run
      *
      * @return the duration
      */

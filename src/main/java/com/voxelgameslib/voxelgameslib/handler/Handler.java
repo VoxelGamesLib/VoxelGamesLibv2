@@ -7,12 +7,12 @@ package com.voxelgameslib.voxelgameslib.handler;
 public interface Handler {
 
     /**
-     * Called on server start
+     * Called on server enable
      */
-    void start();
+    void enable();
 
     /**
-     * Called on server stop. used to cleanup things.
+     * Called on server disable. used to cleanup things.
      */
-    void stop();
+    void disable();
 }

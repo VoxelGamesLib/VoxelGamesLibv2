@@ -35,7 +35,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
     @SuppressWarnings("Duplicates")
     @Override
-    public void start() {
+    public void enable() {
         if (!folder.exists()) {
             folder.mkdir();
         }
@@ -62,7 +62,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         UserMap.clear();
     }
 

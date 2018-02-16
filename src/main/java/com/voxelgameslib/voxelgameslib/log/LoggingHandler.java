@@ -39,7 +39,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     private RollingRandomAccessFileAppender log4jAppender;
 
     @Override
-    public void start() {
+    public void enable() {
         logger = Logger.getLogger("com.voxelgameslib.voxelgameslib");
         handler = new LogHandler() {
 
@@ -100,7 +100,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
 
 
     @Override
-    public void stop() {
+    public void disable() {
         Logger.getLogger("").removeHandler(handler);
     }
 

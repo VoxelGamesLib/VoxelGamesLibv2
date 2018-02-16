@@ -48,7 +48,7 @@ public class TextureHandler implements Handler {
     private MineskinClient mineskinClient = new MineskinClient();
 
     @Override
-    public void start() {
+    public void enable() {
         if (!skinsFolder.exists()) {
             log.warning("Skins folder doesn't exit, creating");
             skinsFolder.mkdirs();
@@ -61,7 +61,7 @@ public class TextureHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 

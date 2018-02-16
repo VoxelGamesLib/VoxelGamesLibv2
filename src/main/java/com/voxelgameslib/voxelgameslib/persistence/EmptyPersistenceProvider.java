@@ -12,12 +12,12 @@ import com.voxelgameslib.voxelgameslib.user.User;
 public class EmptyPersistenceProvider implements PersistenceProvider {
 
     @Override
-    public void start() {
+    public void enable() {
         // ignore
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         // ignore
     }
 

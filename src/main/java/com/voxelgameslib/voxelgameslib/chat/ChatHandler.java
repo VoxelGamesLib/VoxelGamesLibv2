@@ -22,9 +22,9 @@ public class ChatHandler implements Handler {
     public Map<String, ChatChannel> activeChannels;
 
     /**
-     * @see Handler#start()
+     * @see Handler#enable()
      */
-    public void start() {
+    public void enable() {
         // every user should be in this channel:
         defaultChannel = new ChatChannel("default");
 
@@ -33,9 +33,9 @@ public class ChatHandler implements Handler {
     }
 
     /**
-     * @see Handler#stop()
+     * @see Handler#disable()
      */
-    public void stop() {
+    public void disable() {
         defaultChannel = null;
         activeChannels = null;
     }

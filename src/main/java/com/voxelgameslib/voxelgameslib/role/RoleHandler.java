@@ -26,11 +26,11 @@ public class RoleHandler implements Handler {
     private final List<Permission> knownPermissions = new ArrayList<>();
 
     @Override
-    public void start() {
+    public void enable() {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         knownPermissions.clear();
     }
 

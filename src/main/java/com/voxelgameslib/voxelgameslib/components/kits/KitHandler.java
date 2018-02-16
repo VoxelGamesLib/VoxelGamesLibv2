@@ -45,7 +45,7 @@ public class KitHandler implements Handler {
     private Set<String> availableKits = new HashSet<>();
 
     @Override
-    public void start() {
+    public void enable() {
         if (!kitsDir.exists()) {
             log.info("Kits dir doesn't exist, creating....");
             kitsDir.mkdirs();
@@ -133,7 +133,7 @@ public class KitHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
 
     }
 }

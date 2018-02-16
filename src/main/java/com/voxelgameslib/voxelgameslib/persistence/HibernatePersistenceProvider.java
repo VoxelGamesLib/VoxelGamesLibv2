@@ -46,7 +46,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private SessionFactory sessionFactory;
 
     @Override
-    public void start() {
+    public void enable() {
         // don't judge me, bukkit doesn't want to resolve those so we need to manually load them
         Class[] iDontEvenKnow = new Class[]{CoreMessageLogger_$logger.class, Log_$logger.class,
                 ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class, GamePlayer.class};
@@ -130,7 +130,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         if (sessionFactory != null) {
             sessionFactory.close();
         }

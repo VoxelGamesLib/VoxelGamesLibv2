@@ -25,7 +25,7 @@ public class MetricHandler implements Handler {
     private GameHandler gameHandler;
 
     @Override
-    public void start() {
+    public void enable() {
         try {
             metrics = new Metrics(voxelGamesLib);
             //TODO add custom charts, like user/gamemode, installed gamesmodes, user/lang, installed langs etc
@@ -42,7 +42,7 @@ public class MetricHandler implements Handler {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         metrics = null;
     }
 }

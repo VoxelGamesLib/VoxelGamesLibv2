@@ -156,10 +156,10 @@ public abstract class AbstractPhase implements Phase {
             game.abortGame();
             return;
         }
-        // start timer
+        // enable timer
         startTime = LocalDateTime.now();
 
-        log.finer("start phase" + getName());
+        log.finer("enable phase" + getName());
 
         phaseTickables.values().forEach(Tickable::start);
 
@@ -167,7 +167,7 @@ public abstract class AbstractPhase implements Phase {
             if (game.isAborting()) {
                 return;
             }
-            log.finer("start " + feature.getName());
+            log.finer("enable " + feature.getName());
             try {
                 feature.start();
             } catch (Exception ex) {
@@ -194,13 +194,13 @@ public abstract class AbstractPhase implements Phase {
 
     @Override
     public void stop() {
-        // stop timer
+        // disable timer
         duration = Duration.between(startTime, LocalDateTime.now());
 
-        log.finer("stop phase " + getName());
-        // only stop features that have been started to avoid errors
+        log.finer("disable phase " + getName());
+        // only disable features that have been started to avoid errors
         for (Feature feature : startedFeatures) {
-            log.finer("stop " + feature.getName());
+            log.finer("disable " + feature.getName());
             try {
                 feature.stop();
             } catch (Exception ex) {
