@@ -21,6 +21,7 @@ VoxelGamesLib uses [Gradle](https://gradle.org/) as our build system. To compile
 
 * Install Git and Gradle
 * Clone the repository
+* Run `git submodule update --init --recursive` to clone all submodule if you want to
 * Run `gradle clean build`
 
 # Chat
