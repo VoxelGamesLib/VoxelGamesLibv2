@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.voxelgameslib</groupId>
+  <artifactId>chatmenuapi</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20180216152426</lastUpdated>
+  </versioning>
+</metadata>
