@@ -15,7 +15,6 @@ The following dependencies are using the latest milestone version:
  - org.jetbrains.kotlin:kotlin-annotation-processing-gradle:1.2.21
  - org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21
  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.21
- - org.projectlombok:lombok:1.16.20
  - co.aikar:taskchain-bukkit:3.6.0
  - net.lingala.zip4j:zip4j:1.3.2
 
