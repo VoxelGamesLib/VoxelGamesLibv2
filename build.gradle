@@ -5,7 +5,6 @@ buildscript {
     }
     dependencies {
         classpath 'net.sf.proguard:proguard-gradle:5.3.2'
-        classpath 'org.ajoberstar:grgit:1.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21"
     }
 }
@@ -22,16 +21,10 @@ plugins {
 group = 'com.voxelgameslib'
 version = '2.0-SNAPSHOT'
 
-import org.ajoberstar.grgit.Grgit
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
-
 ext {
-    git = Grgit.open(file('.'))//TODO use git on subprojects
-    revision = git.head().abbreviatedId
-    revision = 'FAILED'
-
     testServerFolder = "${rootProject.rootDir}/testserver/plugins"
 }
 
@@ -49,6 +42,16 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
+    }
+
+    ext {
+        def output = new ByteArrayOutputStream()
+        exec {
+            standardOutput = output
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            workingDir = project.projectDir
+        }
+        revision = output.toString().trim()
     }
 
     repositories {
@@ -115,7 +118,7 @@ allprojects {
 
     processResources {
         filter ReplaceTokens, tokens: [
-                'version': project.version + "@" + revision
+            'version': version + "@" + revision
         ]
     }
 
@@ -157,7 +160,7 @@ allprojects {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 
-    if(project.name.startsWith("/games")){
+    if (project.name.startsWith("/games")) {
         task copyToServer(type: Copy) {
             from jar
             into testServerFolder
