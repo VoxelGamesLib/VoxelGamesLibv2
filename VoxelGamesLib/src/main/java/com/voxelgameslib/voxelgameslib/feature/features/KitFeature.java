@@ -44,10 +44,10 @@ public class KitFeature extends AbstractFeature {
     private boolean registerCommands;
 
     /**
-     * @see AbstractFeature#start()
+     * @see AbstractFeature#enable()
      */
     @Override
-    public void start() {
+    public void enable() {
         if (registerCommands) {
             commandManager.registerCommand(injector.getInstance(KitCommands.class));
         }
@@ -76,10 +76,10 @@ public class KitFeature extends AbstractFeature {
     }
 
     /**
-     * @see AbstractFeature#stop()
+     * @see AbstractFeature#disable()
      */
     @Override
-    public void stop() {
+    public void disable() {
         if (registerCommands) {
             commandManager.unregisterCommand(injector.getInstance(KitCommands.class));
         }

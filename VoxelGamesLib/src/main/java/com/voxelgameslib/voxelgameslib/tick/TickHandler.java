@@ -34,7 +34,7 @@ public class TickHandler implements Handler {
      */
     public void tick() {
         // disable old stuff
-        removeQueue.forEach(Tickable::stop);
+        removeQueue.forEach(Tickable::disable);
         tickables.removeAll(removeQueue);
         removeQueue.clear();
 
@@ -54,18 +54,18 @@ public class TickHandler implements Handler {
      */
     @Override
     public void disable() {
-        tickables.forEach(Tickable::stop);
+        tickables.forEach(Tickable::disable);
         tickables.clear();
     }
 
     /**
-     * Registers a new {@link Tickable}. Calls the {@link Tickable#start()} method.
+     * Registers a new {@link Tickable}. Calls the {@link Tickable#enable()} method.
      *
      * @param tickable the new {@link Tickable} that should now receive server ticks
      */
     public void registerTickable(@Nonnull Tickable tickable) {
         tickables.add(tickable);
-        tickable.start();
+        tickable.enable();
     }
 
     /**

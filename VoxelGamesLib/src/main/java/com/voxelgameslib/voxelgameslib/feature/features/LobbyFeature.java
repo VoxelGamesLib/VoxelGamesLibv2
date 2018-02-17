@@ -38,7 +38,7 @@ public class LobbyFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         curr = startDelay;
         log.finer("Starting lobby feature with starting " + starting + " curr " + curr);
         // bossbar

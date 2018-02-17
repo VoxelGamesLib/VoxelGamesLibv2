@@ -14,7 +14,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 public class NoHungerLossFeature extends AbstractFeature {
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().getGame().getPlayers().forEach(this::feed);
     }
 

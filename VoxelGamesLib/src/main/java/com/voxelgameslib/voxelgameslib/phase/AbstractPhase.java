@@ -150,7 +150,7 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         if (!checkDependencies()) {
             game.abortGame();
             return;
@@ -160,7 +160,7 @@ public abstract class AbstractPhase implements Phase {
 
         log.finer("enable phase" + getName());
 
-        phaseTickables.values().forEach(Tickable::start);
+        phaseTickables.values().forEach(Tickable::enable);
 
         for (Feature feature : features) {
             if (game.isAborting()) {
@@ -168,7 +168,7 @@ public abstract class AbstractPhase implements Phase {
             }
             log.finer("enable " + feature.getName());
             try {
-                feature.start();
+                feature.enable();
             } catch (Exception ex) {
                 log.severe("error while starting " + feature.getName());
                 ex.printStackTrace();
@@ -192,7 +192,7 @@ public abstract class AbstractPhase implements Phase {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         // disable timer
         duration = Duration.between(startTime, LocalDateTime.now());
 
@@ -201,7 +201,7 @@ public abstract class AbstractPhase implements Phase {
         for (Feature feature : startedFeatures) {
             log.finer("disable " + feature.getName());
             try {
-                feature.stop();
+                feature.disable();
             } catch (Exception ex) {
                 log.severe("error while stopping " + feature.getName());
                 ex.printStackTrace();
@@ -219,7 +219,7 @@ public abstract class AbstractPhase implements Phase {
         }
 
         phaseTickables.values().forEach(tickable -> {
-            tickable.stop();
+            tickable.disable();
 
             if (tickable instanceof Ability) {
                 ((Ability) tickable).unregister();

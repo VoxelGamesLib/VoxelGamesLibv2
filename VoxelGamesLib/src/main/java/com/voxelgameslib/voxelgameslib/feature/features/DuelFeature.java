@@ -61,7 +61,7 @@ public class DuelFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         if (getPhase().getGame().getPlayers().size() != 2) {
             getPhase().getGame().broadcastMessage(LangKey.DUEL_WRONG_PLAYER_COUNT,
                     getPhase().getGame().getPlayers().size());

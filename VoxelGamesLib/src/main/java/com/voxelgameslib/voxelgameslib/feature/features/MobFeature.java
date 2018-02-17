@@ -52,7 +52,7 @@ public class MobFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         worldName = getPhase().getFeature(MapFeature.class).getWorld().getName();
 
         if (removeExisting) {

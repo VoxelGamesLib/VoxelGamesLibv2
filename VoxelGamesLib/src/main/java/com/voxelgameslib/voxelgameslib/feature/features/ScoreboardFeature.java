@@ -20,13 +20,13 @@ public class ScoreboardFeature extends AbstractFeature {
     private Scoreboard scoreboard;
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().getGame().getPlayers().forEach(scoreboard::addUser);
         getPhase().getGame().getSpectators().forEach(scoreboard::addUser);
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         scoreboard.removeAllLines();
         scoreboard.removeAllUsers();
     }

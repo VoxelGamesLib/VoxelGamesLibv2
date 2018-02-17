@@ -39,7 +39,7 @@ public class SpawnFeature extends AbstractFeature {
     private MarkerDefinition spawnMarker = new BasicMarkerDefinition("spawn");
 
     @Override
-    public void start() {
+    public void enable() {
         map = getPhase().getFeature(MapFeature.class).getMap();
         for (Marker marker : map.getMarkers(spawnMarker)) {
             spawns.add(marker.getLoc());

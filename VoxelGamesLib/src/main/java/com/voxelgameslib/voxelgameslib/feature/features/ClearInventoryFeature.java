@@ -14,7 +14,7 @@ public class ClearInventoryFeature extends AbstractFeature {
     // TODO add ability to restore the inv
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().getGame().getPlayers().forEach(user -> user.getPlayer().getInventory().clear());
     }
 

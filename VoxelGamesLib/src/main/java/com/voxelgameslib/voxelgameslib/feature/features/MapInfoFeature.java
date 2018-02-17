@@ -17,7 +17,7 @@ import org.bukkit.ChatColor;
 public class MapInfoFeature extends AbstractFeature {
 
     @Override
-    public void start() {
+    public void enable() {
         MapFeature mapFeature = getPhase().getFeature(MapFeature.class);
         Map map = mapFeature.getMap();
 

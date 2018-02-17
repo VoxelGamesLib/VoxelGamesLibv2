@@ -67,7 +67,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     private ItemStack openMenuItem = new ItemBuilder(Material.PAPER).amount(1).name(ChatColor.GOLD + "Vote for a map").build();
 
     @Override
-    public void start() {
+    public void enable() {
         String mode = getPhase().getGame().getGameMode().getName();
         int id = 1;
         for (MapInfo info : config.maps) {
@@ -95,7 +95,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         Map<Integer, Integer> votes = new HashMap<>();
         int max = -1;
         int maxMap = -1;

@@ -145,12 +145,12 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         startTime = LocalDateTime.now();
         chatChannel = chatHandler.createChannel("game." + getUuid().toString());
 
         activePhase.setRunning(true);
-        activePhase.start();
+        activePhase.enable();
     }
 
     /**
@@ -158,7 +158,7 @@ public abstract class AbstractGame implements Game {
      */
     @Deprecated
     @Override
-    public void stop() {
+    public void disable() {
         // ignore disable from tick handler, we only need to care about that disable if server shuts down
         // and then we know about it via the game handler and endGame() anyways
     }
@@ -219,12 +219,12 @@ public abstract class AbstractGame implements Game {
     @Override
     public void endPhase() {
         activePhase.setRunning(false);
-        activePhase.stop();
+        activePhase.disable();
         if (activePhase.getNextPhase() != null) {
             activePhase = activePhase.getNextPhase();
             assert activePhase != null;
             activePhase.setRunning(true);
-            activePhase.start();
+            activePhase.enable();
         } else {
             log.warning("Game finished without a winner?!");
             abortGame();
@@ -270,7 +270,7 @@ public abstract class AbstractGame implements Game {
 
         if (activePhase.isRunning()) {
             activePhase.setRunning(false);
-            activePhase.stop();
+            activePhase.disable();
         }
 
         chatHandler.removeChannel(chatChannel.getIdentifier());

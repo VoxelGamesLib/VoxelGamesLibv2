@@ -23,7 +23,7 @@ public class NoTimeChangeFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         World w = getPhase().getFeature(MapFeature.class).getWorld();
         w.setTime(time);
         w.setGameRuleValue("doDaylightCycle", "false");

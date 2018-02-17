@@ -40,8 +40,8 @@ public abstract class TimedPhase extends AbstractPhase {
     }
 
     @Override
-    public void start() {
-        super.start();
+    public void enable() {
+        super.enable();
 
         originalTicks = ticks;
 
@@ -55,8 +55,8 @@ public abstract class TimedPhase extends AbstractPhase {
     }
 
     @Override
-    public void stop() {
-        super.stop();
+    public void disable() {
+        super.disable();
 
         if (started) {
             bossBar.removeAll();

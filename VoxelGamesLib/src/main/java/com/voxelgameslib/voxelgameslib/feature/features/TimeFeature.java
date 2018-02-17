@@ -19,7 +19,7 @@ public class TimeFeature extends AbstractFeature {
     private int time = 6000;
 
     @Override
-    public void start() {
+    public void enable() {
         World world = getPhase().getFeature(MapFeature.class).getWorld();
         world.setGameRuleValue("doDaylightCycle", shouldChange + "");
         world.setTime(time);

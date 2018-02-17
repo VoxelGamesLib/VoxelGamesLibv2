@@ -35,7 +35,7 @@ public class DoubleJumpFeature extends AbstractFeature {
 
 
     @Override
-    public void stop() {
+    public void disable() {
         getPhase().getGame().getAllUsers().stream().map(User::getPlayer).forEach(player -> {
             player.setAllowFlight(false);
             player.setFlying(false);

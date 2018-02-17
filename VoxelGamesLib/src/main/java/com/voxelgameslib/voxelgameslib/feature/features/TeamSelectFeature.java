@@ -37,7 +37,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     private int teamCount = 4;
 
     @Override
-    public void start() {
+    public void enable() {
         // create default teams
         List<String> teamNames = new ArrayList<>();
         teamNames.add("BLUE");
@@ -61,7 +61,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         Map<String, Integer> sizes = calcSizes();
 
         // add everyone who isn't in a team yet to the smallest team

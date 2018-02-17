@@ -37,14 +37,14 @@ public class BossBarFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         bossBar = Bukkit.createBossBar(message, color, style);
 
         getPhase().getGame().getPlayers().forEach(user -> bossBar.addPlayer(user.getPlayer()));
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         bossBar.removeAll();
     }
 

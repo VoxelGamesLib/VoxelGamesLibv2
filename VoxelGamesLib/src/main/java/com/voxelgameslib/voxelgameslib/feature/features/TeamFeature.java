@@ -14,7 +14,7 @@ public class TeamFeature extends TeamSelectFeature {
     private static final Logger log = Logger.getLogger(TeamFeature.class.getName());
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().setAllowJoin(false);
 
         DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());

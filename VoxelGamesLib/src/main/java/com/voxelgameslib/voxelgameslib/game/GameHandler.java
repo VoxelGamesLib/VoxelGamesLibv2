@@ -73,7 +73,7 @@ public class GameHandler implements Handler {
 
     @Override
     public void disable() {
-        games.forEach(Game::stop);
+        games.forEach(Game::disable);
         games.clear();
     }
 

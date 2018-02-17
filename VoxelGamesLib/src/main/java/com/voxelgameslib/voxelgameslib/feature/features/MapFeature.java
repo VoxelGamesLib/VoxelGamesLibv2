@@ -37,7 +37,7 @@ public class MapFeature extends AbstractFeature {
     }
 
     @Override
-    public void start() {
+    public void enable() {
         // we already set the map externally, no need to do anything of the following, just set the world
         if (map != null) {
             world = Bukkit.getWorld(map.getLoadedName(getPhase().getGame().getUuid()));
@@ -72,7 +72,7 @@ public class MapFeature extends AbstractFeature {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         if (shouldUnload) {
             worldHandler.unloadWorld(map, getPhase().getGame().getUuid());
         }

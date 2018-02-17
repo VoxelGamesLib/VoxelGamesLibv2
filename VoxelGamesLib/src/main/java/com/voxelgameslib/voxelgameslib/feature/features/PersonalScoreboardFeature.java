@@ -35,7 +35,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     private Map<User, Scoreboard> scoreboards = new HashMap<>();
 
     @Override
-    public void start() {
+    public void enable() {
         globalScoreboard = new GlobalScoreboard(scoreboards.values());
 
         getPhase().getGame().getAllUsers().forEach(user -> {
@@ -46,7 +46,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     }
 
     @Override
-    public void stop() {
+    public void disable() {
         getPhase().getGame().getAllUsers().forEach(user -> {
             scoreboards.get(user).removeAllUsers();
             scoreboards.get(user).removeAllLines();

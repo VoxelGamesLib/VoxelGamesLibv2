@@ -20,7 +20,7 @@ public class HealFeature extends AbstractFeature {
     private boolean feed = true;
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().getGame().getPlayers().forEach(this::heal);
     }
 

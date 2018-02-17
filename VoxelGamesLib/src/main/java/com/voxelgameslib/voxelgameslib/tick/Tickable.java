@@ -9,12 +9,12 @@ public interface Tickable {
     /**
      * called before the first tick
      */
-    void start();
+    void enable();
 
     /**
      * called when it stops ticking
      */
-    void stop();
+    void disable();
 
     /**
      * called on every tick

@@ -19,7 +19,7 @@ public class GameModeFeature extends AbstractFeature {
     private GameMode mode = GameMode.SURVIVAL;
 
     @Override
-    public void start() {
+    public void enable() {
         getPhase().getGame().getPlayers().forEach(u -> u.getPlayer().setGameMode(mode));
     }
 

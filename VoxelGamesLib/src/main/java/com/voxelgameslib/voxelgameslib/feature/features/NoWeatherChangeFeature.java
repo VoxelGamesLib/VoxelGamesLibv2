@@ -28,7 +28,7 @@ public class NoWeatherChangeFeature extends AbstractFeature implements Listener 
     }
 
     @Override
-    public void start() {
+    public void enable() {
         world = getPhase().getFeature(MapFeature.class).getWorld();
         switch (weather) {
             case CLEAR:
