@@ -11,6 +11,8 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
         description = "Simple feature that clears the inventory of all players when the game starts (or a new player joins)")
 public class ClearInventoryFeature extends AbstractFeature {
 
+    // TODO add ability to restore the inv
+
     @Override
     public void start() {
         getPhase().getGame().getPlayers().forEach(user -> user.getPlayer().getInventory().clear());
