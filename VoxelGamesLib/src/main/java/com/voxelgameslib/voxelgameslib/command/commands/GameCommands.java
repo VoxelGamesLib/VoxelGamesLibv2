@@ -66,9 +66,9 @@ public class GameCommands extends BaseCommand {
         Lang.msg(sender, LangKey.GAME_GAMEMODE_INSTALLED, sb.toString());
     }
 
-    @Subcommand("enable")
+    @Subcommand("start")
     @CommandCompletion("@gamemodes")
-    @Syntax("<mode> - the mode you want to enable")
+    @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%premium")
     public void gameStart(@Nonnull User sender, @Nonnull GameMode mode) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
@@ -96,7 +96,7 @@ public class GameCommands extends BaseCommand {
         }
     }
 
-    @Subcommand("disable")
+    @Subcommand("stop")
     @CommandPermission("%admin")
     public void gameStop(@Nonnull User sender, @Nullable @co.aikar.commands.annotation.Optional String gameId) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), false);

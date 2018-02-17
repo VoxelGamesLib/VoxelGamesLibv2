@@ -38,7 +38,7 @@ public class TestCommands extends BaseCommand {
     public void chatmenu(@Nonnull User user) {
         ChatMenu menu = new ChatMenu().pauseChat(0, 0, ChatColor.RED + "[Close]");
         menu.add(new TextElement("Hello, world!", 10, 10));
-        IncrementalElement incr = new IncrementalElement(20, 20, 10);
+        IncrementalElement incr = new IncrementalElement(5, 5, 10);
         incr.value.setChangeCallback((s) -> System.out.println("IncrementalElement changed! " + s.getPrevious() + " -> " + s.getCurrent()));
         menu.add(incr);
         menu.openFor(user.getPlayer());

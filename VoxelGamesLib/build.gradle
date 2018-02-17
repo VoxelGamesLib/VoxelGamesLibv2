@@ -4,6 +4,8 @@ import proguard.gradle.ProGuardTask
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
+println(project.name)
+
 processResources {
     filter ReplaceTokens, tokens: [
         'version': version + "@" + revision

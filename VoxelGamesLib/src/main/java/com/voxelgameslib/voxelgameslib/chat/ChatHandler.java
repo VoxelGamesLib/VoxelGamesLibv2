@@ -24,6 +24,7 @@ public class ChatHandler implements Handler {
     /**
      * @see Handler#enable()
      */
+    @Override
     public void enable() {
         // every user should be in this channel:
         defaultChannel = new ChatChannel("default");
@@ -35,6 +36,7 @@ public class ChatHandler implements Handler {
     /**
      * @see Handler#disable()
      */
+    @Override
     public void disable() {
         defaultChannel = null;
         activeChannels = null;

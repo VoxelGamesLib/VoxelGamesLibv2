@@ -60,7 +60,7 @@ public class WorldModifyCommands extends BaseCommand {
         Lang.msg(sender, LangKey.WORLD_MODIFY_HELP);
     }
 
-    @Subcommand("enable")
+    @Subcommand("start")
     @CommandPermission("%admin")
     @Syntax("<world> - the name of the map you want to modify")
     public void start(@Nonnull User user, @Nonnull String world) {
@@ -181,7 +181,7 @@ public class WorldModifyCommands extends BaseCommand {
         //TODO lets do this later, we need a nice inventory here
     }
 
-    @Subcommand("disable")
+    @Subcommand("stop")
     @CommandPermission("%admin")
     public void stop(@Nonnull User user) {
         if (!check(user)) return;

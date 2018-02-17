@@ -15,11 +15,13 @@ public interface PersistenceProvider extends Handler {
     /**
      * Called when a provider is started
      */
+    @Override
     void enable();
 
     /**
      * Called when a provider is stopped
      */
+    @Override
     void disable();
 
     /**

@@ -44,6 +44,7 @@ public class TickHandler implements Handler {
     /**
      * Starts the ticker
      */
+    @Override
     public void enable() {
         Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
     }

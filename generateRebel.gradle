@@ -3,7 +3,7 @@ task generateRebelTask(dependsOn: "jar", type: Copy) {
     description = "Generate rebel.xm file"
 
     def paths = [
-        "VoxelGamesLib/build/classes/",
+        "VoxelGamesLib/build/classes/java/main",
 
         "games/1vs1/build/classes/",
         "games/Deathmatch/build/classes/",
@@ -25,7 +25,7 @@ task generateRebelTask(dependsOn: "jar", type: Copy) {
     def footer = """  </classpath>
 </application>"""
 
-    new File("VoxelGamesLib/src/main/resources/rebel.xml").write(header + middle + footer)
+    new File(project.rootProject.projectDir, "VoxelGamesLib/src/main/resources/rebel.xml").write(header + middle + footer)
 
     println "REBEL.XML WRITTEN"
 }
