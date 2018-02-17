@@ -1,0 +1,31 @@
+task generateRebelTask(dependsOn: "jar", type: Copy) {
+    group = "Copying"
+    description = "Generate rebel.xm file"
+
+    def paths = [
+        "VoxelGamesLib/build/classes/",
+
+        "games/1vs1/build/classes/",
+        "games/Deathmatch/build/classes/",
+        "games/Hub/build/classes/",
+
+        "tools/ChatMenuAPI/build/classes/"
+    ]
+    def middle = ""
+    for(def path : paths){
+        middle += "<dir name=\"" + file(path).absolutePath + "\"></dir>\n"
+    }
+
+    def header = """<!--
+   This is the JRebel configuration file. It maps the running application to your IDE workspace, enabling JRebel reloading for this project.
+   Refer to https://manuals.zeroturnaround.com/jrebel/standalone/config.html for more information.
+-->
+<application generated-by="gradle" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
+  <classpath>"""
+    def footer = """  </classpath>
+</application>"""
+
+    new File("VoxelGamesLib/src/main/resources/rebel.xml").write(header + middle + footer)
+
+    println "REBEL.XML WRITTEN"
+}

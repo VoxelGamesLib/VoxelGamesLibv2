@@ -26,6 +26,8 @@ ext {
     testServerFolder = "${rootProject.rootDir}/testserver/plugins"
 }
 
+apply from: "${rootProject.rootDir}/generateRebel.gradle"
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
