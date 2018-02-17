@@ -4,6 +4,10 @@ import com.google.inject.Injector;
 
 import com.bugsnag.Severity;
 
+import org.inventivetalent.menubuilder.MenuBuilderPlugin;
+import org.inventivetalent.menubuilder.inventory.InventoryListener;
+import org.objenesis.ObjenesisStd;
+
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -24,7 +28,6 @@ import com.voxelgameslib.voxelgameslib.command.commands.TextureCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.WorldRepositoryCommands;
-import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
 import com.voxelgameslib.voxelgameslib.components.points.PointHandler;
 import com.voxelgameslib.voxelgameslib.components.signs.SignButtons;
@@ -67,6 +70,7 @@ import com.voxelgameslib.voxelgameslib.user.UserListener;
 import com.voxelgameslib.voxelgameslib.utils.db.DB;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -103,8 +107,6 @@ public final class VoxelGamesLib extends JavaPlugin {
     private UserHandler userHandler;
     @Inject
     private RoleHandler roleHandler;
-    @Inject
-    private InventoryHandler inventoryHandler;
     @Inject
     private MapHandler mapHandler;
     @Inject
@@ -177,6 +179,12 @@ public final class VoxelGamesLib extends JavaPlugin {
             // chat menu api
             ChatMenuAPI.init(this);
 
+            // menu builder (excuse the hack, but we want to shade you)
+            MenuBuilderPlugin menuBuilderPluginFake = new ObjenesisStd().getInstantiatorOf(MenuBuilderPlugin.class).newInstance();
+            menuBuilderPluginFake.inventoryListener = new InventoryListener(menuBuilderPluginFake);
+            MenuBuilderPlugin.instance = menuBuilderPluginFake;
+            Bukkit.getPluginManager().registerEvents(menuBuilderPluginFake.inventoryListener, this);
+
             // guice
             VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
                     commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
@@ -193,7 +201,6 @@ public final class VoxelGamesLib extends JavaPlugin {
                 chatHandler.enable();
                 userHandler.enable();
                 roleHandler.enable();
-                inventoryHandler.enable();
                 mapHandler.enable();
                 worldHandler.enable();
                 teamHandler.enable();
@@ -246,7 +253,6 @@ public final class VoxelGamesLib extends JavaPlugin {
                 chatHandler.disable();
                 userHandler.disable();
                 roleHandler.disable();
-                inventoryHandler.disable();
                 mapHandler.disable();
                 worldHandler.disable();
                 teamHandler.disable();

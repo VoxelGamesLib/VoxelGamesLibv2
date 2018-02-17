@@ -1,24 +1,23 @@
 package com.voxelgameslib.voxelgameslib.editmode;
 
+import org.inventivetalent.menubuilder.inventory.InventoryMenuBuilder;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.function.BiConsumer;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.components.inventory.InventoryHandler;
-import com.voxelgameslib.voxelgameslib.components.inventory.PagedInventory;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
+import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -39,8 +38,6 @@ public class EditMode extends BaseCommand {
 
     @Inject
     private MapHandler mapHandler;
-    @Inject
-    private InventoryHandler inventoryHandler;
 
     @Nonnull
     private List<UUID> editMode = new ArrayList<>();
@@ -80,7 +77,7 @@ public class EditMode extends BaseCommand {
     public void skull(@Nonnull User sender, @Nonnull String name) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
-                    .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(name))).build();
+                .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(name))).build();
             sender.getPlayer().getInventory().setItemInMainHand(skull);
         } else {
             Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
@@ -103,17 +100,15 @@ public class EditMode extends BaseCommand {
     @CommandPermission("%admin")
     public void gui(@Nonnull User sender) {
         if (editMode.contains(sender.getUuid())) {
-            PagedInventory inventory = inventoryHandler.createInventory(PagedInventory.class, sender, Lang.legacy(LangKey.INV_MARKER), 9);
-
-            Map<ItemStack, BiConsumer<ItemStack, User>> content = new HashMap<>();
-            mapHandler.getMarkerDefinitions().forEach(markerDefinition -> {
+            //TODO implement paginated invs
+            InventoryMenuBuilder builder = new InventoryMenuBuilder().withSize(9).withTitle(Lang.legacy(LangKey.INV_MARKER));
+            for (int i = 0; i < mapHandler.getMarkerDefinitions().size(); i++) {
+                MarkerDefinition markerDefinition = mapHandler.getMarkerDefinitions().get(i);
                 ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
-                        .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
-                content.put(is, (item, user) -> user.getPlayer().performCommand("editmode skull " + is.getItemMeta().getDisplayName()));
-            });
-            inventory.autoConstructPages(content.keySet().toArray(new ItemStack[content.size()]));
-            content.forEach(inventory::addClickAction);
-            inventory.open();
+                    .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
+                builder.withItem(i, is, (player, clickType, itemStack) -> sender.getPlayer().performCommand("editmode skull " + itemStack.getItemMeta().getDisplayName()), ClickType.LEFT);
+            }
+            builder.show(sender.getPlayer());
         } else {
             Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
         }
