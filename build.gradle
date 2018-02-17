@@ -19,20 +19,17 @@ plugins {
 }
 
 group = 'com.voxelgameslib'
-version = '2.0-SNAPSHOT'
 
 import org.apache.tools.ant.filters.ReplaceTokens
-import proguard.gradle.ProGuardTask
 
 ext {
     testServerFolder = "${rootProject.rootDir}/testserver/plugins"
 }
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'idea'
-    apply plugin: 'kotlin'
     apply from: "${rootProject.rootDir}/nonnull.gradle"
 
     sourceCompatibility = 1.8
@@ -88,8 +85,6 @@ allprojects {
         compile group: 'org.inventivetalent', name: 'reflectionhelper', version: '1.13.0-SNAPSHOT'
         compile group: 'org.inventivetalent', name: 'mc-wrappers', version: '1.0.3-SNAPSHOT'
         compile group: 'io.github.lukehutch', name: 'fast-classpath-scanner', version: '2.18.1'
-        compile group: 'com.voxelgameslib', name: 'chatmenuapi', version: '1.0-SNAPSHOT', changing: true
-        compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.21'
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
         testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
@@ -101,19 +96,6 @@ allprojects {
 
         compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.4.0-SNAPSHOT'
     }
-
-    shadowJar {
-        mergeServiceFiles()
-        configurations = [project.configurations.compile]
-
-        //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
-
-        manifest {
-            attributes 'Implementation-Version': project.version + "@" + revision
-        }
-    }
-
-    build.dependsOn shadowJar
 
     processResources {
         filter ReplaceTokens, tokens: [
@@ -136,15 +118,8 @@ allprojects {
         options.fork = true
     }
 
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
     javadoc {
-        options.stylesheetFile = new File(rootProject.rootDir, "src/main/javadocs/javadoc_stylesheet.css")
+        options.stylesheetFile = new File(rootProject.rootDir, "VoxelGamesLib/src/main/javadocs/javadoc_stylesheet.css")
     }
 
     idea {
@@ -160,51 +135,13 @@ allprojects {
     }
 
     if (project.name.startsWith("/games")) {
+        dependencies{
+            compileOnly project(":VoxelGamesLib")
+        }
+
         task copyToServer(type: Copy) {
             from jar
             into testServerFolder
         }
     }
-}
-
-task copyToServer(type: Copy) {
-    from shadowJar
-    into testServerFolder
-}
-
-task createPom() {
-    pom {
-        project {
-            groupId 'com.voxelgameslib'
-            artifactId 'voxelgameslib'
-            version version
-
-            inceptionYear '2015'
-            licenses {
-                license {
-                    name 'MIT'
-                    url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/blob/master/LICENSE'
-                    distribution 'repo'
-                }
-            }
-
-            issueManagement {
-                system 'GitHub Issues'
-                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
-            }
-
-            scm {
-                connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
-                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
-            }
-        }
-    }.writeTo("pom.xml")
-}
-
-task proguard(type: ProGuardTask) {
-    configuration 'proguard.txt'
-
-    injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
-    outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
 }

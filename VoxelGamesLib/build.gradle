@@ -1,0 +1,70 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+import proguard.gradle.ProGuardTask
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+processResources {
+    filter ReplaceTokens, tokens: [
+        'version': version + "@" + revision
+    ]
+}
+
+task copyToServer(type: Copy) {
+    from shadowJar
+    into testServerFolder
+}
+
+shadowJar {
+    mergeServiceFiles()
+    configurations = [project.configurations.compile]
+
+    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
+
+    manifest {
+        attributes 'Implementation-Version': project.version + "@" + revision
+    }
+}
+
+build.dependsOn shadowJar
+
+dependencies{
+    compile project(":/tools/ChatMenuAPI")
+}
+
+task createPom() {
+    pom {
+        project {
+            groupId 'com.voxelgameslib'
+            artifactId 'voxelgameslib'
+            version version
+
+            inceptionYear '2015'
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+
+            issueManagement {
+                system 'GitHub Issues'
+                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2/issues'
+            }
+
+            scm {
+                connection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                developerConnection 'scm:git@github.com:VoxelGamesLib/VoxelGamesLibv2.git'
+                url 'https://github.com/VoxelGamesLib/VoxelGamesLibv2'
+            }
+        }
+    }.writeTo("pom.xml")
+}
+
+task proguard(type: ProGuardTask) {
+    configuration 'proguard.txt'
+
+    injars 'build/libs/voxelgameslib-' + project.version + '-all.jar'
+    outjars 'build/libs/voxelgameslib-' + project.version + '-result.jar'
+}
