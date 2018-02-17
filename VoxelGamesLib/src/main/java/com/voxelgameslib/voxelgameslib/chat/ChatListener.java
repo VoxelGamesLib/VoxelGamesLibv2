@@ -9,6 +9,7 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -19,8 +20,9 @@ public class ChatListener implements Listener {
     @Inject
     private UserHandler userHandler;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(@Nonnull AsyncPlayerChatEvent event) {
+        if (event.isCancelled()) return;
         Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
 
         user.ifPresent(u -> u.getActiveChannel().sendMessage(u, event.getMessage()));
