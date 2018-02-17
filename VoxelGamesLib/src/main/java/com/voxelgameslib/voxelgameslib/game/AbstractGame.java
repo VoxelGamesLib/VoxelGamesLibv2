@@ -403,7 +403,6 @@ public abstract class AbstractGame implements Game {
         spectators.remove(user);
         allUsers.remove(user);
         Optional.ofNullable(playerStates.remove(user.getUuid())).ifPresent(state -> state.apply(user));
-        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
         user.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
@@ -411,6 +410,8 @@ public abstract class AbstractGame implements Game {
         user.removeListeningChannel(chatChannel.getIdentifier());
         user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
         user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
+
+        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
     }
 
     @Override
