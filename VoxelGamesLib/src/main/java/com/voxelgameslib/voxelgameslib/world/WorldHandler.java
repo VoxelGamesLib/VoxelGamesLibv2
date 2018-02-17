@@ -35,12 +35,14 @@ import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.map.MapScanner;
+import com.voxelgameslib.voxelgameslib.map.Marker;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.FileUtils;
 import com.voxelgameslib.voxelgameslib.utils.NMSUtil;
 import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -100,7 +102,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             Optional<MapInfo> mapInfo = getMapInfo(name);
             if (!mapInfo.isPresent()) {
                 throw new MapException(
-                        "Unknown map " + name + ". Did you register it into the world config?");
+                    "Unknown map " + name + ". Did you register it into the world config?");
             }
 
             try {
@@ -115,7 +117,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
                     }
                 }
                 throw new MapException("Could not load map config for map " + name
-                        + ". Fileheader was null. Does it has a map.json?");
+                    + ". Fileheader was null. Does it has a map.json?");
 
             } catch (Exception e) {
                 throw new MapException("Error while trying to load map config " + name, e);
@@ -134,7 +136,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Nonnull
     public Optional<MapInfo> getMapInfo(@Nonnull String name) {
         return config.maps.stream().filter(mapInfo -> mapInfo.getName().equalsIgnoreCase(name))
-                .findAny();
+            .findAny();
     }
 
     /**
@@ -166,6 +168,22 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         if (replaceMarkers) {
             replaceMarkers(world, map);
         }
+
+        // load chunks based on markers
+        int i = 0;
+        int a = 0;
+        for (Marker m : map.getMarkers()) {
+            Location l = m.getLoc().toLocation(world.getName());
+            if (!l.getChunk().isLoaded() || !l.getWorld().isChunkLoaded(l.getChunk())) {
+                l.getChunk().load();
+                l.getWorld().loadChunk(l.getChunk());
+                i++;
+            } else {
+                a++;
+            }
+        }
+
+        log.finer("Loaded " + i + " chunks and ignored " + a + " already loaded");
 
         return world;
     }
@@ -202,8 +220,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         //worldRepository.setURL();// TODO make url configurable
         if (!worldsFolder.exists()) {
             log.warning(
-                    "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
-                            + worldRepository.getURL() + "...");
+                "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
+                    + worldRepository.getURL() + "...");
             worldRepository.cloneRepo();
         } else {
             worldRepository.updateRepo();
@@ -310,7 +328,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             fileWriter.close();
         } catch (IOException e) {
             Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_CONFIG_ERROR, e.getMessage(),
-                    e.getClass().getName());
+                e.getClass().getName());
             log.log(Level.WARNING, "Error while saving the world config", e);
             return;
         }
@@ -320,7 +338,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             zip = ZipUtil.createZip(worldFolder, map.getInfo().getName());
         } catch (ZipException e) {
             Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_ZIP_ERROR, e.getMessage(),
-                    e.getClass().getName());
+                e.getClass().getName());
             log.log(Level.WARNING, "Error while creating the zip", e);
             return;
         }
