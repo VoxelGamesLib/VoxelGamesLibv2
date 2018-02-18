@@ -25,6 +25,7 @@ import javax.persistence.Transient;
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
 import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.elo.EloHandler;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameEndEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
@@ -172,9 +173,12 @@ public abstract class AbstractGame implements Game {
 
         // fix stuff
         for (int i = 0; i < gameDefinition.getPhases().size(); i++) {
-            Phase nextPhase = null;
+            Phase nextPhase;
             if (gameDefinition.getPhases().size() > i + 1) {
                 nextPhase = gameDefinition.getPhases().get(i + 1);
+            } else {
+                log.severe("Couldn't fix next phase for phase " + gameDefinition.getPhases().get(i).getName());
+                return;
             }
             Phase currPhase = gameDefinition.getPhases().get(i);
             currPhase.setNextPhase(nextPhase);
@@ -242,7 +246,7 @@ public abstract class AbstractGame implements Game {
         //TODO handle stats
         if (winnerTeam != null) {
             Bukkit.getPluginManager()
-                    .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
+                .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
         } else if (winnerUser != null) {
             List<User> winningUsers = new ArrayList<>();
             winningUsers.add(winnerUser);
@@ -250,7 +254,7 @@ public abstract class AbstractGame implements Game {
             Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winningUsers, duration, aborted));
         } else {
             Bukkit.getPluginManager()
-                    .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
+                .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
         }
 
         if (!aborted) {
@@ -445,6 +449,14 @@ public abstract class AbstractGame implements Game {
         phase.setGame(this);
         phase.init();
         return phase;
+    }
+
+    @Nonnull
+    @Override
+    public <T extends VictoryCondition> T createVictoryCondition(@Nonnull Class<T> victoryConditionClass, Phase phase) {
+        T victoryCondition = injector.getInstance(victoryConditionClass);
+        victoryCondition.setPhase(phase);
+        return victoryCondition;
     }
 
     @Override

@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
+import com.voxelgameslib.voxelgameslib.condition.conditions.DuelVictoryCondition;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
@@ -152,6 +154,17 @@ public interface Game extends Tickable {
      */
     @Nonnull
     <T extends Phase> T createPhase(@Nonnull Class<T> phaseClass);
+
+    /**
+     * Create a new victory condition class (using guice and stuff)
+     *
+     * @param victoryCondition the class of the feature that should be created
+     * @param phase            the phase that the new feature should be attached to
+     * @param <T>              the victory condition
+     * @return the created condition instance
+     */
+    @Nonnull
+    <T extends VictoryCondition> T createVictoryCondition(@Nonnull Class<T> victoryCondition, Phase phase);
 
     /**
      * @return the minimum amount of players for this game

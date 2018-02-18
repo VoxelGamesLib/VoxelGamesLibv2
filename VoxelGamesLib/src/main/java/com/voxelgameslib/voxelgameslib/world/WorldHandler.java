@@ -274,6 +274,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      */
     @Nonnull
     public World loadLocalWorld(@Nonnull String name) {
+        log.finer("Loading world " + name);
         org.bukkit.WorldCreator wc = new WorldCreator(name);
         wc.environment(World.Environment.NORMAL); //TODO do we need support for environment in maps?
         wc.generateStructures(false);
@@ -292,6 +293,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @throws WorldException if the world is not found or something else goes wrong
      */
     public void unloadLocalWorld(@Nonnull String name) {
+        log.finer("Unloading world " + name);
         Bukkit.unloadWorld(name, false);
     }
 

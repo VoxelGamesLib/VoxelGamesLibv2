@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.game.Game;
@@ -90,6 +91,8 @@ public interface Phase extends Tickable {
     @Nonnull
     List<Feature> getFeatures();
 
+    void addVictoryCondition(VictoryCondition victoryCondition);
+
     /**
      * @return the {@link Phase} that will follow after this {@link Phase} has ended.
      */
@@ -153,4 +156,11 @@ public interface Phase extends Tickable {
      * @param identifier identifier of the tickable
      */
     void removeTickable(@Nonnull UUID identifier);
+
+    /**
+     * A list with all victory conditions that have to be met to be able to finish this game
+     *
+     * @return the list of victory conditions
+     */
+    List<VictoryCondition> getVictoryConditions();
 }

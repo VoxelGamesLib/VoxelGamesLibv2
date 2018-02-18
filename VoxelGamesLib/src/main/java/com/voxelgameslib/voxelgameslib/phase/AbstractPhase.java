@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -21,15 +23,20 @@ import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.command.CommandHandler;
 import com.voxelgameslib.voxelgameslib.components.ability.Ability;
+import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
+import com.voxelgameslib.voxelgameslib.condition.conditions.EmptyVictoryCondition;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
 import com.voxelgameslib.voxelgameslib.exception.DependencyGraphException;
 import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.graph.Graph;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.event.Listener;
 
@@ -63,7 +70,9 @@ public abstract class AbstractPhase implements Phase {
     @Nonnull
     @Expose
     private List<Feature> features = new ArrayList<>();
-
+    @Nonnull
+    @Expose
+    private List<VictoryCondition> victoryConditions = new ArrayList<>();
 
     private Game game;
 
@@ -122,7 +131,7 @@ public abstract class AbstractPhase implements Phase {
     @SuppressWarnings("unchecked")
     public <T extends Feature> T getFeature(@Nonnull Class<T> clazz) {
         return (T) features.stream().filter(f -> f.getClass().equals(clazz)).findFirst()
-                .orElseThrow(() -> new NoSuchFeatureException(clazz));
+            .orElseThrow(() -> new NoSuchFeatureException(clazz));
     }
 
     @Nonnull
@@ -136,6 +145,22 @@ public abstract class AbstractPhase implements Phase {
     @Override
     public List<Feature> getFeatures() {
         return features;
+    }
+
+
+    @Override
+    @Nonnull
+    public List<VictoryCondition> getVictoryConditions() {
+        return victoryConditions;
+    }
+
+    @Override
+    public void addVictoryCondition(VictoryCondition victoryCondition) {
+        if (victoryConditions.contains(victoryCondition)) {
+            throw new RuntimeException("Tried to register " + victoryCondition.getName() + " twice!");
+        }
+        log.finer("add " + victoryCondition.getName() + " victory condition");
+        victoryConditions.add(victoryCondition);
     }
 
     @Nullable
@@ -155,6 +180,14 @@ public abstract class AbstractPhase implements Phase {
             game.abortGame();
             return;
         }
+        if (!checkVictoryConditionDependencies()) {
+            game.abortGame();
+            return;
+        }
+        if (victoryConditions.size() == 0) {
+            addVictoryCondition(getGame().createVictoryCondition(EmptyVictoryCondition.class, this));
+        }
+
         // enable timer
         startTime = LocalDateTime.now();
 
@@ -189,6 +222,12 @@ public abstract class AbstractPhase implements Phase {
 
             startedFeatures.add(feature);
         }
+
+        for (VictoryCondition victoryCondition : victoryConditions) {
+            if (victoryCondition instanceof Listener) {
+                eventHandler.registerEvents((Listener) victoryCondition, getGame());
+            }
+        }
     }
 
     @Override
@@ -218,6 +257,12 @@ public abstract class AbstractPhase implements Phase {
             }
         }
 
+        for (VictoryCondition victoryCondition : victoryConditions) {
+            if (victoryCondition instanceof Listener) {
+                eventHandler.registerEvents((Listener) victoryCondition, getGame());
+            }
+        }
+
         phaseTickables.values().forEach(tickable -> {
             tickable.disable();
 
@@ -243,6 +288,8 @@ public abstract class AbstractPhase implements Phase {
     public void tick() {
         features.forEach(Feature::tick);
         phaseTickables.values().forEach(Tickable::tick);
+
+        checkEnd();
     }
 
     @Override
@@ -298,7 +345,7 @@ public abstract class AbstractPhase implements Phase {
                         getFeature(dependency);
                     } catch (NoSuchFeatureException ex) {
                         log.severe("could not find dependency " + dependency.getName() + " for feature " +
-                                feature.getClass().getName() + " in phase " + getName());
+                            feature.getClass().getName() + " in phase " + getName());
                         return false;
                     }
                 }
@@ -345,15 +392,27 @@ public abstract class AbstractPhase implements Phase {
 
         if (features.size() != orderedFeatures.size()) {
             throw new RuntimeException(
-                    "WTF HAPPENED HERE?!" + features.size() + " " + orderedFeatures.size());
+                "WTF HAPPENED HERE?!" + features.size() + " " + orderedFeatures.size());
         }
 
         // reverse order because dependencies need to be run before dependend features
         Collections.reverse(orderedFeatures);
         // remap classes to features
         features = orderedFeatures.stream().map((Function<Class, Feature>) this::getFeature)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
 
+        return true;
+    }
+
+    private boolean checkVictoryConditionDependencies() {
+        for (VictoryCondition condition : getVictoryConditions()) {
+            for (Class<? extends Feature> feature : condition.getDependencies()) {
+                if (!getOptionalFeature(feature).isPresent()) {
+                    log.severe(condition.getName() + " defined a dependency on feature " + feature.getSimpleName() + " which isn't present in phase " + getName());
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -365,5 +424,45 @@ public abstract class AbstractPhase implements Phase {
         } else {
             return duration;
         }
+    }
+
+    private void checkEnd() {
+        // check all victory conditions
+        User winner = null;
+        Team winnerTeam = null;
+        for (VictoryCondition victoryCondition : victoryConditions) {
+            if (!victoryCondition.completed()) {
+                return;
+            }
+
+            if (victoryCondition.getWinner() != null) {
+                if (!victoryCondition.getWinner().equals(winner)) {
+                    if (winner == null) {
+                        if (winnerTeam != null && !winnerTeam.contains(victoryCondition.getWinner())) {
+                            throw new VoxelGameLibException(victoryCondition.getName() + " defined a winner even tho we already have a winning team!");
+                        }
+                        winner = victoryCondition.getWinner();
+                    } else {
+                        throw new VoxelGameLibException(victoryCondition.getName() + " defined a different winner than one of the conditions before it!");
+                    }
+                }
+            }
+            if (victoryCondition.getWinnerTeam() != null) {
+                if (!victoryCondition.getWinnerTeam().equals(winnerTeam)) {
+                    if (winnerTeam == null) {
+                        if (winner != null && !victoryCondition.getWinnerTeam().contains(winner)) {
+                            throw new VoxelGameLibException(victoryCondition.getName() + " defined a winning team even tho we already have a winning user!");
+                        } else {
+                            winnerTeam = victoryCondition.getWinnerTeam();
+                        }
+                    } else {
+                        throw new VoxelGameLibException(victoryCondition.getName() + " defined a different winning team than one of the conditions before it!");
+                    }
+                }
+            }
+        }
+
+        // all done, end this game
+        getGame().endGame(winnerTeam, winner);
     }
 }
