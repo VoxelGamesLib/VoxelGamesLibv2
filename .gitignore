@@ -12,6 +12,8 @@ build/
 # Java
 *.jar
 
+*out*
+
 # JRebel <3
 rebel.xml
 
