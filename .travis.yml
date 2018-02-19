@@ -26,4 +26,4 @@ deploy:
     branch: master
   skip_cleanup: true
 install: "git submodule update"
-script: "gradle build dependencyUpdates createPom javadoc"
+script: "gradle build dependencyUpdates createPom javadoc && chmod +x scripts/regenerate-docs.sh && scripts/regenerate-docs.sh"
