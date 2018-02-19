@@ -4,5 +4,5 @@ wget https://github.com/VoxelGamesLib/VoxelGamesLibv2/raw/gh-pages/commandline-t
 echo 'run cli.jar'
 # java -jar cli.jar -generateDocs -docsFolder docs
 echo 'push'
-cd docs
-git push
+# cd docs
+# git push
