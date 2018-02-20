@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- if [ "$RUNDOCS" = "false" ]; then
+ if [ "$RUNDOCS" != "true" ]; then
     echo "skipping docs"
     exit 1
 fi
