@@ -9,4 +9,4 @@ echo 'run cli.jar'
 java -jar cli.jar -generateDocs -docsFolder docs
 echo 'push'
 cd docs
-git push
+git push "https://${GITHUB_TOKEN}@github.com/VoxelGamesLib/docs.git" master:master
