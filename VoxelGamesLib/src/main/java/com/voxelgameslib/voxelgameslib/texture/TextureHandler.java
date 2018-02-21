@@ -3,6 +3,9 @@ package com.voxelgameslib.voxelgameslib.texture;
 import com.google.gson.Gson;
 import com.google.inject.name.Named;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
+
 import org.mineskin.MineskinClient;
 import org.mineskin.Model;
 import org.mineskin.SkinOptions;
@@ -27,8 +30,10 @@ import javax.inject.Singleton;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 @Singleton
 public class TextureHandler implements Handler {
@@ -57,6 +62,8 @@ public class TextureHandler implements Handler {
             Arrays.stream(files).map(file -> file.getName().replace(".json", "")).forEach(this::loadSkin);
         }
         log.info("Loaded " + loadedSkins.size() + " skins");
+
+        fetchSkin(118300, null);
     }
 
     @Override
@@ -106,6 +113,9 @@ public class TextureHandler implements Handler {
 
         // fetch from mineskin
         mineskinClient.getSkin(id, skin -> {
+            if (skin.name.equals("")) {
+                skin.name = id + "";
+            }
             loadedSkins.add(skin);
             saveSkin(skin);
             if (skinCallback != null) {
@@ -143,15 +153,14 @@ public class TextureHandler implements Handler {
         return null;
     }
 
+    public PlayerProfile getPlayerProfile(Skin skin) {
+        PlayerProfile playerProfile = Bukkit.createProfile(skin.data.uuid, skin.name);
+        playerProfile.setProperty(new ProfileProperty("textures", skin.data.texture.value, skin.data.texture.signature));
+        return playerProfile;
+    }
+
     @Nullable
     public ItemStack getSkull(@Nonnull Skin skin) {
-        return new ItemBuilder(Material.SKULL_ITEM).durability(3).name(skin.name).meta((itemMeta -> {
-            try {
-                HeadTextureChanger.applyTextureToMeta(itemMeta,
-                        HeadTextureChanger.createProfile(skin.data.texture.value, skin.data.texture.signature));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        })).build();
+        return new ItemBuilder(Material.SKULL_ITEM).durability(3).name(skin.name).meta((itemMeta -> ((SkullMeta) itemMeta).setPlayerProfile(getPlayerProfile(skin)))).build();
     }
 }

@@ -62,6 +62,7 @@ import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
 import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
+import com.voxelgameslib.voxelgameslib.texture.TextureListener;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -351,6 +352,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         pm.registerEvents(injector.getInstance(SignPlaceholders.class), this);
         pm.registerEvents(injector.getInstance(SignButtons.class), this);
         pm.registerEvents(injector.getInstance(CommandHandler.class), this);
+        pm.registerEvents(injector.getInstance(TextureListener.class), this);
     }
 
 
