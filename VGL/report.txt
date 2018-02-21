@@ -24,7 +24,6 @@ The following dependencies exceed the version found at the milestone revision le
  - de.davidbilge:jskill [1.1-SNAPSHOT <- 1.0]
  - org.inventivetalent:mc-wrappers [1.0.3-SNAPSHOT <- 1.0.2]
  - org.inventivetalent:reflectionhelper [1.13.0-SNAPSHOT <- 1.10.4]
- - org.spigotmc:spigot-api [1.12.1-R0.1-SNAPSHOT <- 1.5.1-R0.2]
 
 The following dependencies have later milestone versions:
  - com.zaxxer:HikariCP [2.6.3 -> 2.7.7]
