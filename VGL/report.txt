@@ -39,4 +39,5 @@ The following dependencies have later milestone versions:
 Failed to determine the latest version for the following dependencies (use --info for details):
  - co.aikar:acf-bukkit
  - org.mineskin:java-client
- - org.spigotmc:spigot
+ - com.destroystokyo.paper:paper
+ - com.destroystokyo.paper:paper-api
