@@ -6,12 +6,6 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 println(project.name)
 
-processResources {
-    filter ReplaceTokens, tokens: [
-        'version': version + "@" + revision
-    ]
-}
-
 task copyToServer(type: Copy) {
     from shadowJar
     into testServerFolder
