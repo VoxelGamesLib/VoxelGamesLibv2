@@ -30,3 +30,7 @@
 	path = tools/skeletonkt
 	url = https://github.com/VoxelGamesLib/skeletonkt.git
 	branch = master
+[submodule "tools/dependencies"]
+	path = tools/dependencies
+	url = https://github.com/VoxelGamesLib/dependencies.git
+	branch = master

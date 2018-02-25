@@ -1,31 +1,12 @@
-import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-println(project.name)
-
 task copyToServer(type: Copy) {
-    from shadowJar
+    from jar
     into testServerFolder
 }
 
-shadowJar {
-    mergeServiceFiles()
-    configurations = [project.configurations.compile]
-
-    //relocate 'org.bstats', 'com.voxelgameslib.voxelgameslib.metrics' TODO relocate bstats
-
-    manifest {
-        attributes 'Implementation-Version': project.version + "@" + revision
-    }
-}
-
-build.dependsOn shadowJar
-
 dependencies{
-    compile project(":/tools/ChatMenuAPI")
+    compile project(":/tools/dependencies")
 }
 
 task createPom() {
