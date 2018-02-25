@@ -34,3 +34,7 @@
 	path = tools/dependencies
 	url = https://github.com/VoxelGamesLib/dependencies.git
 	branch = master
+[submodule "tools/assets"]
+	path = tools/assets
+	url = https://github.com/VoxelGamesLib/assets.git
+	branch = master
