@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.editmode;
 
 import org.inventivetalent.menubuilder.inventory.InventoryMenuBuilder;
+import org.mineskin.data.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,12 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
+import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
@@ -38,6 +41,9 @@ public class EditMode extends BaseCommand {
 
     @Inject
     private MapHandler mapHandler;
+
+    @Inject
+    private TextureHandler textureHandler;
 
     @Nonnull
     private List<UUID> editMode = new ArrayList<>();
@@ -77,7 +83,12 @@ public class EditMode extends BaseCommand {
     public void skull(@Nonnull User sender, @Nonnull String name) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
-                .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(name))).build();
+                .meta((itemMeta -> {
+                    char prefix = name.toUpperCase().charAt(0);
+                    Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));
+                    ((SkullMeta) itemMeta).setPlayerProfile(textureHandler.getPlayerProfile(skin));
+                    ((SkullMeta) itemMeta).setOwner(name);
+                })).build();
             sender.getPlayer().getInventory().setItemInMainHand(skull);
         } else {
             Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
@@ -105,8 +116,14 @@ public class EditMode extends BaseCommand {
             for (int i = 0; i < mapHandler.getMarkerDefinitions().size(); i++) {
                 MarkerDefinition markerDefinition = mapHandler.getMarkerDefinitions().get(i);
                 ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
-                    .meta((itemMeta -> ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix()))).build();
-                builder.withItem(i, is, (player, clickType, itemStack) -> sender.getPlayer().performCommand("editmode skull " + itemStack.getItemMeta().getDisplayName()), ClickType.LEFT);
+                    .meta((itemMeta -> {
+                        char prefix = markerDefinition.getPrefix().toUpperCase().charAt(0);
+                        Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));
+                        ((SkullMeta) itemMeta).setPlayerProfile(textureHandler.getPlayerProfile(skin));
+                        ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix());
+                    })).build();
+                builder.withItem(i, is, (player, clickType, itemStack) ->
+                    sender.getPlayer().performCommand("editmode skull " + itemStack.getItemMeta().getDisplayName()), ClickType.LEFT);
             }
             builder.show(sender.getPlayer());
         } else {

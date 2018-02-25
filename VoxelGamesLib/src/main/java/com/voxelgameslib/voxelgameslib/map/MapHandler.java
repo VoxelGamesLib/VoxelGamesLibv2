@@ -12,8 +12,11 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.persistence.Entity;
 
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.feature.Feature;
+import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -39,21 +42,20 @@ public class MapHandler implements Handler {
     @Override
     public void enable() {
         Timings.time("ScanningFeatures", () ->
-                new FastClasspathScanner().scan().getNamesOfSubclassesOf(AbstractFeature.class).stream().map(n -> {
-                    try {
-                        //noinspection unchecked
-                        return (Class<AbstractFeature>) Class.forName(n);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+            new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
+                .matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
+                    if (!Feature.class.isAssignableFrom(clazz)) {
+                        log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
+                        return;
                     }
-                    return null;
-                }).filter(Objects::nonNull).forEach(clazz -> {
+                    //noinspection unchecked
+                    Class<Feature> cls = (Class<Feature>) clazz;
                     try {
-                        markerDefinitions.addAll(Arrays.asList(clazz.newInstance().getMarkers()));
+                        markerDefinitions.addAll(Arrays.asList(cls.newInstance().getMarkers()));
                     } catch (InstantiationException | IllegalAccessException e) {
-                        log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed!", e);
+                        log.log(Level.WARNING, "Feature " + cls.getName() + " is malformed!", e);
                     }
-                }));
+                }).scan());
         log.info("Loaded " + markerDefinitions.size() + " MarkerDefinitions");
     }
 

@@ -16,9 +16,12 @@ import org.mineskin.data.SkinCallback;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +30,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
@@ -49,6 +53,9 @@ public class TextureHandler implements Handler {
     @Named("SkinsFolder")
     private File skinsFolder;
 
+    @Inject
+    private VoxelGamesLib voxelGamesLib;
+
     private MineskinClient mineskinClient = new MineskinClient();
 
     @Override
@@ -64,6 +71,18 @@ public class TextureHandler implements Handler {
         log.info("Loaded " + loadedSkins.size() + " skins");
 
         fetchSkin(118300, null);
+
+        // loading skins 0-9A-Z from provided ids
+        try {
+            InputStreamReader reader = new InputStreamReader(voxelGamesLib.getResource("ids.json"));
+            //noinspection unchecked
+            Map<String, Double> ids = gson.fromJson(reader, Map.class);
+            ids.forEach((key, value) -> fetchSkin(value.intValue(), key, null));
+            reader.close();
+        } catch (IOException e) {
+            log.warning("Error while loading skins, some features of VGL might not work as expected!");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -92,16 +111,34 @@ public class TextureHandler implements Handler {
         }
 
         // fetch from mineskin
-        mineskinClient.generateUrl(url, SkinOptions.create(name, Model.DEFAULT, Visibility.PRIVATE), skin -> {
-            loadedSkins.add(skin);
-            saveSkin(skin);
-            if (skinCallback != null) {
-                skinCallback.done(skin);
+        mineskinClient.generateUrl(url, SkinOptions.create(name, Model.DEFAULT, Visibility.PRIVATE), new SkinCallback() {
+            @Override
+            public void done(Skin skin) {
+                loadedSkins.add(skin);
+                TextureHandler.this.saveSkin(skin);
+                if (skinCallback != null) {
+                    skinCallback.done(skin);
+                }
+            }
+
+            @Override
+            public void error(String errorMessage) {
+                log.warning("Error while fetching skin " + name + " (" + url + "): " + errorMessage);
+            }
+
+            @Override
+            public void exception(Exception exception) {
+                log.log(Level.WARNING, "Error while fetching skin " + name + " (" + url + "): ", exception);
             }
         });
     }
 
     public void fetchSkin(int id, @Nullable SkinCallback skinCallback) {
+        fetchSkin(id, id + "", skinCallback);
+    }
+
+    public void fetchSkin(int id, String fallBackName, @Nullable SkinCallback skinCallback) {
+        System.out.println("fetching skin " + id + " fallbackname " + fallBackName);
         // check cache
         Optional<Skin> s = getSkin(id);
         if (s.isPresent()) {
@@ -112,14 +149,27 @@ public class TextureHandler implements Handler {
         }
 
         // fetch from mineskin
-        mineskinClient.getSkin(id, skin -> {
-            if (skin.name.equals("")) {
-                skin.name = id + "";
+        mineskinClient.getSkin(id, new SkinCallback() {
+            @Override
+            public void done(Skin skin) {
+                if (skin.name.equals("")) {
+                    skin.name = fallBackName;
+                }
+                loadedSkins.add(skin);
+                TextureHandler.this.saveSkin(skin);
+                if (skinCallback != null) {
+                    skinCallback.done(skin);
+                }
             }
-            loadedSkins.add(skin);
-            saveSkin(skin);
-            if (skinCallback != null) {
-                skinCallback.done(skin);
+
+            @Override
+            public void error(String errorMessage) {
+                log.warning("Error while fetching skin #" + id + " (" + fallBackName + "): " + errorMessage);
+            }
+
+            @Override
+            public void exception(Exception exception) {
+                log.log(Level.WARNING, "Error while fetching skin #" + id + " (" + fallBackName + "): ", exception);
             }
         });
     }
