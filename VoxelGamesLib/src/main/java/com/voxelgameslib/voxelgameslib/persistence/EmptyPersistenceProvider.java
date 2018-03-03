@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
@@ -22,13 +23,13 @@ public class EmptyPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(@Nonnull User user) {
+    public void saveUser(@Nonnull UserData user) {
         // ignore
     }
 
     @Override
     @Nonnull
-    public Optional<User> loadUser(@Nonnull UUID id) {
+    public Optional<UserData> loadUser(@Nonnull UUID id) {
         return Optional.empty();
     }
 }

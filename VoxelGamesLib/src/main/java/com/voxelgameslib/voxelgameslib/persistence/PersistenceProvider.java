@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
@@ -29,14 +30,14 @@ public interface PersistenceProvider extends Handler {
      *
      * @param user the user data to persist
      */
-    void saveUser(@Nonnull User user);
+    void saveUser(@Nonnull UserData user);
 
     /**
      * Tries to load the data for a user based on a uuid
      *
      * @param id the uuid of the user data
-     * @return the User, if present
+     * @return the UserData, if present
      */
     @Nonnull
-    Optional<User> loadUser(@Nonnull UUID id);
+    Optional<UserData> loadUser(@Nonnull UUID id);
 }

@@ -60,6 +60,6 @@ public class RoleCommands extends BaseCommand {
         user.applyRoleSuffix();
         Lang.msg(sender, LangKey.ROLE_UPDATED_OTHER,
                 user.getDisplayName(), role.getName());
-        persistenceHandler.getProvider().saveUser(user);
+        persistenceHandler.getProvider().saveUser(user.getUserData());
     }
 }

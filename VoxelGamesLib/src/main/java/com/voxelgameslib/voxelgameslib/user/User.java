@@ -11,6 +11,7 @@ import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.game.GameMode;
 import com.voxelgameslib.voxelgameslib.lang.Locale;
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
 
@@ -240,4 +241,8 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      * Applies the default suffix of the role, if there is one
      */
     void applyRoleSuffix();
+
+    UserData getUserData();
+
+    void setUserData(UserData userData);
 }

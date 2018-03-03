@@ -18,6 +18,7 @@ import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 
 import org.bukkit.entity.Player;
 
@@ -64,19 +65,15 @@ public class UserHandler implements Handler {
         User user = tempData.remove(player.getUniqueId());
         user.setPlayer(player);
 
-        if (user.getDisplayName() == null || user.getRawDisplayName() == null) {
-            user.setDisplayName(user.getPlayer().getDisplayName());
-        }
+        user.refreshDisplayName();
 
         // todo load persisted data
-
         user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
         user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
 
         user.applyRolePrefix();
         user.applyRoleSuffix();
 
-        user.refreshDisplayName();
 
         users.put(user.getUuid(), user);
         log.info("Applied data for user " + user.getUuid() + " (" + user.getRole().getName() + " " + user.getRawDisplayName() + ")");
@@ -88,7 +85,7 @@ public class UserHandler implements Handler {
      * @param id the uuid of the user that logged out
      */
     public void logout(@Nonnull UUID id) {
-        getUser(id).ifPresent(u -> persistenceHandler.getProvider().saveUser(u));
+        getUser(id).ifPresent(u -> persistenceHandler.getProvider().saveUser(u.getUserData()));
 
         users.remove(id);
         tempData.remove(id);
@@ -114,14 +111,21 @@ public class UserHandler implements Handler {
     public boolean login(@Nonnull UUID uniqueId) {
         log.info("Loading data for user " + uniqueId);
 
-        Optional<User> data = persistenceHandler.getProvider().loadUser(uniqueId);
+        Optional<UserData> data = persistenceHandler.getProvider().loadUser(uniqueId);
         if (data.isPresent()) {
-            User userData = data.get();
-            injector.injectMembers(userData);
-            tempData.put(uniqueId, userData);
-        } else {
-            User user = new GamePlayer();
+            // existing user
+            UserData userData = data.get();
+            GamePlayer user = new GamePlayer();
             user.setUuid(uniqueId);
+            user.setUserData(userData);
+            injector.injectMembers(user);
+            tempData.put(uniqueId, user);
+        } else {
+            // new user
+            GamePlayer user = new GamePlayer();
+            user.setUuid(uniqueId);
+            user.setUserData(new UserData());
+            user.getUserData().setUuid(uniqueId);
             injector.injectMembers(user);
             tempData.put(uniqueId, user);
         }

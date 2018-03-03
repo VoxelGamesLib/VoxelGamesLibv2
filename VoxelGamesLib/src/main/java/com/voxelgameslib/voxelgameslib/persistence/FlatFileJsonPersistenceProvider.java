@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 /**
@@ -31,7 +32,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     private File folder;
 
     private File UserFile;
-    private Map<UUID, User> UserMap;
+    private Map<UUID, UserData> UserMap;
 
     @SuppressWarnings("Duplicates")
     @Override
@@ -67,7 +68,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(@Nonnull User user) {
+    public void saveUser(@Nonnull UserData user) {
         UserMap.put(user.getUuid(), user);
         saveUsers();
     }
@@ -82,7 +83,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
     @Override
     @Nonnull
-    public Optional<User> loadUser(@Nonnull UUID id) {
+    public Optional<UserData> loadUser(@Nonnull UUID id) {
         return Optional.ofNullable(UserMap.get(id));
     }
 }

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -37,6 +38,7 @@ import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.persistence.converter.ComponentConverter;
 import com.voxelgameslib.voxelgameslib.persistence.converter.LocaleConverter;
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
@@ -48,62 +50,22 @@ import jskills.Rating;
 /**
  * abstract implementation of the user interface that deals with some stuff
  */
-@Entity
-@Table(name = "players")
 public class GamePlayer implements User {
 
-    @Transient
     @Inject
     private GlobalConfig config;
-    @Transient
     @Inject
     private PersistenceHandler persistenceHandler;
-    @Transient
     @Inject
     private ChatHandler chatHandler;
 
-    @Transient
-    private Player player;
-
-    @Expose
-    @Id
-    @Type(type = "uuid-char")
     private UUID uuid;
-
-    @Expose
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.DEFAULT;
-
-    @Expose
-    @Convert(converter = LocaleConverter.class)
-    private Locale locale = Locale.ENGLISH;
-
-    @Expose
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @CollectionTable(name = "ratings")
-    @MapKeyColumn(name = "gamemode")
-    private Map<String, RatingWrapper> ratings = new HashMap<>();
+    private Player player;
+    private UserData userData;
 
     @Expose
     @Transient//TODO fix me
     private Map<GameMode, Map<String, Integer>> points = new HashMap<>();
-
-    @Expose
-    @Column(name = "display_name")
-    @Convert(converter = ComponentConverter.class)
-    // combination of <prefix> <rawdisplayname> <suffix>
-    private Component displayName;
-
-    @Expose
-    @Column(name = "raw_display_name")
-    private String rawDisplayName;
-
-    @Expose
-    @Convert(converter = ComponentConverter.class)
-    private Component prefix = TextComponent.of("");
-    @Expose
-    @Convert(converter = ComponentConverter.class)
-    private Component suffix = TextComponent.of("");
 
     @Transient
     @Expose//TODO figure out what to do with chat channels
@@ -112,20 +74,10 @@ public class GamePlayer implements User {
     @Expose
     private ChatChannel activeChannel;
 
-    /* Data to persist. Otherwise has no use */
-    @Expose
-    @Column(name = "username")
-    private String name;
-    @Expose
-    @Column(name = "ip_address")
-    private String ipAddress;
-    @Expose
-    private boolean banned;
-
     @Nonnull
     @Override
     public UUID getUuid() {
-        return uuid;
+        return userData.getUuid();
     }
 
     @Override
@@ -144,33 +96,33 @@ public class GamePlayer implements User {
     @Override
     @Nonnull
     public Component getDisplayName() {
-        if (rawDisplayName == null) {
+        if (userData.getRawDisplayName() == null) {
             // wat?
-            rawDisplayName = getPlayer().getDisplayName();
+            userData.setRawDisplayName(getPlayer().getDisplayName());
         }
 
-        if (displayName == null) {
-            if (prefix == null) {
-                prefix = TextComponent.of("");
+        if (userData.getDisplayName() == null) {
+            if (userData.getPrefix() == null) {
+                userData.setPrefix(TextComponent.of(""));
             }
-            if (suffix == null) {
-                suffix = TextComponent.of("");
+            if (userData.getSuffix() == null) {
+                userData.setSuffix(TextComponent.of(""));
             }
-            displayName = TextComponent.of("").append(prefix.append(TextComponent.of(rawDisplayName))).append(suffix);
+            userData.setDisplayName(TextComponent.of("").append(userData.getPrefix().append(TextComponent.of(userData.getRawDisplayName()))).append(userData.getSuffix()));
         }
-        return displayName;
+        return userData.getDisplayName();
     }
 
     @Override
     public void setDisplayName(@Nonnull String displayName) {
-        this.rawDisplayName = displayName;
+        userData.setRawDisplayName(displayName);
         refreshDisplayName();
     }
 
     @Override
     @Nonnull
     public String getRawDisplayName() {
-        return rawDisplayName;
+        return userData.getRawDisplayName();
     }
 
     @Override
@@ -188,23 +140,23 @@ public class GamePlayer implements User {
     @Override
     @Nonnull
     public Locale getLocale() {
-        return locale;
+        return userData.getLocale();
     }
 
     @Override
     public void setLocale(@Nonnull Locale locale) {
-        this.locale = locale;
+        userData.setLocale(locale);
     }
 
     @Override
     @Nonnull
     public Role getRole() {
-        return role;
+        return userData.getRole();
     }
 
     @Override
     public void setRole(@Nonnull Role role) {
-        this.role = role;
+        userData.setRole(role);
     }
 
     @Override
@@ -220,22 +172,22 @@ public class GamePlayer implements User {
 
     @Override
     public void saveRating(@Nonnull GameMode mode, @Nonnull Rating rating) {
-        ratings.put(mode.getName(), new RatingWrapper(rating));
-        persistenceHandler.getProvider().saveUser(this);
+        userData.getRatings().put(mode.getName(), new RatingWrapper(rating));
+        persistenceHandler.getProvider().saveUser(getUserData());
     }
 
     @Override
     public void refreshDisplayName() {
-        displayName = null; // regenerate full display name
+        userData.setDisplayName(null); // regenerate full display name
     }
 
     @Override
     @Nonnull
     public Map<String, RatingWrapper> getRatings() {
-        if (ratings == null) {
-            ratings = new HashMap<>();
+        if (userData.getRatings() == null) {
+            userData.setRatings(new HashMap<>());
         }
-        return ratings;
+        return userData.getRatings();
     }
 
     @Override
@@ -265,9 +217,9 @@ public class GamePlayer implements User {
     }
 
     private void setPlayerData(@Nonnull Player player) {
-        name = player.getName();
-        ipAddress = player.getAddress().getAddress().getHostAddress();
-        banned = player.isBanned();
+        userData.setName(player.getName());
+        userData.setIpAddress(player.getAddress().getAddress().getHostAddress());
+        userData.setBanned(player.isBanned());
     }
 
     @Override
@@ -283,24 +235,24 @@ public class GamePlayer implements User {
     @Override
     @Nonnull
     public Component getPrefix() {
-        return prefix;
+        return userData.getPrefix();
     }
 
     @Override
     public void setPrefix(@Nonnull Component prefix) {
-        this.prefix = prefix;
+        userData.setPrefix(prefix);
         refreshDisplayName();
     }
 
     @Override
     @Nonnull
     public Component getSuffix() {
-        return suffix;
+        return userData.getSuffix();
     }
 
     @Override
     public void setSuffix(@Nonnull Component suffix) {
-        this.suffix = suffix;
+        userData.setSuffix(suffix);
         refreshDisplayName();
     }
 
@@ -362,5 +314,15 @@ public class GamePlayer implements User {
         if (config.useRoleSystem && getRole().getSuffix() != null) {
             setSuffix(getRole().getSuffix());
         }
+    }
+
+    @Override
+    public UserData getUserData() {
+        return userData;
+    }
+
+    @Override
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 }

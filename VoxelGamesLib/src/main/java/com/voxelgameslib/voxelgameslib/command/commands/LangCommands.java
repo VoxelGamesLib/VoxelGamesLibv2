@@ -64,6 +64,6 @@ public class LangCommands extends BaseCommand {
             Lang.msg(sender, LangKey.LANG_NOT_ENABLED, locale.getName());
         }
 
-        persistenceHandler.getProvider().saveUser(sender);
+        persistenceHandler.getProvider().saveUser(sender.getUserData());
     }
 }

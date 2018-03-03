@@ -24,6 +24,7 @@ import javax.persistence.Entity;
 
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -97,7 +98,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public void saveUser(@Nonnull User user) {
+    public void saveUser(@Nonnull UserData user) {
         session(session -> {
             session.saveOrUpdate(user);
             return null;
@@ -106,8 +107,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @Override
     @Nonnull
-    public Optional<User> loadUser(@Nonnull UUID id) {
-        return Optional.ofNullable(session(session -> session.get(GamePlayer.class, id)));
+    public Optional<UserData> loadUser(@Nonnull UUID id) {
+        return Optional.ofNullable(session(session -> session.get(UserData.class, id)));
     }
 
     @Nullable
