@@ -38,7 +38,7 @@ public class UserListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(@Nonnull PlayerJoinEvent event) {
         if (!handler.hasLoggedIn(event.getPlayer().getUniqueId())) {
             // worst case: load data sync

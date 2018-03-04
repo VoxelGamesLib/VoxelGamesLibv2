@@ -60,6 +60,8 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
+import com.voxelgameslib.voxelgameslib.stats.StatListener;
+import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
 import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureListener;
@@ -140,6 +142,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private CommandHandler commandHandler;
     @Inject
     private TextureHandler textureHandler;
+    @Inject
+    private StatsHandler statsHandler;
 
     @Inject
     private TestStuff testStuff;
@@ -213,6 +217,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 kitHandler.enable();
                 commandHandler.enable();
                 textureHandler.enable();
+                statsHandler.enable();
 
                 gameHandler.enable();
             });
@@ -265,6 +270,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 pointHandler.disable();
                 commandHandler.disable();
                 textureHandler.disable();
+                statsHandler.disable();
 
                 gameHandler.disable();
                 moduleHandler.disable();
@@ -353,6 +359,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         pm.registerEvents(injector.getInstance(SignButtons.class), this);
         pm.registerEvents(injector.getInstance(CommandHandler.class), this);
         pm.registerEvents(injector.getInstance(TextureListener.class), this);
+        pm.registerEvents(injector.getInstance(StatListener.class), this);
     }
 
 
