@@ -18,8 +18,6 @@ public abstract class Stat {
     @Inject
     private UserHandler userHandler;
 
-    public abstract String getName();
-
     @Nullable
     public Listener getListener() {
         return null;
@@ -38,11 +36,11 @@ public abstract class Stat {
     }
 
     public StatInstance getInstance(User user) {
-        return statsHandler.getInstance(this, user);
+        return user.getUserData().getStat(getType());
     }
 
     public StatInstance getInstance(UUID id) {
-        return statsHandler.getInstance(this, userHandler.getUser(id).orElseThrow(() -> new VoxelGameLibException("Unknown user " + id)));
+        return getInstance(getUser(id));
     }
 
     @Override
@@ -50,11 +48,21 @@ public abstract class Stat {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stat stat = (Stat) o;
-        return Objects.equals(getName(), stat.getName());
+        return Objects.equals(getType(), stat.getType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getType());
+    }
+
+    public abstract StatType getType();
+
+    public StatInstance getNewInstance(UUID uuid) {
+        return new StatInstance(getUser(uuid), getType(), defaultValue());
+    }
+
+    public User getUser(UUID uuid){
+        return userHandler.getUser(uuid).orElseThrow(() -> new VoxelGameLibException("Unknown user " + uuid));
     }
 }

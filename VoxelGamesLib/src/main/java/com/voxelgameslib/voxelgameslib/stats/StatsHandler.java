@@ -1,20 +1,18 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
 import com.google.inject.Injector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.persistence.Entity;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
 import org.bukkit.Bukkit;
 
@@ -24,13 +22,18 @@ import io.github.lukehutch.fastclasspathscanner.matchprocessor.SubclassMatchProc
 @Singleton
 public class StatsHandler implements Handler {
 
+    private static final Logger log = Logger.getLogger(StatsHandler.class.getName());
+
     @Inject
     private VoxelGamesLib vgl;
     @Inject
     private Injector injector;
+    @Inject
+    private UserHandler userHandler;
+    @Inject
+    private PersistenceHandler persistenceHandler;
 
     private List<Stat> statTypes = new ArrayList<>();
-    private Table<Stat, UUID, StatInstance> instances = HashBasedTable.create();
 
     @Override
     public void enable() {
@@ -39,27 +42,26 @@ public class StatsHandler implements Handler {
         Timings.time("RegisterStatTypes",
             () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
                 .matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan());
-    }
 
+        Bukkit.getScheduler().runTaskTimer(vgl, () -> userHandler.getUsers().forEach(user -> {
+            if(user.getUserData().getStats().values().stream().anyMatch(StatInstance::isDirty)){
+                log.finer("Persisting stats for " + user.getRawDisplayName());
+                persistenceHandler.getProvider().saveUser(user.getUserData());
+            }
+        }), 60 * 20, 60 * 20);
+    }
+    
     @Override
     public void disable() {
 
     }
 
-    public void registerStatType(Class<? extends Stat> clazz) {
+    private void registerStatType(Class<? extends Stat> clazz) {
         Stat stat = injector.getInstance(clazz);
+        stat.getType().setStat(stat);
         statTypes.add(stat);
         if (stat.getListener() != null) {
             Bukkit.getPluginManager().registerEvents(stat.getListener(), vgl);
         }
-    }
-
-    public StatInstance getInstance(Stat stat, User user) {
-        StatInstance instance = instances.get(stat, user.getUuid());
-        if (instance == null) {
-            instance = new StatInstance(user, stat, stat.defaultValue());
-            instances.put(stat, user.getUuid(), instance);
-        }
-        return instance;
     }
 }

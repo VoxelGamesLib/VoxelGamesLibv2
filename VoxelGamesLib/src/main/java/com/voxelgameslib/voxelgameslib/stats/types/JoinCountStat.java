@@ -3,17 +3,13 @@ package com.voxelgameslib.voxelgameslib.stats.types;
 import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.stats.Stat;
+import com.voxelgameslib.voxelgameslib.stats.StatType;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinCountStat extends Stat {
-
-    @Override
-    public String getName() {
-        return "JoinCount";
-    }
 
     @Nullable
     @Override
@@ -24,5 +20,10 @@ public class JoinCountStat extends Stat {
                 getInstance(e.getPlayer().getUniqueId()).increment();
             }
         };
+    }
+
+    @Override
+    public StatType getType() {
+        return StatType.JOIN_COUNT;
     }
 }

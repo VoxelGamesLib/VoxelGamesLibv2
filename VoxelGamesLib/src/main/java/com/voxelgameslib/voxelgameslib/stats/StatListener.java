@@ -12,11 +12,11 @@ public class StatListener implements Listener {
 
     @EventHandler
     public void increment(PlayerIncrementStatEvent e) {
-        e.getUser().sendMessage(TextComponent.of("+" + e.getIncrementAmount() + " " + e.getStat().getName() + "(" + e.getNewVal() + ")"));
+        e.getUser().sendMessage(TextComponent.of("+" + e.getIncrementAmount() + " " + e.getStat() + "(" + e.getNewVal() + ")"));
     }
 
     @EventHandler
     public void decrement(PlayerDecrementStatEvent e) {
-        e.getUser().sendMessage(TextComponent.of("-" + e.getDecrementAmount() + " " + e.getStat().getName() + "(" + e.getNewVal() + ")"));
+        e.getUser().sendMessage(TextComponent.of("-" + e.getDecrementAmount() + " " + e.getStat() + "(" + e.getNewVal() + ")"));
     }
 }

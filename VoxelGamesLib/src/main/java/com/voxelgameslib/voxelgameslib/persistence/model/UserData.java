@@ -29,6 +29,8 @@ import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.persistence.converter.ComponentConverter;
 import com.voxelgameslib.voxelgameslib.persistence.converter.LocaleConverter;
 import com.voxelgameslib.voxelgameslib.role.Role;
+import com.voxelgameslib.voxelgameslib.stats.StatInstance;
+import com.voxelgameslib.voxelgameslib.stats.StatType;
 
 @Entity
 @Table(name = "players")
@@ -77,6 +79,12 @@ public class UserData {
     private String ipAddress;
     @Expose
     private boolean banned;
+
+    @Expose
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @CollectionTable(name = "stats")
+    @MapKeyColumn(name = "stat_type")
+    private Map<StatType, StatInstance> stats = new HashMap<>();
 
     public UUID getUuid() {
         return uuid;
@@ -165,6 +173,14 @@ public class UserData {
 
     public void setBanned(boolean banned) {
         this.banned = banned;
+    }
+
+    public Map<StatType, StatInstance> getStats() {
+        return stats;
+    }
+
+    public StatInstance getStat(StatType type) {
+        return stats.computeIfAbsent(type, t -> t.getNewInstance(uuid));
     }
 
     @Override

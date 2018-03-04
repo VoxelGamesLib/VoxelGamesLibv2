@@ -47,10 +47,6 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
     @Override
     public void enable() {
-        // don't judge me, bukkit doesn't want to resolve those so we need to manually load them
-        Class[] iDontEvenKnow = new Class[]{CoreMessageLogger_$logger.class, Log_$logger.class,
-            ConnectionPoolingLogger_$logger.class, EntityManagerMessageLogger_$logger.class, ConnectionAccessLogger_$logger.class, GamePlayer.class};
-
         boolean shouldCreateTable = config.persistence.initialTableCreation;
         if (shouldCreateTable) {
             config.persistence.initialTableCreation = false;
