@@ -9,6 +9,7 @@ The following dependencies are using the latest milestone version:
  - commons-cli:commons-cli:1.4
  - io.github.lukehutch:fast-classpath-scanner:2.18.1
  - com.github.ben-manes:gradle-versions-plugin:0.17.0
+ - org.hibernate:hibernate-core:5.3.0.CR1
  - org.apache.httpcomponents:httpclient:4.5.5
  - com.google.code.findbugs:jsr305:3.0.2
  - junit:junit:4.12
@@ -28,7 +29,6 @@ The following dependencies have later milestone versions:
  - com.bugsnag:bugsnag [3.0.2 -> 3.1.4]
  - com.google.code.gson:gson [2.8.1 -> 2.8.2]
  - com.google.inject:guice [4.1.0 -> 4.2.0]
- - org.hibernate:hibernate-core [5.2.10.Final -> 5.3.0.CR1]
  - org.jetbrains.kotlin:kotlin-gradle-plugin [1.2.21 -> 1.2.30]
  - org.mockito:mockito-core [2.8.47 -> 2.15.0]
  - org.eclipse.jgit:org.eclipse.jgit [4.8.0.201706111038-r -> 4.10.0.201712302008-r]
