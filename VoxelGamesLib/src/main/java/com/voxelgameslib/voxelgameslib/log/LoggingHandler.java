@@ -5,9 +5,8 @@ import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender;
 
 import java.io.PrintStream;
-import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,45 +30,59 @@ import co.aikar.commands.annotation.Syntax;
 public class LoggingHandler extends BaseCommand implements Handler {
 
     private static final Logger log = Logger.getLogger(LoggingHandler.class.getName());
-    private LogHandler handler;
-    private Logger logger;
+    private Logger parent;
     private Level level = Level.INFO;
-    private RollingRandomAccessFileAppender log4jAppender;
 
     @Override
     public void enable() {
-        logger = Logger.getLogger("com.voxelgameslib.voxelgameslib");
-        handler = new LogHandler() {
+        System.out.println("[VoxelGamesLib] Taking over logging...");
 
-            @Override
-            public void publish(@Nonnull LogRecord record) {
-                record.setMessage("[VoxelGamesLib] " + record.getMessage());
+        // force everybody to use the parent handler
+        java.util.logging.LogManager manager = java.util.logging.LogManager.getLogManager();
+        Enumeration<String> names = manager.getLoggerNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            if (name.startsWith("com.voxelgameslib")) {
+                Logger logger = Logger.getLogger(name);
+                logger.setUseParentHandlers(true);
             }
-        };
-        // remove old handler, fuck you reloads ;)
-        Arrays.stream(logger.getHandlers()).filter(h -> h.getClass().getName().endsWith("LogHandler")).findAny().ifPresent(logger::removeHandler);
-
-        logger.addHandler(handler);
-
-        // fuck everyone
-        java.util.logging.Logger global = java.util.logging.Logger.getLogger("");
-        global.setUseParentHandlers(false);
-        for (java.util.logging.Handler handler : global.getHandlers()) {
-            global.removeHandler(handler);
         }
+        parent = Logger.getLogger("com.voxelgameslib");
 
+        // get file logger
         org.apache.logging.log4j.core.Logger log4j = (org.apache.logging.log4j.core.Logger) LogManager.getLogger("Minecraft");
         java.util.Optional<Appender> appender = log4j.getContext().getConfiguration().getAppenders().values().stream()
-                .filter(app -> app instanceof RollingRandomAccessFileAppender).findAny();
+            .filter(app -> app instanceof RollingRandomAccessFileAppender).findAny();
+        RollingRandomAccessFileAppender log4jAppender = null;
         if (appender.isPresent()) {
             log4jAppender = (RollingRandomAccessFileAppender) appender.get();
         } else {
             log.warning("COULD NOT FIND LOG4j APPENDER! FILE LOGGING IS DISABLED!");
         }
+        LogFormatter logFormatter = new LogFormatter(log4jAppender);
 
-        global.addHandler(new ForwardHandler(log4jAppender));
-        System.setOut(new PrintStream(new LoggerOutputStream(), true));
-        System.setErr(new PrintStream(new LoggerOutputStream(), true));
+        // fuck everyone
+
+        // jul first
+        java.util.logging.Logger global = java.util.logging.Logger.getLogger("");
+        global.setUseParentHandlers(false);
+        for (java.util.logging.Handler handler : global.getHandlers()) {
+            global.removeHandler(handler);
+        }
+        // log4j later
+        log4j.getContext().getConfiguration().getAppenders().values().forEach(log4j::removeAppender);
+
+        // forward
+
+        // get all log4j messages and let them go thru our handler
+        ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(new Log4JForwardHandler(logFormatter));
+
+        // get all jul messages and let them go thru our handler
+        global.addHandler(new JULForwardHandler(logFormatter));
+
+        // get all sout messages and let them go thru out handler (via jul)
+        System.setOut(new PrintStream(new SoutForwardHandler(), true));
+        System.setErr(new PrintStream(new SoutForwardHandler(), true));
     }
 
     @Subcommand("log")
@@ -79,7 +92,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     @CommandCompletion("ALL|CONFIG|FINE|FINER|FINEST|INFO|OFF|WARNING|SEVERE")
     public void logCommand(@Nonnull User sender, @Nullable @Optional String level) {
         if (level == null) {
-            Lang.msg(sender, LangKey.LOG_LEVEL_CURRENT, logger.getLevel() == null ? "null" : logger.getLevel().getName());
+            Lang.msg(sender, LangKey.LOG_LEVEL_CURRENT, getLevel().getName());
             return;
         }
 
@@ -99,7 +112,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
 
     @Override
     public void disable() {
-        Logger.getLogger("").removeHandler(handler);
+
     }
 
     /**
@@ -109,21 +122,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
      */
     public void setLevel(@Nonnull Level level) {
         this.level = level;
-        Logger.getLogger("com.voxelgameslib").setLevel(level);
+        parent.setLevel(level);
         log.info("Level changed to " + level.getName());
-    }
-
-    // used to make the code look more clean
-    private abstract class LogHandler extends java.util.logging.Handler {
-
-        @Override
-        public void flush() {
-
-        }
-
-        @Override
-        public void close() throws SecurityException {
-
-        }
     }
 }
