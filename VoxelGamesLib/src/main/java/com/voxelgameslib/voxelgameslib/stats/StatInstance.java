@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -24,8 +25,10 @@ public class StatInstance {
     private boolean dirty = false;
 
     @Id
+    @GeneratedValue
+    private long id;
     @Type(type = "uuid-char")
-    private UUID id;
+    private UUID uuid;
     private double val;
     @Enumerated(EnumType.STRING)
     private StatType statType;
@@ -35,7 +38,7 @@ public class StatInstance {
 
     public StatInstance(User user, StatType statType, double val) {
         this.user = user;
-        this.id = user.getUuid();
+        this.uuid = user.getUuid();
         this.statType = statType;
         this.val = val;
     }
@@ -74,7 +77,7 @@ public class StatInstance {
 
     public User getUser() {
         if (user == null) {
-            user = statType.getUser(id);
+            user = statType.getUser(uuid);
         }
         return user;
     }

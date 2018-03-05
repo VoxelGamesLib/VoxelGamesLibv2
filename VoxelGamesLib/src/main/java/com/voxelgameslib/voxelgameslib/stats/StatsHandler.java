@@ -50,7 +50,7 @@ public class StatsHandler implements Handler {
             }
         }), 60 * 20, 60 * 20);
     }
-    
+
     @Override
     public void disable() {
 
