@@ -29,8 +29,9 @@ public class LogFormatter {
     }
 
     public void log(long millies, String levelName, String loggerName, String message, @Nullable Throwable throwable){
-        levelName = formatLevel(levelName);
-        loggerName = formatLoggerName(loggerName);
+        levelName = formatLevel(levelName, message);
+        loggerName = formatLoggerName(loggerName, message);
+        message = formatMessage(message);
 
         // print out to sout
         StringBuilder sb = new StringBuilder();
@@ -84,12 +85,26 @@ public class LogFormatter {
         }
     }
 
-    private String formatLevel(String level) {
+    private String formatLevel(String level, String msg) {
+        if(msg.startsWith("Hibernate:")){
+            return "FINER ";
+        }
         return StringUtils.rightPad(level.replace("WARNING", "WARN"), 6);
     }
 
-    private String formatLoggerName(@Nullable String name) {
+    private String formatMessage(String message){
+        if(message.startsWith("Hibernate:")){
+            return message.replace("Hibernate: ","");
+        }
+        return message;
+    }
+
+    private String formatLoggerName(@Nullable String name, String msg) {
         if (name == null || name.length() == 0) {
+            if(msg.startsWith("Hibernate:")){
+                return "Hibernate    ";
+            }
+
             return "Unknown      ";
         }
 
