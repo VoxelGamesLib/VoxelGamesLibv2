@@ -23,6 +23,7 @@ import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.LangCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.OverrideCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.RoleCommands;
+import com.voxelgameslib.voxelgameslib.command.commands.StatsCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.TestCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.TextureCommands;
 import com.voxelgameslib.voxelgameslib.command.commands.VGLCommands;
@@ -61,6 +62,7 @@ import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
 import com.voxelgameslib.voxelgameslib.stats.StatListener;
+import com.voxelgameslib.voxelgameslib.stats.StatType;
 import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
 import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
@@ -310,6 +312,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         rep.addReplacement("@gamemodes", gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.joining("|")));
         rep.addReplacement("@locales", Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.joining("|")));
         rep.addReplacement("@roles", Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
+        rep.addReplacement("@stats", Arrays.stream(StatType.values()).map(StatType::name).collect(Collectors.joining("|")));
 
         rep.addReplacement("%user", "voxelgameslib.role.user");
         rep.addReplacement("%premium", "voxelgameslib.role.premium");
@@ -323,6 +326,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         comp.registerCompletion("gamemodes", (c) -> gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.toList()));
         comp.registerCompletion("locales", (c) -> Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
         comp.registerCompletion("roles", (c) -> Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.toList()));
+        comp.registerCompletion("stats", (c) -> Arrays.stream(StatType.values()).map(StatType::name).collect(Collectors.toList()));
     }
 
     private void registerCommands() {
@@ -339,6 +343,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         commandManager.registerCommand(injector.getInstance(LoggingHandler.class));
         commandManager.registerCommand(injector.getInstance(KitCommands.class));
         commandManager.registerCommand(injector.getInstance(TextureCommands.class));
+        commandManager.registerCommand(injector.getInstance(StatsCommands.class));
         commandManager.registerCommand(injector.getInstance(TestCommands.class));
     }
 
@@ -354,7 +359,6 @@ public final class VoxelGamesLib extends JavaPlugin {
         pm.registerEvents(injector.getInstance(TextureListener.class), this);
         pm.registerEvents(injector.getInstance(StatListener.class), this);
     }
-
 
     /**
      * Create a new (normal) chain using the right factory for this server mod
