@@ -287,7 +287,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
     private void registerCommandContexts() {
         CommandContexts<BukkitCommandExecutionContext> con = commandManager.getCommandContexts();
-        con.registerSenderAwareContext(User.class, c -> {
+        con.registerIssuerAwareContext(User.class, c -> {
             if ("false".equalsIgnoreCase(c.getFlagValue("other", "false"))) {
                 return userHandler.getUser(c.getSender().getName())
                         .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName()));

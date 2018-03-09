@@ -12,6 +12,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
@@ -33,7 +34,7 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@players @stats")
     public void get(User sender,
                     @Description("the user which stats should be displayed")
-                        User user,
+                    @Flags("other") User user,
                     @Description("the stats type to display")
                         StatType type) {
 
@@ -45,7 +46,7 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@players @stats")
     public void set(User sender,
                     @Description("the user which stats should be changed")
-                        User user,
+                    @Flags("other") User user,
                     @Description("the stats type to change")
                         StatType type,
                     @Description("the new amount")
@@ -59,7 +60,7 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@players @stats")
     public void increment(User sender,
                           @Description("the user which stats should be changed")
-                              User user,
+                          @Flags("other") User user,
                           @Description("the stats type to change")
                               StatType type,
                           @Description("the amount to increment, defaults to 1")
@@ -73,7 +74,7 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@players @stats")
     public void decrement(User sender,
                           @Description("the user which stats should be changed")
-                              User user,
+                          @Flags("other") User user,
                           @Description("the stats type to change")
                               StatType type,
                           @Description("the amount to decrement, defaults to 1")

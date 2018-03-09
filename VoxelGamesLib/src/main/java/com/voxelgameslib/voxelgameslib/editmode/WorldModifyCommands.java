@@ -34,8 +34,7 @@ import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 
 @Singleton
-@CommandAlias("worldcreator|wc")
-@Subcommand("modify|m")
+@Subcommand("worldcreator|wc modify|m")
 public class WorldModifyCommands extends BaseCommand {
 
     private static final Logger log = Logger.getLogger(WorldModifyCommands.class.getName());
@@ -54,7 +53,7 @@ public class WorldModifyCommands extends BaseCommand {
         help.showHelp();
     }
 
-    @CommandAlias("modify")
+    @Subcommand("modify")
     @CommandPermission("%admin")
     public void modify(@Nonnull User sender) {
         Lang.msg(sender, LangKey.WORLD_MODIFY_HELP);
