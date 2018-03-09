@@ -61,6 +61,8 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.role.Role;
 import com.voxelgameslib.voxelgameslib.role.RoleHandler;
+import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
+import com.voxelgameslib.voxelgameslib.startup.StartupListener;
 import com.voxelgameslib.voxelgameslib.stats.StatListener;
 import com.voxelgameslib.voxelgameslib.stats.StatType;
 import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
@@ -100,6 +102,9 @@ public final class VoxelGamesLib extends JavaPlugin {
     private Injector injector;
     private ErrorHandler errorHandler;
     private LoggingHandler loggingHandler;
+
+    @Inject
+    private StartupHandler startupHandler;
 
     @Inject
     private ConfigHandler configHandler;
@@ -197,6 +202,10 @@ public final class VoxelGamesLib extends JavaPlugin {
             injector = module.createInjector();
             injector.injectMembers(this);
 
+            // startup handler
+            startupHandler.registerService("onEnable");
+            Bukkit.getPluginManager().registerEvents(injector.getInstance(StartupListener.class), this);
+
             // then enable all VGL stuff
             Timings.time("EnableAllHandlers", () -> {
                 eventHandler.enable();
@@ -241,6 +250,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         getServer().getPluginManager().callEvent(new VoxelGamesLibEnableEvent());
 
         testStuff.test();
+
+        startupHandler.unregisterService("onEnable");
     }
 
     @Override

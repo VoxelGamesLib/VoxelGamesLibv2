@@ -2,15 +2,10 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.common.util.impl.Log_$logger;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.internal.CoreMessageLogger_$logger;
-import org.hibernate.internal.EntityManagerMessageLogger_$logger;
-import org.hibernate.internal.log.ConnectionAccessLogger_$logger;
-import org.hibernate.internal.log.ConnectionPoolingLogger_$logger;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 
 import java.util.Optional;
@@ -22,12 +17,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.persistence.Entity;
 
+import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
-import com.voxelgameslib.voxelgameslib.user.GamePlayer;
-import com.voxelgameslib.voxelgameslib.user.User;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
@@ -42,6 +36,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private GlobalConfig config;
     @Inject
     private ConfigHandler configHandler;
+    @Inject
+    private StartupHandler startupHandler;
 
     private SessionFactory sessionFactory;
 
@@ -53,44 +49,52 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             configHandler.saveGlobalConfig();
         }
 
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-            // credentials and stuff
-            .applySetting("hibernate.connection.username", config.persistence.user)
-            .applySetting("hibernate.connection.password", config.persistence.pass)
-            .applySetting("hibernate.connection.driver_class", config.persistence.driver)
-            .applySetting("hibernate.connection.url", config.persistence.url + "?useSSL=false")
-            .applySetting("hibernate.dialect", config.persistence.dialect)
-            // misc settings
-            .applySetting("hibernate.hbm2ddl.auto", shouldCreateTable ? "create" : "update")
-            .applySetting("hibernate.show_sql", config.persistence.showSQL + "")
-            //TODO apparently this is an anti-pattern [0], but it fixes an issue so ¯\_(ツ)_/¯
-            // [0]: https://vladmihalcea.com/2016/09/05/the-hibernate-enable_lazy_load_no_trans-anti-pattern/
-            .applySetting("hibernate.enable_lazy_load_no_trans", true)
-            .applySetting("hibernate.connection.autocommit", true)
-            // connection pool
-            .applySetting("hibernate.connection.pool_size", config.persistence.pool_size + "")
-            //TODO figure out how to use hikari with hibernate
-            //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
-            .build();
+        startupHandler.registerService("Hibernate");
 
-        JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(ComponentTypeDescriptor.INSTANCE);
+        Thread thread = new Thread(()->{
+            StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                // credentials and stuff
+                .applySetting("hibernate.connection.username", config.persistence.user)
+                .applySetting("hibernate.connection.password", config.persistence.pass)
+                .applySetting("hibernate.connection.driver_class", config.persistence.driver)
+                .applySetting("hibernate.connection.url", config.persistence.url + "?useSSL=false")
+                .applySetting("hibernate.dialect", config.persistence.dialect)
+                // misc settings
+                .applySetting("hibernate.hbm2ddl.auto", shouldCreateTable ? "create" : "update")
+                .applySetting("hibernate.show_sql", config.persistence.showSQL + "")
+                //TODO apparently this is an anti-pattern [0], but it fixes an issue so ¯\_(ツ)_/¯
+                // [0]: https://vladmihalcea.com/2016/09/05/the-hibernate-enable_lazy_load_no_trans-anti-pattern/
+                .applySetting("hibernate.enable_lazy_load_no_trans", true)
+                .applySetting("hibernate.connection.autocommit", true)
+                // connection pool
+                .applySetting("hibernate.connection.pool_size", config.persistence.pool_size + "")
+                //TODO figure out how to use hikari with hibernate
+                //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
+                .build();
 
-        MetadataSources sources = new MetadataSources(registry);
+            JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(ComponentTypeDescriptor.INSTANCE);
 
-        Timings.time("RegisterDBEntities",
-            () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
-                .matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
-                    if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
-                }).scan());
+            MetadataSources sources = new MetadataSources(registry);
 
-        try {
-            Metadata metadata = sources.buildMetadata();
-            sessionFactory = metadata.buildSessionFactory();
-            log.info("Build HibernationSessionFactory with " + sources.getAnnotatedClasses().size() + " entities.");
-        } catch (Exception e) {
-            StandardServiceRegistryBuilder.destroy(registry);
-            e.printStackTrace();
-        }
+            Timings.time("RegisterDBEntities",
+                () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
+                    .matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
+                        if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
+                    }).scan());
+
+            try {
+                Metadata metadata = sources.buildMetadata();
+                sessionFactory = metadata.buildSessionFactory();
+                log.info("Build HibernationSessionFactory with " + sources.getAnnotatedClasses().size() + " entities.");
+            } catch (Exception e) {
+                StandardServiceRegistryBuilder.destroy(registry);
+                e.printStackTrace();
+            }
+
+            startupHandler.unregisterService("Hibernate");
+        });
+        thread.setName("Hibernate Startup");
+        thread.start();
     }
 
     @Override
