@@ -4,12 +4,14 @@ include 'VoxelGamesLib'
 
 // Games
 file('games').eachDir { dir ->
+    if(dir.name.startsWith(".")) return
     include dir.name
     project(":${dir.name}").projectDir = dir
 }
 
 // tools
 file('tools').eachDir { dir ->
+    if(dir.name.startsWith(".")) return
     include dir.name
     project(":${dir.name}").projectDir = dir
 }
