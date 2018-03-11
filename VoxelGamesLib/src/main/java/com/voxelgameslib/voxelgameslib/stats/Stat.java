@@ -56,7 +56,7 @@ public abstract class Stat {
         return Objects.hash(getType());
     }
 
-    public abstract StatType getType();
+    public abstract Trackable getType();
 
     public StatInstance getNewInstance(UUID uuid) {
         return new StatInstance(getUser(uuid), getType(), defaultValue());

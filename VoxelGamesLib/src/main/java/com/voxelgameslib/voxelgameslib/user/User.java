@@ -14,8 +14,6 @@ import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.role.Permission;
 import com.voxelgameslib.voxelgameslib.role.Role;
-import com.voxelgameslib.voxelgameslib.stats.StatInstance;
-import com.voxelgameslib.voxelgameslib.stats.StatType;
 
 import org.bukkit.entity.Player;
 

@@ -46,7 +46,6 @@ import com.voxelgameslib.voxelgameslib.event.EventHandler;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibEnableEvent;
 import com.voxelgameslib.voxelgameslib.exception.LangException;
-import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.game.GameListener;
@@ -64,8 +63,8 @@ import com.voxelgameslib.voxelgameslib.role.RoleHandler;
 import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.startup.StartupListener;
 import com.voxelgameslib.voxelgameslib.stats.StatListener;
-import com.voxelgameslib.voxelgameslib.stats.StatType;
 import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureListener;
@@ -77,6 +76,8 @@ import com.voxelgameslib.voxelgameslib.user.UserListener;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -86,6 +87,9 @@ import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.CommandCompletions;
 import co.aikar.commands.CommandContexts;
 import co.aikar.commands.CommandReplacements;
+import co.aikar.commands.InvalidCommandArgument;
+import co.aikar.commands.MessageKeys;
+import co.aikar.commands.annotation.Optional;
 import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
@@ -198,7 +202,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // guice
             VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
-                    commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
+                commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules());
             injector = module.createInjector();
             injector.injectMembers(this);
 
@@ -299,23 +303,48 @@ public final class VoxelGamesLib extends JavaPlugin {
     private void registerCommandContexts() {
         CommandContexts<BukkitCommandExecutionContext> con = commandManager.getCommandContexts();
         con.registerIssuerAwareContext(User.class, c -> {
-            if ("false".equalsIgnoreCase(c.getFlagValue("other", "false"))) {
-                return userHandler.getUser(c.getSender().getName())
-                        .orElseThrow(() -> new UserException("Unknown user " + c.getSender().getName()));
+            boolean isOptional = c.hasAnnotation(Optional.class);
+            CommandSender sender = c.getSender();
+            boolean isPlayerSender = sender instanceof Player;
+            if (!c.hasFlag("other")) {
+                Player player = isPlayerSender ? (Player) sender : null;
+                if (player == null) {
+                    if (!isOptional) {
+                        throw new InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
+                    } else {
+                        return null;
+                    }
+                }
+                return userHandler.getUser(player.getUniqueId()).orElseThrow(() -> new VoxelGameLibException("Unknown user " + player.getDisplayName()));
             } else {
-                return userHandler.getUser(c.getFirstArg())
-                        .orElseThrow(() -> new UserException("Unknown user " + c.getFirstArg()));
+                String arg = c.popFirstArg();
+                if (arg == null) {
+                    if (isOptional) {
+                        if (c.hasFlag("defaultself")) {
+                            if (isPlayerSender) {
+                                return userHandler.getUser(((Player) sender).getUniqueId()).orElseThrow(() -> new VoxelGameLibException("Unknown user " + ((Player) sender).getDisplayName()));
+                            } else {
+                                throw new InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
+                            }
+                        }
+                    }
+                    return null;
+                } else {
+                    return userHandler.getUser(arg).orElseThrow(() -> new VoxelGameLibException("Unknown user " + arg));
+                }
             }
         });
         con.registerContext(int.class, c -> Integer.parseInt(c.getFirstArg()));
         con.registerContext(GameMode.class, c -> gameHandler.getGameModes().stream()
-                .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
-                .orElseThrow(() -> new VoxelGameLibException("Unknown gamemode " + c.getFirstArg())));
+            .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
+            .orElseThrow(() -> new VoxelGameLibException("Unknown gamemode " + c.getFirstArg())));
         con.registerContext(Locale.class, c -> Locale.fromName(c.getFirstArg()).orElse(Locale
-                .fromTag(c.getFirstArg())
-                .orElseThrow(() -> new LangException("Unknown locale " + c.getFirstArg()))));
+            .fromTag(c.getFirstArg())
+            .orElseThrow(() -> new LangException("Unknown locale " + c.getFirstArg()))));
         con.registerContext(Role.class, c -> Role.fromName(c.getArgs().get(1)));
         con.registerContext(UUID.class, c -> UUID.fromString(c.getFirstArg()));
+        con.registerContext(Trackable.class, c -> StatsHandler.fromName(c.getFirstArg())
+            .orElseThrow(() -> new VoxelGameLibException("Unknown stats type" + c.getFirstArg())));
     }
 
     private void registerCommandReplacements() {
@@ -323,7 +352,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         rep.addReplacement("@gamemodes", gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.joining("|")));
         rep.addReplacement("@locales", Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.joining("|")));
         rep.addReplacement("@roles", Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
-        rep.addReplacement("@stats", Arrays.stream(StatType.values()).map(StatType::name).collect(Collectors.joining("|")));
+        rep.addReplacement("@stats", statsHandler.getStatTypes().stream().map(Trackable::name).collect(Collectors.joining("|")));
 
         rep.addReplacement("%user", "voxelgameslib.role.user");
         rep.addReplacement("%premium", "voxelgameslib.role.premium");
@@ -337,7 +366,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         comp.registerCompletion("gamemodes", (c) -> gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.toList()));
         comp.registerCompletion("locales", (c) -> Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
         comp.registerCompletion("roles", (c) -> Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.toList()));
-        comp.registerCompletion("stats", (c) -> Arrays.stream(StatType.values()).map(StatType::name).collect(Collectors.toList()));
+        comp.registerCompletion("stats", (c) -> statsHandler.getStatTypes().stream().map(Trackable::name).collect(Collectors.toList()));
     }
 
     private void registerCommands() {

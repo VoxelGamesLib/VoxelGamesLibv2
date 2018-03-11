@@ -1,8 +1,5 @@
 package com.voxelgameslib.voxelgameslib.persistence.converter;
 
-import net.kyori.text.Component;
-import net.kyori.text.serializer.ComponentSerializers;
-
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
@@ -10,42 +7,45 @@ import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
 import javax.annotation.Nonnull;
 import javax.persistence.Converter;
 
+import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
+import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
+
 @Converter
-public class ComponentConverter implements VGLConverter<Component, String> {
+public class TrackableConverter implements VGLConverter<Trackable, String> {
 
     @Override
     @Nonnull
-    public String convertToDatabaseColumn(@Nonnull Component attribute) {
-        return ComponentSerializers.JSON.serialize(attribute);
+    public String convertToDatabaseColumn(@Nonnull Trackable attribute) {
+        return attribute.name();
     }
 
     @Override
     @Nonnull
-    public Component convertToEntityAttribute(@Nonnull String dbData) {
-        return ComponentSerializers.JSON.deserialize(dbData);
+    public Trackable convertToEntityAttribute(@Nonnull String dbData) {
+        return StatsHandler.fromName(dbData).orElseThrow(() -> new VoxelGameLibException("Couldn't load db data: Encountered unknown stat type: " + dbData));
     }
 
-    @Override
     public void init() {
-        JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(new AbstractTypeDescriptor<Component>(Component.class) {
+        JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(new AbstractTypeDescriptor<Trackable>(Trackable.class) {
             @Override
-            public String toString(Component value) {
+            public String toString(Trackable value) {
                 return convertToDatabaseColumn(value);
             }
 
             @Override
-            public Component fromString(String string) {
+            public Trackable fromString(String string) {
                 return convertToEntityAttribute(string);
             }
 
             @Override
             @SuppressWarnings("unchecked")
-            public <X> X unwrap(Component value, Class<X> type, WrapperOptions options) {
+            public <X> X unwrap(Trackable value, Class<X> type, WrapperOptions options) {
                 if (value == null) {
                     return null;
                 }
 
-                if (Component.class.isAssignableFrom(type)) {
+                if (Trackable.class.isAssignableFrom(type)) {
                     return (X) value;
                 }
 
@@ -53,20 +53,19 @@ public class ComponentConverter implements VGLConverter<Component, String> {
             }
 
             @Override
-            public <X> Component wrap(X value, WrapperOptions options) {
+            public <X> Trackable wrap(X value, WrapperOptions options) {
                 if (value == null) {
                     return null;
                 }
 
-                if (Component.class.isInstance(value)) {
-                    return (Component) value;
+                if (Trackable.class.isInstance(value)) {
+                    return (Trackable) value;
                 }
 
                 throw unknownUnwrap(value.getClass());
             }
         });
     }
-
 
     @Override
     public boolean equals(Object obj) {

@@ -138,7 +138,6 @@ public class TextureHandler implements Handler {
     }
 
     public void fetchSkin(int id, String fallBackName, @Nullable SkinCallback skinCallback) {
-        System.out.println("fetching skin " + id + " fallbackname " + fallBackName);
         // check cache
         Optional<Skin> s = getSkin(id);
         if (s.isPresent()) {

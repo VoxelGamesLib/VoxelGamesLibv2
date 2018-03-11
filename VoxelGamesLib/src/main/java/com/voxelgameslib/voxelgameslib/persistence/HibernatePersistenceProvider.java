@@ -15,12 +15,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 
+import com.voxelgameslib.voxelgameslib.persistence.converter.VGLConverter;
 import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
@@ -51,7 +54,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
         startupHandler.registerService("Hibernate");
 
-        Thread thread = new Thread(()->{
+        Thread thread = new Thread(() -> {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 // credentials and stuff
                 .applySetting("hibernate.connection.username", config.persistence.user)
@@ -72,9 +75,18 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                 //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
                 .build();
 
-            JavaTypeDescriptorRegistry.INSTANCE.addDescriptor(ComponentTypeDescriptor.INSTANCE);
-
             MetadataSources sources = new MetadataSources(registry);
+
+            Timings.time("Init converters",
+                () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
+                    .matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
+                        try {
+                            annotatedClass.newInstance().init();
+                        } catch (InstantiationException | IllegalAccessException e) {
+                            log.warning("Error while initializing converter " + annotatedClass.getSimpleName());
+                            e.printStackTrace();
+                        }
+                    }).scan());
 
             Timings.time("RegisterDBEntities",
                 () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())

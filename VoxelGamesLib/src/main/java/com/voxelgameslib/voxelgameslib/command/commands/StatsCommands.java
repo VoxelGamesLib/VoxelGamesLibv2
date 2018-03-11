@@ -1,9 +1,13 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.stats.StatType;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.stats.StatInstance;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 import co.aikar.commands.BaseCommand;
@@ -11,6 +15,7 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.HelpCommand;
@@ -34,10 +39,11 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@players @stats")
     public void get(User sender,
                     @Description("the user which stats should be displayed")
-                    @Flags("other") User user,
+                    @Flags("other,defaultself") User user,
                     @Description("the stats type to display")
-                        StatType type) {
-
+                        Trackable type) {
+        double val = user.getUserData().getStat(type).getVal();
+        Lang.msg(sender, LangKey.STATS_GET, user.getDisplayName(), type.format(val));
     }
 
     @Subcommand("set")
@@ -48,10 +54,12 @@ public class StatsCommands extends BaseCommand {
                     @Description("the user which stats should be changed")
                     @Flags("other") User user,
                     @Description("the stats type to change")
-                        StatType type,
+                        Trackable type,
                     @Description("the new amount")
-                        int amount) {
-
+                        double amount) {
+        StatInstance stat = user.getUserData().getStat(type);
+        stat.setVal(amount);
+        Lang.msg(sender, LangKey.STATS_SET, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
     }
 
     @Subcommand("increment")
@@ -62,10 +70,12 @@ public class StatsCommands extends BaseCommand {
                           @Description("the user which stats should be changed")
                           @Flags("other") User user,
                           @Description("the stats type to change")
-                              StatType type,
+                              Trackable type,
                           @Description("the amount to increment, defaults to 1")
-                          @Optional Integer amount) {
-
+                          @Default("1") int amount) {
+        StatInstance stat = user.getUserData().getStat(type);
+        stat.increment(amount);
+        Lang.msg(sender, LangKey.STATS_INCREMENT, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
     }
 
     @Subcommand("decrement")
@@ -76,9 +86,11 @@ public class StatsCommands extends BaseCommand {
                           @Description("the user which stats should be changed")
                           @Flags("other") User user,
                           @Description("the stats type to change")
-                              StatType type,
+                              Trackable type,
                           @Description("the amount to decrement, defaults to 1")
-                          @Optional Integer amount) {
-
+                          @Default("1") int amount) {
+        StatInstance stat = user.getUserData().getStat(type);
+        stat.decrement(amount);
+        Lang.msg(sender, LangKey.STATS_DECREMENT, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
     }
 }

@@ -3,6 +3,7 @@ package com.voxelgameslib.voxelgameslib.stats;
 import org.hibernate.annotations.Type;
 
 import java.util.UUID;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,7 @@ import javax.persistence.Transient;
 
 import com.voxelgameslib.voxelgameslib.event.events.player.PlayerDecrementStatEvent;
 import com.voxelgameslib.voxelgameslib.event.events.player.PlayerIncrementStatEvent;
+import com.voxelgameslib.voxelgameslib.persistence.converter.TrackableConverter;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 @Entity
@@ -30,13 +32,13 @@ public class StatInstance {
     @Type(type = "uuid-char")
     private UUID uuid;
     private double val;
-    @Enumerated(EnumType.STRING)
-    private StatType statType;
+    @Convert(converter = TrackableConverter.class)
+    private Trackable statType;
 
     protected StatInstance() {
     }
 
-    public StatInstance(User user, StatType statType, double val) {
+    public StatInstance(User user, Trackable statType, double val) {
         this.user = user;
         this.uuid = user.getUuid();
         this.statType = statType;
@@ -69,6 +71,11 @@ public class StatInstance {
 
     public double getVal() {
         return val;
+    }
+
+    public void setVal(double amount) {
+        this.val = amount;
+        dirty = true;
     }
 
     public boolean isDirty() {

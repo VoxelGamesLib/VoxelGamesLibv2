@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.stats.Stat;
 import com.voxelgameslib.voxelgameslib.stats.StatType;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +24,7 @@ public class JoinCountStat extends Stat {
     }
 
     @Override
-    public StatType getType() {
+    public Trackable getType() {
         return StatType.JOIN_COUNT;
     }
 }

@@ -2,7 +2,7 @@ package com.voxelgameslib.voxelgameslib.event.events.player;
 
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.stats.StatType;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.event.Cancellable;
@@ -12,12 +12,12 @@ public class PlayerIncrementStatEvent extends PlayerEvent implements Cancellable
     private static final HandlerList handlers = new HandlerList();
 
     private boolean cancelled = false;
-    private StatType statType;
+    private Trackable statType;
     private double oldVal;
     private double newVal;
     private double incrementAmount;
 
-    public PlayerIncrementStatEvent(@Nonnull User user, StatType statType, double oldVal, double newVal, double incrementAmount) {
+    public PlayerIncrementStatEvent(@Nonnull User user, Trackable statType, double oldVal, double newVal, double incrementAmount) {
         super(user);
         this.statType = statType;
         this.oldVal = oldVal;
@@ -46,7 +46,7 @@ public class PlayerIncrementStatEvent extends PlayerEvent implements Cancellable
         cancelled = b;
     }
 
-    public StatType getStat() {
+    public Trackable getStat() {
         return statType;
     }
 

@@ -2,6 +2,7 @@ package com.voxelgameslib.voxelgameslib.stats.types;
 
 import com.voxelgameslib.voxelgameslib.stats.Stat;
 import com.voxelgameslib.voxelgameslib.stats.StatType;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 
 import org.bukkit.Bukkit;
 
@@ -18,7 +19,7 @@ public class PlayTimeStat extends Stat {
     }
 
     @Override
-    public StatType getType() {
+    public Trackable getType() {
         return StatType.PLAY_TIME;
     }
 }

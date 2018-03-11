@@ -3,8 +3,11 @@ package com.voxelgameslib.voxelgameslib.stats;
 import com.google.inject.Injector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -34,9 +37,12 @@ public class StatsHandler implements Handler {
     private PersistenceHandler persistenceHandler;
 
     private List<Stat> statTypes = new ArrayList<>();
+    private static List<Trackable> trackables = new ArrayList<>();
 
     @Override
     public void enable() {
+        registerTrackable(StatType.DUMMY);
+
         Bukkit.getScheduler().runTaskTimer(vgl, () -> statTypes.stream().filter(Stat::shouldTick).forEach(Stat::tickOneMinute), 20 * 60, 20 * 60);
 
         Timings.time("RegisterStatTypes",
@@ -44,7 +50,7 @@ public class StatsHandler implements Handler {
                 .matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan());
 
         Bukkit.getScheduler().runTaskTimer(vgl, () -> userHandler.getUsers().forEach(user -> {
-            if(user.getUserData().getStats().values().stream().anyMatch(StatInstance::isDirty)){
+            if (user.getUserData().getStats().values().stream().anyMatch(StatInstance::isDirty)) {
                 log.finer("Persisting stats for " + user.getRawDisplayName());
                 persistenceHandler.getProvider().saveUser(user.getUserData());
             }
@@ -63,5 +69,17 @@ public class StatsHandler implements Handler {
         if (stat.getListener() != null) {
             Bukkit.getPluginManager().registerEvents(stat.getListener(), vgl);
         }
+    }
+
+    public void registerTrackable(Trackable trackable) {
+        trackables.add(trackable);
+    }
+
+    public List<Trackable> getStatTypes() {
+        return trackables.stream().flatMap(trackable -> Arrays.stream(trackable.getValues())).collect(Collectors.toList());
+    }
+
+    public static Optional<Trackable> fromName(String name) {
+        return trackables.stream().flatMap(trackable -> Arrays.stream(trackable.getValues())).filter(trackable -> trackable.name().equals(name)).findAny();
     }
 }
