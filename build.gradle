@@ -25,6 +25,10 @@ ext {
 
 // apply from: "${rootProject.rootDir}/generateRebel.gradle" TODO fix jrebel
 
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
@@ -68,13 +72,17 @@ subprojects {
     }
 
     ext {
-        def output = new ByteArrayOutputStream()
-        exec {
-            standardOutput = output
-            commandLine 'git', 'rev-parse', '--short', 'HEAD'
-            workingDir = project.projectDir
+        if (System.getenv('CI_BUILD')) {
+            def output = new ByteArrayOutputStream()
+            exec {
+                standardOutput = output
+                commandLine 'git', 'rev-parse', '--short', 'HEAD'
+                workingDir = project.projectDir
+            }
+            revision = output.toString().trim()
+        }else{
+            revision = "local"
         }
-        revision = output.toString().trim()
     }
 
     processResources {
@@ -114,7 +122,7 @@ subprojects {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 
-    if (project.name.startsWith("/games")) {
+    if (project.projectDir.parent.endsWith("games")) {
         dependencies {
             compileOnly project(":VoxelGamesLib")
         }

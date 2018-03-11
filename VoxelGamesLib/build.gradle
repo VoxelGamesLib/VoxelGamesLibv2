@@ -6,7 +6,7 @@ task copyToServer(type: Copy) {
 }
 
 dependencies{
-    compile project(":/tools/dependencies")
+    compile project(":dependencies")
 }
 
 task createPom() {

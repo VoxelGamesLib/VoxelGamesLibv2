@@ -3,15 +3,13 @@ rootProject.name = 'voxelgameslib'
 include 'VoxelGamesLib'
 
 // Games
-include '/games/1vs1'
-include '/games/Deathmatch'
-include '/games/Hub'
+file('games').eachDir { dir ->
+    include dir.name
+    project(":${dir.name}").projectDir = dir
+}
 
 // tools
-include '/tools/ChatMenuAPI'
-include '/tools/commandline-tools'
-include '/tools/dependencies'
-include '/tools/assets'
-//include '/tools/KVGL'
-//include '/tools/skeleton'
-//include '/tools/skeletonkt'
+file('tools').eachDir { dir ->
+    include dir.name
+    project(":${dir.name}").projectDir = dir
+}
