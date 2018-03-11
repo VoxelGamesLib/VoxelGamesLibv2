@@ -43,7 +43,7 @@ public class StatsCommands extends BaseCommand {
                     @Description("the stats type to display")
                         Trackable type) {
         double val = user.getUserData().getStat(type).getVal();
-        Lang.msg(sender, LangKey.STATS_GET, user.getDisplayName(), type.format(val));
+        Lang.msg(sender, LangKey.STATS_GET, user.getDisplayName(), type.formatLong(val));
     }
 
     @Subcommand("set")
@@ -59,7 +59,7 @@ public class StatsCommands extends BaseCommand {
                         double amount) {
         StatInstance stat = user.getUserData().getStat(type);
         stat.setVal(amount);
-        Lang.msg(sender, LangKey.STATS_SET, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
+        Lang.msg(sender, LangKey.STATS_SET, user.getDisplayName(), type.getDisplayName(), type.formatShort(stat.getVal()));
     }
 
     @Subcommand("increment")
@@ -75,7 +75,7 @@ public class StatsCommands extends BaseCommand {
                           @Default("1") int amount) {
         StatInstance stat = user.getUserData().getStat(type);
         stat.increment(amount);
-        Lang.msg(sender, LangKey.STATS_INCREMENT, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
+        Lang.msg(sender, LangKey.STATS_INCREMENT, user.getDisplayName(), type.getDisplayName(), type.formatLong(stat.getVal()));
     }
 
     @Subcommand("decrement")
@@ -91,6 +91,6 @@ public class StatsCommands extends BaseCommand {
                           @Default("1") int amount) {
         StatInstance stat = user.getUserData().getStat(type);
         stat.decrement(amount);
-        Lang.msg(sender, LangKey.STATS_DECREMENT, user.getDisplayName(), type.getDisplayName(), type.format(stat.getVal()));
+        Lang.msg(sender, LangKey.STATS_DECREMENT, user.getDisplayName(), type.getDisplayName(), type.formatLong(stat.getVal()));
     }
 }

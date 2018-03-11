@@ -25,7 +25,9 @@ public interface Trackable{
 
     StatFormatter getStatFormatter();
 
-    String format(double val);
+    String formatLong(double val);
+
+    String formatShort(double val);
 
     String name();
 

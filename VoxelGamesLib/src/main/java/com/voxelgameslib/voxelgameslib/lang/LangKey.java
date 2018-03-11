@@ -173,10 +173,10 @@ public enum LangKey implements Translatable {
     TEXTURE_FETCHING_TEXTURE("{aqua}Fetching texture..."),
     TEXTURE_TEXTURE_APPLIED("{green}Texture applied to skull!"),
 
-    STATS_GET("{yellow}{user}{yellow} {aqua}{val}", "user", "val"),
-    STATS_SET("{aqua}Set {yellow}{type}{aqua} of {yellow}{user}{yellow} to {aqua}{val}", "user", "type", "val"),
-    STATS_DECREMENT("{aqua}Incremented {yellow}{type}{aqua} of {yellow}{user}{yellow} to {aqua}{val}", "user", "type", "val"),
-    STATS_INCREMENT("{aqua}Decremented {yellow}{type}{aqua} of {yellow}{user}{yellow} to {aqua}{val}", "user", "type", "val"),
+    STATS_GET("{yellow}{user} {aqua}{val}", "user", "val"),
+    STATS_SET("{aqua}Set {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
+    STATS_DECREMENT("{aqua}Incremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
+    STATS_INCREMENT("{aqua}Decremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
 
     ;
 

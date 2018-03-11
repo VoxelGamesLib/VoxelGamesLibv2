@@ -6,8 +6,6 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 public enum StatType implements Trackable {
 
-    DUMMY("", "", null),
-
     JOIN_COUNT("Join count", "joined {val} times.", StatFormatter.INT),
     PLAY_TIME("Play time", "played {val}.", StatFormatter.DURATION_LONG);
 
@@ -67,8 +65,13 @@ public enum StatType implements Trackable {
     }
 
     @Override
-    public String format(double val) {
+    public String formatLong(double val) {
         return text.replace("{val}", statFormatter.format(val));
+    }
+
+    @Override
+    public String formatShort(double val) {
+        return statFormatter.format(val);
     }
 
     // workaround for not having access to the user handler

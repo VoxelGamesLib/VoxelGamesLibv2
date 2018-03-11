@@ -41,7 +41,7 @@ public class StatsHandler implements Handler {
 
     @Override
     public void enable() {
-        registerTrackable(StatType.DUMMY);
+        registerTrackable(StatType.JOIN_COUNT);
 
         Bukkit.getScheduler().runTaskTimer(vgl, () -> statTypes.stream().filter(Stat::shouldTick).forEach(Stat::tickOneMinute), 20 * 60, 20 * 60);
 
