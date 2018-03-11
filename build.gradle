@@ -4,14 +4,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'net.sf.proguard:proguard-gradle:5.3.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.21"
+        classpath 'net.sf.proguard:proguard-gradle:6.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.30"
     }
 }
 
 plugins {
     id 'idea'
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.2'
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
@@ -66,7 +66,7 @@ subprojects {
         testCompile group: 'com.destroystokyo.paper', name: 'paper', version: '1.12.2-R0.1-SNAPSHOT'
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
-        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.15.0'
 
         compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.4.0-SNAPSHOT'
     }
