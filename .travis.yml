@@ -25,5 +25,5 @@ deploy:
   on:
     branch: master
   skip_cleanup: true
-install: "git submodule update && chmod +x scripts/build-paper.sh && scripts/build-paper.sh"
+install: "git submodule update --init --recursive && chmod +x scripts/build-paper.sh && scripts/build-paper.sh"
 script: "gradle build dependencyUpdates createPom javadoc && chmod +x scripts/regenerate-docs.sh && scripts/regenerate-docs.sh"
