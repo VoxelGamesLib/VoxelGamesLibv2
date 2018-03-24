@@ -1,5 +1,7 @@
 package com.voxelgameslib.voxelgameslib.persistence;
 
+import com.google.inject.name.Named;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -41,6 +43,9 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private ConfigHandler configHandler;
     @Inject
     private StartupHandler startupHandler;
+    @Inject
+    @Named("IncludeAddons")
+    private FastClasspathScanner scanner;
 
     private SessionFactory sessionFactory;
 
@@ -78,8 +83,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             MetadataSources sources = new MetadataSources(registry);
 
             Timings.time("Init converters",
-                () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
-                    .matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
+                () -> scanner.matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
                         try {
                             annotatedClass.newInstance().init();
                         } catch (InstantiationException | IllegalAccessException e) {
@@ -89,8 +93,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                     }).scan());
 
             Timings.time("RegisterDBEntities",
-                () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
-                    .matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
+                () -> scanner.matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
                         if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
                     }).scan());
 

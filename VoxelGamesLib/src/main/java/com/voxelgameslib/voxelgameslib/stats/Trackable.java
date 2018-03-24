@@ -35,4 +35,10 @@ public interface Trackable{
     User getUser(UUID id);
 
     Trackable[] getValues();
+
+    boolean shouldAnnounce();
+
+    void setAnnounce(boolean announce);
+
+    String getPrefix();
 }

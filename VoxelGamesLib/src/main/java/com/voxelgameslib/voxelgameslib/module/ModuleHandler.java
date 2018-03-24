@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -61,7 +62,7 @@ public class ModuleHandler implements Handler {
                     continue;
                 }
                 log.info("Loading module " + info.name() + " v" + info.version() + " by " + Arrays
-                        .toString(info.authors()));
+                    .toString(info.authors()));
                 if (Module.class.isAssignableFrom(clazz)) {
                     //noinspection SuspiciousMethodCalls
                     Module module = offeredModules.get(clazz);
@@ -89,5 +90,13 @@ public class ModuleHandler implements Handler {
         } else {
             throw new VoxelGameLibException("Module offers closed! Make sure you offer the module onLoad!");
         }
+    }
+
+    public List<ClassLoader> getModuleClassLoaders() {
+        if(offeredModules.size() != 0){
+            // we haven't enabled the module handler yet, grab raw modules
+            return offeredModules.keySet().stream().map(Class::getClassLoader).collect(Collectors.toList());
+        }
+        return modules.stream().map(module -> module.getClass().getClassLoader()).collect(Collectors.toList());
     }
 }

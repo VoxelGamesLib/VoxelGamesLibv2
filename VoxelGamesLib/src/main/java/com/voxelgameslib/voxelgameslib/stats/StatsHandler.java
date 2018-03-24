@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,9 @@ public class StatsHandler implements Handler {
     private UserHandler userHandler;
     @Inject
     private PersistenceHandler persistenceHandler;
+    @Inject
+    @Named("IncludeAddons")
+    private FastClasspathScanner scanner;
 
     private List<Stat> statTypes = new ArrayList<>();
     private static List<Trackable> trackables = new ArrayList<>();
@@ -46,8 +50,8 @@ public class StatsHandler implements Handler {
         Bukkit.getScheduler().runTaskTimer(vgl, () -> statTypes.stream().filter(Stat::shouldTick).forEach(Stat::tickOneMinute), 20 * 60, 20 * 60);
 
         Timings.time("RegisterStatTypes",
-            () -> new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
-                .matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan());
+            () -> scanner.matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan());
+        log.info("Registered " + statTypes.size() + " StatsTypes");
 
         Bukkit.getScheduler().runTaskTimer(vgl, () -> userHandler.getUsers().forEach(user -> {
             if (user.getUserData().getStats().values().stream().anyMatch(StatInstance::isDirty)) {
@@ -80,6 +84,13 @@ public class StatsHandler implements Handler {
     }
 
     public static Optional<Trackable> fromName(String name) {
-        return trackables.stream().flatMap(trackable -> Arrays.stream(trackable.getValues())).filter(trackable -> trackable.name().equals(name)).findAny();
+        if (!name.contains(":")) {
+            name = "VGL:" + name;
+        }
+        final String fName = name;
+        return trackables.stream()
+            .flatMap(trackable -> Arrays.stream(trackable.getValues()))
+            .filter(trackable -> (trackable.getPrefix() + ":" + trackable.name()).equals(fName))
+            .findAny();
     }
 }

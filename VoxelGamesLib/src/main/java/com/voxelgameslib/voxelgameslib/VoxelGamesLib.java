@@ -352,8 +352,8 @@ public final class VoxelGamesLib extends JavaPlugin {
         con.registerContext(Role.class, c -> Role.fromName(c.popFirstArg()));
         con.registerContext(UUID.class, c -> UUID.fromString(c.popFirstArg()));
         con.registerContext(Trackable.class, c -> {
-            Trackable s =  StatsHandler.fromName(c.getFirstArg())
-                .orElseThrow(() -> new InvalidCommandArgument("Unknown stats type" + c.getFirstArg()));
+            Trackable s = StatsHandler.fromName(c.getFirstArg())
+                .orElseThrow(() -> new InvalidCommandArgument("Unknown stats type " + c.getFirstArg()));
             c.popFirstArg(); // pop later so that we can get a nice error message
             return s;
         });
@@ -364,7 +364,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         rep.addReplacement("@gamemodes", gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.joining("|")));
         rep.addReplacement("@locales", Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.joining("|")));
         rep.addReplacement("@roles", Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.joining("|")));
-        rep.addReplacement("@stats", statsHandler.getStatTypes().stream().map(Trackable::name).collect(Collectors.joining("|")));
+        rep.addReplacement("@stats", statsHandler.getStatTypes().stream().map(stat -> stat.getPrefix() + ":" + stat.name()).collect(Collectors.joining("|")));
 
         rep.addReplacement("%user", "voxelgameslib.role.user");
         rep.addReplacement("%premium", "voxelgameslib.role.premium");
@@ -378,7 +378,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         comp.registerCompletion("gamemodes", (c) -> gameHandler.getGameModes().stream().map(GameMode::getName).collect(Collectors.toList()));
         comp.registerCompletion("locales", (c) -> Arrays.stream(Locale.values()).map(locale -> locale.getName() + "|" + locale.getTag()).collect(Collectors.toList()));
         comp.registerCompletion("roles", (c) -> Arrays.stream(Role.values()).map(Role::getName).collect(Collectors.toList()));
-        comp.registerCompletion("stats", (c) -> statsHandler.getStatTypes().stream().map(Trackable::name).collect(Collectors.toList()));
+        comp.registerCompletion("stats", (c) -> statsHandler.getStatTypes().stream().map(stat -> stat.getPrefix() + ":" + stat.name()).collect(Collectors.toList()));
     }
 
     private void registerCommands() {

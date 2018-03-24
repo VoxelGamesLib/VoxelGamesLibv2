@@ -17,7 +17,7 @@ public class TrackableConverter implements VGLConverter<Trackable, String> {
     @Override
     @Nonnull
     public String convertToDatabaseColumn(@Nonnull Trackable attribute) {
-        return attribute.name();
+        return attribute.getPrefix() + ":" + attribute.name();
     }
 
     @Override

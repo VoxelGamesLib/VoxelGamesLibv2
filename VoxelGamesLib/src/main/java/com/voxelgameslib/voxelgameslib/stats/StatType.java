@@ -6,21 +6,23 @@ import com.voxelgameslib.voxelgameslib.user.User;
 
 public enum StatType implements Trackable {
 
-    JOIN_COUNT("Join count", "joined {val} times.", StatFormatter.INT),
-    PLAY_TIME("Play time", "played {val}.", StatFormatter.DURATION_LONG);
+    JOIN_COUNT("Join count", "joined {val} times.", false, StatFormatter.INT),
+    PLAY_TIME("Play time", "played {val}.", false, StatFormatter.DURATION_LONG);
 
     private Stat stat;
     private String displayName;
     private String text;
     private StatFormatter statFormatter;
+    private boolean announce;
 
-    StatType(String displayName, String text) {
-        this(displayName, text, StatFormatter.DOUBLE);
+    StatType(String displayName, String text, boolean announce) {
+        this(displayName, text, announce, StatFormatter.DOUBLE);
     }
 
-    StatType(String displayName, String text, StatFormatter statFormatter) {
+    StatType(String displayName, String text, boolean announce, StatFormatter statFormatter) {
         this.displayName = displayName;
         this.text = text;
+        this.announce = announce;
         this.statFormatter = statFormatter;
     }
 
@@ -83,5 +85,20 @@ public enum StatType implements Trackable {
     @Override
     public Trackable[] getValues() {
         return values();
+    }
+
+    @Override
+    public boolean shouldAnnounce() {
+        return announce;
+    }
+
+    @Override
+    public void setAnnounce(boolean announce) {
+        this.announce = announce;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "VGL";
     }
 }

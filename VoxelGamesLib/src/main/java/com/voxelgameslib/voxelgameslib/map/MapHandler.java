@@ -1,6 +1,8 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 
+import com.google.inject.name.Named;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +34,9 @@ public class MapHandler implements Handler {
     private static final Logger log = Logger.getLogger(MapHandler.class.getName());
     @Inject
     private GameHandler gameHandler;
+    @Inject
+    @Named("IncludeAddons")
+    private FastClasspathScanner scanner;
 
     //TODO implement chests
     @Nonnull
@@ -41,9 +46,7 @@ public class MapHandler implements Handler {
 
     @Override
     public void enable() {
-        Timings.time("ScanningFeatures", () ->
-            new FastClasspathScanner().addClassLoader(getClass().getClassLoader())
-                .matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
+        Timings.time("ScanningFeatures", () -> scanner.matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
                     if (!Feature.class.isAssignableFrom(clazz)) {
                         log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
                         return;

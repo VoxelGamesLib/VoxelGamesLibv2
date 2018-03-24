@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
@@ -22,6 +23,7 @@ import com.voxelgameslib.voxelgameslib.game.GameTypeAdapter;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.log.LoggingHandler;
 import com.voxelgameslib.voxelgameslib.module.Module;
+import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
@@ -33,6 +35,7 @@ import org.bukkit.plugin.Plugin;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 public final class VoxelGamesLibModule extends AbstractModule {
 
@@ -72,19 +75,19 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
         bind(File.class).annotatedWith(Names.named("ConfigFolder")).toInstance(dataFolder);
         bind(File.class).annotatedWith(Names.named("LangFolder"))
-                .toInstance(new File(dataFolder.getAbsoluteFile(), "lang"));
+            .toInstance(new File(dataFolder.getAbsoluteFile(), "lang"));
         bind(File.class).annotatedWith(Names.named("WorldsFolder"))
-                .toInstance(new File(Bukkit.getWorldContainer().getAbsoluteFile(), "worlds"));
+            .toInstance(new File(Bukkit.getWorldContainer().getAbsoluteFile(), "worlds"));
         bind(File.class).annotatedWith(Names.named("WorldContainer"))
-                .toInstance(Bukkit.getWorldContainer().getAbsoluteFile());
+            .toInstance(Bukkit.getWorldContainer().getAbsoluteFile());
         bind(File.class).annotatedWith(Names.named("GameDefinitionFolder"))
-                .toInstance(new File(dataFolder.getAbsoluteFile(), "games"));
+            .toInstance(new File(dataFolder.getAbsoluteFile(), "games"));
         bind(File.class).annotatedWith(Names.named("DataFolder"))
-                .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
+            .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
         bind(File.class).annotatedWith(Names.named("KitsFolder"))
-                .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
+            .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
         bind(File.class).annotatedWith(Names.named("SkinsFolder"))
-                .toInstance(new File(dataFolder.getAbsoluteFile(), "skins"));
+            .toInstance(new File(dataFolder.getAbsoluteFile(), "skins"));
 
         bind(WorldConfig.class).toProvider(WorldHandler.class);
         bind(GlobalConfig.class).toProvider(ConfigHandler.class);
@@ -93,6 +96,19 @@ public final class VoxelGamesLibModule extends AbstractModule {
         requestStaticInjection(Permission.class);
 
         offeredModules.forEach((key, value) -> bind(key).toInstance(value));
+    }
+
+    @Provides
+    public FastClasspathScanner getScanner() {
+        return new FastClasspathScanner().addClassLoader(getClass().getClassLoader());
+    }
+
+    @Provides
+    @Named("IncludeAddons")
+    public FastClasspathScanner getScannerWithAddons(ModuleHandler moduleHandler) {
+        FastClasspathScanner scanner = getScanner();
+        moduleHandler.getModuleClassLoaders().forEach(scanner::addClassLoader);
+        return scanner;
     }
 
     @Provides
