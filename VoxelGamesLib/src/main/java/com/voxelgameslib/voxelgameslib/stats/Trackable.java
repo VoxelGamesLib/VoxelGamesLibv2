@@ -1,10 +1,11 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
+import net.kyori.text.TextComponent;
+
 import java.util.UUID;
-import java.util.stream.Stream;
 
-import javax.inject.Inject;
-
+import com.voxelgameslib.voxelgameslib.lang.Locale;
+import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 public interface Trackable{
@@ -19,13 +20,13 @@ public interface Trackable{
 
     StatInstance getNewInstance(UUID uuid);
 
-    String getDisplayName();
+    Translatable getDisplayName();
 
-    String getText();
+    Translatable getText();
 
     StatFormatter getStatFormatter();
 
-    String formatLong(double val);
+    String formatLong(double val, Locale locale);
 
     String formatShort(double val);
 

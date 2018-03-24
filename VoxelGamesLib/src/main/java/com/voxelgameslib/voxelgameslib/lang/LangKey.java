@@ -178,6 +178,12 @@ public enum LangKey implements Translatable {
     STATS_DECREMENT("{aqua}Incremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
     STATS_INCREMENT("{aqua}Decremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
 
+    // STATS
+    STAT_JOIN_COUNT_NAME("Join count"),
+    STAT_JOIN_COUNT_TEXT("joined {val} times.", "val"),
+    STAT_PLAY_TIME_NAME("Play time"),
+    STAT_PLAY_TIME_TEXT("played {val}.", "val"),
+
     ;
 
     @Nonnull

@@ -1,25 +1,31 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
+import net.kyori.text.TextComponent;
+
 import java.util.UUID;
 
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.lang.Locale;
+import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 public enum StatType implements Trackable {
 
-    JOIN_COUNT("Join count", "joined {val} times.", false, StatFormatter.INT),
-    PLAY_TIME("Play time", "played {val}.", false, StatFormatter.DURATION_LONG);
+    JOIN_COUNT(LangKey.STAT_JOIN_COUNT_NAME, LangKey.STAT_JOIN_COUNT_TEXT, false, StatFormatter.INT),
+    PLAY_TIME(LangKey.STAT_PLAY_TIME_NAME, LangKey.STAT_PLAY_TIME_TEXT, false, StatFormatter.DURATION_LONG);
 
     private Stat stat;
-    private String displayName;
-    private String text;
+    private Translatable displayName;
+    private Translatable text;
     private StatFormatter statFormatter;
     private boolean announce;
 
-    StatType(String displayName, String text, boolean announce) {
+    StatType(Translatable displayName, Translatable text, boolean announce) {
         this(displayName, text, announce, StatFormatter.DOUBLE);
     }
 
-    StatType(String displayName, String text, boolean announce, StatFormatter statFormatter) {
+    StatType(Translatable displayName, Translatable text, boolean announce, StatFormatter statFormatter) {
         this.displayName = displayName;
         this.text = text;
         this.announce = announce;
@@ -52,12 +58,12 @@ public enum StatType implements Trackable {
     }
 
     @Override
-    public String getDisplayName() {
+    public Translatable getDisplayName() {
         return displayName;
     }
 
     @Override
-    public String getText() {
+    public Translatable getText() {
         return text;
     }
 
@@ -67,8 +73,8 @@ public enum StatType implements Trackable {
     }
 
     @Override
-    public String formatLong(double val) {
-        return text.replace("{val}", statFormatter.format(val));
+    public String formatLong(double val, Locale locale) {
+        return Lang.string(text, locale, statFormatter.format(val));
     }
 
     @Override
