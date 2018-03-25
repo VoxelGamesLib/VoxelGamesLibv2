@@ -27,7 +27,7 @@ VoxelGamesLib uses [Gradle](https://gradle.org/) as our build system. To compile
 # Chat
 
 You can find the active contributors on IRC. irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc))  
-Opon popular demand, I also setup a discord ([invite link](https://s.minidigger.me/discord).
+Opon popular demand, I also setup a discord ([invite link](https://s.minidigger.me/discord))
 
 # Repo
 
