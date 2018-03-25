@@ -3,9 +3,12 @@ package com.voxelgameslib.voxelgameslib.stats;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 
+import net.kyori.text.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -16,7 +19,9 @@ import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import org.bukkit.Bukkit;
 
@@ -92,5 +97,9 @@ public class StatsHandler implements Handler {
             .flatMap(trackable -> Arrays.stream(trackable.getValues()))
             .filter(trackable -> (trackable.getPrefix() + ":" + trackable.name()).equals(fName))
             .findAny();
+    }
+
+    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
+        return persistenceHandler.getProvider().getTop(type, amount);
     }
 }

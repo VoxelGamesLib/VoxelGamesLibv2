@@ -2,31 +2,37 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.inject.name.Named;
 
+import net.kyori.text.Component;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry;
+import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
+import javax.persistence.criteria.CriteriaBuilder;
 
-import com.voxelgameslib.voxelgameslib.persistence.converter.VGLConverter;
-import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.persistence.converter.VGLConverter;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
+import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
@@ -48,6 +54,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private FastClasspathScanner scanner;
 
     private SessionFactory sessionFactory;
+    private CriteriaBuilder cBuilder;
 
     @Override
     public void enable() {
@@ -84,18 +91,18 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
             Timings.time("Init converters",
                 () -> scanner.matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
-                        try {
-                            annotatedClass.newInstance().init();
-                        } catch (InstantiationException | IllegalAccessException e) {
-                            log.warning("Error while initializing converter " + annotatedClass.getSimpleName());
-                            e.printStackTrace();
-                        }
-                    }).scan());
+                    try {
+                        annotatedClass.newInstance().init();
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        log.warning("Error while initializing converter " + annotatedClass.getSimpleName());
+                        e.printStackTrace();
+                    }
+                }).scan());
 
             Timings.time("RegisterDBEntities",
                 () -> scanner.matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
-                        if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
-                    }).scan());
+                    if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
+                }).scan());
 
             try {
                 Metadata metadata = sources.buildMetadata();
@@ -105,6 +112,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
                 StandardServiceRegistryBuilder.destroy(registry);
                 e.printStackTrace();
             }
+
+            cBuilder = sessionFactory.getCriteriaBuilder();
 
             startupHandler.unregisterService("Hibernate");
         });
@@ -124,6 +133,25 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     @Nonnull
     public Optional<UserData> loadUser(@Nonnull UUID id) {
         return Optional.ofNullable(session(session -> session.get(UserData.class, id)));
+    }
+
+    @Override
+    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
+        return session(session -> {
+            Query query = session.createQuery("select user.displayName, stat.val from StatInstance stat, UserData user\n" +
+                "where user.uuid = stat.uuid\n" +
+                "and stat.statType = :type\n" +
+                "order by stat.val desc");
+            query.setParameter("type", type);
+            query.setMaxResults(amount);
+
+            List<Pair<Component, Double>> result = new ArrayList<>();
+            //noinspection unchecked
+            for(Object[] row : (List<Object[]>)query.getResultList()){
+                result.add(new Pair<>((Component) row[0], (Double) row[1]));
+            }
+            return result;
+        });
     }
 
     @Nullable

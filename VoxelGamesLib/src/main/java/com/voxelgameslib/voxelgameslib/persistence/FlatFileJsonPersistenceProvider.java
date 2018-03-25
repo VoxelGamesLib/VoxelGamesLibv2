@@ -2,11 +2,17 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.gson.Gson;
 
+
+import net.kyori.text.Component;
+
+import org.apache.commons.lang.NotImplementedException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +22,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
+import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 /**
  * Simple persistence provider which uses gson to save the stuff as json to a flat file<br> <b>NOT RECOMMENDED FOR
@@ -85,5 +92,10 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
     @Nonnull
     public Optional<UserData> loadUser(@Nonnull UUID id) {
         return Optional.ofNullable(UserMap.get(id));
+    }
+
+    @Override
+    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
+        throw new NotImplementedException();
     }
 }

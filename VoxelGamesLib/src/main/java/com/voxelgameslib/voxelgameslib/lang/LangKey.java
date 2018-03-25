@@ -177,14 +177,14 @@ public enum LangKey implements Translatable {
     STATS_SET("{aqua}Set {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
     STATS_DECREMENT("{aqua}Incremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
     STATS_INCREMENT("{aqua}Decremented {yellow}{type}{aqua} of {yellow}{user} to {yellow}{val}", "user", "type", "val"),
+    STATS_TOP_HEADER("{gold}==== {aqua}Listing top {count} for type {yellow}{type}{gold} ====", "count", "type"),
+    STATS_TOP_ENTRY("{yellow}#{pos}{aqua}: {name}{aqua} with {yellow}{val}", "pos", "name", "val"),
 
     // STATS
     STAT_JOIN_COUNT_NAME("Join count"),
     STAT_JOIN_COUNT_TEXT("joined {val} times.", "val"),
     STAT_PLAY_TIME_NAME("Play time"),
-    STAT_PLAY_TIME_TEXT("played {val}.", "val"),
-
-    ;
+    STAT_PLAY_TIME_TEXT("played {val}.", "val"),;
 
     @Nonnull
     private final String defaultValue;

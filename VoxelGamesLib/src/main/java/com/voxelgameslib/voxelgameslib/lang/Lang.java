@@ -250,8 +250,8 @@ public class Lang {
             }
             // why don't you just expose getCode?....
             stringBuilder.append(ChatColor.COLOR_CHAR)
-                    .append(savedColor.toString().substring(1, 1)) // no COLOR_CHAR in text
-                    .append(token);
+                .append(savedColor.toString().substring(1, 1)) // no COLOR_CHAR in text
+                .append(token);
         }
 
         return stringBuilder.toString();
@@ -327,8 +327,8 @@ public class Lang {
     public static String string(@Nonnull Translatable key, @Nonnull Locale loc, @Nonnull Object... args) {
         if (args.length != key.getArgs().length) {
             throw new LangException(
-                    "Wrong arguments for Translatable " + key.name() + ": entered " + args.length + ", expected "
-                            + key.getArgs().length);
+                "Wrong arguments for Translatable " + key.name() + ": entered " + args.length + ", expected "
+                    + key.getArgs().length);
         }
 
         LangStorage storage;
@@ -347,6 +347,8 @@ public class Lang {
                 replacement = ChatUtil.toPlainText((Component) args[i]);
             } else if (args[i] instanceof Component[]) {
                 replacement = ChatUtil.toPlainText((Component[]) args[i]);
+            } else if (args[i] instanceof Translatable) {
+                replacement = string((Translatable) args[i], loc);
             } else {
                 replacement = String.valueOf(args[i]);
             }
