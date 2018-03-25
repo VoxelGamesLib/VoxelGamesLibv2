@@ -26,7 +26,20 @@ VoxelGamesLib uses [Gradle](https://gradle.org/) as our build system. To compile
 
 # Chat
 
-You can find the active contributors on IRC. irc.spi.gt #minidigger (or [webchat](http://irc.spi.gt/iris/?nick=&channels=minidigger))
+You can find the active contributors on IRC. irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc))  
+Opon popular demand, I also setup a discord ([invite link](https://s.minidigger.me/discord).
+
+# Repo
+
+I host a maven repo on github, because why not. Details below.  
+URL:
+```
+        maven { url "https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo" }
+```
+Artifact:
+```
+        compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '2.0-SNAPSHOT'
+```
 
 # Contributing
 
