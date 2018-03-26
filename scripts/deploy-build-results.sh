@@ -11,8 +11,8 @@ git config --global user.name "VoxelGamesLibBot"
 
 echo "copy stuff to deploy"
 
-declare -a paths=("" "games/1vs1/" "games/Deathmatch/" "games/Hub/" "tools/ChatMenuAPI/" "tools/commandline-tools/" "tools/KVGL/")
-declare -a names=("VGL" "1vs1" "Deathmatch" "Hub" "ChatMenuAPI" "commandline-tools" "KVGL")
+declare -a paths=("" "games/1vs1/" "games/Deathmatch/" "games/Hub/" "tools/ChatMenuAPI/" "tools/commandline-tools/" "tools/KVGL/" "tools/dependencies")
+declare -a names=("VGL" "1vs1" "Deathmatch" "Hub" "ChatMenuAPI" "commandline-tools" "KVGL" "dependencies")
 
 arraylength=${#paths[@]}
 
@@ -34,6 +34,7 @@ declare -a jars=(
                 "tools/ChatMenuAPI/build/libs/tools/ChatMenuAPI-1.0-SNAPSHOT.jar"
                 "tools/commandline-tools/build/libs/tools/commandline-tools-1.0-SNAPSHOT.jar"
                 "tools/KVGL/build/libs/tools/KVGL-1.0-SNAPSHOT.jar"
+                "tools/KVGL/build/libs/tools/dependencies-1.0-SNAPSHOT.jar"
                 )
 arraylength=${#jars[@]}
 for (( i=1; i<${arraylength}+1; i++ ));
