@@ -27,14 +27,14 @@ done
 
 echo "deploy to maven repo"
 declare -a jars=(
-                "build/libs/voxelgameslib-2.0-SNAPSHOT.jar"
+                "VoxelGamesLib/build/libs/voxelgameslib-2.0-SNAPSHOT.jar"
                 "games/1vs1/build/libs/1vs1-1.0-SNAPSHOT.jar"
                 "games/Deathmatch/build/libs/Deathmatch-1.0-SNAPSHOT.jar"
                 "games/Hub/build/libs/Hub-1.0-SNAPSHOT.jar"
-                "tools/ChatMenuAPI/build/libs/tools/ChatMenuAPI-1.0-SNAPSHOT.jar"
+                "tools/ChatMenuAPI/build/libs/ChatMenuAPI-1.0-SNAPSHOT.jar"
                 "tools/commandline-tools/build/libs/commandline-tools-1.0-SNAPSHOT.jar"
                 "tools/KVGL/build/libs/KVGL-1.0-SNAPSHOT.jar"
-                "tools/KVGL/build/libs/dependencies-1.0-SNAPSHOT.jar"
+                "tools/dependencies/build/libs/dependencies-1.0-SNAPSHOT.jar"
                 )
 arraylength=${#jars[@]}
 for (( i=1; i<${arraylength}+1; i++ ));
