@@ -40,7 +40,7 @@ arraylength=${#jars[@]}
 for (( i=1; i<${arraylength}+1; i++ ));
 do
   echo $i " / " ${arraylength}
-  mvn deploy:deploy-file -Dfile=${jars[$i-1]} -DpomFile=pom.xml  -Durl=file://${TRAVIS_BUILD_DIR}/deploy-stuff/mvn-repo
+  mvn deploy:deploy-file -Dfile=${jars[$i-1]} -DpomFile=./${paths[$i-1]}/pom.xml  -Durl=file://${TRAVIS_BUILD_DIR}/deploy-stuff/mvn-repo
 done
 
 echo "create index"
