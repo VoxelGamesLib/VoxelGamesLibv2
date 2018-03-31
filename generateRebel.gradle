@@ -3,18 +3,18 @@ task generateRebelTask(dependsOn: "jar", type: Copy) {
     description = "Generate rebel.xm file"
 
     def paths = [
-        "VoxelGamesLib/build/classes/main",
+        "VoxelGamesLib/build/classes/java/main",
         "VoxelGamesLib/out/production/classes",
 
-        "games/1vs1/build/classes/main",
-        "games/1vs1/out/production/classes/",
-        "games/Deathmatch/build/classes/main",
-        "games/Deathmatch/out/production/classes/",
-        "games/Hub/build/classes/main",
-        "games/Hub/out/production/classes/",
+//        "games/1vs1/build/classes/java/main",
+//        "games/1vs1/out/production/classes/",
+//        "games/Deathmatch/build/classes/java/main",
+//        "games/Deathmatch/out/production/classes/",
+//        "games/Hub/build/classes/java/main",
+//        "games/Hub/out/production/classes/",
 
-        "tools/ChatMenuAPI/build/classes/main",
-        "tools/ChatMenuAPI/out/production/classes/"
+//        "tools/ChatMenuAPI/build/classes/java/main",
+//        "tools/ChatMenuAPI/out/production/classes/"
     ]
     def middle = ""
     for(def path : paths){
