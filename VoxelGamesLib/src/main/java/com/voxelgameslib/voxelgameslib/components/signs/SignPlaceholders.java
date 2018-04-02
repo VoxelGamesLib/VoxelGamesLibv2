@@ -60,21 +60,21 @@ public class SignPlaceholders implements Listener {
      */
     public void registerPlaceholders() {
         registerPlaceholder("world", (SimpleSignPlaceHolder)
-                (user, location, rawLines, lines, key) ->
-                        TextComponent.of(location.getWorld().getName()));
+            (user, location, rawLines, lines, key) ->
+                TextComponent.of(location.getWorld().getName()));
         registerPlaceholder("time", (SimpleSignPlaceHolder)
-                (user, location, rawLines, lines, key) ->
-                        TextComponent.of(DateTimeFormatter.ISO_TIME.format(LocalTime.now())));
+            (user, location, rawLines, lines, key) ->
+                TextComponent.of(DateTimeFormatter.ISO_TIME.format(LocalTime.now())));
         registerPlaceholder("location", (SimpleSignPlaceHolder)
-                (user, loc, rawLines, lines, key) ->
-                        TextComponent.of("X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ()));
+            (user, loc, rawLines, lines, key) ->
+                TextComponent.of("X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ()));
         registerPlaceholder("greeting", (FullSignPlaceHolder)
-                (user, loc, rawLines, lines, key) -> new Component[]{
-                        TextComponent.of("Hey there"),
-                        user.getDisplayName(),
-                        TextComponent.of(""),
-                        TextComponent.of("")
-                });
+            (user, loc, rawLines, lines, key) -> new Component[]{
+                TextComponent.of("Hey there"),
+                user.getDisplayName(),
+                TextComponent.of(""),
+                TextComponent.of("")
+            });
     }
 
     /**
@@ -101,11 +101,11 @@ public class SignPlaceholders implements Listener {
         registerPlaceholders();
 
         Bukkit.getWorlds().stream()
-                .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
-                .flatMap(s -> Arrays.stream(s.getTileEntities()))
-                .filter(s -> s instanceof Sign)
-                .map(s -> (Sign) s)
-                .forEach(s -> lastSeenSigns.put(s.getLocation(), s));
+            .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
+            .flatMap(s -> Arrays.stream(s.getTileEntities()))
+            .filter(s -> s instanceof Sign)
+            .map(s -> (Sign) s)
+            .forEach(s -> lastSeenSigns.put(s.getLocation(), s));
 
         // modify update packets
         protocolManager.addPacketListener(new PacketAdapter(voxelGamesLib, PacketType.Play.Server.TILE_ENTITY_DATA) {
@@ -146,12 +146,14 @@ public class SignPlaceholders implements Listener {
                     return;
                 }
 
-                Block b = loc.getBlock();
-                if (!(b.getState() instanceof Sign)) {
-                    return;
+                if (!(rawLines[0].equals("") && rawLines[1].equals("") && rawLines[2].equals("") && rawLines[3].equals(""))) {
+                    Block b = loc.getBlock();
+                    if (!(b.getState() instanceof Sign)) {
+                        return;
+                    }
+                    Sign sign = (Sign) b.getState();
+                    lastSeenSigns.put(loc, sign);
                 }
-                Sign sign = (Sign) b.getState();
-                lastSeenSigns.put(loc, sign);
 
                 Optional<User> user = userHandler.getUser(event.getPlayer().getUniqueId());
                 if (!user.isPresent()) {
@@ -234,15 +236,15 @@ public class SignPlaceholders implements Listener {
     @EventHandler
     public void chunkLoad(@Nonnull ChunkLoadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-                .filter(blockState -> blockState instanceof Sign)
-                .map(blockState -> (Sign) blockState)
-                .forEach(sign -> lastSeenSigns.put(sign.getLocation(), sign));
+            .filter(blockState -> blockState instanceof Sign)
+            .map(blockState -> (Sign) blockState)
+            .forEach(sign -> lastSeenSigns.put(sign.getLocation(), sign));
     }
 
     @EventHandler
     public void chunkUnload(@Nonnull ChunkUnloadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-                .filter(blockState -> blockState instanceof Sign)
-                .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));
+            .filter(blockState -> blockState instanceof Sign)
+            .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));
     }
 }
