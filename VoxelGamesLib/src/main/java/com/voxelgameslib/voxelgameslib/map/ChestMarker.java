@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 import org.bukkit.inventory.ItemStack;
 
 /**

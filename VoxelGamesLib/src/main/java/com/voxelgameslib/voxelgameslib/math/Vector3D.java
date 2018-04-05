@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.voxelgameslib.voxelgameslib.map;
+package com.voxelgameslib.voxelgameslib.math;
 
 import com.google.gson.annotations.Expose;
 

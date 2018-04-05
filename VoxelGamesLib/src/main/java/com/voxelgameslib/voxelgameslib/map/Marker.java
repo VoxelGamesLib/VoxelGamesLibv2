@@ -1,6 +1,7 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 
 import javax.annotation.Nonnull;
 
