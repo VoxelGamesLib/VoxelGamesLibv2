@@ -21,7 +21,7 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.MapInfo;
-import com.voxelgameslib.voxelgameslib.map.Vector3D;
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
