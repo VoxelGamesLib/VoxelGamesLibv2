@@ -28,6 +28,7 @@ com.voxelgameslib.voxelgameslib.lang
 com.voxelgameslib.voxelgameslib.log
 com.voxelgameslib.voxelgameslib.map
 com.voxelgameslib.voxelgameslib.matchmaking
+com.voxelgameslib.voxelgameslib.math
 com.voxelgameslib.voxelgameslib.metrics
 com.voxelgameslib.voxelgameslib.module
 com.voxelgameslib.voxelgameslib.persistence
