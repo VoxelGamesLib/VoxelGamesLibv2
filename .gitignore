@@ -6,7 +6,6 @@ target/
 build/
 
 # IDEA
-*.iml
 .idea/
 
 # Java
@@ -18,7 +17,7 @@ build/
 rebel.xml
 
 # allow gradle wrapper
-!*gradle-wrapper.jar
+!gradle-wrapper.jar
 
 # ignore ci stuff
 /deploy-stuff
