@@ -18,7 +18,7 @@ import com.voxelgameslib.voxelgameslib.map.BasicMarkerDefinition;
 import com.voxelgameslib.voxelgameslib.map.Map;
 import com.voxelgameslib.voxelgameslib.map.Marker;
 import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
-import com.voxelgameslib.voxelgameslib.map.Vector3D;
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 import org.bukkit.Location;

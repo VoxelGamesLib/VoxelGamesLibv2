@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 /**

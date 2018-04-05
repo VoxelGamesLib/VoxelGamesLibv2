@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.exception.MapException;
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.utils.DirectionUtil;
 
 import org.bukkit.Bukkit;
