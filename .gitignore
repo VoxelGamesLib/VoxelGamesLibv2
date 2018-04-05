@@ -6,6 +6,7 @@ target/
 build/
 
 # IDEA
+*.iml
 .idea/
 
 # Java
