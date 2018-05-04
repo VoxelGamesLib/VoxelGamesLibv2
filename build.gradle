@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.sf.proguard:proguard-gradle:6.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.31"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41"
     }
 }
 
