@@ -1,4 +1,4 @@
-package com.voxelgameslib.voxelgameslib.components.signs;
+package com.voxelgameslib.voxelgameslib.components.placeholders;
 
 import javax.annotation.Nonnull;
 

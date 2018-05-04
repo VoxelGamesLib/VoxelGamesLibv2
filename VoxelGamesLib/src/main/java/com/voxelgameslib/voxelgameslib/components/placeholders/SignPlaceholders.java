@@ -1,4 +1,4 @@
-package com.voxelgameslib.voxelgameslib.components.signs;
+package com.voxelgameslib.voxelgameslib.components.placeholders;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
