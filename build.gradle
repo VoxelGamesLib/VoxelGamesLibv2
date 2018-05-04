@@ -4,8 +4,8 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41"
         classpath 'net.sf.proguard:proguard-gradle:6.0.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.31"
     }
 }
 
