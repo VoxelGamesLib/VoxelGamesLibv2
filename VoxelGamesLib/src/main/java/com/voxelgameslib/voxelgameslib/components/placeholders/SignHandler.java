@@ -18,12 +18,16 @@ public class SignHandler implements Handler {
     private SignButtons signButtons;
     @Inject
     private SignPlaceholders signPlaceholders;
+    @Inject
+    private SkullPlaceHolders skullPlaceHolders;
 
     @Override
     public void enable() {
         signButtons.registerButtons();
 
         signPlaceholders.init();
+
+        skullPlaceHolders.init();
     }
 
     @Override

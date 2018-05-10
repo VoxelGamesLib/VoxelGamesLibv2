@@ -10,8 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
@@ -33,9 +35,19 @@ public class LoggingHandler extends BaseCommand implements Handler {
     private Logger parent;
     private Level level = Level.INFO;
 
+    private ErrorHandler  errorHandler;
+
+    public void setErrorHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
+
     @Override
     public void enable() {
         System.out.println("[VoxelGamesLib] Taking over logging...");
+        if(errorHandler == null){
+            System.err.println("ERRORHANDLER IS NULL, ABORTING");
+            return;
+        }
 
         // force everybody to use the parent handler
         java.util.logging.LogManager manager = java.util.logging.LogManager.getLogManager();
@@ -59,7 +71,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
         } else {
             log.warning("COULD NOT FIND LOG4j APPENDER! FILE LOGGING IS DISABLED!");
         }
-        LogFormatter logFormatter = new LogFormatter(log4jAppender);
+        LogFormatter logFormatter = new LogFormatter(log4jAppender, errorHandler);
 
         // fuck everyone
 

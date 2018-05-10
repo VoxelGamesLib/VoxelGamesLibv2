@@ -168,6 +168,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         try {
             // logging first, only changes prefixes anyways
             loggingHandler = new LoggingHandler();
+            loggingHandler.setErrorHandler(errorHandler);
             loggingHandler.enable();
             // enable by enabling external stuff. they don't require any VGL stuff
 
@@ -237,7 +238,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             registerListeners();
         } catch (Exception ex) {
-            errorHandler.handle(ex, Severity.ERROR);
+            errorHandler.handle(ex, Severity.ERROR, true);
         }
 
         // register commands
@@ -295,7 +296,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 injector = null;
             });
         } catch (Exception ex) {
-            errorHandler.handle(ex, Severity.ERROR);
+            errorHandler.handle(ex, Severity.ERROR, true);
         }
     }
 

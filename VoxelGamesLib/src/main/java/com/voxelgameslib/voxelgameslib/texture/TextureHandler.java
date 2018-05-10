@@ -208,6 +208,25 @@ public class TextureHandler implements Handler {
         return playerProfile;
     }
 
+    public Optional<PlayerProfile> getPlayerProfile(String owner) {
+        Optional<Skin> skin = getSkin(owner);
+        if (!skin.isPresent()) {
+            PlayerProfile playerProfile = Bukkit.createProfile(owner);
+            boolean success = playerProfile.completeFromCache();
+            if (!success) {
+                // no success? try async and the update on next interval
+                VoxelGamesLib.newChain().async(() -> {
+                    boolean s = playerProfile.complete(true);
+                    if (!s) {
+                        // still no success? rate limited, yey
+                        log.warning("It appears that we have been rate limited (could not load texture for " + owner + ")");
+                    }
+                });
+            }
+        }
+        return skin.map(this::getPlayerProfile);
+    }
+
     @Nullable
     public ItemStack getSkull(@Nonnull Skin skin) {
         return new ItemBuilder(Material.SKULL_ITEM).durability(3).name(skin.name).meta((itemMeta -> ((SkullMeta) itemMeta).setPlayerProfile(getPlayerProfile(skin)))).build();

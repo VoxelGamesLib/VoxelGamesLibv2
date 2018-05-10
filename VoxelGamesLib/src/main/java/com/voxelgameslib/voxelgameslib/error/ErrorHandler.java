@@ -49,7 +49,7 @@ public class ErrorHandler implements Handler {
     private boolean sendBukkitInfo = true;
     private boolean sendWorldInfo = true;
 
-    private boolean enableBugsnag = false;
+    private boolean enableBugsnag = true;
 
     // No guice since we enable on Load
     public ErrorHandler(@Nonnull VoxelGamesLib voxelGamesLib) {
@@ -69,7 +69,7 @@ public class ErrorHandler implements Handler {
 
             setupCallbacks();
 
-            injectErrorHandlers();
+            //injectErrorHandlers(); TODO currently broken
         } else {
             log.warning("Bugsnag is disabled, will not report errors");
         }
@@ -93,11 +93,11 @@ public class ErrorHandler implements Handler {
                 error.addToTab(BUKKIT_INFO_TAB, "Loaded Plugins", pluginNames);
                 error.addToTab(BUKKIT_INFO_TAB, "Version", Bukkit.getVersion());
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Bungeecord Enabled",
-                        Bukkit.spigot().getConfig().getBoolean("settings.bungeecord"));
+                    Bukkit.spigot().getConfig().getBoolean("settings.bungeecord"));
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Late Bind Enabled",
-                        Bukkit.spigot().getConfig().getBoolean("settings.late-bind"));
+                    Bukkit.spigot().getConfig().getBoolean("settings.late-bind"));
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Netty Threads",
-                        Bukkit.spigot().getConfig().getInt("settings.netty-threads"));
+                    Bukkit.spigot().getConfig().getInt("settings.netty-threads"));
             });
         }
 
@@ -171,7 +171,7 @@ public class ErrorHandler implements Handler {
                                             Object value = field.get(event);
                                             if (value instanceof EntityDamageEvent.DamageModifier) {
                                                 value = value.getClass().getCanonicalName() + "."
-                                                        + ((EntityDamageEvent.DamageModifier) value).name();
+                                                    + ((EntityDamageEvent.DamageModifier) value).name();
                                             }
                                             if (value instanceof Enum) {
                                                 value = value.getClass().getCanonicalName() + "." + ((Enum) value).name();
@@ -180,10 +180,10 @@ public class ErrorHandler implements Handler {
                                         } catch (IllegalAccessException ignored) {
                                         } catch (Throwable internalE) {
                                             eventData.put(field.getName(),
-                                                    "Error getting field data: " + internalE.getClass().getCanonicalName() + (
-                                                            internalE.getMessage() != null
-                                                                    && internalE.getMessage().trim().length() > 0 ? ": " + internalE
-                                                                    .getMessage() : ""));
+                                                "Error getting field data: " + internalE.getClass().getCanonicalName() + (
+                                                    internalE.getMessage() != null
+                                                        && internalE.getMessage().trim().length() > 0 ? ": " + internalE
+                                                        .getMessage() : ""));
                                         }
                                     }
                                 }
@@ -226,12 +226,17 @@ public class ErrorHandler implements Handler {
 //    }
     }
 
-    public void handle(@Nonnull Exception ex, @Nonnull Severity severity) {
+    public void handle(@Nonnull Exception ex, @Nonnull Severity severity, boolean shouldLog) {
         if (enableBugsnag) {
             bugsnag.notify(ex, severity);
         }
-        log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
+        if (shouldLog) {
+            log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
                 "Caught exception with level " + severity.getValue(), ex);
+        } else {
+            log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
+                "Caught exception with level " + severity.getValue());
+        }
     }
 
     public void handle(@Nonnull CommandIssuer sender, @Nonnull List<String> args, @Nonnull Throwable e) {

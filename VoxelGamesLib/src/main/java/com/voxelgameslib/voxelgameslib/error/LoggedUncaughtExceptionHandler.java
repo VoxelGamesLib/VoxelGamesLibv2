@@ -49,6 +49,7 @@ public class LoggedUncaughtExceptionHandler implements UncaughtExceptionHandler 
         }
     }
 
+    @Override
     public void uncaughtException(@Nonnull Thread thread, @Nonnull Throwable throwable) {
         // Notify any subscribed clients of the uncaught exception
         for (Bugsnag bugsnag : clientMap.keySet()) {

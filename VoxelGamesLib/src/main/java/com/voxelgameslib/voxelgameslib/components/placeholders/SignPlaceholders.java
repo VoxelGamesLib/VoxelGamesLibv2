@@ -100,6 +100,7 @@ public class SignPlaceholders implements Listener {
     public void init() {
         registerPlaceholders();
 
+        // search for already loaded signs
         Bukkit.getWorlds().stream()
             .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
             .flatMap(s -> Arrays.stream(s.getTileEntities()))

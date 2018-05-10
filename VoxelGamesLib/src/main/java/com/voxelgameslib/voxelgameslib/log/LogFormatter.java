@@ -1,6 +1,9 @@
 package com.voxelgameslib.voxelgameslib.log;
 
+import com.bugsnag.Severity;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
@@ -16,6 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
+
+import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 
 public class LogFormatter {
 
@@ -23,12 +29,14 @@ public class LogFormatter {
     private final PrintStream sout = new PrintStream(new FileOutputStream(FileDescriptor.out));
     @Nullable
     private final RollingRandomAccessFileAppender log4jAppender;
+    private ErrorHandler errorHandler;
 
-    public LogFormatter(@Nullable RollingRandomAccessFileAppender log4jAppender){
+    public LogFormatter(@Nullable RollingRandomAccessFileAppender log4jAppender, ErrorHandler errorHandler) {
         this.log4jAppender = log4jAppender;
+        this.errorHandler = errorHandler;
     }
 
-    public void log(long millies, String levelName, String loggerName, String message, @Nullable Throwable throwable){
+    public void log(long millies, String levelName, String loggerName, String message, @Nullable Throwable throwable) {
         levelName = formatLevel(levelName, message);
         loggerName = formatLoggerName(loggerName, message);
         message = formatMessage(message);
@@ -40,14 +48,25 @@ public class LogFormatter {
         sb.append(message);
         sout.println(sb.toString());
 
+        Level level = toLog4j(levelName);
         // print to log4j to handle file stuff
         if (log4jAppender != null) {
             Message log4jMessage = new MutableLogEvent(new StringBuilder(message), new Object[0]);
-            LogEvent log4jEvent = Log4jLogEvent.newBuilder().setMessage(log4jMessage).setTimeMillis(millies).setLevel(toLog4j(levelName)).setLoggerName(loggerName).build();
+            LogEvent log4jEvent = Log4jLogEvent.newBuilder().setMessage(log4jMessage).setTimeMillis(millies).setLevel(level).setLoggerName(loggerName).build();
             log4jAppender.append(log4jEvent);
         }
 
         if (throwable != null) {
+            // forward to error handler
+            if (throwable instanceof Exception) {
+                Exception exception = (Exception) throwable;
+                if (level.equals(Level.WARN)) {
+                    errorHandler.handle(exception, Severity.WARNING, false);
+                } else {
+                    errorHandler.handle(exception, Severity.ERROR, false);
+                }
+            }
+
             // print to sout
             throwable.printStackTrace(sout);
 
@@ -57,7 +76,7 @@ public class LogFormatter {
                 PrintWriter pw = new PrintWriter(sw);
                 throwable.printStackTrace(pw);
                 Message log4jMessage = new MutableLogEvent(new StringBuilder(sw.toString()), new Object[0]);
-                LogEvent log4jEvent = Log4jLogEvent.newBuilder().setMessage(log4jMessage).setTimeMillis(millies).setLevel(toLog4j(levelName)).setLoggerName(loggerName).build();
+                LogEvent log4jEvent = Log4jLogEvent.newBuilder().setMessage(log4jMessage).setTimeMillis(millies).setLevel(level).setLoggerName(loggerName).build();
                 log4jAppender.append(log4jEvent);
             }
         }
@@ -86,22 +105,22 @@ public class LogFormatter {
     }
 
     private String formatLevel(String level, String msg) {
-        if(msg.startsWith("Hibernate:")){
+        if (msg.startsWith("Hibernate:")) {
             return "FINER ";
         }
         return StringUtils.rightPad(level.replace("WARNING", "WARN"), 6);
     }
 
-    private String formatMessage(String message){
-        if(message.startsWith("Hibernate:")){
-            return message.replace("Hibernate: ","");
+    private String formatMessage(String message) {
+        if (message.startsWith("Hibernate:")) {
+            return message.replace("Hibernate: ", "");
         }
         return message;
     }
 
     private String formatLoggerName(@Nullable String name, String msg) {
         if (name == null || name.length() == 0) {
-            if(msg.startsWith("Hibernate:")){
+            if (msg.startsWith("Hibernate:")) {
                 return "Hibernate    ";
             }
 
@@ -112,7 +131,7 @@ public class LogFormatter {
             return "VoxelGamesLib";
         } else if (name.contains("hibernate")) {
             return "Hibernate    ";
-        }else if(name.contains("net.minecraft.server")){
+        } else if (name.contains("net.minecraft.server")) {
             return "Minecraft    ";
         }
 
