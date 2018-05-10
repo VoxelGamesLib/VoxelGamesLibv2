@@ -4,9 +4,9 @@ com.voxelgameslib.voxelgameslib.command
 com.voxelgameslib.voxelgameslib.command.commands
 com.voxelgameslib.voxelgameslib.components.ability
 com.voxelgameslib.voxelgameslib.components.kits
+com.voxelgameslib.voxelgameslib.components.placeholders
 com.voxelgameslib.voxelgameslib.components.points
 com.voxelgameslib.voxelgameslib.components.scoreboard
-com.voxelgameslib.voxelgameslib.components.signs
 com.voxelgameslib.voxelgameslib.components.team
 com.voxelgameslib.voxelgameslib.condition
 com.voxelgameslib.voxelgameslib.condition.conditions
