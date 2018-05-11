@@ -316,14 +316,14 @@ public final class VoxelGamesLib extends JavaPlugin {
                         return null;
                     }
                 }
-                return userHandler.getUser(player.getUniqueId()).orElseThrow(() -> new VoxelGameLibException("Unknown user " + player.getDisplayName()));
+                return userHandler.getUser(player.getUniqueId()).orElseThrow(() -> new InvalidCommandArgument("Unknown user " + player.getDisplayName()));
             } else {
                 String arg = c.popFirstArg();
                 if (arg == null) {
                     if (isOptional) {
                         if (c.hasFlag("defaultself")) {
                             if (isPlayerSender) {
-                                return userHandler.getUser(((Player) sender).getUniqueId()).orElseThrow(() -> new VoxelGameLibException("Unknown user " + ((Player) sender).getDisplayName()));
+                                return userHandler.getUser(((Player) sender).getUniqueId()).orElseThrow(() -> new InvalidCommandArgument("Unknown user " + ((Player) sender).getDisplayName()));
                             } else {
                                 throw new InvalidCommandArgument(MessageKeys.NOT_ALLOWED_ON_CONSOLE, false);
                             }
@@ -331,7 +331,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                     }
                     return null;
                 } else {
-                    return userHandler.getUser(arg).orElseThrow(() -> new VoxelGameLibException("Unknown user " + arg));
+                    return userHandler.getUser(arg).orElseThrow(() -> new InvalidCommandArgument("Unknown user " + arg));
                 }
             }
         });
