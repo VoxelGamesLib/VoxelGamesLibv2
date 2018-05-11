@@ -24,7 +24,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.stats.StatType;
 import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
@@ -87,7 +86,7 @@ public class SkullPlaceHolders implements Listener {
                 }
             }
 
-            List<Pair<UUID, Double>> list = statsHandler.getTopWithUUID(type.get(), 1);
+            List<Pair<UUID, Double>> list = statsHandler.getTopWithUUID(type.get(), Math.max(index, 5));
             if (list.size() < index + 1) {
                 return null;
             }

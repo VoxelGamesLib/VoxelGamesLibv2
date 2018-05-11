@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,9 +25,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.lang.Lang;
+import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
+import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -48,6 +53,8 @@ public class SignPlaceholders implements Listener {
     private VoxelGamesLib voxelGamesLib;
     @Inject
     private UserHandler userHandler;
+    @Inject
+    private StatsHandler statsHandler;
 
     private ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -75,6 +82,48 @@ public class SignPlaceholders implements Listener {
                 TextComponent.of(""),
                 TextComponent.of("")
             });
+        registerPlaceholder("top", (FullSignPlaceHolder) (user, loc, rawLines, lines, key) -> {
+            Optional<Trackable> type = StatsHandler.fromName(rawLines[1]);
+            if (!type.isPresent()) {
+                return getErrorSign(3);
+            }
+
+            int index = 0;
+            if (!rawLines[2].equals("")) {
+                try {
+                    index = Integer.parseInt(rawLines[2]);
+                } catch (NumberFormatException ex) {
+                    return getErrorSign(2);
+                }
+            }
+
+            List<Pair<Component, Double>> list = statsHandler.getTopWithName(type.get(), Math.max(index, 5));
+            if (list.size() < index + 1) {
+                return new Component[]{
+                    Lang.trans(type.get().getDisplayName(), user.getLocale()),
+                    TextComponent.of("#" + (index + 1)),
+                    TextComponent.of(""),
+                    TextComponent.of("you?")
+                };
+            }
+
+            Pair<Component, Double> max = list.get(index);
+            return new Component[]{
+                Lang.trans(type.get().getDisplayName(), user.getLocale()),
+                TextComponent.of("#" + (index + 1)),
+                TextComponent.of(type.get().formatShort(max.getSecond())),
+                max.getFirst()
+            };
+        });
+    }
+
+    private Component[] getErrorSign(int id) {
+        return new Component[]{
+            TextComponent.of("Error#" + id),
+            TextComponent.of("Error#" + id),
+            TextComponent.of("Error#" + id),
+            TextComponent.of("Error#" + id)
+        };
     }
 
     /**
