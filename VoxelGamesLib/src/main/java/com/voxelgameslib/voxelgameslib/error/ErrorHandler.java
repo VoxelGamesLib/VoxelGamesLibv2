@@ -49,7 +49,7 @@ public class ErrorHandler implements Handler {
     private boolean sendBukkitInfo = true;
     private boolean sendWorldInfo = true;
 
-    private boolean enableBugsnag = true;
+    private boolean enableBugsnag = System.getProperty("disableBugsnag", "false").equals("false");
 
     // No guice since we enable on Load
     public ErrorHandler(@Nonnull VoxelGamesLib voxelGamesLib) {
