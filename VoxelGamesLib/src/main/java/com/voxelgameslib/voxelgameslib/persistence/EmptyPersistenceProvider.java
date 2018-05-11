@@ -40,7 +40,12 @@ public class EmptyPersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
+    public List<Pair<Component, Double>> getTopWithName(Trackable type, int amount) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
         return new ArrayList<>();
     }
 }

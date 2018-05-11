@@ -10,12 +10,15 @@ import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+
 import java.io.File;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureTypeAdapter;
 import com.voxelgameslib.voxelgameslib.game.Game;
@@ -27,6 +30,7 @@ import com.voxelgameslib.voxelgameslib.module.ModuleHandler;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
 import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.role.Permission;
+import com.voxelgameslib.voxelgameslib.texture.PlayerProfileTypeAdapter;
 import com.voxelgameslib.voxelgameslib.world.WorldConfig;
 import com.voxelgameslib.voxelgameslib.world.WorldHandler;
 
@@ -46,9 +50,12 @@ public final class VoxelGamesLibModule extends AbstractModule {
     private String pluginVersion;
     private File dataFolder;
     private Map<Class<Module>, Module> offeredModules;
+    private ErrorHandler errorHandler;
 
-    @java.beans.ConstructorProperties({"voxelGamesLib", "loggingHandler", "timingManager", "commandManager", "pluginVersion", "dataFolder", "offeredModules"})
-    public VoxelGamesLibModule(VoxelGamesLib voxelGamesLib, LoggingHandler loggingHandler, TimingManager timingManager, BukkitCommandManager commandManager, String pluginVersion, File dataFolder, Map<Class<Module>, Module> offeredModules) {
+    public VoxelGamesLibModule(VoxelGamesLib voxelGamesLib, LoggingHandler loggingHandler, TimingManager timingManager,
+                               BukkitCommandManager commandManager, String pluginVersion, File dataFolder,
+                               Map<Class<Module>, Module> offeredModules,
+                               ErrorHandler errorHandler) {
         this.voxelGamesLib = voxelGamesLib;
         this.loggingHandler = loggingHandler;
         this.timingManager = timingManager;
@@ -56,6 +63,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
         this.pluginVersion = pluginVersion;
         this.dataFolder = dataFolder;
         this.offeredModules = offeredModules;
+        this.errorHandler = errorHandler;
     }
 
     @Nonnull
@@ -70,6 +78,7 @@ public final class VoxelGamesLibModule extends AbstractModule {
         bind(TimingManager.class).toInstance(timingManager);
         bind(BukkitCommandManager.class).toInstance(commandManager);
         bind(LoggingHandler.class).toInstance(loggingHandler);
+        bind(ErrorHandler.class).toInstance(errorHandler);
 
         bind(String.class).annotatedWith(Names.named("PluginVersion")).toInstance(pluginVersion);
 
@@ -135,5 +144,6 @@ public final class VoxelGamesLibModule extends AbstractModule {
         builder.registerTypeAdapter(Phase.class, injector.getInstance(PhaseTypeAdapter.class));
         builder.registerTypeAdapter(Feature.class, injector.getInstance(FeatureTypeAdapter.class));
         builder.registerTypeAdapter(Game.class, injector.getInstance(GameTypeAdapter.class));
+        builder.registerTypeAdapter(PlayerProfile.class, injector.getInstance(PlayerProfileTypeAdapter.class));
     }
 }

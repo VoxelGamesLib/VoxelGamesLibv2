@@ -1,7 +1,12 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
+
+import com.bugsnag.Severity;
 
 import net.kyori.text.Component;
 
@@ -10,12 +15,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timings;
@@ -44,6 +53,8 @@ public class StatsHandler implements Handler {
     @Inject
     @Named("IncludeAddons")
     private FastClasspathScanner scanner;
+    @Inject
+    private ErrorHandler errorHandler;
 
     private List<Stat> statTypes = new ArrayList<>();
     private static List<Trackable> trackables = new ArrayList<>();
@@ -95,11 +106,47 @@ public class StatsHandler implements Handler {
         final String fName = name;
         return trackables.stream()
             .flatMap(trackable -> Arrays.stream(trackable.getValues()))
-            .filter(trackable -> (trackable.getPrefix() + ":" + trackable.name()).equals(fName))
+            .filter(trackable -> (trackable.getPrefix().toUpperCase() + ":" + trackable.name().toUpperCase()).equals(fName.toUpperCase()))
             .findAny();
     }
 
-    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
-        return persistenceHandler.getProvider().getTop(type, amount);
+    private LoadingCache<Pair<Trackable, Integer>, List<Pair<UUID, Double>>> uuidCache = CacheBuilder.newBuilder()
+        .maximumSize(1000)
+        .expireAfterWrite(1, TimeUnit.HOURS)
+        .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<UUID, Double>>>() {
+            @Override
+            public List<Pair<UUID, Double>> load(Pair<Trackable, Integer> key) throws Exception {
+                return persistenceHandler.getProvider().getTopWithUUID(key.getFirst(), key.getSecond());
+            }
+        });
+
+    public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
+        try {
+            return uuidCache.get(new Pair<>(type, amount));
+        } catch (ExecutionException e) {
+            errorHandler.handle(e, Severity.WARNING, true);
+        }
+
+        return new ArrayList<>();
+    }
+
+    private LoadingCache<Pair<Trackable, Integer>, List<Pair<Component, Double>>> nameCache = CacheBuilder.newBuilder()
+        .maximumSize(1000)
+        .expireAfterWrite(1, TimeUnit.HOURS)
+        .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<Component, Double>>>() {
+            @Override
+            public List<Pair<Component, Double>> load(Pair<Trackable, Integer> key) throws Exception {
+                return persistenceHandler.getProvider().getTopWithName(key.getFirst(), key.getSecond());
+            }
+        });
+
+    public List<Pair<Component, Double>> getTopWithName(Trackable type, int amount) {
+        try {
+            return nameCache.get(new Pair<>(type, amount));
+        } catch (ExecutionException e) {
+            errorHandler.handle(e, Severity.WARNING, true);
+        }
+
+        return new ArrayList<>();
     }
 }

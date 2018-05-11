@@ -45,5 +45,21 @@ public interface PersistenceProvider extends Handler {
     @Nonnull
     Optional<UserData> loadUser(@Nonnull UUID id);
 
-    List<Pair<Component, Double>> getTop(Trackable type, int amount);
+    /**
+     * Gets a list of the top users for the given type. A user is represented by his display name
+     *
+     * @param type   the type to get the top users for
+     * @param amount the number of users to fetch
+     * @return the top list for the given type
+     */
+    List<Pair<Component, Double>> getTopWithName(Trackable type, int amount);
+
+    /**
+     * Gets a list of the top users for the given type. A user is represented by his uuid
+     *
+     * @param type   the type to get the top users for
+     * @param amount the number of users to fetch
+     * @return the top list for the given type
+     */
+    List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount);
 }

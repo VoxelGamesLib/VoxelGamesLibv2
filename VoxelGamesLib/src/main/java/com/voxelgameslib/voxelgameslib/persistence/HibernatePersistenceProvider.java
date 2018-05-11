@@ -136,7 +136,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Override
-    public List<Pair<Component, Double>> getTop(Trackable type, int amount) {
+    public List<Pair<Component, Double>> getTopWithName(Trackable type, int amount) {
         return session(session -> {
             Query query = session.createQuery("select user.displayName, stat.val from StatInstance stat, UserData user\n" +
                 "where user.uuid = stat.uuid\n" +
@@ -149,6 +149,24 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             //noinspection unchecked
             for(Object[] row : (List<Object[]>)query.getResultList()){
                 result.add(new Pair<>((Component) row[0], (Double) row[1]));
+            }
+            return result;
+        });
+    }
+
+    @Override
+    public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
+        return session(session -> {
+            Query query = session.createQuery("select stat.uuid, stat.val from StatInstance stat\n" +
+                "where stat.statType = :type\n" +
+                "order by stat.val desc");
+            query.setParameter("type", type);
+            query.setMaxResults(amount);
+
+            List<Pair<UUID, Double>> result = new ArrayList<>();
+            //noinspection unchecked
+            for(Object[] row : (List<Object[]>)query.getResultList()){
+                result.add(new Pair<>((UUID) row[0], (Double) row[1]));
             }
             return result;
         });

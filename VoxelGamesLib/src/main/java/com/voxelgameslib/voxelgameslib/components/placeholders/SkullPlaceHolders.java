@@ -12,17 +12,24 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.stats.StatType;
+import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
+import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.utils.NBTUtil;
+import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,30 +46,57 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 @Singleton
 public class SkullPlaceHolders implements Listener {
+
+    private static final Logger log = Logger.getLogger(SkullPlaceHolder.class.getName());
+
     private ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
     private Map<String, SkullPlaceHolder> placeHolders = new HashMap<>();
     private final Map<Location, Skull> lastSeenSkulls = new ConcurrentHashMap<>();
 
-    private PlayerProfile errorProfile;
-
     @Inject
     private TextureHandler textureHandler;
     @Inject
     private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private StatsHandler statsHandler;
 
     /**
      * registers the default skull placeholders
      */
     public void registerPlaceholders() {
-        registerPlaceholder("god", (name, player, location) -> textureHandler.getPlayerProfile(ThreadLocalRandom.current().nextBoolean() ? "MiniDigger" : "Notch"));
+        registerPlaceholder("god", (name, player, location, args) ->
+            textureHandler.getPlayerProfile(ThreadLocalRandom.current().nextBoolean() ? "MiniDigger" : "Notch"));
+
+        registerPlaceholder("top", (name, player, location, args) -> {
+            if (args.length < 2) {
+                return null;
+            }
+
+            Optional<Trackable> type = StatsHandler.fromName(args[1]);
+            if (!type.isPresent()) {
+                return null;
+            }
+
+            int index = 0;
+            if (args.length == 3) {
+                try {
+                    index = Integer.parseInt(args[2]);
+                } catch (NumberFormatException ex) {
+                    return null;
+                }
+            }
+
+            List<Pair<UUID, Double>> list = statsHandler.getTopWithUUID(type.get(), 1);
+            if (list.size() < index + 1) {
+                return null;
+            }
+
+            return textureHandler.getPlayerProfile(list.get(index).getFirst());
+        });
     }
 
     public void init() {
-        // setup error profile
-        errorProfile = Bukkit.createProfile("MHF_Question");
-        VoxelGamesLib.newChain().async(() -> errorProfile.complete(true)).execute();
-
         Bukkit.getPluginManager().registerEvents(this, voxelGamesLib);
 
         registerPlaceholders();
@@ -101,7 +135,7 @@ public class SkullPlaceHolders implements Listener {
      * @param placeHolder the placeholder that will replace the key
      */
     public void registerPlaceholder(@Nonnull String key, @Nonnull SkullPlaceHolder placeHolder) {
-        placeHolders.put("[" + key + "]", placeHolder);
+        placeHolders.put(key, placeHolder);
     }
 
     /**
@@ -124,18 +158,21 @@ public class SkullPlaceHolders implements Listener {
             if (owner.containsKey("Name")) {
                 String name = owner.getString("Name");
                 PlayerProfile profile = null;
-                for (SkullPlaceHolder skullPlaceHolder : placeHolders.values()) {
-                    profile = skullPlaceHolder.apply(name, player, location);
-                    if (profile.hasTextures()) {
-                        break;
-                    }
+
+                String[] args = name.split(":");
+                SkullPlaceHolder skullPlaceHolder = placeHolders.get(args[0]);
+                if (skullPlaceHolder != null) {
+                    profile = skullPlaceHolder.apply(name, player, location, args);
                 }
 
                 if (profile != null && profile.hasTextures()) {
                     NBTUtil.setPlayerProfile(owner, profile);
                 } else {
-                    NBTUtil.setPlayerProfile(owner, errorProfile);
+                    //log.warning("Error while applying placeholder '" + name + "' null? " + (profile == null) + " textures? " + (profile == null ? "" : profile.hasTextures()));
+                    NBTUtil.setPlayerProfile(owner, textureHandler.getErrorProfile());
                 }
+
+                owner.setName(name);
             }
 
             // update last seen signs

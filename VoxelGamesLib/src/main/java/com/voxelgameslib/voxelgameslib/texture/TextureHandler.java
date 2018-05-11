@@ -3,6 +3,10 @@ package com.voxelgameslib.voxelgameslib.texture;
 import com.google.gson.Gson;
 import com.google.inject.name.Named;
 
+import com.destroystokyo.paper.event.profile.FillProfileEvent;
+import com.destroystokyo.paper.event.profile.LookupProfileEvent;
+import com.destroystokyo.paper.event.profile.PreFillProfileEvent;
+import com.destroystokyo.paper.event.profile.PreLookupProfileEvent;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 
@@ -23,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
@@ -36,14 +41,17 @@ import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 @Singleton
-public class TextureHandler implements Handler {
+public class TextureHandler implements Handler, Listener {
 
     private static final Logger log = Logger.getLogger(TextureHandler.class.getName());
     private List<Skin> loadedSkins = new ArrayList<>();
+    private PlayerProfile errorProfile;
 
     @Inject
     @Named("IgnoreExposedBS")
@@ -55,6 +63,8 @@ public class TextureHandler implements Handler {
 
     @Inject
     private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private TextureCache cache;
 
     private MineskinClient mineskinClient = new MineskinClient();
 
@@ -83,11 +93,17 @@ public class TextureHandler implements Handler {
             log.warning("Error while loading skins, some features of VGL might not work as expected!");
             e.printStackTrace();
         }
+
+        cache.init();
+
+        // setup error profile
+        errorProfile = Bukkit.createProfile("MHF_Question");
+        VoxelGamesLib.newChain().async(() -> cache.fill(errorProfile)).execute();
     }
 
     @Override
     public void disable() {
-
+        cache.persist();
     }
 
     @Nonnull
@@ -208,30 +224,25 @@ public class TextureHandler implements Handler {
         return playerProfile;
     }
 
+    public PlayerProfile getPlayerProfile(UUID uuid) {
+        return cache.get(uuid);
+    }
+
     public PlayerProfile getPlayerProfile(String owner) {
         Optional<Skin> skin = getSkin(owner);
         if (skin.isPresent()) {
             return getPlayerProfile(skin.get());
         } else {
-            PlayerProfile playerProfile = Bukkit.createProfile(owner);
-            playerProfile.completeFromCache();
-            if (!playerProfile.hasTextures()) {
-                // no success? try async and then update on next interval
-                VoxelGamesLib.newChain().async(() -> {
-                    boolean success = playerProfile.complete(true);
-                    if (!success) {
-                        // still no success? rate limited, yey
-                        log.warning("It appears that we have been rate limited (could not load texture for " + owner + ")");
-                    }
-                }).execute();
-            }
-
-            return playerProfile;
+            return cache.get(owner);
         }
     }
 
     @Nullable
     public ItemStack getSkull(@Nonnull Skin skin) {
         return new ItemBuilder(Material.SKULL_ITEM).durability(3).name(skin.name).meta((itemMeta -> ((SkullMeta) itemMeta).setPlayerProfile(getPlayerProfile(skin)))).build();
+    }
+
+    public PlayerProfile getErrorProfile() {
+        return errorProfile;
     }
 }

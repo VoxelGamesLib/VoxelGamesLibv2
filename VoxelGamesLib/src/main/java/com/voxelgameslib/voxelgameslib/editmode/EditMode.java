@@ -1,11 +1,16 @@
 package com.voxelgameslib.voxelgameslib.editmode;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+
 import org.inventivetalent.menubuilder.inventory.InventoryMenuBuilder;
 import org.mineskin.data.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,6 +20,7 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
+import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
@@ -38,6 +44,8 @@ import co.aikar.commands.annotation.Syntax;
 @CommandAlias("editmode")
 @SuppressWarnings("JavaDoc") // commands don't need javadoc, go read the command's descriptions
 public class EditMode extends BaseCommand {
+
+    private static final Logger log = Logger.getLogger(EditMode.class.getName());
 
     @Inject
     private MapHandler mapHandler;
@@ -80,14 +88,33 @@ public class EditMode extends BaseCommand {
     @Subcommand("skull")
     @CommandPermission("%admin")
     @Syntax("<name> - the name of the skull")
-    public void skull(@Nonnull User sender, @Nonnull String name) {
+    public void skull(@Nonnull User sender, @Nonnull String name, @co.aikar.commands.annotation.Optional @Default(value = "true") boolean usePrefix) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
                 .meta((itemMeta -> {
-                    char prefix = name.toUpperCase().charAt(0);
-                    Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));
-                    ((SkullMeta) itemMeta).setPlayerProfile(textureHandler.getPlayerProfile(skin));
-                    ((SkullMeta) itemMeta).setOwner(name);
+                    SkullMeta skullMeta = (SkullMeta) itemMeta;
+                    if (usePrefix) {
+                        char prefix = name.toUpperCase().charAt(0);
+                        Optional<Skin> skin = textureHandler.getSkin(prefix + "");
+                        if (!skin.isPresent()) {
+                            log.warning("Could not find skull for char " + prefix + "!");
+                            skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
+                        } else {
+                            skullMeta.setPlayerProfile(textureHandler.getPlayerProfile(skin.get()));
+                        }
+                    } else {
+                        PlayerProfile playerProfile = textureHandler.getPlayerProfile(name);
+                        if (playerProfile == null) {
+                            log.warning("Could not find skull for name " + name + "!");
+                            skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
+                        } else {
+                            skullMeta.setPlayerProfile(playerProfile);
+                        }
+                    }
+
+                    if (skullMeta.getPlayerProfile() != null) {
+                        skullMeta.getPlayerProfile().setName(name);
+                    }
                 })).build();
             sender.getPlayer().getInventory().setItemInMainHand(skull);
         } else {

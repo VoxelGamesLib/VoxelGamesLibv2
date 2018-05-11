@@ -116,7 +116,7 @@ public class StatsCommands extends BaseCommand {
                     @Description("the amount to of entry you want to see, defaults to 5")
                     @Default("5") int amount) {
 
-        List<Pair<Component, Double>> top = statsHandler.getTop(type, amount);
+        List<Pair<Component, Double>> top = statsHandler.getTopWithName(type, amount);
         Lang.msg(sender, LangKey.STATS_TOP_HEADER, top.size(), type.getDisplayName());
 
         int i = 1;

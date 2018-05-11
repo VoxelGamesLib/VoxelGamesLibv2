@@ -19,5 +19,9 @@ public class StartupListener implements Listener {
         if(!startupHandler.isReady()){
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server is starting, please gimme a second!");
         }
+
+        if(startupHandler.isInterrupted()){
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server start was interrupted, please try again later");
+        }
     }
 }
