@@ -12,5 +12,5 @@ import org.bukkit.entity.Player;
  */
 public interface SkullPlaceHolder {
 
-    Optional<PlayerProfile> apply(String name, Player player, Location location);
+    PlayerProfile apply(String name, Player player, Location location);
 }

@@ -61,7 +61,7 @@ public class SkullPlaceHolders implements Listener {
     public void init() {
         // setup error profile
         errorProfile = Bukkit.createProfile("MHF_Question");
-        VoxelGamesLib.newChain().async(() -> errorProfile.complete(true));
+        VoxelGamesLib.newChain().async(() -> errorProfile.complete(true)).execute();
 
         Bukkit.getPluginManager().registerEvents(this, voxelGamesLib);
 
@@ -123,15 +123,19 @@ public class SkullPlaceHolders implements Listener {
             NbtCompound owner = nbt.getCompound("Owner");
             if (owner.containsKey("Name")) {
                 String name = owner.getString("Name");
-                Optional<PlayerProfile> profile = Optional.empty();
+                PlayerProfile profile = null;
                 for (SkullPlaceHolder skullPlaceHolder : placeHolders.values()) {
                     profile = skullPlaceHolder.apply(name, player, location);
-                    if (profile.isPresent()) {
+                    if (profile.hasTextures()) {
                         break;
                     }
                 }
 
-                NBTUtil.setPlayerProfile(owner, profile.orElse(errorProfile));
+                if (profile != null && profile.hasTextures()) {
+                    NBTUtil.setPlayerProfile(owner, profile);
+                } else {
+                    NBTUtil.setPlayerProfile(owner, errorProfile);
+                }
             }
 
             // update last seen signs
