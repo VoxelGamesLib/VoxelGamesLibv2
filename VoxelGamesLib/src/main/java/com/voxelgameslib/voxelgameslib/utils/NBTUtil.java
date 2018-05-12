@@ -28,6 +28,7 @@ public class NBTUtil {
     public static void setPlayerProfile(NbtCompound nbt, PlayerProfile playerProfile) {
         nbt.put("Id", (playerProfile.getId() == null ? UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerProfile.getName()).getBytes()) : playerProfile.getId()).toString());
         nbt.put("Name", playerProfile.getName());
+        if(!nbt.containsKey("Properties")) return;
         NbtCompound properties = nbt.getCompound("Properties");
         NbtList list = properties.getList("textures");
         Map<String, NbtBase> texture = (Map<String, NbtBase>) list.getValue(0);

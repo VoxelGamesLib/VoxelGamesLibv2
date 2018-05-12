@@ -12,12 +12,14 @@ import com.destroystokyo.paper.event.profile.PreFillProfileEvent;
 import com.destroystokyo.paper.profile.PlayerProfile;
 
 import org.apache.commons.lang3.StringUtils;
+import org.mineskin.data.Skin;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -73,7 +75,7 @@ public class TextureCache implements Listener {
                     if (!playerProfile.hasTextures()) {
                         playerProfile.complete(true);
                     }
-                    if(!playerProfile.hasTextures()){
+                    if (!playerProfile.hasTextures()) {
                         log.warning("plz....");
                     }
                     return playerProfile;
@@ -151,10 +153,6 @@ public class TextureCache implements Listener {
 
     @EventHandler
     public void fill(PreFillProfileEvent e) {
-        if (checkForPlaceholders(e.getPlayerProfile())) {
-            return;
-        }
-
         // handle locks to avoid being called twice
         if (e.getPlayerProfile().getName() != null) {
             if (currentNames.contains(e.getPlayerProfile().getName())) {
@@ -184,12 +182,18 @@ public class TextureCache implements Listener {
             return true;
         }
 
+        PlayerProfile prefixProfile = checkForPrefix(playerProfile);
+        if (prefixProfile != null) {
+            playerProfile.setProperties(prefixProfile.getProperties());
+            return playerProfile.isComplete() && playerProfile.hasTextures();
+        }
+
         PlayerProfile newProfile = null;
         //playerProfile.completeFromCache();
         if (playerProfile.getId() != null) {
             try {
                 newProfile = uuidCache.get(playerProfile.getId());
-                if(!newProfile.hasTextures()){
+                if (!newProfile.hasTextures()) {
                     uuidCache.invalidate(playerProfile.getId());
                 }
             } catch (ExecutionException e1) {
@@ -198,7 +202,7 @@ public class TextureCache implements Listener {
         } else if (!StringUtils.isBlank(playerProfile.getName())) {
             try {
                 newProfile = nameCache.get(playerProfile.getName());
-                if(!newProfile.hasTextures()){
+                if (!newProfile.hasTextures()) {
                     nameCache.invalidate(playerProfile.getName());
                 }
             } catch (ExecutionException e1) {
@@ -248,5 +252,23 @@ public class TextureCache implements Listener {
             }
         }
         return false;
+    }
+
+    private PlayerProfile checkForPrefix(PlayerProfile playerProfile) {
+        if (playerProfile.getName() != null) {
+            if (playerProfile.getName().contains(":")) {
+                String[] args = playerProfile.getName().split(":");
+                Optional<Skin> skin = textureHandler.getSkin(args[1].charAt(0));
+                if (skin.isPresent()) {
+                    log.finer("Found prefix marker, return " + skin.get().name);
+                    return textureHandler.getPlayerProfile(skin.get());
+                } else {
+                    log.warning("Requested prefix marker, but is missing skin! " + playerProfile.getName());
+                    return textureHandler.getErrorProfile();
+                }
+            }
+        }
+
+        return null;
     }
 }
