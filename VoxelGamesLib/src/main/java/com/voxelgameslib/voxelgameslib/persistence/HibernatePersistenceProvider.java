@@ -28,6 +28,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.persistence.converter.VGLConverter;
+import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
@@ -172,8 +173,16 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
         });
     }
 
+    @Override
+    public void saveGame(GameData gameData) {
+        session(session -> {
+            session.saveOrUpdate(gameData);
+            return null;
+        });
+    }
+
     @Nullable
-    public <T> T session(@Nonnull SessionExecutor<T> executor) {
+    private  <T> T session(@Nonnull SessionExecutor<T> executor) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -186,7 +195,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @FunctionalInterface
-    public interface SessionExecutor<T> {
+    interface SessionExecutor<T> {
 
         @Nullable
         T execute(@Nonnull Session session);

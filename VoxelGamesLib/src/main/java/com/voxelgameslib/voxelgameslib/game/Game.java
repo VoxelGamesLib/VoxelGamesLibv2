@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
-import com.voxelgameslib.voxelgameslib.condition.conditions.DuelVictoryCondition;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
@@ -232,4 +231,11 @@ public interface Game extends Tickable {
      * @return if this game is currently in the process of being aborted
      */
     boolean isAborting();
+
+    /**
+     * @return the data of this game that should be persisted
+     * @param winner
+     * @param winners
+     */
+    com.voxelgameslib.voxelgameslib.persistence.model.GameData getGameData(@Nullable User winner, @Nullable Team winners);
 }

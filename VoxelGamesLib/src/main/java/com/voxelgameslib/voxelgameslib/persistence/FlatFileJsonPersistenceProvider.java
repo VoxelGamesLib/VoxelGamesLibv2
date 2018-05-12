@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
@@ -58,7 +59,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
         try {
             String json = Files.readAllLines(UserFile.toPath()).stream()
-                    .collect(Collectors.joining());
+                .collect(Collectors.joining());
             //noinspection unchecked
             UserMap = gson.fromJson(json, Map.class);
             if (UserMap == null) {
@@ -101,6 +102,11 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
     @Override
     public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void saveGame(GameData gameData) {
         throw new NotImplementedException();
     }
 }

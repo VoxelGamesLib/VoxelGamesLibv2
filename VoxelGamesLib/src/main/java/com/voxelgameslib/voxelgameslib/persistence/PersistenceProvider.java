@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
@@ -62,4 +63,10 @@ public interface PersistenceProvider extends Handler {
      * @return the top list for the given type
      */
     List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount);
+
+    /**
+     * Saves the state of a game
+     * @param gameData the game data to save
+     */
+    void saveGame(GameData gameData);
 }

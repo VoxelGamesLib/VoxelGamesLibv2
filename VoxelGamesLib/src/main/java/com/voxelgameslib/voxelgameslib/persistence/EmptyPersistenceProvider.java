@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
+import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
@@ -47,5 +48,10 @@ public class EmptyPersistenceProvider implements PersistenceProvider {
     @Override
     public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
         return new ArrayList<>();
+    }
+
+    @Override
+    public void saveGame(GameData gameData) {
+        // ignore
     }
 }
