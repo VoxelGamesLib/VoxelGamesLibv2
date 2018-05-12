@@ -8,6 +8,7 @@ import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
+import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
@@ -58,6 +59,11 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onJoin(@Nonnull PlayerJoinEvent event) {
+        if (gameHandler.getDefaultGame() != null) {
+            gameHandler.getDefaultGame().getActivePhase().getOptionalFeature(SpawnFeature.class).ifPresent(spawnFeature ->
+                event.getPlayer().teleport(spawnFeature.getSpawn(event.getPlayer().getUniqueId())));
+        }
+
         Bukkit.getScheduler().runTaskLater(voxelGamesLib, () -> {
             if (gameHandler.getDefaultGame() != null) {
                 gameHandler.getDefaultGame().join(userHandler.getUser(event.getPlayer().getUniqueId()).orElseThrow(() ->
