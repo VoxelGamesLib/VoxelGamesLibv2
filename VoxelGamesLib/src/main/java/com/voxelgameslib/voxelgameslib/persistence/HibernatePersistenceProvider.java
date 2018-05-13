@@ -2,6 +2,8 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.inject.name.Named;
 
+import com.bugsnag.Severity;
+
 import net.kyori.text.Component;
 
 import org.hibernate.Session;
@@ -10,6 +12,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 
 import com.voxelgameslib.voxelgameslib.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.config.GlobalConfig;
+import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.persistence.converter.VGLConverter;
 import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
@@ -53,6 +57,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     @Inject
     @Named("IncludeAddons")
     private FastClasspathScanner scanner;
+    @Inject
+    private ErrorHandler errorHandler;
 
     private SessionFactory sessionFactory;
     private CriteriaBuilder cBuilder;
@@ -148,7 +154,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
             List<Pair<Component, Double>> result = new ArrayList<>();
             //noinspection unchecked
-            for(Object[] row : (List<Object[]>)query.getResultList()){
+            for (Object[] row : (List<Object[]>) query.getResultList()) {
                 result.add(new Pair<>((Component) row[0], (Double) row[1]));
             }
             return result;
@@ -166,7 +172,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
             List<Pair<UUID, Double>> result = new ArrayList<>();
             //noinspection unchecked
-            for(Object[] row : (List<Object[]>)query.getResultList()){
+            for (Object[] row : (List<Object[]>) query.getResultList()) {
                 result.add(new Pair<>((UUID) row[0], (Double) row[1]));
             }
             return result;
@@ -182,16 +188,37 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     }
 
     @Nullable
-    private  <T> T session(@Nonnull SessionExecutor<T> executor) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+    @SuppressWarnings("Duplicates")
+    private <T> T session(@Nonnull SessionExecutor<T> executor) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
 
-        T t = executor.execute(session);
+            T t = executor.execute(session);
 
-        session.getTransaction().commit();
-        session.close();
+            session.getTransaction().commit();
+            session.close();
 
-        return t;
+            return t;
+        } catch (JDBCConnectionException ex) {
+            log.finer("DB connection error, retrying... (" + ex.getMessage() + ")");
+            // retry
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                T t = executor.execute(session);
+
+                session.getTransaction().commit();
+                session.close();
+
+                return t;
+            } catch (Exception e) {
+                errorHandler.handle(ex, Severity.ERROR, true);
+                return null;
+            }
+        } catch (Exception ex) {
+            errorHandler.handle(ex, Severity.ERROR, true);
+            return null;
+        }
     }
 
     @FunctionalInterface
