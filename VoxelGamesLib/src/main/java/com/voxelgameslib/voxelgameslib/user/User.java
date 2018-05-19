@@ -242,7 +242,28 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
      */
     void applyRoleSuffix();
 
+    /**
+     * @return the userdata for this user
+     */
     UserData getUserData();
 
+    /**
+     * Sets the userdata for this user
+     * @param userData the new data to set
+     */
     void setUserData(UserData userData);
+
+    /**
+     * @return if this player is currently attempting to quit the server
+     */
+    boolean isLeaving();
+
+    /**
+     * Marks this player as leaving. Should only be called by vgl
+     *
+     * @param leaving if the player is leaving
+     * @deprecated should only be used internally
+     */
+    @Deprecated
+    void setLeaving(boolean leaving);
 }

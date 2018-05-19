@@ -62,6 +62,7 @@ public class GamePlayer implements User {
     private UUID uuid;
     private Player player;
     private UserData userData;
+    private boolean isLeaving;
 
     @Expose
     @Transient//TODO fix me
@@ -324,5 +325,15 @@ public class GamePlayer implements User {
     @Override
     public void setUserData(UserData userData) {
         this.userData = userData;
+    }
+
+    @Override
+    public boolean isLeaving() {
+        return isLeaving;
+    }
+
+    @Override
+    public void setLeaving(boolean leaving) {
+        this.isLeaving = leaving;
     }
 }

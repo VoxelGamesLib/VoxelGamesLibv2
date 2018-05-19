@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 
 import org.bukkit.Bukkit;
@@ -54,7 +54,7 @@ public class BossBarFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onGameLeave(@Nonnull GameLeaveEvent event) {
+    public void onGameLeave(@Nonnull GamePreLeaveEvent event) {
         bossBar.removePlayer(event.getUser().getPlayer());
     }
 

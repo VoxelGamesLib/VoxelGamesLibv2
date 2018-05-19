@@ -6,7 +6,8 @@ import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePostLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -35,16 +36,17 @@ public class GameListener implements Listener {
             .orElseThrow(() -> new UserException(
                 "Unknown user " + event.getPlayer().getDisplayName() + "(" + event.getPlayer()
                     .getUniqueId() + ")"));
+        user.setLeaving(true);
         gameHandler.getGames(event.getPlayer().getUniqueId(), true)
-            .forEach((game -> game.leave(user)));
+            .forEach((game -> game.leave(user, false)));
     }
 
     @EventHandler
-    public void onL(@Nonnull GameLeaveEvent event) {
+    public void onL(@Nonnull GamePostLeaveEvent event) {
         log.finer(event.getUser().getRawDisplayName() + " left the game " + event.getGame()
             .getGameMode().getName());
 
-        if (gameHandler.getDefaultGame() != null) {
+        if (!event.getUser().isLeaving() && gameHandler.getDefaultGame() != null) {
             if (event.getGame().getUuid() != gameHandler.getDefaultGame().getUuid()) {
                 gameHandler.getDefaultGame().join(event.getUser());
             }

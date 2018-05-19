@@ -26,8 +26,6 @@ public class UserListener implements Listener {
     private static final Logger log = Logger.getLogger(UserListener.class.getName());
     @Inject
     private UserHandler handler;
-    @Inject
-    private GameHandler gameHandler;
 
     @EventHandler
     public void onAsyncLogin(@Nonnull AsyncPlayerPreLoginEvent event) {
@@ -54,16 +52,10 @@ public class UserListener implements Listener {
         }
 
         handler.join(event.getPlayer());
-
-        // tp to spawn
-        event.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
     }
 
     @EventHandler
     public void onLeave(@Nonnull PlayerQuitEvent event) {
-        Optional<User> user = handler.getUser(event.getPlayer().getUniqueId());
-        user.ifPresent(u -> gameHandler.getGames(u.getUuid(), true).forEach(game -> game.leave(u)));
-
         handler.logout(event.getPlayer().getUniqueId());
     }
 

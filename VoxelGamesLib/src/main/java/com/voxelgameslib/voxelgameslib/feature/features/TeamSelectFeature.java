@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
@@ -205,7 +205,7 @@ public class TeamSelectFeature extends AbstractFeature implements FeatureCommand
     }
 
     @GameEvent
-    public void onQuit(@Nonnull GameLeaveEvent event) {
+    public void onQuit(@Nonnull GamePreLeaveEvent event) {
         getTeam(event.getUser()).ifPresent(t -> t.leave(event.getUser()));
     }
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -25,7 +26,8 @@ import com.voxelgameslib.voxelgameslib.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.elo.EloHandler;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameEndEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePostLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.NoSuchFeatureException;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
@@ -81,6 +83,7 @@ public abstract class AbstractGame implements Game {
     private Map<Class<GameData>, GameData> gameData = new HashMap<>();
 
     private boolean aborted = false;
+    private boolean ending = false;
 
     private LocalDateTime startTime;
     private Duration duration;
@@ -242,15 +245,17 @@ public abstract class AbstractGame implements Game {
         log.finer("Persisting game data");
         persistenceHandler.getProvider().saveGame(getGameData(winnerUser, winnerTeam));
 
-        end();
+        end(gameHandler.getDefaultGame() == null);
     }
 
-    private void end() {
+    private void end(boolean shouldTeleportToSpawn) {
+        ending = true;
+
         while (players.size() != 0) {
-            leave(players.get(0));
+            leave(players.get(0), shouldTeleportToSpawn);
         }
         while (spectators.size() != 0) {
-            leave(spectators.get(0));
+            leave(spectators.get(0), shouldTeleportToSpawn);
         }
 
         if (activePhase.isRunning()) {
@@ -382,8 +387,8 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void leave(@Nonnull User user) {
-        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
+    public void leave(@Nonnull User user, boolean shouldTeleportToSpawn) {
+        Bukkit.getPluginManager().callEvent(new GamePreLeaveEvent(this, user));
 
         players.remove(user);
         spectators.remove(user);
@@ -391,13 +396,17 @@ public abstract class AbstractGame implements Game {
         Optional.ofNullable(playerStates.remove(user.getUuid())).ifPresent(state -> state.apply(user));
         broadcastMessage(LangKey.GAME_PLAYER_LEAVE, (Object) user.getDisplayName());
 
-        user.getPlayer().teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        GamePostLeaveEvent event = new GamePostLeaveEvent(this, user, Bukkit.getWorlds().get(0).getSpawnLocation(), shouldTeleportToSpawn);
+        event.callEvent();
+        if (event.shouldTeleportToSpawn()) {
+            user.getPlayer().teleport(event.getSpawnLocation());
+        }
 
         user.removeListeningChannel(chatChannel.getIdentifier());
         user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
         user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
 
-        if(players.size() < minPlayers){
+        if (players.size() < minPlayers && !ending && !aborted) {
             broadcastMessage(LangKey.GAME_TOO_FEW_PLAYERS);
             abortGame();
         }
@@ -524,5 +533,18 @@ public abstract class AbstractGame implements Game {
         gameData.setAborted(aborted);
 
         return gameData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractGame)) return false;
+        AbstractGame that = (AbstractGame) o;
+        return Objects.equals(uuid, that.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
     }
 }

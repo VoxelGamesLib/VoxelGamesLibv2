@@ -8,9 +8,9 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a user left a game
+ * Called when a user leaves a game. Called before he actually left the game to give features the possibility to do cleanup.
  */
-public class GameLeaveEvent extends GameEvent {
+public class GamePreLeaveEvent extends GameEvent {
 
     private static final HandlerList handlers = new HandlerList();
     private User user;
@@ -19,7 +19,7 @@ public class GameLeaveEvent extends GameEvent {
      * @param game the game the user left
      * @param user the user that left the game
      */
-    public GameLeaveEvent(@Nonnull Game game, @Nonnull User user) {
+    public GamePreLeaveEvent(@Nonnull Game game, @Nonnull User user) {
         super(game);
         this.user = user;
     }

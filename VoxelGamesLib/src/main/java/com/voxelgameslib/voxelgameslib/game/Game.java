@@ -112,8 +112,9 @@ public interface Game extends Tickable {
      * Lets a user leave this game
      *
      * @param user the user that wants to leave this game
+     * @param shouldTeleportToSpawn
      */
-    void leave(@Nonnull User user);
+    void leave(@Nonnull User user, boolean shouldTeleportToSpawn);
 
     /**
      * Checks if that user is playing (not spectating!) this game

@@ -19,7 +19,7 @@ import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardLine;
 import com.voxelgameslib.voxelgameslib.components.scoreboard.StringScoreboardLine;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -62,7 +62,7 @@ public class PersonalScoreboardFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onQuit(@Nonnull GameLeaveEvent event) {
+    public void onQuit(@Nonnull GamePreLeaveEvent event) {
         Scoreboard scoreboard = scoreboards.get(event.getUser());
         scoreboard.removeAllLines();
         scoreboard.removeAllUsers();

@@ -252,4 +252,14 @@ public class GameConsoleUser implements ConsoleUser {
     public void setUserData(UserData userData) {
         this.userData = userData;
     }
+
+    @Override
+    public boolean isLeaving() {
+        return false;
+    }
+
+    @Override
+    public void setLeaving(boolean leaving) {
+        // ignore
+    }
 }

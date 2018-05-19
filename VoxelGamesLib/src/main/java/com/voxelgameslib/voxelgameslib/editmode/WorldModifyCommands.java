@@ -87,7 +87,7 @@ public class WorldModifyCommands extends BaseCommand {
         user.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName(user.getUuid())));
 
         if (gameHandler.getDefaultGame().isParticipating(editor.getUuid())) {
-            gameHandler.getDefaultGame().leave(editor);
+            gameHandler.getDefaultGame().leave(editor, false);
         }
         game = gameHandler.startGame(EditModeGame.GAMEMODE);
         game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(map.getCenter());

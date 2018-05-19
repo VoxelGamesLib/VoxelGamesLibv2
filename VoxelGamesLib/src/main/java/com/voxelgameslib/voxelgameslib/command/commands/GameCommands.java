@@ -71,7 +71,7 @@ public class GameCommands extends BaseCommand {
     @Syntax("<mode> - the mode you want to start")
     @CommandPermission("%premium")
     public void gameStart(@Nonnull User sender, @Nonnull GameMode mode) {
-        if(handleGameLeaving(sender))return;
+        if (handleGameLeaving(sender, false)) return;
 
         Game game = gameHandler.startGame(mode);
 
@@ -116,7 +116,7 @@ public class GameCommands extends BaseCommand {
     @Syntax("<mode> - the mode you want to enable")
     @CommandPermission("%user")
     public void gameJoin(@Nonnull User sender, @Nonnull GameMode mode) {
-        if (handleGameLeaving(sender)) return;
+        if (handleGameLeaving(sender, false)) return;
         Optional<Game> game = gameHandler.findGame(sender, mode);
         if (game.isPresent()) {
             game.get().join(sender);
@@ -130,7 +130,7 @@ public class GameCommands extends BaseCommand {
     @Syntax("<uuid> - the uuid of the game you want to join")
     @CommandPermission("%user")
     public void gameJoinUUID(@Nonnull User sender, @Nonnull UUID id) {
-        if (handleGameLeaving(sender)) return;
+        if (handleGameLeaving(sender, false)) return;
         Optional<Game> game = gameHandler.getGames().stream().filter(g -> g.getUuid().equals(id)).findAny();
         if (game.isPresent()) {
             game.get().join(sender);
@@ -148,11 +148,13 @@ public class GameCommands extends BaseCommand {
             Lang.msg(sender, LangKey.GAME_NOT_FOUND);
             return;
         } else if (games.size() > 1) {
-            // todo perhaps remove in production
             Lang.msg(sender, LangKey.GAME_IN_MORE_THAN_ONE_GAME);
         }
 
-        games.forEach(game -> game.leave(sender));
+        // leave everything but the default game
+        games.stream()
+            .filter(game -> !game.equals(gameHandler.getDefaultGame()))
+            .forEach(game -> game.leave(sender, gameHandler.getDefaultGame() == null));
     }
 
     @Subcommand("skip-phase")
@@ -192,12 +194,12 @@ public class GameCommands extends BaseCommand {
         }
     }
 
-    private boolean handleGameLeaving(User sender) {
+    private boolean handleGameLeaving(User sender, boolean shouldTeleportToSpawn) {
         List<Game> games = gameHandler.getGames(sender.getUuid(), true);
         if (games.size() != 0) {
             if (games.size() == 1 && games.get(0).getGameMode().equals(gameHandler.getDefaultGame().getGameMode())) {
                 // leave the default game
-                games.get(0).leave(sender);
+                games.get(0).leave(sender, shouldTeleportToSpawn);
             } else {
                 Lang.msg(sender, LangKey.GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES);
                 return true;

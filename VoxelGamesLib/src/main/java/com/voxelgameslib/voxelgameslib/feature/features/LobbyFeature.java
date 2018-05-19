@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.lang.Lang;
@@ -98,7 +98,7 @@ public class LobbyFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onLeave(@Nonnull GameLeaveEvent event) {
+    public void onLeave(@Nonnull GamePreLeaveEvent event) {
         scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
             getPhase().getGame().getPlayers().size() - 1 + "/" + getPhase().getGame().getMaxPlayers()));
         if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()

@@ -6,7 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GameLeaveEvent;
+import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -43,7 +43,7 @@ public class DoubleJumpFeature extends AbstractFeature {
     }
 
     @GameEvent
-    public void onQuit(@Nonnull GameLeaveEvent e) {
+    public void onQuit(@Nonnull GamePreLeaveEvent e) {
         e.getUser().getPlayer().setAllowFlight(false);
         e.getUser().getPlayer().setFlying(false);
     }

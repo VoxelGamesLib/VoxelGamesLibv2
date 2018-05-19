@@ -1,8 +1,11 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
+import com.google.inject.Injector;
+
 import net.md_5.bungee.api.ChatColor;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
@@ -20,6 +23,9 @@ import me.tom.sparse.spigot.chat.menu.element.TextElement;
 
 @CommandAlias("test")
 public class TestCommands extends BaseCommand {
+
+    @Inject
+    private Injector injector;
 
     @HelpCommand
     @CommandPermission("%admin")
@@ -42,5 +48,11 @@ public class TestCommands extends BaseCommand {
         incr.value.setChangeCallback((s) -> System.out.println("IncrementalElement changed! " + s.getPrevious() + " -> " + s.getCurrent()));
         menu.add(incr);
         menu.openFor(user.getPlayer());
+    }
+
+    @Subcommand("breakpoint")
+    @CommandPermission("%admin")
+    public void breakpoint(@Nonnull User user){
+        System.out.println("");
     }
 }
