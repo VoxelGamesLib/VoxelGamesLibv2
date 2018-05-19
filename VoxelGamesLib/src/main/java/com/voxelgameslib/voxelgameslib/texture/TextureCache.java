@@ -75,9 +75,18 @@ public class TextureCache implements Listener {
                     if (!playerProfile.hasTextures()) {
                         playerProfile.complete(true);
                     }
-                    if (!playerProfile.hasTextures()) {
-                        //log.warning("plz....");//TODO handle textures for offline servers
-                    }
+//                    if (!playerProfile.hasTextures()) {
+//                        MinecraftServer server = MinecraftServer.getServer();
+//                        // if we are in offline mode, lets access mojang anyways because why not?!
+//                        boolean isOnlineMode = server.getOnlineMode() || (SpigotConfig.bungee && PaperConfig.bungeeOnlineMode);
+//                        if (!isOnlineMode) {
+//                            GameProfile gameProfile = CraftPlayerProfile.asAuthlib(playerProfile);
+//                            server.getSessionService().fillProfileProperties(gameProfile, true);
+//                            return CraftPlayerProfile.asBukkitMirror(gameProfile);
+//                        } else {
+//                            log.finer("Something went wrong while fetching texture " + key);
+//                        }//TODO fix this, easiest way would be to implement the network call myself I guess
+//                    }
                     return playerProfile;
                 }
             });
