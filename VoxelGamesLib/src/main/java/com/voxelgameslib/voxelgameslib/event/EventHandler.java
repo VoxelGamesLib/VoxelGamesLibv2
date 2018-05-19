@@ -39,6 +39,9 @@ public class EventHandler implements Handler, Listener {
 
     private static final EventFilter filterPlayers = (event, registeredListener, user) ->
             user.filter(user1 -> registeredListener.getGame().isPlaying(user1.getUuid())).isPresent();
+    private static final EventFilter filterSpectators = (event, registeredListener, user) ->
+        user.filter(user1 -> registeredListener.getGame().isSpectating(user1.getUuid())).isPresent();
+
     private static final Logger log = Logger.getLogger(EventHandler.class.getName());
 
     private final EventExecutor eventExecutor = (listener, event) -> callEvent(event);
@@ -73,6 +76,9 @@ public class EventHandler implements Handler, Listener {
 
                         if (annotation.filterPlayers()) {
                             registeredListener.addFilter(filterPlayers);
+                        }
+                        if(annotation.filterSpectators()){
+                            registeredListener.addFilter(filterSpectators);
                         }
 
                         activeListeners.computeIfAbsent(game.getUuid(), (key) -> new CopyOnWriteArrayList<>()).add(registeredListener);

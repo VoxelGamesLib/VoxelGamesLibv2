@@ -33,6 +33,7 @@ import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureCommandImplementor;
+import com.voxelgameslib.voxelgameslib.feature.features.SpectatorFeature;
 import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.graph.Graph;
 import com.voxelgameslib.voxelgameslib.tick.Tickable;
@@ -186,6 +187,11 @@ public abstract class AbstractPhase implements Phase {
         }
         if (victoryConditions.size() == 0) {
             addVictoryCondition(getGame().createVictoryCondition(EmptyVictoryCondition.class, this));
+        }
+
+        // check for spec feature
+        if (allowSpectate && !getOptionalFeature(SpectatorFeature.class).isPresent()) {
+            log.warning(getName() + " does allow spectators but doesn't use the spectator feature! Did you forget to add it?");
         }
 
         // enable timer

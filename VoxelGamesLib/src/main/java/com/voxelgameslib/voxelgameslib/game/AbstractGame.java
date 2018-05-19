@@ -381,6 +381,19 @@ public abstract class AbstractGame implements Game {
             spectators.add(user);
             allUsers.add(user);
             playerStates.put(user.getUuid(), PlayerState.of(user));
+
+            GameJoinEvent event = new GameJoinEvent(this, user);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                players.remove(user);
+                allUsers.remove(user);
+                return false;
+            }
+
+            // todo: perhaps consider having this handled by phases instead
+            user.removeListeningChannel(chatHandler.defaultChannel.getIdentifier()); // disable listening to global messages
+            user.addListeningChannel(chatChannel.getIdentifier()); // local channel
+            user.setActiveChannel(chatChannel.getIdentifier());
             return true;
         }
         return false;

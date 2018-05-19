@@ -12,6 +12,7 @@ import com.voxelgameslib.voxelgameslib.feature.features.NoBlockPlaceFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.NoDamageFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.ScoreboardFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
+import com.voxelgameslib.voxelgameslib.feature.features.SpectatorFeature;
 import com.voxelgameslib.voxelgameslib.phase.TimedPhase;
 
 import org.bukkit.GameMode;
@@ -67,5 +68,8 @@ public class GracePhase extends TimedPhase {
 
         MobFeature mobFeature = getGame().createFeature(MobFeature.class, this);
         addFeature(mobFeature);
+
+        SpectatorFeature spectatorFeature = getGame().createFeature(SpectatorFeature.class, this);
+        addFeature(spectatorFeature);
     }
 }

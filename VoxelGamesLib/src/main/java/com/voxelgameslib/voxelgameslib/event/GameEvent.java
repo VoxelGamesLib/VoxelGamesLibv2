@@ -9,5 +9,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GameEvent {
 
+    /**
+     * @return True when this method should only be called when the player is playing in the right game
+     */
     boolean filterPlayers() default true;
+
+    /**
+     * @return True when this method should only be called when the player is spectating in the right game
+     */
+    boolean filterSpectators() default false;
 }
