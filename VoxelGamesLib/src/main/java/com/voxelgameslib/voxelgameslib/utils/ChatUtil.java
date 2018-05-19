@@ -61,7 +61,7 @@ public class ChatUtil {
         if (component instanceof TextComponent) {
             sb.append(((TextComponent) component).content());
         }
-        if (component.children().size() > 0) {
+        if (component.children() != null && component.children().size() > 0) {
             component.children().forEach(c -> toPlainText(sb, c));
         }
     }
