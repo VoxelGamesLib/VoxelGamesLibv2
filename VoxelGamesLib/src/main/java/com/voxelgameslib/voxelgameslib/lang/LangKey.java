@@ -54,6 +54,7 @@ public enum LangKey implements Translatable {
     GAME_IN_MORE_THAN_ONE_GAME("{red}You are in more than one game. Assuming you want to leave them all..."),
     GAME_YOU_CANNOT_BE_IN_MULTIPLE_GAMES("{red}You are already in a game! Please leave the game before joining a new one."),
     GAME_COULD_NOT_FIND_GAME("{red}Could not find game {yellow}{game}", "game"),
+    GAME_TOO_FEW_PLAYERS("{red}There are too few players left to continue"),
 
     GAME_ANNOUNCE_GAME_STARTED("{yellow}{name}{aqua} has started a new round of {yellow}{mode}. {click:run_command:{command}}{aqua}Click here to join!{/click}", "command", "name", "mode"),
 
@@ -183,7 +184,8 @@ public enum LangKey implements Translatable {
     STAT_JOIN_COUNT_NAME("Join count"),
     STAT_JOIN_COUNT_TEXT("joined {val} times.", "val"),
     STAT_PLAY_TIME_NAME("Play time"),
-    STAT_PLAY_TIME_TEXT("played {val}.", "val"),;
+    STAT_PLAY_TIME_TEXT("played {val}.", "val")
+    ;
 
     @Nonnull
     private final String defaultValue;

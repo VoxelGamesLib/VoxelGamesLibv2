@@ -49,7 +49,7 @@ public class LobbyFeature extends AbstractFeature {
         scoreboard = getPhase().getFeature(ScoreboardFeature.class).getScoreboard();
 
         scoreboard.createAndAddLine("lobby-line",
-                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers());
+            getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers());
         scoreboard.createAndAddLine("Waiting for players...");
     }
 
@@ -76,13 +76,12 @@ public class LobbyFeature extends AbstractFeature {
     @GameEvent
     public void onJoin(@Nonnull GameJoinEvent event) {
         scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
-                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers()));
+            getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers()));
 
         if (getPhase().getGame().getPlayers().size() >= getPhase().getGame().getMinPlayers()) {
             if (!starting) {
                 starting = true;
                 curr = startDelay;
-                //TODO also update scoreboard
                 getPhase().getGame().broadcastMessage(LangKey.GAME_STARTING);
                 bossBar.setTitle(Lang.parseLegacyFormat(Lang.string(LangKey.GAME_STARTING)));
                 bossBar.setVisible(true);
@@ -101,11 +100,10 @@ public class LobbyFeature extends AbstractFeature {
     @GameEvent
     public void onLeave(@Nonnull GameLeaveEvent event) {
         scoreboard.getLine("lobby-line").ifPresent(line -> line.setValue(
-                getPhase().getGame().getPlayers().size() + "/" + getPhase().getGame().getMaxPlayers()));
+            getPhase().getGame().getPlayers().size() - 1 + "/" + getPhase().getGame().getMaxPlayers()));
         if (getPhase().getGame().getPlayers().size() <= getPhase().getGame().getMinPlayers()
-                && starting) {
+            && starting) {
             starting = false;
-            // TODO also update scoreboard
             getPhase().getGame().broadcastMessage(LangKey.GAME_START_ABORTED);
             bossBar.setTitle("");
             bossBar.setVisible(false);

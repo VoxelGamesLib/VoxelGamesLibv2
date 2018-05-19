@@ -338,7 +338,6 @@ public abstract class AbstractGame implements Game {
         this.activePhase = phase;
     }
 
-
     @Override
     public boolean join(@Nonnull User user) {
         if (!getActivePhase().allowJoin() || getMaxPlayers() == players.size()) {
@@ -384,6 +383,8 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void leave(@Nonnull User user) {
+        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
+
         players.remove(user);
         spectators.remove(user);
         allUsers.remove(user);
@@ -396,7 +397,10 @@ public abstract class AbstractGame implements Game {
         user.addListeningChannel(chatHandler.defaultChannel.getIdentifier());
         user.setActiveChannel(chatHandler.defaultChannel.getIdentifier());
 
-        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(this, user));
+        if(players.size() < minPlayers){
+            broadcastMessage(LangKey.GAME_TOO_FEW_PLAYERS);
+            abortGame();
+        }
     }
 
     @Override

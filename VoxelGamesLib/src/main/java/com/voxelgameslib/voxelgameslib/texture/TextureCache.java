@@ -76,7 +76,7 @@ public class TextureCache implements Listener {
                         playerProfile.complete(true);
                     }
                     if (!playerProfile.hasTextures()) {
-                        log.warning("plz....");
+                        //log.warning("plz....");//TODO handle textures for offline servers
                     }
                     return playerProfile;
                 }
