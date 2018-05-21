@@ -229,4 +229,26 @@ public class Vector2D implements Cloneable {
     public Location toLocation(@Nonnull String world, double z) {
         return new Location(Bukkit.getWorld(world), x, y, z);
     }
+
+    /**
+     * Converts this vector into a three dimensional vector where z equals 0.
+     *
+     * @return This vector converted to a 3D one.
+     */
+    @Nonnull
+    public Vector3D toVector3D() {
+        return this.toVector3D(0);
+    }
+
+
+    /**
+     * Converts this vector into a three dimensional vector.
+     *
+     * @param z The z value to be used by the new vector.
+     * @return This vector converted to a 3D one.
+     */
+    @Nonnull
+    public Vector3D toVector3D(double z) {
+        return new Vector3D(x, y, z);
+    }
 }
