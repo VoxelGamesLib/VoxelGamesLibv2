@@ -279,6 +279,6 @@ public class Vector3D implements Cloneable {
     */
     @Nonnull
     public Vector2D toVector2D() {
-                return new Vector2D(x, y);
+        return new Vector2D(x, y);
     }
 }
