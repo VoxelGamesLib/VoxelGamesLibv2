@@ -50,6 +50,7 @@
   { "name": "System: Points", "color": "#fbca04" },
   { "name": "System: Scoreboard", "color": "#fbca04" },
   { "name": "System: Team", "color": "#fbca04" },
+  { "name": "System: Meta", "color": "#fbca04" },
   
   { "name": "Project: ChatMenuAPI", "color": "#fef2c0" },
   { "name": "Project: KVGL", "color": "#fef2c0" },
