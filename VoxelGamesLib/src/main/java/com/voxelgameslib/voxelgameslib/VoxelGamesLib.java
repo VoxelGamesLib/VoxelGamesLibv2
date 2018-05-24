@@ -45,7 +45,6 @@ import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.event.EventHandler;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibDisableEvent;
 import com.voxelgameslib.voxelgameslib.event.events.VoxelGamesLibEnableEvent;
-import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.game.GameListener;
 import com.voxelgameslib.voxelgameslib.game.GameMode;

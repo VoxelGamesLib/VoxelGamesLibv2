@@ -15,6 +15,9 @@ import com.voxelgameslib.voxelgameslib.phase.Phase;
 
 import org.bukkit.Bukkit;
 
+import co.aikar.timings.lib.TimingManager;
+import co.aikar.timings.lib.MCTiming;
+
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is registered here.
  * {@link Phase}s and {@link Feature}s receive their ticks from the {@link Game} instance<br> Every server mod has it's
@@ -25,9 +28,13 @@ public class TickHandler implements Handler {
 
     @Inject
     private VoxelGamesLib voxelGamesLib;
+    @Inject
+    private TimingManager timingsManager;
 
     private final List<Tickable> tickables = new ArrayList<>();
     private final List<Tickable> removeQueue = Collections.synchronizedList(new ArrayList<>());
+
+    private MCTiming tickTiming;
 
     /**
      * Called when the underlying server mod calls a tick. Causes all {@link Tickable}s to tick
@@ -38,7 +45,13 @@ public class TickHandler implements Handler {
         tickables.removeAll(removeQueue);
         removeQueue.clear();
 
-        tickables.forEach(Tickable::tick);
+        tickTiming.startTiming();
+        for (Tickable tickable : tickables) {
+            MCTiming timing = timingsManager.ofStart("Tickable: " + tickable.getClass().getSimpleName(), tickTiming);
+            tickable.tick();
+            timing.stopTiming();
+        }
+        tickTiming.stopTiming();
     }
 
     /**
@@ -46,6 +59,7 @@ public class TickHandler implements Handler {
      */
     @Override
     public void enable() {
+        tickTiming = timingsManager.of("Tickables");
         Bukkit.getServer().getScheduler().runTaskTimer(voxelGamesLib, this::tick, 1L, 1L);
     }
 

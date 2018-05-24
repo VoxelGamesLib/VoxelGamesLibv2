@@ -42,6 +42,8 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
+import co.aikar.timings.lib.MCTiming;
+import co.aikar.timings.lib.TimingManager;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
@@ -57,6 +59,8 @@ public abstract class AbstractPhase implements Phase {
     private Injector injector;
     @Inject
     private CommandHandler commandHandler;
+    @Inject
+    private TimingManager timingManager;
 
     @Expose
     private String name;
@@ -84,6 +88,8 @@ public abstract class AbstractPhase implements Phase {
 
     private LocalDateTime startTime;
     private Duration duration;
+
+    private MCTiming phaseTiming;
 
     private Map<UUID, Tickable> phaseTickables = new HashMap<>();
 
@@ -132,7 +138,7 @@ public abstract class AbstractPhase implements Phase {
     @SuppressWarnings("unchecked")
     public <T extends Feature> T getFeature(@Nonnull Class<T> clazz) {
         return (T) features.stream().filter(f -> f.getClass().equals(clazz)).findFirst()
-            .orElseThrow(() -> new NoSuchFeatureException(clazz));
+                .orElseThrow(() -> new NoSuchFeatureException(clazz));
     }
 
     @Nonnull
@@ -177,6 +183,8 @@ public abstract class AbstractPhase implements Phase {
 
     @Override
     public void enable() {
+        phaseTiming = timingManager.of("Phase::Tickables::" + getName());
+
         if (!checkDependencies()) {
             game.abortGame();
             return;
@@ -292,8 +300,18 @@ public abstract class AbstractPhase implements Phase {
 
     @Override
     public void tick() {
-        features.forEach(Feature::tick);
-        phaseTickables.values().forEach(Tickable::tick);
+        phaseTiming.startTiming();
+        for (Feature feature : features) {
+            MCTiming timing = timingManager.ofStart("Phase::Tickables::" + getName() + "::" + feature.getName(), phaseTiming);
+            feature.tick();
+            timing.stopTiming();
+        }
+        for (Tickable tickable : phaseTickables.values()) {
+            MCTiming timing = timingManager.ofStart("Phase::Tickables::" + getName() + "::" + tickable.getClass().getSimpleName(), phaseTiming);
+            tickable.tick();
+            timing.stopTiming();
+        }
+        phaseTiming.stopTiming();
 
         checkEnd();
     }
@@ -351,7 +369,7 @@ public abstract class AbstractPhase implements Phase {
                         getFeature(dependency);
                     } catch (NoSuchFeatureException ex) {
                         log.severe("could not find dependency " + dependency.getName() + " for feature " +
-                            feature.getClass().getName() + " in phase " + getName());
+                                feature.getClass().getName() + " in phase " + getName());
                         return false;
                     }
                 }
@@ -398,14 +416,14 @@ public abstract class AbstractPhase implements Phase {
 
         if (features.size() != orderedFeatures.size()) {
             throw new RuntimeException(
-                "WTF HAPPENED HERE?!" + features.size() + " " + orderedFeatures.size());
+                    "WTF HAPPENED HERE?!" + features.size() + " " + orderedFeatures.size());
         }
 
         // reverse order because dependencies need to be run before dependend features
         Collections.reverse(orderedFeatures);
         // remap classes to features
         features = orderedFeatures.stream().map((Function<Class, Feature>) this::getFeature)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
 
         return true;
     }
