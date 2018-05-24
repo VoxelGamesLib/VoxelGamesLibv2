@@ -59,5 +59,6 @@
   { "name": "Project: dependencies", "color": "#fef2c0" },
   { "name": "Project: skeleton", "color": "#fef2c0" },
   { "name": "Project: skeletonkt", "color": "#fef2c0" },
-  { "name": "Project: Tooling", "color": "#fef2c0" }
+  { "name": "Project: Tooling", "color": "#fef2c0" },
+  { "name": "Project: Core", "color": "#fef2c0" }
 ]
