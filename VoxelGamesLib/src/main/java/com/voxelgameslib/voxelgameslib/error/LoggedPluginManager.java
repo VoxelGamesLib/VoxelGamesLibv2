@@ -203,6 +203,11 @@ public abstract class LoggedPluginManager implements PluginManager {
     }
 
     @Override
+    public void disablePlugin(Plugin plugin, boolean b) {
+        catchError(plugin, () -> delegate.disablePlugin(plugin, b));
+    }
+
+    @Override
     public void disablePlugins() {
         delegate.disablePlugins();
     }
