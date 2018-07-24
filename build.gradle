@@ -68,7 +68,7 @@ subprojects {
         testCompile group: 'com.destroystokyo.paper', name: 'paper', version: '1.12.2-R0.1-SNAPSHOT'
 
         testCompile group: 'junit', name: 'junit', version: '4.12'
-        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.19.1'
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.20.0'
 
         compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib', version: '4.4.0-SNAPSHOT'
     }
