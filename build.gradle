@@ -62,7 +62,7 @@ subprojects {
     }
 
     dependencies {
-        compileOnly group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.12.2-R0.1-SNAPSHOT'
+        compileOnly group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.13-R0.1-SNAPSHOT'
         testCompile group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.12.2-R0.1-SNAPSHOT'
         compileOnly group: 'com.destroystokyo.paper', name: 'paper', version: '1.12.2-R0.1-SNAPSHOT'
         testCompile group: 'com.destroystokyo.paper', name: 'paper', version: '1.12.2-R0.1-SNAPSHOT'
