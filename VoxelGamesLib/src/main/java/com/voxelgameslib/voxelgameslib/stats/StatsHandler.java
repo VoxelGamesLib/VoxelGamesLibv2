@@ -27,7 +27,7 @@ import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.timings.Timing;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
@@ -65,8 +65,9 @@ public class StatsHandler implements Handler {
 
         Bukkit.getScheduler().runTaskTimer(vgl, () -> statTypes.stream().filter(Stat::shouldTick).forEach(Stat::tickOneMinute), 20 * 60, 20 * 60);
 
-        Timings.time("RegisterStatTypes",
-            () -> scanner.matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan());
+        try (final Timing timing = new Timing("RegisterStatTypes")) {
+            scanner.matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan();
+        }
         log.info("Registered " + statTypes.size() + " StatsTypes");
 
         Bukkit.getScheduler().runTaskTimer(vgl, () -> userHandler.getUsers().forEach(user -> {
