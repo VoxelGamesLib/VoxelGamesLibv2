@@ -21,7 +21,7 @@ import com.voxelgameslib.voxelgameslib.feature.Feature;
 import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.timings.Timing;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
@@ -46,19 +46,21 @@ public class MapHandler implements Handler {
 
     @Override
     public void enable() {
-        Timings.time("ScanningFeatures", () -> scanner.matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
-                    if (!Feature.class.isAssignableFrom(clazz)) {
-                        log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
-                        return;
-                    }
-                    //noinspection unchecked
-                    Class<Feature> cls = (Class<Feature>) clazz;
-                    try {
-                        markerDefinitions.addAll(Arrays.asList(cls.newInstance().getMarkers()));
-                    } catch (InstantiationException | IllegalAccessException e) {
-                        log.log(Level.WARNING, "Feature " + cls.getName() + " is malformed!", e);
-                    }
-                }).scan());
+        try (final Timing timing = new Timing("ScanningFeatures")) {
+            scanner.matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
+                if (!Feature.class.isAssignableFrom(clazz)) {
+                    log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
+                    return;
+                }
+                //noinspection unchecked
+                Class<Feature> cls = (Class<Feature>) clazz;
+                try {
+                    markerDefinitions.addAll(Arrays.asList(cls.newInstance().getMarkers()));
+                } catch (InstantiationException | IllegalAccessException e) {
+                    log.log(Level.WARNING, "Feature " + cls.getName() + " is malformed!", e);
+                }
+            }).scan();
+        }
         log.info("Loaded " + markerDefinitions.size() + " MarkerDefinitions");
     }
 

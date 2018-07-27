@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.timings.Timing;
 
 /**
  * The module handler takes care of all modules.
@@ -53,7 +53,7 @@ public class ModuleHandler implements Handler {
     }
 
     private void findModules() {
-        Timings.time("RegisterModules", () -> {
+        try (final Timing timing = new Timing("RegisterModules")) {
             isAcceptingOffers = false;
             for (Class<? extends Module> clazz : offeredModules.keySet()) {
                 ModuleInfo info = clazz.getAnnotation(ModuleInfo.class);
@@ -75,7 +75,7 @@ public class ModuleHandler implements Handler {
 
             offeredModules.clear();
             log.info("Loaded " + this.modules.size() + " modules!");
-        });
+        }
     }
 
     /**

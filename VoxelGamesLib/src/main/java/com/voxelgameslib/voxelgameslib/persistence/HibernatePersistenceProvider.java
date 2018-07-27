@@ -36,7 +36,7 @@ import com.voxelgameslib.voxelgameslib.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.stats.Trackable;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.timings.Timing;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
@@ -96,20 +96,22 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
             MetadataSources sources = new MetadataSources(registry);
 
-            Timings.time("Init converters",
-                () -> scanner.matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
+            try (final Timing timing = new Timing("Init converters")) {
+                scanner.matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
                     try {
                         annotatedClass.newInstance().init();
                     } catch (InstantiationException | IllegalAccessException e) {
                         log.warning("Error while initializing converter " + annotatedClass.getSimpleName());
                         e.printStackTrace();
                     }
-                }).scan());
+                }).scan();
+            }
 
-            Timings.time("RegisterDBEntities",
-                () -> scanner.matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
+            try (final Timing timing = new Timing("RegisterDBEntities")) {
+                scanner.matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
                     if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
-                }).scan());
+                }).scan();
+            }
 
             try {
                 Metadata metadata = sources.buildMetadata();

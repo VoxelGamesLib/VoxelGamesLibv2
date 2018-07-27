@@ -66,7 +66,7 @@ import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.test.TestStuff;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.tick.TickHandler;
-import com.voxelgameslib.voxelgameslib.timings.Timings;
+import com.voxelgameslib.voxelgameslib.timings.Timing;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.user.UserListener;
@@ -209,7 +209,7 @@ public final class VoxelGamesLib extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(injector.getInstance(StartupListener.class), this);
 
             // then enable all VGL stuff
-            Timings.time("EnableAllHandlers", () -> {
+            try (final Timing timing = new Timing("EnableAllHandlers")) {
                 eventHandler.enable();
                 configHandler.enable();
                 persistenceHandler.enable();
@@ -232,7 +232,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 statsHandler.enable();
 
                 gameHandler.enable();
-            });
+            }
 
             registerListeners();
         } catch (Exception ex) {
@@ -265,7 +265,7 @@ public final class VoxelGamesLib extends JavaPlugin {
             ChatMenuAPI.disable();
 
             getServer().getPluginManager().callEvent(new VoxelGamesLibDisableEvent());
-            Timings.time("DisableAllHandlers", () -> {
+            try (final Timing timing = new Timing("DisableAllHandlers")) {
                 configHandler.disable();
                 langHandler.disable();
                 tickHandler.disable();
@@ -294,7 +294,7 @@ public final class VoxelGamesLib extends JavaPlugin {
                 loggingHandler.disable();
 
                 injector = null;
-            });
+            }
         } catch (Exception ex) {
             errorHandler.handle(ex, Severity.ERROR, true);
         }
