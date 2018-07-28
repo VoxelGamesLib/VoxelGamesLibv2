@@ -200,7 +200,7 @@ public final class VoxelGamesLib extends JavaPlugin {
 
             // guice
             VoxelGamesLibModule module = new VoxelGamesLibModule(this, loggingHandler, timingManager,
-                commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules(), errorHandler);
+                    commandManager, getVersion(), getDataFolder(), ModuleHandler.getOfferedModules(), errorHandler);
             injector = module.createInjector();
             injector.injectMembers(this);
 
@@ -337,15 +337,15 @@ public final class VoxelGamesLib extends JavaPlugin {
         con.registerContext(int.class, c -> Integer.parseInt(c.popFirstArg()));
         con.registerContext(GameMode.class, c -> {
             GameMode mode = gameHandler.getGameModes().stream()
-                .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
-                .orElseThrow(() -> new InvalidCommandArgument("Unknown gamemode " + c.getFirstArg()));
+                    .filter(gameMode -> gameMode.getName().equalsIgnoreCase(c.getFirstArg())).findAny()
+                    .orElseThrow(() -> new InvalidCommandArgument("Unknown gamemode " + c.getFirstArg()));
             c.popLastArg(); // pop later so that we can get a nice error message
             return mode;
         });
         con.registerContext(Locale.class, c -> {
             Locale locale = Locale.fromName(c.getFirstArg()).orElse(Locale
-                .fromTag(c.getFirstArg())
-                .orElseThrow(() -> new InvalidCommandArgument("Unknown locale " + c.getFirstArg())));
+                    .fromTag(c.getFirstArg())
+                    .orElseThrow(() -> new InvalidCommandArgument("Unknown locale " + c.getFirstArg())));
             c.popFirstArg(); // pop later so that we can get a nice error message
             return locale;
         });
@@ -353,7 +353,7 @@ public final class VoxelGamesLib extends JavaPlugin {
         con.registerContext(UUID.class, c -> UUID.fromString(c.popFirstArg()));
         con.registerContext(Trackable.class, c -> {
             Trackable s = StatsHandler.fromName(c.getFirstArg())
-                .orElseThrow(() -> new InvalidCommandArgument("Unknown stats type " + c.getFirstArg()));
+                    .orElseThrow(() -> new InvalidCommandArgument("Unknown stats type " + c.getFirstArg()));
             c.popFirstArg(); // pop later so that we can get a nice error message
             return s;
         });

@@ -93,11 +93,11 @@ public class ErrorHandler implements Handler {
                 error.addToTab(BUKKIT_INFO_TAB, "Loaded Plugins", pluginNames);
                 error.addToTab(BUKKIT_INFO_TAB, "Version", Bukkit.getVersion());
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Bungeecord Enabled",
-                    Bukkit.spigot().getConfig().getBoolean("settings.bungeecord"));
+                        Bukkit.spigot().getConfig().getBoolean("settings.bungeecord"));
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Late Bind Enabled",
-                    Bukkit.spigot().getConfig().getBoolean("settings.late-bind"));
+                        Bukkit.spigot().getConfig().getBoolean("settings.late-bind"));
                 error.addToTab(BUKKIT_INFO_TAB, "Spigot: Netty Threads",
-                    Bukkit.spigot().getConfig().getInt("settings.netty-threads"));
+                        Bukkit.spigot().getConfig().getInt("settings.netty-threads"));
             });
         }
 
@@ -171,7 +171,7 @@ public class ErrorHandler implements Handler {
                                             Object value = field.get(event);
                                             if (value instanceof EntityDamageEvent.DamageModifier) {
                                                 value = value.getClass().getCanonicalName() + "."
-                                                    + ((EntityDamageEvent.DamageModifier) value).name();
+                                                        + ((EntityDamageEvent.DamageModifier) value).name();
                                             }
                                             if (value instanceof Enum) {
                                                 value = value.getClass().getCanonicalName() + "." + ((Enum) value).name();
@@ -180,10 +180,10 @@ public class ErrorHandler implements Handler {
                                         } catch (IllegalAccessException ignored) {
                                         } catch (Throwable internalE) {
                                             eventData.put(field.getName(),
-                                                "Error getting field data: " + internalE.getClass().getCanonicalName() + (
-                                                    internalE.getMessage() != null
-                                                        && internalE.getMessage().trim().length() > 0 ? ": " + internalE
-                                                        .getMessage() : ""));
+                                                    "Error getting field data: " + internalE.getClass().getCanonicalName() + (
+                                                            internalE.getMessage() != null
+                                                                    && internalE.getMessage().trim().length() > 0 ? ": " + internalE
+                                                                    .getMessage() : ""));
                                         }
                                     }
                                 }
@@ -232,10 +232,10 @@ public class ErrorHandler implements Handler {
         }
         if (shouldLog) {
             log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
-                "Caught exception with level " + severity.getValue(), ex);
+                    "Caught exception with level " + severity.getValue(), ex);
         } else {
             log.log(severity.equals(Severity.ERROR) ? Level.SEVERE : Level.WARNING,
-                "Caught exception with level " + severity.getValue());
+                    "Caught exception with level " + severity.getValue());
         }
     }
 

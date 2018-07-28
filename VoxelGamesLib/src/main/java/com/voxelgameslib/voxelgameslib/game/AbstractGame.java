@@ -227,7 +227,7 @@ public abstract class AbstractGame implements Game {
         //TODO handle stats
         if (winnerTeam != null) {
             Bukkit.getPluginManager()
-                .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
+                    .callEvent(new GameEndEvent(this, winnerTeam.getPlayers(), duration, aborted));
         } else if (winnerUser != null) {
             List<User> winningUsers = new ArrayList<>();
             winningUsers.add(winnerUser);
@@ -235,7 +235,7 @@ public abstract class AbstractGame implements Game {
             Bukkit.getPluginManager().callEvent(new GameEndEvent(this, winningUsers, duration, aborted));
         } else {
             Bukkit.getPluginManager()
-                .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
+                    .callEvent(new GameEndEvent(this, new ArrayList<>(), duration, aborted));
         }
 
         if (!aborted) {

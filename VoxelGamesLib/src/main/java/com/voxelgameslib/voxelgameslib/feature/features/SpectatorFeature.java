@@ -39,7 +39,7 @@ public class SpectatorFeature extends AbstractFeature {
         Optional<SpawnFeature> spawnFeature = getPhase().getOptionalFeature(SpawnFeature.class);
         if (spawns.size() > 0) {
             Location location = spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()))
-                .toLocation(map.getLoadedName(getPhase().getGame().getUuid())).add(0.5, 0, 0.5);
+                    .toLocation(map.getLoadedName(getPhase().getGame().getUuid())).add(0.5, 0, 0.5);
             event.getUser().getPlayer().teleport(location);
         } else if (spawnFeature.isPresent()) {
             event.getUser().getPlayer().teleport(spawnFeature.get().getSpawn(event.getUser().getUuid()));

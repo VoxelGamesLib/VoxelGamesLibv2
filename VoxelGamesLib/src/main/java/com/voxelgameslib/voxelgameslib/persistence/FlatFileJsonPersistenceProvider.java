@@ -2,7 +2,6 @@ package com.voxelgameslib.voxelgameslib.persistence;
 
 import com.google.gson.Gson;
 
-
 import net.kyori.text.Component;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -59,7 +58,7 @@ public class FlatFileJsonPersistenceProvider implements PersistenceProvider {
 
         try {
             String json = Files.readAllLines(UserFile.toPath()).stream()
-                .collect(Collectors.joining());
+                    .collect(Collectors.joining());
             //noinspection unchecked
             UserMap = gson.fromJson(json, Map.class);
             if (UserMap == null) {

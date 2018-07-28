@@ -128,13 +128,13 @@ public class GameData {
         if (o == null || getClass() != o.getClass()) return false;
         GameData gameData = (GameData) o;
         return aborted == gameData.aborted &&
-            Objects.equals(id, gameData.id) &&
-            Objects.equals(players, gameData.players) &&
-            Objects.equals(spectators, gameData.spectators) &&
-            Objects.equals(duration, gameData.duration) &&
-            Objects.equals(winner, gameData.winner) &&
-            Objects.equals(winners, gameData.winners) &&
-            Objects.equals(gameMode, gameData.gameMode);
+                Objects.equals(id, gameData.id) &&
+                Objects.equals(players, gameData.players) &&
+                Objects.equals(spectators, gameData.spectators) &&
+                Objects.equals(duration, gameData.duration) &&
+                Objects.equals(winner, gameData.winner) &&
+                Objects.equals(winners, gameData.winners) &&
+                Objects.equals(gameMode, gameData.gameMode);
     }
 
     @Override
@@ -145,14 +145,14 @@ public class GameData {
     @Override
     public String toString() {
         return "GameData{" +
-            "id=" + id +
-            ", players=" + players +
-            ", spectators=" + spectators +
-            ", duration=" + duration +
-            ", winner=" + winner +
-            ", winners=" + winners +
-            ", gameMode=" + gameMode +
-            ", aborted=" + aborted +
-            '}';
+                "id=" + id +
+                ", players=" + players +
+                ", spectators=" + spectators +
+                ", duration=" + duration +
+                ", winner=" + winner +
+                ", winners=" + winners +
+                ", gameMode=" + gameMode +
+                ", aborted=" + aborted +
+                '}';
     }
 }

@@ -7,12 +7,8 @@ import com.comphenix.protocol.wrappers.nbt.NbtList;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
-
-import org.bukkit.Bukkit;
 
 /**
  * Util to nicely set nbt data
@@ -28,7 +24,7 @@ public class NBTUtil {
     public static void setPlayerProfile(NbtCompound nbt, PlayerProfile playerProfile) {
         nbt.put("Id", (playerProfile.getId() == null ? UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerProfile.getName()).getBytes()) : playerProfile.getId()).toString());
         nbt.put("Name", playerProfile.getName());
-        if(!nbt.containsKey("Properties")) return;
+        if (!nbt.containsKey("Properties")) return;
         NbtCompound properties = nbt.getCompound("Properties");
         NbtList list = properties.getList("textures");
         Map<String, NbtBase> texture = (Map<String, NbtBase>) list.getValue(0);

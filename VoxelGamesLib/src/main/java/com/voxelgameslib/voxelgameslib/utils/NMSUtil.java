@@ -1,16 +1,15 @@
 package com.voxelgameslib.voxelgameslib.utils;
 
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import lombok.extern.java.Log;
-
-@Log
 public class NMSUtil {
 
+    private static final Logger log = Logger.getLogger(NMSUtil.class.getName());
     private static Method worldGetHandle;
     private static Class nmsWorldServer;
     private static Method worldServerFlushSave;

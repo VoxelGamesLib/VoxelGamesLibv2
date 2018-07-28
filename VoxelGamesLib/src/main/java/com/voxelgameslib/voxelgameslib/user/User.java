@@ -249,6 +249,7 @@ public interface User extends IPlayer, ISupportPartialPlay, ISupportPartialUpdat
 
     /**
      * Sets the userdata for this user
+     *
      * @param userData the new data to set
      */
     void setUserData(UserData userData);

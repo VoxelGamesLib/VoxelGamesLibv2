@@ -48,24 +48,24 @@ public class MapScanner {
         List<Marker> errored = new ArrayList<>();
 
         map.getMarkers().stream().filter(marker -> marker.getData().startsWith("chest:"))
-            .forEach(marker -> {
-                String name = marker.getData().replace("chest:", "");
-                if (!map.getChestMarker(name).isPresent()) {
-                    log.warning(
-                        "Could not find a chest " + name + " for marker at " + marker.getLoc().toString());
-                    errored.add(marker);
-                }
-            });
+                .forEach(marker -> {
+                    String name = marker.getData().replace("chest:", "");
+                    if (!map.getChestMarker(name).isPresent()) {
+                        log.warning(
+                                "Could not find a chest " + name + " for marker at " + marker.getLoc().toString());
+                        errored.add(marker);
+                    }
+                });
 
         map.getMarkers().removeAll(errored);
 
         List<ChestMarker> errored2 = new ArrayList<>();
 
         map.getChestMarkers().stream().filter(marker -> marker.getData().startsWith("container.chest"))
-            .forEach(marker -> {
-                log.warning("Found unnamed chest at " + marker.getLoc().toString());
-                errored2.add(marker);
-            });
+                .forEach(marker -> {
+                    log.warning("Found unnamed chest at " + marker.getLoc().toString());
+                    errored2.add(marker);
+                });
 
         map.getChestMarkers().removeAll(errored2);
     }
@@ -80,7 +80,7 @@ public class MapScanner {
     public void searchForMarkers(@Nonnull Map map, @Nonnull Vector3D center, int range, @Nonnull UUID gameid) {
         World world = Bukkit.getWorld(map.getLoadedName(gameid));
         if (world == null) {
-            throw new MapException("Could not find world " + map.getLoadedName(gameid) + "(" + map.getInfo().getName() + ")" + ". Is it loaded?");
+            throw new MapException("Could not find world " + map.getLoadedName(gameid) + "(" + map.getInfo().getDisplayName() + ")" + ". Is it loaded?");
         }
 
         List<Marker> markers = new ArrayList<>();
@@ -106,14 +106,14 @@ public class MapScanner {
                             if (markerData == null) continue;
                             MarkerDefinition markerDefinition = mapHandler.createMarkerDefinition(markerData);
                             markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
-                                DirectionUtil.directionToYaw(skull.getRotation()),
-                                markerData, markerDefinition));
+                                    DirectionUtil.directionToYaw(skull.getRotation()),
+                                    markerData, markerDefinition));
                         }
                     } else if (te.getType() == Material.CHEST) {
                         Chest chest = (Chest) te;
                         String name = chest.getBlockInventory().getName();
                         ItemStack[] items = new ItemStack[chest.getBlockInventory()
-                            .getStorageContents().length];
+                                .getStorageContents().length];
                         for (int i = 0; i < items.length; i++) {
                             ItemStack is = chest.getBlockInventory().getItem(i);
                             if (is == null) {
@@ -123,8 +123,8 @@ public class MapScanner {
                             }
                         }
                         chestMarkers
-                            .add(new ChestMarker(new Vector3D(chest.getX(), chest.getY(), chest.getZ()), name,
-                                items));
+                                .add(new ChestMarker(new Vector3D(chest.getX(), chest.getY(), chest.getZ()), name,
+                                        items));
                     }
                 }
             }
@@ -143,10 +143,10 @@ public class MapScanner {
         if (skull.getOwningPlayer() != null) {
             String markerData = skull.getOwningPlayer().getName();
             if (markerData == null) {
-                log.warning("owning player name null?!");
+                //log.warning("owning player name null?!");
                 markerData = skull.getOwner();
                 if (markerData == null) {
-                    log.warning("just set it to undefined...");
+                    log.warning("Could not find data about the owner for the skull at " + skull.getLocation().toVector());
                     markerData = "undefined";
                 }
             }
@@ -162,8 +162,8 @@ public class MapScanner {
     }
 
     private boolean isPlaceholder(String key) {
-        for(String k : skullPlaceHolders.getPlaceHolders().keySet()){
-            if(key.startsWith(k)){
+        for (String k : skullPlaceHolders.getPlaceHolders().keySet()) {
+            if (key.startsWith(k)) {
                 return true;
             }
         }

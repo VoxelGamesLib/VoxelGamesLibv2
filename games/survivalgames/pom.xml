@@ -12,6 +12,13 @@
     <artifactId>survivalgames</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>voxelgameslib</id>
+            <url>https://repo.minidigger.me/repository/voxelgameslib/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- provided -->
         <dependency>

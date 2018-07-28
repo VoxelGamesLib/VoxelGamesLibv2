@@ -78,7 +78,7 @@ public class WorldModifyCommands extends BaseCommand {
             zip.extractAll(file.getAbsolutePath());
             FileUtils.delete(new File(file, "uid.dat"));
         } catch (ZipException e) {
-            throw new WorldException("Could not unzip world " + map.getInfo().getName() + ".", e);
+            throw new WorldException("Could not unzip world " + map.getInfo().getDisplayName() + "(" + map.getWorldName() + ".zip).", e);
         }
 
         worldHandler.loadLocalWorld(map.getLoadedName(editor.getUuid()));
@@ -96,6 +96,7 @@ public class WorldModifyCommands extends BaseCommand {
         game.join(editor);
         game.endPhase();
 
+        map.getInfo().setWorldName(map.getWorldName());
         Lang.msg(user, LangKey.WORLD_MODIFY_START);
         //TODO use inventory for world creator
     }
@@ -107,11 +108,11 @@ public class WorldModifyCommands extends BaseCommand {
         if (!check(user)) return;
         // view
         if (name == null) {
-            Lang.msg(user, LangKey.WORLD_MODIFY_DISPLAYNAME_VIEW, map.getInfo().getName());
+            Lang.msg(user, LangKey.WORLD_MODIFY_DISPLAYNAME_VIEW, map.getInfo().getDisplayName());
         }
         // edit
         else {
-            map.getInfo().setName(name);
+            map.getInfo().setDisplayName(name);
             Lang.msg(user, LangKey.WORLD_MODIFY_DISPLAYNAME_EDIT, name);
         }
     }

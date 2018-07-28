@@ -16,7 +16,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -192,16 +191,16 @@ public class UserData {
         if (o == null || getClass() != o.getClass()) return false;
         UserData userData = (UserData) o;
         return banned == userData.banned &&
-            Objects.equals(uuid, userData.uuid) &&
-            role == userData.role &&
-            Objects.equals(locale, userData.locale) &&
-            Objects.equals(ratings, userData.ratings) &&
-            Objects.equals(rawDisplayName, userData.rawDisplayName) &&
-            Objects.equals(displayName, userData.displayName) &&
-            Objects.equals(prefix, userData.prefix) &&
-            Objects.equals(suffix, userData.suffix) &&
-            Objects.equals(name, userData.name) &&
-            Objects.equals(ipAddress, userData.ipAddress);
+                Objects.equals(uuid, userData.uuid) &&
+                role == userData.role &&
+                Objects.equals(locale, userData.locale) &&
+                Objects.equals(ratings, userData.ratings) &&
+                Objects.equals(rawDisplayName, userData.rawDisplayName) &&
+                Objects.equals(displayName, userData.displayName) &&
+                Objects.equals(prefix, userData.prefix) &&
+                Objects.equals(suffix, userData.suffix) &&
+                Objects.equals(name, userData.name) &&
+                Objects.equals(ipAddress, userData.ipAddress);
     }
 
     @Override
@@ -212,17 +211,17 @@ public class UserData {
     @Override
     public String toString() {
         return "UserData{" +
-            "uuid=" + uuid +
-            ", role=" + role +
-            ", locale=" + locale +
-            ", ratings=" + ratings +
-            ", rawDisplayName='" + rawDisplayName + '\'' +
-            ", displayName=" + displayName +
-            ", prefix=" + prefix +
-            ", suffix=" + suffix +
-            ", name='" + name + '\'' +
-            ", ipAddress='" + ipAddress + '\'' +
-            ", banned=" + banned +
-            '}';
+                "uuid=" + uuid +
+                ", role=" + role +
+                ", locale=" + locale +
+                ", ratings=" + ratings +
+                ", rawDisplayName='" + rawDisplayName + '\'' +
+                ", displayName=" + displayName +
+                ", prefix=" + prefix +
+                ", suffix=" + suffix +
+                ", name='" + name + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", banned=" + banned +
+                '}';
     }
 }

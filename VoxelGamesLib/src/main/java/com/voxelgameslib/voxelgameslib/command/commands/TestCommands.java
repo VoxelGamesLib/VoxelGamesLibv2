@@ -52,7 +52,7 @@ public class TestCommands extends BaseCommand {
 
     @Subcommand("breakpoint")
     @CommandPermission("%admin")
-    public void breakpoint(@Nonnull User user){
+    public void breakpoint(@Nonnull User user) {
         System.out.println("");
     }
 }

@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
@@ -35,7 +34,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     private Logger parent;
     private Level level = Level.INFO;
 
-    private ErrorHandler  errorHandler;
+    private ErrorHandler errorHandler;
 
     public void setErrorHandler(ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
@@ -44,7 +43,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
     @Override
     public void enable() {
         System.out.println("[VoxelGamesLib] Taking over logging...");
-        if(errorHandler == null){
+        if (errorHandler == null) {
             System.err.println("ERRORHANDLER IS NULL, ABORTING");
             return;
         }
@@ -64,7 +63,7 @@ public class LoggingHandler extends BaseCommand implements Handler {
         // get file logger
         org.apache.logging.log4j.core.Logger log4j = (org.apache.logging.log4j.core.Logger) LogManager.getLogger("Minecraft");
         java.util.Optional<Appender> appender = log4j.getContext().getConfiguration().getAppenders().values().stream()
-            .filter(app -> app instanceof RollingRandomAccessFileAppender).findAny();
+                .filter(app -> app instanceof RollingRandomAccessFileAppender).findAny();
         RollingRandomAccessFileAppender log4jAppender = null;
         if (appender.isPresent()) {
             log4jAppender = (RollingRandomAccessFileAppender) appender.get();

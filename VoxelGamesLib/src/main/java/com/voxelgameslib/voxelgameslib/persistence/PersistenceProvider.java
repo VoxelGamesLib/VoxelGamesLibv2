@@ -66,6 +66,7 @@ public interface PersistenceProvider extends Handler {
 
     /**
      * Saves the state of a game
+     *
      * @param gameData the game data to save
      */
     void saveGame(GameData gameData);

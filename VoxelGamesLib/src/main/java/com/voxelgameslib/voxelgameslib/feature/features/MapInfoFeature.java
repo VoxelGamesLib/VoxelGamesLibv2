@@ -31,7 +31,7 @@ public class MapInfoFeature extends AbstractFeature {
         scoreboard.createAndAddLine(ChatColor.YELLOW + "" + ChatColor.BOLD + "Gamemodes: ");
         scoreboard.createAndAddLine(map.getInfo().getAuthor());
         scoreboard.createAndAddLine(ChatColor.YELLOW + "" + ChatColor.BOLD + "Author: ");
-        scoreboard.createAndAddLine(map.getInfo().getName());
+        scoreboard.createAndAddLine(map.getInfo().getDisplayName());
         scoreboard.createAndAddLine(ChatColor.YELLOW + "" + ChatColor.BOLD + "Map: ");
     }
 

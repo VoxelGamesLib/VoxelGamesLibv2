@@ -41,7 +41,7 @@ public class GameConsoleUser implements ConsoleUser {
 
     private UserData userData = new UserData();
 
-    public GameConsoleUser(){
+    public GameConsoleUser() {
         userData.setUuid(UUID);
     }
 

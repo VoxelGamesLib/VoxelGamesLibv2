@@ -15,12 +15,12 @@ public class StartupListener implements Listener {
     private StartupHandler startupHandler;
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onLogin(AsyncPlayerPreLoginEvent event){
-        if(!startupHandler.isReady()){
+    public void onLogin(AsyncPlayerPreLoginEvent event) {
+        if (!startupHandler.isReady()) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server is starting, please gimme a second!");
         }
 
-        if(startupHandler.isInterrupted()){
+        if (startupHandler.isInterrupted()) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server start was interrupted, please try again later");
         }
     }

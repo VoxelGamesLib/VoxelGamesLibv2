@@ -45,7 +45,7 @@ public class Locale implements Serializable {
     @Nonnull
     public static Locale[] values() {
         return new Locale[]{ENGLISH, FRENCH, GERMAN, ITALIAN, PORTUGUESE, RUSSIAN, SPANISH, SWEDISH,
-                            TURKISH, DUTCH, BRAZILIAN_PORTUGUESE};
+                TURKISH, DUTCH, BRAZILIAN_PORTUGUESE};
     }
 
     /**

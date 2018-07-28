@@ -65,16 +65,16 @@ public class TextureCache implements Listener {
 
     public void init() {
         uuidCache = CacheBuilder.newBuilder()
-            .maximumSize(10000)
-            .expireAfterAccess(1, TimeUnit.DAYS)
-            .build(new CacheLoader<UUID, PlayerProfile>() {
-                @Override
-                public PlayerProfile load(UUID key) {
-                    PlayerProfile playerProfile = Bukkit.createProfile(key);
-                    //playerProfile.completeFromCache();
-                    if (!playerProfile.hasTextures()) {
-                        playerProfile.complete(true);
-                    }
+                .maximumSize(10000)
+                .expireAfterAccess(1, TimeUnit.DAYS)
+                .build(new CacheLoader<UUID, PlayerProfile>() {
+                    @Override
+                    public PlayerProfile load(UUID key) {
+                        PlayerProfile playerProfile = Bukkit.createProfile(key);
+                        //playerProfile.completeFromCache();
+                        if (!playerProfile.hasTextures()) {
+                            playerProfile.complete(true);
+                        }
 //                    if (!playerProfile.hasTextures()) {
 //                        MinecraftServer server = MinecraftServer.getServer();
 //                        // if we are in offline mode, lets access mojang anyways because why not?!
@@ -87,24 +87,24 @@ public class TextureCache implements Listener {
 //                            log.finer("Something went wrong while fetching texture " + key);
 //                        }//TODO fix this, easiest way would be to implement the network call myself I guess
 //                    }
-                    return playerProfile;
-                }
-            });
+                        return playerProfile;
+                    }
+                });
 
         nameCache = CacheBuilder.newBuilder()
-            .maximumSize(10000)
-            .expireAfterAccess(1, TimeUnit.DAYS)
-            .build(new CacheLoader<String, PlayerProfile>() {
-                @Override
-                public PlayerProfile load(String key) {
-                    PlayerProfile playerProfile = Bukkit.createProfile(key);
-                    //playerProfile.completeFromCache();
-                    if (!playerProfile.hasTextures()) {
-                        playerProfile.complete(true);
+                .maximumSize(10000)
+                .expireAfterAccess(1, TimeUnit.DAYS)
+                .build(new CacheLoader<String, PlayerProfile>() {
+                    @Override
+                    public PlayerProfile load(String key) {
+                        PlayerProfile playerProfile = Bukkit.createProfile(key);
+                        //playerProfile.completeFromCache();
+                        if (!playerProfile.hasTextures()) {
+                            playerProfile.complete(true);
+                        }
+                        return playerProfile;
                     }
-                    return playerProfile;
-                }
-            });
+                });
 
         Bukkit.getPluginManager().registerEvents(this, voxelGamesLib);
 

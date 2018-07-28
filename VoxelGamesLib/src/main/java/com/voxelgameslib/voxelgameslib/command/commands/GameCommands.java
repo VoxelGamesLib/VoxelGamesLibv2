@@ -51,8 +51,8 @@ public class GameCommands extends BaseCommand {
         Lang.msg(sender, LangKey.GAME_GAMELIST_HEADER);
         for (Game game : gameHandler.getGames()) {
             Lang.msg(sender, LangKey.GAME_GAMELIST_ENTRY,
-                game.getUuid().toString().split("-")[0], game.getGameMode().getName(),
-                game.getActivePhase().getName(), game.getPlayers().size(), game.getSpectators().size());
+                    game.getUuid().toString().split("-")[0], game.getGameMode().getName(),
+                    game.getActivePhase().getName(), game.getPlayers().size(), game.getSpectators().size());
         }
         Lang.msg(sender, LangKey.GAME_GAMELIST_FOOTER);
     }
@@ -153,8 +153,8 @@ public class GameCommands extends BaseCommand {
 
         // leave everything but the default game
         games.stream()
-            .filter(game -> !game.equals(gameHandler.getDefaultGame()))
-            .forEach(game -> game.leave(sender, gameHandler.getDefaultGame() == null));
+                .filter(game -> !game.equals(gameHandler.getDefaultGame()))
+                .forEach(game -> game.leave(sender, gameHandler.getDefaultGame() == null));
     }
 
     @Subcommand("skip-phase")

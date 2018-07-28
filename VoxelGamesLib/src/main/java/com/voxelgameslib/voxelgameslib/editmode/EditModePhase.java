@@ -55,7 +55,7 @@ public class EditModePhase extends AbstractPhase {
         addFeature(mapFeature);
 
         MobFeature mobFeature = getGame().createFeature(MobFeature.class, this);
-        mobFeature.setRemoveExisting(false);
+        mobFeature.setRemoveExisting(true);
         addFeature(mobFeature);
 
         TimeFeature timeFeature = getGame().createFeature(TimeFeature.class, this);

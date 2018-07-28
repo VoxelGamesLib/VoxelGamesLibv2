@@ -1,15 +1,11 @@
 package com.voxelgameslib.voxelgameslib.command.commands;
 
 import net.kyori.text.Component;
-import net.kyori.text.TextComponent;
 
 import java.util.List;
-import java.util.Map;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.jws.soap.SOAPBinding;
 
 import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
@@ -28,7 +24,6 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.HelpCommand;
-import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Subcommand;
 
 @Singleton
@@ -53,7 +48,7 @@ public class StatsCommands extends BaseCommand {
                     @Description("the user which stats should be displayed")
                     @Flags("other,defaultself") User user,
                     @Description("the stats type to display")
-                        Trackable type) {
+                            Trackable type) {
         double val = user.getUserData().getStat(type).getVal();
         Lang.msg(sender, LangKey.STATS_GET, user.getDisplayName(), type.formatLong(val, sender.getLocale()));
     }
@@ -66,9 +61,9 @@ public class StatsCommands extends BaseCommand {
                     @Description("the user which stats should be changed")
                     @Flags("other") User user,
                     @Description("the stats type to change")
-                        Trackable type,
+                            Trackable type,
                     @Description("the new amount")
-                        double amount) {
+                            double amount) {
         StatInstance stat = user.getUserData().getStat(type);
         stat.setVal(amount);
         Lang.msg(sender, LangKey.STATS_SET, user.getDisplayName(), type.getDisplayName(), type.formatShort(stat.getVal()));
@@ -82,7 +77,7 @@ public class StatsCommands extends BaseCommand {
                           @Description("the user which stats should be changed")
                           @Flags("other") User user,
                           @Description("the stats type to change")
-                              Trackable type,
+                                  Trackable type,
                           @Description("the amount to increment, defaults to 1")
                           @Default("1") int amount) {
         StatInstance stat = user.getUserData().getStat(type);
@@ -98,7 +93,7 @@ public class StatsCommands extends BaseCommand {
                           @Description("the user which stats should be changed")
                           @Flags("other") User user,
                           @Description("the stats type to change")
-                              Trackable type,
+                                  Trackable type,
                           @Description("the amount to decrement, defaults to 1")
                           @Default("1") int amount) {
         StatInstance stat = user.getUserData().getStat(type);
@@ -112,7 +107,7 @@ public class StatsCommands extends BaseCommand {
     @CommandCompletion("@stats")
     public void top(User sender,
                     @Description("the stats type which ranking you want to view")
-                        Trackable type,
+                            Trackable type,
                     @Description("the amount to of entry you want to see, defaults to 5")
                     @Default("5") int amount) {
 

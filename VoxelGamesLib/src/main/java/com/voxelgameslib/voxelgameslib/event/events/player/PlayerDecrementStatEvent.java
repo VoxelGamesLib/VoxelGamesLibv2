@@ -49,6 +49,7 @@ public class PlayerDecrementStatEvent extends PlayerEvent implements Cancellable
     public Trackable getStat() {
         return statType;
     }
+
     public double getOldVal() {
         return oldVal;
     }

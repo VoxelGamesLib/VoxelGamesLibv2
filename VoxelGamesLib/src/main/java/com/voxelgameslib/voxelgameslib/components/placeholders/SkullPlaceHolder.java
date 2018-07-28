@@ -2,8 +2,6 @@ package com.voxelgameslib.voxelgameslib.components.placeholders;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 
-import java.util.Optional;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

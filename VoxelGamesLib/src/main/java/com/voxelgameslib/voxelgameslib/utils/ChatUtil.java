@@ -6,6 +6,7 @@ import net.kyori.text.format.TextColor;
 import net.kyori.text.serializer.ComponentSerializers;
 
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.chat.ChatChannel;
@@ -13,14 +14,12 @@ import com.voxelgameslib.voxelgameslib.user.GamePlayer;
 
 import org.bukkit.Bukkit;
 
-import lombok.extern.java.Log;
-
 /**
  * Small util for chat related stuff
  */
-@Log
 public class ChatUtil {
 
+    private static final Logger log = Logger.getLogger(ChatUtil.class.getName());
     private static String NMS_PREFIX = Bukkit.getServer().getClass().getPackage().getName()
             .replace("org.bukkit.craftbukkit", "net.minecraft.server").concat(".");
     private static final Method CRAFTPLAYER_GETHANDLE_METHOD;

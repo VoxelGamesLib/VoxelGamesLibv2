@@ -27,7 +27,7 @@ public class VictoryConditionTypeAdapter implements JsonDeserializer<VictoryCond
     @Override
     @Nullable
     public VictoryCondition deserialize(@Nonnull JsonElement json, @Nonnull Type typeOfT, @Nonnull JsonDeserializationContext context)
-        throws JsonParseException {
+            throws JsonParseException {
         try {
             JsonObject jsonObject = json.getAsJsonObject();
 

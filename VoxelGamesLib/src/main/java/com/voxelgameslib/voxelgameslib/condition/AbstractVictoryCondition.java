@@ -2,17 +2,13 @@ package com.voxelgameslib.voxelgameslib.condition;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.Nullable;
 
 import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.game.Game;
 import com.voxelgameslib.voxelgameslib.phase.Phase;
-import com.voxelgameslib.voxelgameslib.phase.PhaseTypeAdapter;
 import com.voxelgameslib.voxelgameslib.user.User;
 
 public abstract class AbstractVictoryCondition implements VictoryCondition {

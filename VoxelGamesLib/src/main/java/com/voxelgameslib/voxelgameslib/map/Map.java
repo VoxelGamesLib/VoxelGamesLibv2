@@ -80,7 +80,7 @@ public class Map {
      * @param sender the user to send the summary to
      */
     public void printSummary(@Nonnull User sender) {
-        Lang.msg(sender, LangKey.WORLD_CREATOR_MAP_SUMMARY, info.getName(), worldName, info.getAuthor(),
+        Lang.msg(sender, LangKey.WORLD_CREATOR_MAP_SUMMARY, info.getDisplayName(), worldName, info.getAuthor(),
                 center, radius, info.getGamemodes());
         //TODO print summery of map
     }
@@ -104,9 +104,7 @@ public class Map {
     }
 
     public boolean isLoaded(@Nonnull UUID gameid) {
-        log.finer("Is  " + info.getName() + " loaded?");
         if (loadedNames == null) {
-            log.finer("Loaded names = null");
             loadedNames = new HashMap<>();
         }
         return loadedNames.containsKey(gameid);

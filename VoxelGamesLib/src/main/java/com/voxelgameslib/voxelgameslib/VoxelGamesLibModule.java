@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
@@ -84,19 +83,19 @@ public final class VoxelGamesLibModule extends AbstractModule {
 
         bind(File.class).annotatedWith(Names.named("ConfigFolder")).toInstance(dataFolder);
         bind(File.class).annotatedWith(Names.named("LangFolder"))
-            .toInstance(new File(dataFolder.getAbsoluteFile(), "lang"));
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "lang"));
         bind(File.class).annotatedWith(Names.named("WorldsFolder"))
-            .toInstance(new File(Bukkit.getWorldContainer().getAbsoluteFile(), "worlds"));
+                .toInstance(new File(Bukkit.getWorldContainer().getAbsoluteFile(), "worlds"));
         bind(File.class).annotatedWith(Names.named("WorldContainer"))
-            .toInstance(Bukkit.getWorldContainer().getAbsoluteFile());
+                .toInstance(Bukkit.getWorldContainer().getAbsoluteFile());
         bind(File.class).annotatedWith(Names.named("GameDefinitionFolder"))
-            .toInstance(new File(dataFolder.getAbsoluteFile(), "games"));
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "games"));
         bind(File.class).annotatedWith(Names.named("DataFolder"))
-            .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "data"));
         bind(File.class).annotatedWith(Names.named("KitsFolder"))
-            .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "kits"));
         bind(File.class).annotatedWith(Names.named("SkinsFolder"))
-            .toInstance(new File(dataFolder.getAbsoluteFile(), "skins"));
+                .toInstance(new File(dataFolder.getAbsoluteFile(), "skins"));
 
         bind(WorldConfig.class).toProvider(WorldHandler.class);
         bind(GlobalConfig.class).toProvider(ConfigHandler.class);

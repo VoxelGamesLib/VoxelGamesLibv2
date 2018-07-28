@@ -1,9 +1,10 @@
 package com.voxelgameslib.voxelgameslib.map;
 
 import com.google.gson.annotations.Expose;
-import com.voxelgameslib.voxelgameslib.math.Vector3D;
 
 import javax.annotation.Nonnull;
+
+import com.voxelgameslib.voxelgameslib.math.Vector3D;
 
 /**
  * A marker marks a special position in the world. they are most of the time implemented by tile entities so that the

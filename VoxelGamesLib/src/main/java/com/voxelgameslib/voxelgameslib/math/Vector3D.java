@@ -271,12 +271,12 @@ public class Vector3D implements Cloneable {
         return new Location(Bukkit.getWorld(world), x, y, z);
     }
 
-   /**
-    * Converts this vector into a two dimensional vector using this vector's {@link Vector3D#x} and
-    * {@link Vector3D#y} values.
-    *
-    * @return This vector converted to a 2D one.
-    */
+    /**
+     * Converts this vector into a two dimensional vector using this vector's {@link Vector3D#x} and
+     * {@link Vector3D#y} values.
+     *
+     * @return This vector converted to a 2D one.
+     */
     @Nonnull
     public Vector2D toVector2D() {
         return new Vector2D(x, y);

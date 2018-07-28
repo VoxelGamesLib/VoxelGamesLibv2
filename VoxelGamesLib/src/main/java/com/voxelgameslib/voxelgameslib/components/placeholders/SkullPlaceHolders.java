@@ -65,7 +65,7 @@ public class SkullPlaceHolders implements Listener {
      */
     public void registerPlaceholders() {
         registerPlaceholder("god", (name, player, location, args) ->
-            textureHandler.getPlayerProfile(ThreadLocalRandom.current().nextBoolean() ? "MiniDigger" : "Notch"));
+                textureHandler.getPlayerProfile(ThreadLocalRandom.current().nextBoolean() ? "MiniDigger" : "Notch"));
 
         registerPlaceholder("top", (name, player, location, args) -> {
             if (args.length < 2) {
@@ -111,11 +111,11 @@ public class SkullPlaceHolders implements Listener {
 
         // search for already loaded skulls
         Bukkit.getWorlds().stream()
-            .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
-            .flatMap(s -> Arrays.stream(s.getTileEntities()))
-            .filter(s -> s instanceof Skull)
-            .map(s -> (Skull) s)
-            .forEach(s -> lastSeenSkulls.put(s.getLocation(), s));
+                .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
+                .flatMap(s -> Arrays.stream(s.getTileEntities()))
+                .filter(s -> s instanceof Skull)
+                .map(s -> (Skull) s)
+                .forEach(s -> lastSeenSkulls.put(s.getLocation(), s));
 
         // update task
         new BukkitRunnable() {
@@ -206,15 +206,15 @@ public class SkullPlaceHolders implements Listener {
     @EventHandler
     public void chunkLoad(@Nonnull ChunkLoadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-            .filter(blockState -> blockState instanceof Skull)
-            .map((blockState) -> (Skull) blockState)
-            .forEach(skull -> lastSeenSkulls.put(skull.getLocation(), skull));
+                .filter(blockState -> blockState instanceof Skull)
+                .map((blockState) -> (Skull) blockState)
+                .forEach(skull -> lastSeenSkulls.put(skull.getLocation(), skull));
     }
 
     @EventHandler
     public void chunkUnload(@Nonnull ChunkUnloadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-            .filter(blockState -> blockState instanceof Skull)
-            .forEach(sign -> lastSeenSkulls.remove(sign.getLocation()));
+                .filter(blockState -> blockState instanceof Skull)
+                .forEach(sign -> lastSeenSkulls.remove(sign.getLocation()));
     }
 }

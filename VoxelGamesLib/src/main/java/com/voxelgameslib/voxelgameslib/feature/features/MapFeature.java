@@ -51,9 +51,9 @@ public class MapFeature extends AbstractFeature {
 
         String mapName;
         if (type == Type.LOBBY) {
-            mapName = gameData.lobbyMap.getName();
+            mapName = gameData.lobbyMap.getWorldName();
         } else if (type == Type.VOTEWINNER) {
-            mapName = gameData.voteWinner.getName();
+            mapName = gameData.voteWinner.getWorldName();
         } else {
             throw new VoxelGameLibException("Unknown maptype");
         }

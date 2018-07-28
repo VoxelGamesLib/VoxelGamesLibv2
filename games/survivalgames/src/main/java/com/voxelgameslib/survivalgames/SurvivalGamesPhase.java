@@ -2,9 +2,7 @@ package com.voxelgameslib.survivalgames;
 
 import com.voxelgameslib.voxelgameslib.GameConstants;
 import com.voxelgameslib.voxelgameslib.feature.features.AutoRespawnFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.DuelFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.GameModeFeature;
-import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.MobFeature;
 import com.voxelgameslib.voxelgameslib.feature.features.NoBlockBreakFeature;

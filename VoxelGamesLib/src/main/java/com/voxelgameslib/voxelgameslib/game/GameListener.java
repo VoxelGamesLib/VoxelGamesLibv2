@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.event.events.game.GamePostLeaveEvent;
-import com.voxelgameslib.voxelgameslib.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.exception.UserException;
 import com.voxelgameslib.voxelgameslib.feature.features.SpawnFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
@@ -33,18 +32,18 @@ public class GameListener implements Listener {
     @EventHandler
     public void onLeave(@Nonnull PlayerQuitEvent event) {
         User user = userHandler.getUser(event.getPlayer().getUniqueId())
-            .orElseThrow(() -> new UserException(
-                "Unknown user " + event.getPlayer().getDisplayName() + "(" + event.getPlayer()
-                    .getUniqueId() + ")"));
+                .orElseThrow(() -> new UserException(
+                        "Unknown user " + event.getPlayer().getDisplayName() + "(" + event.getPlayer()
+                                .getUniqueId() + ")"));
         user.setLeaving(true);
         gameHandler.getGames(event.getPlayer().getUniqueId(), true)
-            .forEach((game -> game.leave(user, false)));
+                .forEach((game -> game.leave(user, false)));
     }
 
     @EventHandler
     public void onL(@Nonnull GamePostLeaveEvent event) {
         log.finer(event.getUser().getRawDisplayName() + " left the game " + event.getGame()
-            .getGameMode().getName());
+                .getGameMode().getName());
 
         if (!event.getUser().isLeaving() && gameHandler.getDefaultGame() != null) {
             if (event.getGame().getUuid() != gameHandler.getDefaultGame().getUuid()) {
@@ -56,20 +55,20 @@ public class GameListener implements Listener {
     @EventHandler
     public void onJ(@Nonnull GameJoinEvent event) {
         log.finer(event.getUser().getRawDisplayName() + " joined the game " + event.getGame()
-            .getGameMode().getName());
+                .getGameMode().getName());
     }
 
     @EventHandler
     public void onJoin(@Nonnull PlayerJoinEvent event) {
         if (gameHandler.getDefaultGame() != null) {
             gameHandler.getDefaultGame().getActivePhase().getOptionalFeature(SpawnFeature.class).ifPresent(spawnFeature ->
-                event.getPlayer().teleport(spawnFeature.getSpawn(event.getPlayer().getUniqueId())));
+                    event.getPlayer().teleport(spawnFeature.getSpawn(event.getPlayer().getUniqueId())));
         }
 
         Bukkit.getScheduler().runTaskLater(voxelGamesLib, () -> {
             if (gameHandler.getDefaultGame() != null) {
                 gameHandler.getDefaultGame().join(userHandler.getUser(event.getPlayer().getUniqueId()).orElseThrow(() ->
-                    new UserException("Unknown user " + event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")")));
+                        new UserException("Unknown user " + event.getPlayer().getDisplayName() + "(" + event.getPlayer().getUniqueId() + ")")));
             }
         }, 10);
     }

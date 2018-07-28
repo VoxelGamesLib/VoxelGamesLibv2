@@ -11,19 +11,23 @@ import javax.annotation.Nonnull;
 public class MapInfo {
 
     @Expose
-    private String name;
+    private String displayName;
+    @Expose
+    private String worldName;
     @Expose
     private String author;
     @Expose
     private List<String> gamemode;
 
     /**
-     * @param name     the display name of the map
-     * @param author   the author of the map
-     * @param gamemode the gamemodes this map supports
+     * @param displayName the display name of the map
+     * @param worldName   the world name of the map
+     * @param author      the author of the map
+     * @param gamemode    the gamemodes this map supports
      */
-    public MapInfo(@Nonnull String name, @Nonnull String author, @Nonnull List<String> gamemode) {
-        this.name = name;
+    public MapInfo(@Nonnull String displayName, @Nonnull String worldName, @Nonnull String author, @Nonnull List<String> gamemode) {
+        this.displayName = displayName;
+        this.worldName = worldName;
         this.author = author;
         this.gamemode = gamemode;
     }
@@ -32,15 +36,30 @@ public class MapInfo {
      * @return the display name of this map
      */
     @Nonnull
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
     /**
      * @param name the display name to set
      */
-    public void setName(@Nonnull String name) {
-        this.name = name;
+    public void setDisplayName(@Nonnull String name) {
+        this.displayName = name;
+    }
+
+    /**
+     * @return the world name of this map
+     */
+    @Nonnull
+    public String getWorldName() {
+        return worldName;
+    }
+
+    /**
+     * @param name the world name to set
+     */
+    public void setWorldName(@Nonnull String name) {
+        this.worldName = name;
     }
 
     /**
@@ -84,7 +103,7 @@ public class MapInfo {
 
         MapInfo mapInfo = (MapInfo) o;
 
-        if (name != null ? !name.equals(mapInfo.name) : mapInfo.name != null) {
+        if (displayName != null ? !displayName.equals(mapInfo.displayName) : mapInfo.displayName != null) {
             return false;
         }
         if (author != null ? !author.equals(mapInfo.author) : mapInfo.author != null) {
@@ -95,7 +114,7 @@ public class MapInfo {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = displayName != null ? displayName.hashCode() : 0;
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (gamemode != null ? gamemode.hashCode() : 0);
         return result;
@@ -105,7 +124,8 @@ public class MapInfo {
     @Nonnull
     public String toString() {
         return "MapInfo{" +
-                "name='" + name + '\'' +
+                "displayName='" + displayName + '\'' +
+                ", worldName='" + worldName + '\'' +
                 ", author='" + author + '\'' +
                 ", gamemode=" + gamemode +
                 '}';

@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.exception.VoxelGameLibException;
-import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 
@@ -63,7 +62,7 @@ public abstract class Stat {
         return new StatInstance(getUser(uuid), getType(), defaultValue());
     }
 
-    public User getUser(UUID uuid){
+    public User getUser(UUID uuid) {
         return userHandler.getUser(uuid).orElseThrow(() -> new VoxelGameLibException("Unknown user " + uuid));
     }
 }

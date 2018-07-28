@@ -112,7 +112,6 @@ public interface Game extends Tickable {
      * Lets a user leave this game
      *
      * @param user the user that wants to leave this game
-     * @param shouldTeleportToSpawn
      */
     void leave(@Nonnull User user, boolean shouldTeleportToSpawn);
 
@@ -235,8 +234,6 @@ public interface Game extends Tickable {
 
     /**
      * @return the data of this game that should be persisted
-     * @param winner
-     * @param winners
      */
     com.voxelgameslib.voxelgameslib.persistence.model.GameData getGameData(@Nullable User winner, @Nullable Team winners);
 }

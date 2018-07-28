@@ -102,11 +102,11 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             Optional<MapInfo> mapInfo = getMapInfo(name);
             if (!mapInfo.isPresent()) {
                 throw new MapException(
-                    "Unknown map " + name + ". Did you register it into the world config?");
+                        "Unknown map " + name + ". Did you register it into the world config?");
             }
 
             try {
-                ZipFile zipFile = new ZipFile(new File(worldsFolder, mapInfo.get().getName() + ".zip"));
+                ZipFile zipFile = new ZipFile(new File(worldsFolder, mapInfo.get().getWorldName() + ".zip"));
                 for (FileHeader header : (List<FileHeader>) zipFile.getFileHeaders()) {
                     if (header.getFileName().endsWith("config.json")) {
                         InputStream stream = zipFile.getInputStream(header);
@@ -117,10 +117,10 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
                     }
                 }
                 throw new MapException("Could not load map config for map " + name
-                    + ". Fileheader was null. Does it has a map.json?");
+                        + ". Fileheader was null. Does it has a map.json?");
 
             } catch (Exception e) {
-                throw new MapException("Error while trying to load map config " + name, e);
+                throw new MapException("Error while trying to load map config " + name + "(" + mapInfo.get().getWorldName() + ".zip)", e);
             }
         } else {
             return map.get();
@@ -135,8 +135,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      */
     @Nonnull
     public Optional<MapInfo> getMapInfo(@Nonnull String name) {
-        return config.maps.stream().filter(mapInfo -> mapInfo.getName().equalsIgnoreCase(name))
-            .findAny();
+        return config.maps.stream().filter(mapInfo -> mapInfo.getWorldName().equalsIgnoreCase(name))
+                .findAny();
     }
 
     /**
@@ -151,7 +151,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
     @Nonnull
     public World loadWorld(@Nonnull Map map, @Nonnull UUID gameid, boolean replaceMarkers) {
         map.load(gameid, "TEMP_" + map.getWorldName() + "_" + gameid.toString().split("-")[0]);
-        log.finer("Loading map " + map.getInfo().getName() + " as " + map.getLoadedName(gameid));
+        log.finer("Loading map " + map.getInfo().getDisplayName() + " as " + map.getLoadedName(gameid));
 
         File file = new File(worldContainer, map.getLoadedName(gameid));
 
@@ -160,7 +160,7 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             zip.extractAll(file.getAbsolutePath());
             FileUtils.delete(new File(file, "uid.dat"));
         } catch (ZipException e) {
-            throw new WorldException("Could not unzip world " + map.getInfo().getName() + ".", e);
+            throw new WorldException("Could not unzip world " + map.getInfo().getDisplayName() + " (" + map.getWorldName() + ".zip).", e);
         }
 
         World world = loadLocalWorld(map.getLoadedName(gameid));
@@ -220,8 +220,8 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
         //worldRepository.setURL();// TODO make url configurable
         if (!worldsFolder.exists()) {
             log.warning(
-                "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
-                    + worldRepository.getURL() + "...");
+                    "Could not find worlds folder " + worldsFolder.getAbsolutePath() + ". Clonging from "
+                            + worldRepository.getURL() + "...");
             worldRepository.cloneRepo();
         } else {
             worldRepository.updateRepo();
@@ -330,17 +330,17 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
             fileWriter.close();
         } catch (IOException e) {
             Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_CONFIG_ERROR, e.getMessage(),
-                e.getClass().getName());
+                    e.getClass().getName());
             log.log(Level.WARNING, "Error while saving the world config", e);
             return;
         }
 
         ZipFile zip;
         try {
-            zip = ZipUtil.createZip(worldFolder, map.getInfo().getName());
+            zip = ZipUtil.createZip(worldFolder, map.getWorldName());
         } catch (ZipException e) {
             Lang.msg(editor, LangKey.WORLD_CREATOR_SAVE_ZIP_ERROR, e.getMessage(),
-                e.getClass().getName());
+                    e.getClass().getName());
             log.log(Level.WARNING, "Error while creating the zip", e);
             return;
         }

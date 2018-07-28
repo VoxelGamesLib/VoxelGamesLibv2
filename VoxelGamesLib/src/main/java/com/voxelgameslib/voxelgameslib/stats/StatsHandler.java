@@ -13,7 +13,6 @@ import net.kyori.text.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -28,7 +27,6 @@ import com.voxelgameslib.voxelgameslib.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.timings.Timing;
-import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
 
@@ -106,20 +104,20 @@ public class StatsHandler implements Handler {
         }
         final String fName = name;
         return trackables.stream()
-            .flatMap(trackable -> Arrays.stream(trackable.getValues()))
-            .filter(trackable -> (trackable.getPrefix().toUpperCase() + ":" + trackable.name().toUpperCase()).equals(fName.toUpperCase()))
-            .findAny();
+                .flatMap(trackable -> Arrays.stream(trackable.getValues()))
+                .filter(trackable -> (trackable.getPrefix().toUpperCase() + ":" + trackable.name().toUpperCase()).equals(fName.toUpperCase()))
+                .findAny();
     }
 
     private LoadingCache<Pair<Trackable, Integer>, List<Pair<UUID, Double>>> uuidCache = CacheBuilder.newBuilder()
-        .maximumSize(1000)
-        .expireAfterWrite(1, TimeUnit.HOURS)
-        .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<UUID, Double>>>() {
-            @Override
-            public List<Pair<UUID, Double>> load(Pair<Trackable, Integer> key) throws Exception {
-                return persistenceHandler.getProvider().getTopWithUUID(key.getFirst(), key.getSecond());
-            }
-        });
+            .maximumSize(1000)
+            .expireAfterWrite(1, TimeUnit.HOURS)
+            .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<UUID, Double>>>() {
+                @Override
+                public List<Pair<UUID, Double>> load(Pair<Trackable, Integer> key) throws Exception {
+                    return persistenceHandler.getProvider().getTopWithUUID(key.getFirst(), key.getSecond());
+                }
+            });
 
     public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
         try {
@@ -132,14 +130,14 @@ public class StatsHandler implements Handler {
     }
 
     private LoadingCache<Pair<Trackable, Integer>, List<Pair<Component, Double>>> nameCache = CacheBuilder.newBuilder()
-        .maximumSize(1000)
-        .expireAfterWrite(1, TimeUnit.HOURS)
-        .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<Component, Double>>>() {
-            @Override
-            public List<Pair<Component, Double>> load(Pair<Trackable, Integer> key) throws Exception {
-                return persistenceHandler.getProvider().getTopWithName(key.getFirst(), key.getSecond());
-            }
-        });
+            .maximumSize(1000)
+            .expireAfterWrite(1, TimeUnit.HOURS)
+            .build(new CacheLoader<Pair<Trackable, Integer>, List<Pair<Component, Double>>>() {
+                @Override
+                public List<Pair<Component, Double>> load(Pair<Trackable, Integer> key) throws Exception {
+                    return persistenceHandler.getProvider().getTopWithName(key.getFirst(), key.getSecond());
+                }
+            });
 
     public List<Pair<Component, Double>> getTopWithName(Trackable type, int amount) {
         try {

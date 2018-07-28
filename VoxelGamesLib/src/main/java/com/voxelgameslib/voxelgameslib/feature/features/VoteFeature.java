@@ -43,7 +43,7 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Syntax;
 
 @FeatureInfo(name = "VoteFeature", author = "MiniDigger", version = "1.0",
-    description = "Allow players to vote on maps")
+        description = "Allow players to vote on maps")
 public class VoteFeature extends AbstractFeature implements FeatureCommandImplementor {
 
     private static final Logger log = Logger.getLogger(VoteFeature.class.getName());
@@ -84,7 +84,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             getPhase().getGame().broadcastMessage(LangKey.VOTE_NO_MAPS_FOUND);
             getPhase().getGame().abortGame();
             log.warning("Game " + getPhase().getGame().getUuid() + "(" + getPhase().getGame().getGameMode().getName() + ")" +
-                " was aborted because it didn't find any maps to play!");
+                    " was aborted because it didn't find any maps to play!");
             return;
         }
 
@@ -118,7 +118,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         DefaultGameData gameData = getPhase().getGame().getGameData(DefaultGameData.class).orElse(new DefaultGameData());
         gameData.voteWinner = winner;
         getPhase().getGame().putGameData(gameData);
-        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getName(), winner.getAuthor(), Math.max(max, 0));
+        getPhase().getGame().broadcastMessage(LangKey.VOTE_END, winner.getDisplayName(), winner.getAuthor(), Math.max(max, 0));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
         Lang.msg(user, LangKey.VOTE_MESSAGE_TOP);
         for (int id : availableMaps.keySet()) {
             MapInfo info = availableMaps.get(id);
-            Lang.msg(user, LangKey.VOTE_MESSAGE_MAP, "/vote " + id, id, info.getName(), info.getAuthor());
+            Lang.msg(user, LangKey.VOTE_MESSAGE_MAP, "/vote " + id, id, info.getWorldName(), info.getAuthor());
         }
         Lang.msg(user, LangKey.VOTE_MESSAGE_BOT);
     }
@@ -167,7 +167,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             InventoryMenuBuilder builder = new InventoryMenuBuilder().withSize(9).withTitle("Vote for a map");
             for (int id : availableMaps.keySet()) {
                 MapInfo info = availableMaps.get(id);
-                ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getName()).lore(info.getAuthor()).build();
+                ItemStack item = new ItemBuilder(Material.PAPER).amount(id).name(info.getDisplayName()).lore(info.getAuthor()).build();
                 builder.withItem(id - 1, item, (player, clickType, itemStack) -> confirmVote(user, id), ClickType.LEFT);
             }
             builder.show(user.getPlayer());
@@ -188,7 +188,7 @@ public class VoteFeature extends AbstractFeature implements FeatureCommandImplem
             }
 
             votes.put(voter.getUuid(), mapId);
-            Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapInfo.getName(), mapId);
+            Lang.msg(voter, LangKey.VOTE_SUBMITTED, mapInfo.getDisplayName(), mapId);
         }
     }
 

@@ -18,11 +18,12 @@
 package com.voxelgameslib.voxelgameslib.math;
 
 import com.google.gson.annotations.Expose;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 /**
  * Represents an immutable vector in two dimensions. This class is not final by design.
@@ -173,8 +174,8 @@ public class Vector2D implements Cloneable {
     @Nonnull
     public final Vector2D midpoint(@Nonnull Vector2D other) {
         return new Vector2D(
-            (this.x + other.x) / 2,
-            (this.y + other.y) / 2
+                (this.x + other.x) / 2,
+                (this.y + other.y) / 2
         );
     }
 
@@ -204,7 +205,7 @@ public class Vector2D implements Cloneable {
      */
     public boolean isBlockAligned() {
         return (this.x == Math.floor(this.x) && this.y == Math.floor(this.y)
-            && !Double.isInfinite(this.x) && !Double.isInfinite(this.y));
+                && !Double.isInfinite(this.x) && !Double.isInfinite(this.y));
     }
 
     /**

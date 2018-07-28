@@ -2,8 +2,10 @@ package com.voxelgameslib.voxelgameslib.command.commands;
 
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
 import com.voxelgameslib.voxelgameslib.feature.features.KitFeature;
 import com.voxelgameslib.voxelgameslib.user.User;
 
@@ -25,6 +27,9 @@ public class KitCommands extends BaseCommand {
 
     private static final Logger log = Logger.getLogger(KitCommands.class.getName());
 
+    @Inject
+    private KitHandler kitHandler;
+
     @HelpCommand
     @CommandPermission("%user")
     public void doHelp(@Nonnull User sender, @Nonnull CommandHelp help) {
@@ -42,6 +47,9 @@ public class KitCommands extends BaseCommand {
     @Syntax("<kit> - the kit you choose")
     public void selectKit(@Nonnull User sender, @Nonnull String kit) {
         // todo
+//        new InventoryMenuBuilder().withSize(9).withItem(0, is, (player, clickType, itemStack) -> {
+//
+//        }).;
     }
 
     @Subcommand("create")

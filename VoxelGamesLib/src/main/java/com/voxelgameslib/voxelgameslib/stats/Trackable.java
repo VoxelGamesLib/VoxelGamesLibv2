@@ -1,14 +1,12 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
-import net.kyori.text.TextComponent;
-
 import java.util.UUID;
 
 import com.voxelgameslib.voxelgameslib.lang.Locale;
 import com.voxelgameslib.voxelgameslib.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.user.User;
 
-public interface Trackable{
+public interface Trackable {
 
     void setStat(Stat stat);
 

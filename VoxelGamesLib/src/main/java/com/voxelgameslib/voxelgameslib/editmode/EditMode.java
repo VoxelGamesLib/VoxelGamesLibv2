@@ -7,9 +7,9 @@ import org.mineskin.data.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -20,7 +20,6 @@ import com.voxelgameslib.voxelgameslib.lang.Lang;
 import com.voxelgameslib.voxelgameslib.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
-import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.user.User;
 import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
@@ -91,31 +90,31 @@ public class EditMode extends BaseCommand {
     public void skull(@Nonnull User sender, @Nonnull String name, @co.aikar.commands.annotation.Optional @Default(value = "true") boolean usePrefix) {
         if (editMode.contains(sender.getUuid())) {
             ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
-                .meta((itemMeta -> {
-                    SkullMeta skullMeta = (SkullMeta) itemMeta;
-                    if (usePrefix) {
-                        char prefix = name.toUpperCase().charAt(0);
-                        Optional<Skin> skin = textureHandler.getSkin(prefix + "");
-                        if (!skin.isPresent()) {
-                            log.warning("Could not find skull for char " + prefix + "!");
-                            skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
+                    .meta((itemMeta -> {
+                        SkullMeta skullMeta = (SkullMeta) itemMeta;
+                        if (usePrefix) {
+                            char prefix = name.toUpperCase().charAt(0);
+                            Optional<Skin> skin = textureHandler.getSkin(prefix + "");
+                            if (!skin.isPresent()) {
+                                log.warning("Could not find skull for char " + prefix + "!");
+                                skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
+                            } else {
+                                skullMeta.setPlayerProfile(textureHandler.getPlayerProfile(skin.get()));
+                            }
                         } else {
-                            skullMeta.setPlayerProfile(textureHandler.getPlayerProfile(skin.get()));
+                            PlayerProfile playerProfile = textureHandler.getPlayerProfile(name);
+                            if (playerProfile == null) {
+                                log.warning("Could not find skull for name " + name + "!");
+                                skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
+                            } else {
+                                skullMeta.setPlayerProfile(playerProfile);
+                            }
                         }
-                    } else {
-                        PlayerProfile playerProfile = textureHandler.getPlayerProfile(name);
-                        if (playerProfile == null) {
-                            log.warning("Could not find skull for name " + name + "!");
-                            skullMeta.setPlayerProfile(textureHandler.getErrorProfile());
-                        } else {
-                            skullMeta.setPlayerProfile(playerProfile);
-                        }
-                    }
 
-                    if (skullMeta.getPlayerProfile() != null) {
-                        skullMeta.getPlayerProfile().setName(name);
-                    }
-                })).build();
+                        if (skullMeta.getPlayerProfile() != null) {
+                            skullMeta.getPlayerProfile().setName(name);
+                        }
+                    })).build();
             sender.getPlayer().getInventory().setItemInMainHand(skull);
         } else {
             Lang.msg(sender, LangKey.EDITMODE_NOT_ENABLED);
@@ -143,14 +142,16 @@ public class EditMode extends BaseCommand {
             for (int i = 0; i < mapHandler.getMarkerDefinitions().size(); i++) {
                 MarkerDefinition markerDefinition = mapHandler.getMarkerDefinitions().get(i);
                 ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
-                    .meta((itemMeta -> {
-                        char prefix = markerDefinition.getPrefix().toUpperCase().charAt(0);
-                        Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));
-                        ((SkullMeta) itemMeta).setPlayerProfile(textureHandler.getPlayerProfile(skin));
-                        ((SkullMeta) itemMeta).setOwner(markerDefinition.getPrefix());
-                    })).build();
+                        .meta(itemMeta -> {
+                            char prefix = markerDefinition.getPrefix().toUpperCase().charAt(0);
+                            Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));
+                            SkullMeta meta = ((SkullMeta) itemMeta);
+                            meta.setPlayerProfile(textureHandler.getPlayerProfile(skin));
+                            Objects.requireNonNull(meta.getPlayerProfile()).setName(markerDefinition.getPrefix());
+                            meta.setOwner(markerDefinition.getPrefix());
+                        }).build();
                 builder.withItem(i, is, (player, clickType, itemStack) ->
-                    sender.getPlayer().performCommand("editmode skull " + itemStack.getItemMeta().getDisplayName()), ClickType.LEFT);
+                        sender.getPlayer().performCommand("editmode skull " + itemStack.getItemMeta().getDisplayName()), ClickType.LEFT);
             }
             builder.show(sender.getPlayer());
         } else {

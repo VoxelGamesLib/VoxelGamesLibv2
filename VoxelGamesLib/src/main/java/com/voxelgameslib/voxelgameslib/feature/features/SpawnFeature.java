@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.event.GameEvent;
@@ -28,6 +29,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
         description = "Handles (re)spawning")
 public class SpawnFeature extends AbstractFeature {
 
+    private static final Logger log = Logger.getLogger(SpawnFeature.class.getName());
+
     @Expose
     private boolean isRespawn = true;
     @Expose
@@ -44,6 +47,14 @@ public class SpawnFeature extends AbstractFeature {
         for (Marker marker : map.getMarkers(spawnMarker)) {
             spawns.add(marker.getLoc());
         }
+
+        if (spawns.size() == 0) {
+            log.warning("Could not find any spawns on map " +
+                    map.getInfo().getDisplayName() + "(" + map.getInfo().getWorldName() + ")");
+            getPhase().getGame().abortGame();
+            return;
+        }
+
         if (isInitialSpawn) {
             for (User user : getPhase().getGame().getPlayers()) {
                 user.getPlayer().teleport(getSpawn(user.getPlayer().getUniqueId()));

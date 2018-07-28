@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -75,24 +74,24 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
 
         Thread thread = new Thread(() -> {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                // credentials and stuff
-                .applySetting("hibernate.connection.username", config.persistence.user)
-                .applySetting("hibernate.connection.password", config.persistence.pass)
-                .applySetting("hibernate.connection.driver_class", config.persistence.driver)
-                .applySetting("hibernate.connection.url", config.persistence.url + "?useSSL=false")
-                .applySetting("hibernate.dialect", config.persistence.dialect)
-                // misc settings
-                .applySetting("hibernate.hbm2ddl.auto", shouldCreateTable ? "create" : "update")
-                .applySetting("hibernate.show_sql", config.persistence.showSQL + "")
-                //TODO apparently this is an anti-pattern [0], but it fixes an issue so ¯\_(ツ)_/¯
-                // [0]: https://vladmihalcea.com/2016/09/05/the-hibernate-enable_lazy_load_no_trans-anti-pattern/
-                .applySetting("hibernate.enable_lazy_load_no_trans", true)
-                .applySetting("hibernate.connection.autocommit", true)
-                // connection pool
-                .applySetting("hibernate.connection.pool_size", config.persistence.pool_size + "")
-                //TODO figure out how to use hikari with hibernate
-                //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
-                .build();
+                    // credentials and stuff
+                    .applySetting("hibernate.connection.username", config.persistence.user)
+                    .applySetting("hibernate.connection.password", config.persistence.pass)
+                    .applySetting("hibernate.connection.driver_class", config.persistence.driver)
+                    .applySetting("hibernate.connection.url", config.persistence.url + "?useSSL=false")
+                    .applySetting("hibernate.dialect", config.persistence.dialect)
+                    // misc settings
+                    .applySetting("hibernate.hbm2ddl.auto", shouldCreateTable ? "create" : "update")
+                    .applySetting("hibernate.show_sql", config.persistence.showSQL + "")
+                    //TODO apparently this is an anti-pattern [0], but it fixes an issue so ¯\_(ツ)_/¯
+                    // [0]: https://vladmihalcea.com/2016/09/05/the-hibernate-enable_lazy_load_no_trans-anti-pattern/
+                    .applySetting("hibernate.enable_lazy_load_no_trans", true)
+                    .applySetting("hibernate.connection.autocommit", true)
+                    // connection pool
+                    .applySetting("hibernate.connection.pool_size", config.persistence.pool_size + "")
+                    //TODO figure out how to use hikari with hibernate
+                    //.applySetting("hibernate.connection.provider_class","com.zaxxer.hikari.hibernate.HikariConnectionProvider")
+                    .build();
 
             MetadataSources sources = new MetadataSources(registry);
 
@@ -148,9 +147,9 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     public List<Pair<Component, Double>> getTopWithName(Trackable type, int amount) {
         return session(session -> {
             Query query = session.createQuery("select user.displayName, stat.val from StatInstance stat, UserData user\n" +
-                "where user.uuid = stat.uuid\n" +
-                "and stat.statType = :type\n" +
-                "order by stat.val desc");
+                    "where user.uuid = stat.uuid\n" +
+                    "and stat.statType = :type\n" +
+                    "order by stat.val desc");
             query.setParameter("type", type);
             query.setMaxResults(amount);
 
@@ -167,8 +166,8 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     public List<Pair<UUID, Double>> getTopWithUUID(Trackable type, int amount) {
         return session(session -> {
             Query query = session.createQuery("select stat.uuid, stat.val from StatInstance stat\n" +
-                "where stat.statType = :type\n" +
-                "order by stat.val desc");
+                    "where stat.statType = :type\n" +
+                    "order by stat.val desc");
             query.setParameter("type", type);
             query.setMaxResults(amount);
 

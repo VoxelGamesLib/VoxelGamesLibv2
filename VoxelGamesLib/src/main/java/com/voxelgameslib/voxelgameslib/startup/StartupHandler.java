@@ -35,7 +35,7 @@ public class StartupHandler {
         return services.size() == 0;
     }
 
-    public boolean isInterrupted(){
+    public boolean isInterrupted() {
         return interrupted;
     }
 

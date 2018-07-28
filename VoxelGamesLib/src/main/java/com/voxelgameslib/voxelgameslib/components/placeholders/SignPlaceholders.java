@@ -67,21 +67,21 @@ public class SignPlaceholders implements Listener {
      */
     public void registerPlaceholders() {
         registerPlaceholder("world", (SimpleSignPlaceHolder)
-            (user, location, rawLines, lines, key) ->
-                TextComponent.of(location.getWorld().getName()));
+                (user, location, rawLines, lines, key) ->
+                        TextComponent.of(location.getWorld().getName()));
         registerPlaceholder("time", (SimpleSignPlaceHolder)
-            (user, location, rawLines, lines, key) ->
-                TextComponent.of(DateTimeFormatter.ISO_TIME.format(LocalTime.now())));
+                (user, location, rawLines, lines, key) ->
+                        TextComponent.of(DateTimeFormatter.ISO_TIME.format(LocalTime.now())));
         registerPlaceholder("location", (SimpleSignPlaceHolder)
-            (user, loc, rawLines, lines, key) ->
-                TextComponent.of("X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ()));
+                (user, loc, rawLines, lines, key) ->
+                        TextComponent.of("X: " + loc.getX() + " Y: " + loc.getY() + " Z: " + loc.getZ()));
         registerPlaceholder("greeting", (FullSignPlaceHolder)
-            (user, loc, rawLines, lines, key) -> new Component[]{
-                TextComponent.of("Hey there"),
-                user.getDisplayName(),
-                TextComponent.of(""),
-                TextComponent.of("")
-            });
+                (user, loc, rawLines, lines, key) -> new Component[]{
+                        TextComponent.of("Hey there"),
+                        user.getDisplayName(),
+                        TextComponent.of(""),
+                        TextComponent.of("")
+                });
         registerPlaceholder("top", (FullSignPlaceHolder) (user, loc, rawLines, lines, key) -> {
             Optional<Trackable> type = StatsHandler.fromName(rawLines[1]);
             if (!type.isPresent()) {
@@ -100,29 +100,29 @@ public class SignPlaceholders implements Listener {
             List<Pair<Component, Double>> list = statsHandler.getTopWithName(type.get(), Math.max(index, 5));
             if (list.size() < index + 1) {
                 return new Component[]{
-                    Lang.trans(type.get().getDisplayName(), user.getLocale()),
-                    TextComponent.of("#" + (index + 1)),
-                    TextComponent.of(""),
-                    TextComponent.of("you?")
+                        Lang.trans(type.get().getDisplayName(), user.getLocale()),
+                        TextComponent.of("#" + (index + 1)),
+                        TextComponent.of(""),
+                        TextComponent.of("you?")
                 };
             }
 
             Pair<Component, Double> max = list.get(index);
             return new Component[]{
-                Lang.trans(type.get().getDisplayName(), user.getLocale()),
-                TextComponent.of("#" + (index + 1)),
-                TextComponent.of(type.get().formatShort(max.getSecond())),
-                max.getFirst()
+                    Lang.trans(type.get().getDisplayName(), user.getLocale()),
+                    TextComponent.of("#" + (index + 1)),
+                    TextComponent.of(type.get().formatShort(max.getSecond())),
+                    max.getFirst()
             };
         });
     }
 
     private Component[] getErrorSign(int id) {
         return new Component[]{
-            TextComponent.of("Error#" + id),
-            TextComponent.of("Error#" + id),
-            TextComponent.of("Error#" + id),
-            TextComponent.of("Error#" + id)
+                TextComponent.of("Error#" + id),
+                TextComponent.of("Error#" + id),
+                TextComponent.of("Error#" + id),
+                TextComponent.of("Error#" + id)
         };
     }
 
@@ -151,11 +151,11 @@ public class SignPlaceholders implements Listener {
 
         // search for already loaded signs
         Bukkit.getWorlds().stream()
-            .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
-            .flatMap(s -> Arrays.stream(s.getTileEntities()))
-            .filter(s -> s instanceof Sign)
-            .map(s -> (Sign) s)
-            .forEach(s -> lastSeenSigns.put(s.getLocation(), s));
+                .flatMap(w -> Arrays.stream(w.getLoadedChunks()))
+                .flatMap(s -> Arrays.stream(s.getTileEntities()))
+                .filter(s -> s instanceof Sign)
+                .map(s -> (Sign) s)
+                .forEach(s -> lastSeenSigns.put(s.getLocation(), s));
 
         // modify update packets
         protocolManager.addPacketListener(new PacketAdapter(voxelGamesLib, PacketType.Play.Server.TILE_ENTITY_DATA) {
@@ -286,15 +286,15 @@ public class SignPlaceholders implements Listener {
     @EventHandler
     public void chunkLoad(@Nonnull ChunkLoadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-            .filter(blockState -> blockState instanceof Sign)
-            .map(blockState -> (Sign) blockState)
-            .forEach(sign -> lastSeenSigns.put(sign.getLocation(), sign));
+                .filter(blockState -> blockState instanceof Sign)
+                .map(blockState -> (Sign) blockState)
+                .forEach(sign -> lastSeenSigns.put(sign.getLocation(), sign));
     }
 
     @EventHandler
     public void chunkUnload(@Nonnull ChunkUnloadEvent event) {
         Arrays.stream(event.getChunk().getTileEntities())
-            .filter(blockState -> blockState instanceof Sign)
-            .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));
+                .filter(blockState -> blockState instanceof Sign)
+                .forEach(sign -> lastSeenSigns.remove(sign.getLocation()));
     }
 }

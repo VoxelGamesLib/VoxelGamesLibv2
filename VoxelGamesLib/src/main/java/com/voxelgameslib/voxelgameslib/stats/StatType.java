@@ -1,7 +1,5 @@
 package com.voxelgameslib.voxelgameslib.stats;
 
-import net.kyori.text.TextComponent;
-
 import java.util.UUID;
 
 import com.voxelgameslib.voxelgameslib.lang.Lang;

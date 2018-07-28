@@ -97,13 +97,14 @@ public class WorldCreator extends BaseCommand {
             return;
         }
 
+        gameHandler.getGames(sender.getUuid(), true).forEach(game -> game.leave(sender, false));
+
         this.worldName = worldName;
 
         worldHandler.loadLocalWorld(worldName);
         Location spawnLoc = Bukkit.getWorld(worldName).getSpawnLocation();
         Vector3D spawn = new Vector3D(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ());
         sender.getPlayer().teleport(spawnLoc);
-
 
         game = gameHandler.startGame(EditModeGame.GAMEMODE);
         game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(spawn);
@@ -217,7 +218,7 @@ public class WorldCreator extends BaseCommand {
             sender.getPlayer().performCommand("editmode on");
         } else if (onOff.equalsIgnoreCase("off")) {
             sender.getPlayer().performCommand("editmode off");
-            MapInfo info = new MapInfo(displayName, author, gameModes);
+            MapInfo info = new MapInfo(displayName, worldName, author, gameModes);
             map = new Map(info, worldName, center, radius);
             map.load(sender.getUuid(), worldName);
             map.printSummary(sender);

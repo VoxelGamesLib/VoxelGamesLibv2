@@ -3,10 +3,6 @@ package com.voxelgameslib.voxelgameslib.texture;
 import com.google.gson.Gson;
 import com.google.inject.name.Named;
 
-import com.destroystokyo.paper.event.profile.FillProfileEvent;
-import com.destroystokyo.paper.event.profile.LookupProfileEvent;
-import com.destroystokyo.paper.event.profile.PreFillProfileEvent;
-import com.destroystokyo.paper.event.profile.PreLookupProfileEvent;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 
@@ -41,7 +37,6 @@ import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

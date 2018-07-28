@@ -62,7 +62,7 @@ public class ModuleHandler implements Handler {
                     continue;
                 }
                 log.info("Loading module " + info.name() + " v" + info.version() + " by " + Arrays
-                    .toString(info.authors()));
+                        .toString(info.authors()));
                 if (Module.class.isAssignableFrom(clazz)) {
                     //noinspection SuspiciousMethodCalls
                     Module module = offeredModules.get(clazz);
@@ -93,7 +93,7 @@ public class ModuleHandler implements Handler {
     }
 
     public List<ClassLoader> getModuleClassLoaders() {
-        if(offeredModules.size() != 0){
+        if (offeredModules.size() != 0) {
             // we haven't enabled the module handler yet, grab raw modules
             return offeredModules.keySet().stream().map(Class::getClassLoader).collect(Collectors.toList());
         }
