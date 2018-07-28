@@ -1,5 +1,5 @@
 name: VoxelGamesLib
-version: @version@
+version: ${version.number}
 main: com.voxelgameslib.voxelgameslib.VoxelGamesLib
 authors: [VoxelGamesLib]
 depend: [VoxelGamesLib-Dependencies]

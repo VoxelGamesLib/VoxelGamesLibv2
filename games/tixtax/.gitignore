@@ -13,6 +13,3 @@ target/
 
 # these are generated and are unneccesarry
 package-info.java
-
-# Test server
-/testserver/

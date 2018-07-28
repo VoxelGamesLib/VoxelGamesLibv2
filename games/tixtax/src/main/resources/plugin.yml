@@ -1,0 +1,5 @@
+name: Skeleton
+version: ${version.number}
+main: me.minidigger.voxelgameslib.skeletonkt.SkeletonKtPlugin
+authors: [MiniDigger]
+depend: [VoxelGamesLib]

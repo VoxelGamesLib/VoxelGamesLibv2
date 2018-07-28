@@ -1,0 +1,5 @@
+name: SurvivalGames
+version: ${version.number}
+main: com.voxelgameslib.survivalgames.SurvivalGamesPlugin
+authors: [MiniDigger]
+depend: [VoxelGamesLib]
