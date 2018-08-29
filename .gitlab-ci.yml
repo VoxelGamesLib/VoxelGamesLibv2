@@ -1,0 +1,44 @@
+variables:
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+cache:
+  paths:
+  - .m2/repository
+
+image: maven:3-jdk-8
+
+validate:
+  stage: build
+  script:
+  - 'mvn $MAVEN_CLI_OPTS test-compile'
+
+verify:
+  stage: test
+  script:
+  - 'mvn $MAVEN_CLI_OPTS verify site site:stage'
+  except:
+  - master
+
+deploy:
+  stage: test
+  script:
+  - 'mvn $MAVEN_CLI_OPTS deploy site site:stage'
+  only:
+  - master
+  artifacts:
+    paths:
+    - target/staging
+
+pages:
+  image: busybox:latest
+  stage: deploy
+  script:
+  - mv target/staging public
+  dependencies:
+  - deploy:jdk8
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
