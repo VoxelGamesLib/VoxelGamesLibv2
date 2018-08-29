@@ -1,6 +1,6 @@
 # VoxelGamesLib v2
 
-[![Build Status](https://travis-ci.org/VoxelGamesLib/VoxelGamesLibv2.svg?branch=master)](https://travis-ci.org/VoxelGamesLib/VoxelGamesLibv2)
+[![pipeline status](https://gitlab.com/VoxelGamesLib/VoxelGamesLibv2/badges/master/pipeline.svg)](https://gitlab.com/VoxelGamesLib/VoxelGamesLibv2/commits/master)
 [![codebeat badge](https://codebeat.co/badges/fca40169-ef87-4f2a-af71-5524970eb058)](https://codebeat.co/projects/github-com-voxelgameslib-voxelgameslibv2-master)
 [![license](https://img.shields.io/github/license/VoxelGamesLib/VoxelGamesLibv2.svg)](LICENSE)
 
