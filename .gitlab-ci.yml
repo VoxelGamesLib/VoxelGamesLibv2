@@ -36,7 +36,7 @@ pages:
   script:
   - mv target/staging public
   dependencies:
-  - deploy:jdk8
+  - deploy
   artifacts:
     paths:
     - public
