@@ -16,3 +16,5 @@ package-info.java
 
 # Test server
 /testserver/
+
+/tools/dependencies/dependency-reduced-pom.xml

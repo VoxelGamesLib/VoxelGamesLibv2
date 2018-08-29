@@ -83,7 +83,6 @@
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
-                        <release>8</release>
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
                         <compilerArgs>
