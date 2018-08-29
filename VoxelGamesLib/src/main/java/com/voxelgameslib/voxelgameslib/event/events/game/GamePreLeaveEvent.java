@@ -8,7 +8,8 @@ import com.voxelgameslib.voxelgameslib.user.User;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a user leaves a game. Called before he actually left the game to give features the possibility to do cleanup.
+ * Called when a user leaves a game. Called before he actually left the game to give features the possibility to do
+ * cleanup.
  */
 public class GamePreLeaveEvent extends GameEvent {
 

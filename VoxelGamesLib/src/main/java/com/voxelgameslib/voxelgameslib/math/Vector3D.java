@@ -272,8 +272,8 @@ public class Vector3D implements Cloneable {
     }
 
     /**
-     * Converts this vector into a two dimensional vector using this vector's {@link Vector3D#x} and
-     * {@link Vector3D#y} values.
+     * Converts this vector into a two dimensional vector using this vector's {@link Vector3D#x} and {@link Vector3D#y}
+     * values.
      *
      * @return This vector converted to a 2D one.
      */
