@@ -58,7 +58,7 @@ public class ErrorHandler implements Handler {
 
     @Override
     public void enable() {
-        if (enableBugsnag) {
+        if (false || enableBugsnag) { //TODO reenable bugsnag or replace with sentry
             bugsnag = new Bugsnag("243a3b372720a3695802208b2c46283a", false);
             //TODO configure bugsnag release stage
             bugsnag.setReleaseStage("development");
