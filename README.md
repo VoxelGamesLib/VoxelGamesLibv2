@@ -17,33 +17,37 @@ Javadocs can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL
 
 # Building
 
-VoxelGamesLib uses [Gradle](https://gradle.org/) as our build system. To compile:
+VoxelGamesLib uses [Maven](https://maven.apache.org/) as our build system. To compile:
 
-* Install Git and Gradle
+* Install Git and Maven
 * Clone the repository
 * Run `git submodule update --init --recursive` to clone all submodule if you want to
-* Run `gradle clean build`
+* Run `mvn`
 
 # Chat
 
-You can find the active contributors on IRC. irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc))  
-Opon popular demand, I also setup a discord ([invite link](https://s.minidigger.me/discord))
+You can find the active contributors on IRC or [Discord](https://s.minidigger.me/discord).
+IRC: irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc)).
 
-# Repo
+# Repository
 
-I host a maven repo on github, because why not. Details below.  
+The repository is located at `https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo`
+
+Gradle:
 URL:
 ```
-        maven { url "https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo" }
-```
-Artifact:
-```
-        compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '2.0-SNAPSHOT'
+repositories {
+    maven { url 'https://voxelgameslib.github.io/VoxelGamesLibv2/mvn-repo' }
+}
+
+dependencies {
+    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '2.0-SNAPSHOT'
+}
 ```
 
 # Contributing
 
-The main point of the repository is to encourage developers to participate in the development of VoxelGamesLib. All development happens in the open, here on GitHub. We are grateful to all contributors for new features, bug fixes and other improvements.
+We welcome and encourage contributions to VGL. All development happens in the open, here on GitHub. Thanks to all our contributors for new features, bug fixes and other improvements.
 
 For contributing information, see: [Contributing.md](CONTRIBUTING.md)
 
