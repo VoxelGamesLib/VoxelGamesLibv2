@@ -16,22 +16,4 @@ public class CleanRoomChunkGenerator extends ChunkGenerator {
     public ChunkData generateChunkData(@Nonnull World world, @Nonnull Random random, int x, int z, @Nonnull BiomeGrid biome) {
         return createChunkData(world);
     }
-
-    @Nonnull
-    @Override
-    public byte[] generate(@Nonnull World world, @Nonnull Random random, int x, int z) {
-        return new byte[32768];
-    }
-
-    @Nonnull
-    @Override
-    public byte[][] generateBlockSections(@Nonnull World world, @Nonnull Random random, int x, int z, @Nonnull BiomeGrid biomes) {
-        return new byte[world.getMaxHeight() / 16][];
-    }
-
-    @Nonnull
-    @Override
-    public short[][] generateExtBlockSections(@Nonnull World world, @Nonnull Random random, int x, int z, @Nonnull BiomeGrid biomes) {
-        return new short[world.getMaxHeight() / 16][];
-    }
 }

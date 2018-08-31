@@ -89,7 +89,7 @@ public class EditMode extends BaseCommand {
     @Syntax("<name> - the name of the skull")
     public void skull(@Nonnull User sender, @Nonnull String name, @co.aikar.commands.annotation.Optional @Default(value = "true") boolean usePrefix) {
         if (editMode.contains(sender.getUuid())) {
-            ItemStack skull = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(name)
+            ItemStack skull = new ItemBuilder(Material.PLAYER_HEAD).name(name)
                     .meta((itemMeta -> {
                         SkullMeta skullMeta = (SkullMeta) itemMeta;
                         if (usePrefix) {
@@ -141,7 +141,7 @@ public class EditMode extends BaseCommand {
             InventoryMenuBuilder builder = new InventoryMenuBuilder().withSize(9).withTitle(Lang.legacy(LangKey.INV_MARKER));
             for (int i = 0; i < mapHandler.getMarkerDefinitions().size(); i++) {
                 MarkerDefinition markerDefinition = mapHandler.getMarkerDefinitions().get(i);
-                ItemStack is = new ItemBuilder(Material.SKULL_ITEM).durability(3).name(markerDefinition.getPrefix())
+                ItemStack is = new ItemBuilder(Material.PLAYER_HEAD).name(markerDefinition.getPrefix())
                         .meta(itemMeta -> {
                             char prefix = markerDefinition.getPrefix().toUpperCase().charAt(0);
                             Skin skin = textureHandler.getSkin(prefix + "").orElseThrow(() -> new VoxelGameLibException("Unknown skull " + prefix));

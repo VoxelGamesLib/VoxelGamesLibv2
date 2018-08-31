@@ -71,11 +71,6 @@ public abstract class LoggedScheduler implements BukkitScheduler {
     }
 
     @Override
-    public void cancelAllTasks() {
-        delegate.cancelAllTasks();
-    }
-
-    @Override
     public void cancelTask(int taskId) {
         delegate.cancelTask(taskId);
     }

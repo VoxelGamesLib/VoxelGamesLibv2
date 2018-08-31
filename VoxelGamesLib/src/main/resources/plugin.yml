@@ -4,3 +4,4 @@ main: com.voxelgameslib.voxelgameslib.VoxelGamesLib
 authors: [VoxelGamesLib]
 depend: [VoxelGamesLib-Dependencies]
 website: https://github.com/VoxelGamesLib/VoxelGamesLibv2
+api-version: 1.13

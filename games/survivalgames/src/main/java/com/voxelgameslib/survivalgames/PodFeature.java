@@ -45,7 +45,7 @@ public class PodFeature extends AbstractFeature {
     private void powerRelative(List<Location> locations, int rel) {
         locations.forEach(loc -> {
             Block block = loc.getBlock().getRelative(BlockFace.DOWN, rel);
-            if (block.getType() != Material.PISTON_STICKY_BASE) {
+            if (block.getType() != Material.STICKY_PISTON) {
                 log.warning("Invalid block at " + block.getLocation().toVector().toString() + ": Expected a PistonBase, got " + block.getType());
                 return;
             }

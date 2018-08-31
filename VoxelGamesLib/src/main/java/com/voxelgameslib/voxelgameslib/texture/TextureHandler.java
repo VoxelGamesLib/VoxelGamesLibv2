@@ -234,7 +234,7 @@ public class TextureHandler implements Handler, Listener {
 
     @Nullable
     public ItemStack getSkull(@Nonnull Skin skin) {
-        return new ItemBuilder(Material.SKULL_ITEM).durability(3).name(skin.name).meta((itemMeta -> ((SkullMeta) itemMeta).setPlayerProfile(getPlayerProfile(skin)))).build();
+        return new ItemBuilder(Material.PLAYER_HEAD).name(skin.name).meta((itemMeta -> ((SkullMeta) itemMeta).setPlayerProfile(getPlayerProfile(skin)))).build();
     }
 
     public PlayerProfile getErrorProfile() {

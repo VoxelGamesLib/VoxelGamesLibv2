@@ -10,6 +10,7 @@ import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.Action;
@@ -24,7 +25,9 @@ public class JumpPadFeature extends AbstractFeature {
     @GameEvent
     public void onStep(@Nonnull PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL) {
-            if (event.getClickedBlock().getType() != Material.WOOD_PLATE && event.getClickedBlock().getType() != Material.STONE_PLATE) {
+
+            if (!Tag.WOODEN_PRESSURE_PLATES.isTagged(event.getClickedBlock().getType()) &&
+                    event.getClickedBlock().getType() != Material.STONE_PRESSURE_PLATE) {
                 return;
             }
             if (event.isCancelled()) {
@@ -44,7 +47,7 @@ public class JumpPadFeature extends AbstractFeature {
                 }
             }
 
-            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, 10.0F, 1.0F);
+            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 10.0F, 1.0F);
             event.getPlayer().playEffect(event.getPlayer().getLocation(), Effect.SMOKE, 10);
             Vector v = event.getPlayer().getLocation().getDirection().multiply(strength / 2).setY(up / 2);
             event.getPlayer().setVelocity(v);

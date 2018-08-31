@@ -49,9 +49,11 @@ public class SurvivalGamesPhase extends TimedPhase {
         addFeature(spectatorFeature);
 
         NoBlockBreakFeature noBlockBreakFeature = getGame().createFeature(NoBlockBreakFeature.class, this);
-        noBlockBreakFeature.setWhitelist(new Material[]{Material.LEAVES, Material.LEAVES_2, Material.YELLOW_FLOWER,
-                Material.RED_ROSE, Material.VINE, Material.BROWN_MUSHROOM, Material.HUGE_MUSHROOM_1, Material.HUGE_MUSHROOM_2,
-                Material.RED_MUSHROOM, Material.MELON_BLOCK, Material.WHEAT, Material.PUMPKIN});
+        noBlockBreakFeature.setWhitelist(new Material[]{Material.ACACIA_LEAVES, Material.BIRCH_LEAVES, Material.DARK_OAK_LEAVES,
+                Material.JUNGLE_LEAVES, Material.OAK_LEAVES, Material.SPRUCE_LEAVES, Material.SUNFLOWER, Material.ROSE_BUSH,
+                Material.ROSE_RED, Material.DANDELION_YELLOW, Material.DANDELION, Material.VINE, Material.BROWN_MUSHROOM,
+                Material.BROWN_MUSHROOM_BLOCK, Material.RED_MUSHROOM_BLOCK, Material.RED_MUSHROOM, Material.MELON, Material.MELON_STEM,
+                Material.PUMPKIN_STEM, Material.WHEAT, Material.PUMPKIN});
         addFeature(noBlockBreakFeature);
     }
 }

@@ -3,3 +3,4 @@ version: ${version.number}
 main: com.voxelgameslib.survivalgames.SurvivalGamesPlugin
 authors: [MiniDigger]
 depend: [VoxelGamesLib]
+api-version: 1.13

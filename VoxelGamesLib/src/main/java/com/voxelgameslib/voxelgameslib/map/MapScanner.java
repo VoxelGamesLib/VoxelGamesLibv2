@@ -17,7 +17,6 @@ import com.voxelgameslib.voxelgameslib.utils.DirectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -99,16 +98,14 @@ public class MapScanner {
             for (int z = minZ; z <= maxZ; z += 16) {
                 Chunk chunk = world.getChunkAt(x >> 4, z >> 4);
                 for (BlockState te : chunk.getTileEntities()) {
-                    if (te.getType() == Material.SKULL) {
+                    if (te.getType() == Material.PLAYER_HEAD) {
                         Skull skull = (Skull) te;
-                        if (skull.getSkullType() == SkullType.PLAYER) {
-                            String markerData = getMarkerData(skull);
-                            if (markerData == null) continue;
-                            MarkerDefinition markerDefinition = mapHandler.createMarkerDefinition(markerData);
-                            markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
-                                    DirectionUtil.directionToYaw(skull.getRotation()),
-                                    markerData, markerDefinition));
-                        }
+                        String markerData = getMarkerData(skull);
+                        if (markerData == null) continue;
+                        MarkerDefinition markerDefinition = mapHandler.createMarkerDefinition(markerData);
+                        markers.add(new Marker(new Vector3D(skull.getX(), skull.getY(), skull.getZ()),
+                                DirectionUtil.directionToYaw(skull.getRotation()),
+                                markerData, markerDefinition));
                     } else if (te.getType() == Material.CHEST) {
                         Chest chest = (Chest) te;
                         String name = chest.getBlockInventory().getName();

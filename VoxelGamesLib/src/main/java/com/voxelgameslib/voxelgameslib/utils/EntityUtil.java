@@ -106,6 +106,15 @@ public class EntityUtil {
             .put(EntityType.PARROT, Type.FRIENDLY)
             .put(EntityType.LINGERING_POTION, Type.UTILITY)
             .put(EntityType.TIPPED_ARROW, Type.PROJECTILE)
+            .put(EntityType.TURTLE, Type.PASSIVE)
+            .put(EntityType.PHANTOM, Type.ANGRY)
+            .put(EntityType.DOLPHIN, Type.PASSIVE)
+            .put(EntityType.DROWNED, Type.ANGRY)
+            .put(EntityType.COD, Type.PASSIVE)
+            .put(EntityType.SALMON, Type.PASSIVE)
+            .put(EntityType.PUFFERFISH, Type.PASSIVE)
+            .put(EntityType.TROPICAL_FISH, Type.PASSIVE)
+            .put(EntityType.TRIDENT, Type.PROJECTILE)
             .build();
     private static final Multimap<Type, EntityType> TYPE_TO_ENTITY_TYPES = HashMultimap.create();
 

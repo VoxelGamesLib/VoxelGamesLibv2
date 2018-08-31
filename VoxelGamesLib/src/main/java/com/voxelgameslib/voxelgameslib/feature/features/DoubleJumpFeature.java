@@ -57,7 +57,7 @@ public class DoubleJumpFeature extends AbstractFeature {
                 player.setAllowFlight(false);
                 player.setFlying(false);
                 player.setVelocity(player.getLocation().getDirection().multiply(1.6).setY(1));
-                player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 4, 1);
+                player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 4, 1);
             }
         }
     }
