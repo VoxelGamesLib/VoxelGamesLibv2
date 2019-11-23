@@ -24,7 +24,7 @@ public abstract class AbstractFeatureCommand<T extends Feature> extends BaseComm
     }
 
     @Nonnull
-    public Map<String, BukkitRootCommand> getRegisteredCommands() {
+    public Map<String, BukkitRootCommand> getRegisteredRootCommands() {
         try {
             //noinspection unchecked
             return (Map<String, BukkitRootCommand>) registeredCommand.get(this);

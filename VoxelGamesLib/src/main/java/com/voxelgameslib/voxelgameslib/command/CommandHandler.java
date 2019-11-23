@@ -38,11 +38,11 @@ public class CommandHandler implements Handler, Listener {
 
     public void register(@Nonnull AbstractFeatureCommand<?> cmd, @Nonnull Phase phase) {
         commandManager.registerCommand(cmd);
-        cmd.getRegisteredCommands().keySet().forEach(key -> commands.put(key, phase));
+        cmd.getRegisteredRootCommands().keySet().forEach(key -> commands.put(key, phase));
     }
 
     public void unregister(@Nonnull AbstractFeatureCommand<?> cmd, @Nonnull Phase phase) {
-        cmd.getRegisteredCommands().keySet().forEach(key -> {
+        cmd.getRegisteredRootCommands().keySet().forEach(key -> {
             commands.remove(key, phase);
             if (!commands.containsKey(key)) {
                 commandManager.unregisterCommand(cmd);

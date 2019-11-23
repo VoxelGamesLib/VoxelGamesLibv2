@@ -41,18 +41,18 @@
     <distributionManagement>
         <repository>
             <id>minidigger</id>
-            <url>https://repo.minidigger.me/repository/maven-releases/</url>
+            <url>https://repo.minidigger.me/repository/voxelgameslib/</url>
         </repository>
         <snapshotRepository>
             <id>minidigger</id>
-            <url>https://repo.minidigger.me/repository/maven-snapshots/</url>
+            <url>https://repo.minidigger.me/repository/voxelgameslib/</url>
         </snapshotRepository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>voxelgameslib</id>
-            <url>https://repo.minidigger.me/repository/voxelgameslib/</url>
+            <url>https://repo.minidigger.me/repository/maven-public/</url>
         </repository>
     </repositories>
 
