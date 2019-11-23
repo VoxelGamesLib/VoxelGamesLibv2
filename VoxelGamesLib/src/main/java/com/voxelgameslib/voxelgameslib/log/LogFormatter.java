@@ -111,6 +111,12 @@ public class LogFormatter {
     }
 
     private String formatMessage(String message) {
+        // strip trailing line-endings to prevent empty lines
+        if (message.endsWith("\r\n")) {
+            message = message.substring(0, message.length() - 4);
+        } else if (message.endsWith("\n")) {
+            message = message.substring(0, message.length() - 2);
+        }
         if (message.startsWith("Hibernate:")) {
             return message.replace("Hibernate: ", "");
         }
