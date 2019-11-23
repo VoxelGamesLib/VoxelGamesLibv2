@@ -98,6 +98,8 @@ public final class VoxelGamesLib extends JavaPlugin {
     private static final Logger log = Logger.getLogger(VoxelGamesLib.class.getName());
     private static TaskChainFactory taskChainFactory;
 
+    private boolean enabledCleanly = false;
+
     private TimingManager timingManager;
     private BukkitCommandManager commandManager;
     private Injector injector;
@@ -256,10 +258,16 @@ public final class VoxelGamesLib extends JavaPlugin {
         testStuff.test();
 
         startupHandler.unregisterService("onEnable");
+
+        enabledCleanly = true;
     }
 
     @Override
     public void onDisable() {
+        if (!enabledCleanly) {
+            return;
+        }
+
         try {
             // chat menu api
             ChatMenuAPI.disable();
