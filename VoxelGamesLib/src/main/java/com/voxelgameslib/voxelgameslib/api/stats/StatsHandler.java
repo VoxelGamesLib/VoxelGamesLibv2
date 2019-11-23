@@ -23,11 +23,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
 import com.voxelgameslib.voxelgameslib.internal.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
-import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 import com.voxelgameslib.voxelgameslib.internal.persistence.PersistenceHandler;
-import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 import com.voxelgameslib.voxelgameslib.util.Pair;
 
 import org.bukkit.Bukkit;

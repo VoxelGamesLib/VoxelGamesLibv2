@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 

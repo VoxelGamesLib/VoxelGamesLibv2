@@ -9,8 +9,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.components.placeholders.SkullPlaceHolders;
 import com.voxelgameslib.voxelgameslib.api.exception.MapException;
+import com.voxelgameslib.voxelgameslib.components.placeholders.SkullPlaceHolders;
 import com.voxelgameslib.voxelgameslib.internal.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.util.utils.DirectionUtil;
 

@@ -24,11 +24,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.internal.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.api.stats.StatsHandler;
 import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
-import com.voxelgameslib.voxelgameslib.util.utils.NBTUtil;
+import com.voxelgameslib.voxelgameslib.internal.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.util.Pair;
+import com.voxelgameslib.voxelgameslib.util.utils.NBTUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

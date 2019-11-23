@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.api.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 

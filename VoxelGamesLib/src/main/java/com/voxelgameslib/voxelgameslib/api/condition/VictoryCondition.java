@@ -3,9 +3,9 @@ package com.voxelgameslib.voxelgameslib.api.condition;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
 import com.voxelgameslib.voxelgameslib.api.phase.Phase;
+import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.components.user.User;
 
 public interface VictoryCondition {

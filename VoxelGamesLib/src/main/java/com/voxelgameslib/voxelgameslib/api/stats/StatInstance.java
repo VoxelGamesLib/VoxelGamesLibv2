@@ -12,8 +12,8 @@ import javax.persistence.Transient;
 
 import com.voxelgameslib.voxelgameslib.api.event.events.player.PlayerDecrementStatEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.player.PlayerIncrementStatEvent;
-import com.voxelgameslib.voxelgameslib.internal.persistence.converter.TrackableConverter;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.persistence.converter.TrackableConverter;
 
 @Entity
 @Table(name = "stat")

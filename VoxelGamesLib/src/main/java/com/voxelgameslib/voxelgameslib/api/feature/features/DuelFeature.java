@@ -5,8 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 
 /**
  * Feature that handles dueling.

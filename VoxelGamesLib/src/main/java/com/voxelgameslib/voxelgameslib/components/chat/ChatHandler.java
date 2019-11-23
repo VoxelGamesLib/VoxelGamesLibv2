@@ -9,8 +9,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 /**
  * Handles everything related to chat

@@ -14,10 +14,10 @@ import javax.inject.Singleton;
 import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.api.game.GameMode;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;

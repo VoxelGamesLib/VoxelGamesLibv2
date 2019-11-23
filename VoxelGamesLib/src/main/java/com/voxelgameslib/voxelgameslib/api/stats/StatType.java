@@ -2,11 +2,11 @@ package com.voxelgameslib.voxelgameslib.api.stats;
 
 import java.util.UUID;
 
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
 import com.voxelgameslib.voxelgameslib.internal.lang.Translatable;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 public enum StatType implements Trackable {
 

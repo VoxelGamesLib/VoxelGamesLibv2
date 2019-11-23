@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.api.phase.Phase;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

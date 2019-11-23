@@ -21,15 +21,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.internal.config.ConfigHandler;
-import com.voxelgameslib.voxelgameslib.components.editmode.EditModeGame;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GameStartEvent;
 import com.voxelgameslib.voxelgameslib.api.exception.GameModeNotAvailableException;
 import com.voxelgameslib.voxelgameslib.api.exception.GameStartException;
+import com.voxelgameslib.voxelgameslib.api.tick.TickHandler;
+import com.voxelgameslib.voxelgameslib.components.editmode.EditModeGame;
+import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.internal.persistence.PersistenceHandler;
-import com.voxelgameslib.voxelgameslib.api.tick.TickHandler;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.Bukkit;
 

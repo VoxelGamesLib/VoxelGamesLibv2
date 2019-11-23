@@ -16,15 +16,15 @@ import javax.inject.Inject;
 import javax.persistence.Transient;
 
 import com.voxelgameslib.voxelgameslib.api.game.GameMode;
+import com.voxelgameslib.voxelgameslib.api.role.Permission;
+import com.voxelgameslib.voxelgameslib.api.role.Role;
 import com.voxelgameslib.voxelgameslib.components.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.components.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.internal.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.components.elo.RatingWrapper;
+import com.voxelgameslib.voxelgameslib.internal.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
 import com.voxelgameslib.voxelgameslib.internal.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;
-import com.voxelgameslib.voxelgameslib.api.role.Permission;
-import com.voxelgameslib.voxelgameslib.api.role.Role;
 import com.voxelgameslib.voxelgameslib.util.utils.ChatUtil;
 
 import org.bukkit.entity.Player;

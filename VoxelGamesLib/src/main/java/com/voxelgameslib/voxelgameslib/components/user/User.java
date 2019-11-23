@@ -8,12 +8,12 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.api.game.GameMode;
+import com.voxelgameslib.voxelgameslib.api.role.Permission;
+import com.voxelgameslib.voxelgameslib.api.role.Role;
 import com.voxelgameslib.voxelgameslib.components.chat.ChatChannel;
 import com.voxelgameslib.voxelgameslib.components.elo.RatingWrapper;
 import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
 import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;
-import com.voxelgameslib.voxelgameslib.api.role.Permission;
-import com.voxelgameslib.voxelgameslib.api.role.Role;
 
 import org.bukkit.entity.Player;
 

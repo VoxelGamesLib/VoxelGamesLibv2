@@ -27,15 +27,15 @@ import javax.inject.Singleton;
 import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
 
+import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.internal.config.ConfigHandler;
 import com.voxelgameslib.voxelgameslib.internal.config.GlobalConfig;
 import com.voxelgameslib.voxelgameslib.internal.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.internal.persistence.converter.VGLConverter;
+import com.voxelgameslib.voxelgameslib.internal.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.internal.startup.StartupHandler;
 import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
-import com.voxelgameslib.voxelgameslib.internal.persistence.model.GameData;
-import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.util.Pair;
 
 import io.github.classgraph.ClassGraph;

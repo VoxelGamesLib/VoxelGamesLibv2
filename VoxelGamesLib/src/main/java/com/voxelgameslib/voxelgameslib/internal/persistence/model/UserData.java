@@ -24,14 +24,14 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.voxelgameslib.voxelgameslib.components.elo.RatingWrapper;
-import com.voxelgameslib.voxelgameslib.internal.persistence.converter.ComponentConverter;
-import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
-import com.voxelgameslib.voxelgameslib.internal.persistence.converter.LocaleConverter;
-import com.voxelgameslib.voxelgameslib.internal.persistence.converter.TrackableConverter;
 import com.voxelgameslib.voxelgameslib.api.role.Role;
 import com.voxelgameslib.voxelgameslib.api.stats.StatInstance;
 import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
+import com.voxelgameslib.voxelgameslib.components.elo.RatingWrapper;
+import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
+import com.voxelgameslib.voxelgameslib.internal.persistence.converter.ComponentConverter;
+import com.voxelgameslib.voxelgameslib.internal.persistence.converter.LocaleConverter;
+import com.voxelgameslib.voxelgameslib.internal.persistence.converter.TrackableConverter;
 
 @Entity
 @Table(name = "players")

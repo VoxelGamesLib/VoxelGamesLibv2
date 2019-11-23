@@ -1,8 +1,8 @@
 package com.voxelgameslib.voxelgameslib.api.stats.types;
 
 import com.voxelgameslib.voxelgameslib.api.stats.Stat;
-import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.api.stats.StatType;
+import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
 
 import org.bukkit.Bukkit;
 

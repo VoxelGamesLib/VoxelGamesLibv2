@@ -6,11 +6,11 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.api.exception.GameStartException;
 import com.voxelgameslib.voxelgameslib.api.exception.VoxelGameLibException;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.components.map.Map;
 import com.voxelgameslib.voxelgameslib.components.world.WorldHandler;
 

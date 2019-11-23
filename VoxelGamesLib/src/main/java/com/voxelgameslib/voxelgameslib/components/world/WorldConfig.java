@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.internal.config.Config;
 import com.voxelgameslib.voxelgameslib.components.map.MapInfo;
+import com.voxelgameslib.voxelgameslib.internal.config.Config;
 
 /**
  * The config that knows about all world/maps that are playable

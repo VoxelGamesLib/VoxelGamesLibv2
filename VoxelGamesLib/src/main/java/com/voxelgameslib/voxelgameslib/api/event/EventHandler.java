@@ -20,9 +20,9 @@ import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.api.game.Game;
-import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;

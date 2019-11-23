@@ -7,10 +7,10 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.api.exception.NoSuchFeatureException;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.tick.Tickable;
 
 /**

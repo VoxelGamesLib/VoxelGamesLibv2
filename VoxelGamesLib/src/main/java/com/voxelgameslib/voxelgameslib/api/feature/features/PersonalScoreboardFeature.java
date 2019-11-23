@@ -12,16 +12,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.voxelgameslib.voxelgameslib.components.scoreboard.AbstractScoreboard;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardLine;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.StringScoreboardLine;
 import com.voxelgameslib.voxelgameslib.api.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.AbstractScoreboard;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardLine;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.StringScoreboardLine;
 import com.voxelgameslib.voxelgameslib.components.user.User;
 
 @FeatureInfo(name = "PersonalScoreboard", author = "aphel", version = "1.0",

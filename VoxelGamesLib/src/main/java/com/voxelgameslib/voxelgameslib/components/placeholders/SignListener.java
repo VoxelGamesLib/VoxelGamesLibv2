@@ -5,12 +5,12 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.api.exception.UserException;
-import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
-import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.api.role.Permission;
 import com.voxelgameslib.voxelgameslib.api.role.Role;
 import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 
 import org.bukkit.Material;
 import org.bukkit.block.Sign;

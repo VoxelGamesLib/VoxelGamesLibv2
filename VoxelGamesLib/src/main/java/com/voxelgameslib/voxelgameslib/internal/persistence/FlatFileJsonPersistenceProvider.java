@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;
-import com.voxelgameslib.voxelgameslib.internal.persistence.model.GameData;
 import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
+import com.voxelgameslib.voxelgameslib.internal.persistence.model.GameData;
+import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;
 import com.voxelgameslib.voxelgameslib.util.Pair;
 
 /**

@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.feature.features.DuelFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.features.TeamFeature;
-import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 import jskills.IPlayer;
 import jskills.ITeam;

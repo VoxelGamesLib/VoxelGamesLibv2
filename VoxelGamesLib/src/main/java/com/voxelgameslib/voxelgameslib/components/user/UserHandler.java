@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.voxelgameslib.voxelgameslib.api.exception.UserException;
 import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.components.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.api.exception.UserException;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.internal.persistence.PersistenceHandler;
 import com.voxelgameslib.voxelgameslib.internal.persistence.model.UserData;

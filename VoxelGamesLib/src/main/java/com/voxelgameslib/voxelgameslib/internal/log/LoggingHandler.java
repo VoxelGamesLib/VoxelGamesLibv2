@@ -12,11 +12,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;

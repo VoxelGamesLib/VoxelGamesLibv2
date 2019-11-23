@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.api.exception.VoxelGameLibException;
-import com.voxelgameslib.voxelgameslib.internal.math.Vector3D;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.math.Vector3D;
 
 /**
  * A map. A map is a world that is playable in gamemodes. has all kind of extra informations about a world.

@@ -5,9 +5,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.api.game.GameMode;
-import com.voxelgameslib.voxelgameslib.components.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.api.phase.Phase;
 import com.voxelgameslib.voxelgameslib.api.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.components.map.MarkerDefinition;
 
 /**
  * A {@link Feature} is a piece of logic that is active during a {@link Phase}. It typically listens to certain events

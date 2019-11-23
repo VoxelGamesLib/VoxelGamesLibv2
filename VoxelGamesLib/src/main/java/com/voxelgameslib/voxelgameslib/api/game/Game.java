@@ -9,13 +9,13 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.api.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
-import com.voxelgameslib.voxelgameslib.internal.lang.Translatable;
 import com.voxelgameslib.voxelgameslib.api.phase.Phase;
 import com.voxelgameslib.voxelgameslib.api.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.lang.Translatable;
 
 /**
  * A {@link Game} is the representation of an instance of a {@link GameMode}. Handles everything that is related to that

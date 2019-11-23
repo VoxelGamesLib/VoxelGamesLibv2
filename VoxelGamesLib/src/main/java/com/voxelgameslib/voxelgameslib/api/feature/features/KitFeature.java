@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
+import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.command.commands.KitCommands;
 import com.voxelgameslib.voxelgameslib.components.ability.Ability;
 import com.voxelgameslib.voxelgameslib.components.kits.Kit;
 import com.voxelgameslib.voxelgameslib.components.kits.KitHandler;
-import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;

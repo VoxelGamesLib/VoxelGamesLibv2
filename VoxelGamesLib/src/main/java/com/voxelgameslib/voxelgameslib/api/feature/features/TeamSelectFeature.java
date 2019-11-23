@@ -11,16 +11,16 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
-import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.api.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GamePreLeaveEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureCommandImplementor;
+import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
+import com.voxelgameslib.voxelgameslib.components.team.Team;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.ChatColor;
 

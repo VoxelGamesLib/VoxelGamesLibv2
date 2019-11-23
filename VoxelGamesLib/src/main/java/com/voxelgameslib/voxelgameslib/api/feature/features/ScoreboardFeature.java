@@ -3,12 +3,12 @@ package com.voxelgameslib.voxelgameslib.api.feature.features;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
-import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
 import com.voxelgameslib.voxelgameslib.api.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.ScoreboardHandler;
 
 @FeatureInfo(name = "ScoreboardFeature", author = "MiniDigger", version = "1.0",
         description = "Handles the scoreboard for all other features")

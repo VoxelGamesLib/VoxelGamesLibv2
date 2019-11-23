@@ -16,12 +16,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.api.exception.VoxelGameLibException;
-import com.voxelgameslib.voxelgameslib.internal.texture.TextureHandler;
-import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
-import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
 import com.voxelgameslib.voxelgameslib.components.map.MapHandler;
 import com.voxelgameslib.voxelgameslib.components.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.internal.texture.TextureHandler;
 import com.voxelgameslib.voxelgameslib.util.utils.ItemBuilder;
 
 import org.bukkit.Material;

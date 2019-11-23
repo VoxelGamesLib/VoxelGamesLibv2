@@ -7,9 +7,9 @@ import net.md_5.bungee.api.ChatColor;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;

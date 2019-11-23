@@ -8,10 +8,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
-import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.phase.Phase;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 import org.bukkit.Bukkit;
 

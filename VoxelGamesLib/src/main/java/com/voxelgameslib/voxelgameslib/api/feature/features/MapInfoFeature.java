@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
 import com.voxelgameslib.voxelgameslib.components.map.Map;
+import com.voxelgameslib.voxelgameslib.components.scoreboard.Scoreboard;
 
 import org.bukkit.ChatColor;
 

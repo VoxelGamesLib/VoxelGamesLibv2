@@ -19,10 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.voxelgameslib.voxelgameslib.api.game.Game;
-import com.voxelgameslib.voxelgameslib.command.CommandHandler;
-import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.api.condition.VictoryCondition;
 import com.voxelgameslib.voxelgameslib.api.condition.conditions.EmptyVictoryCondition;
 import com.voxelgameslib.voxelgameslib.api.event.EventHandler;
@@ -33,9 +29,13 @@ import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureCommandImplementor;
 import com.voxelgameslib.voxelgameslib.api.feature.features.SpectatorFeature;
-import com.voxelgameslib.voxelgameslib.internal.graph.Graph;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
 import com.voxelgameslib.voxelgameslib.api.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.command.CommandHandler;
+import com.voxelgameslib.voxelgameslib.components.ability.Ability;
+import com.voxelgameslib.voxelgameslib.components.team.Team;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.graph.Graph;
 
 import org.bukkit.event.Listener;
 

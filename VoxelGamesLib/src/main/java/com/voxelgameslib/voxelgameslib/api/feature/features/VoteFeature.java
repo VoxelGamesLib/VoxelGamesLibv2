@@ -14,20 +14,20 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.api.event.GameEvent;
 import com.voxelgameslib.voxelgameslib.api.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureCommandImplementor;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
-import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
-import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.api.game.DefaultGameData;
 import com.voxelgameslib.voxelgameslib.components.map.MapInfo;
 import com.voxelgameslib.voxelgameslib.components.user.User;
 import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
-import com.voxelgameslib.voxelgameslib.util.utils.ItemBuilder;
 import com.voxelgameslib.voxelgameslib.components.world.WorldConfig;
+import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.util.utils.ItemBuilder;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

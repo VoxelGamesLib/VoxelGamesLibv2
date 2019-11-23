@@ -15,12 +15,12 @@ import com.voxelgameslib.voxelgameslib.api.event.events.game.GameJoinEvent;
 import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
 import com.voxelgameslib.voxelgameslib.api.feature.Feature;
 import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
-import com.voxelgameslib.voxelgameslib.internal.math.Vector3D;
 import com.voxelgameslib.voxelgameslib.components.map.BasicMarkerDefinition;
 import com.voxelgameslib.voxelgameslib.components.map.Map;
 import com.voxelgameslib.voxelgameslib.components.map.Marker;
 import com.voxelgameslib.voxelgameslib.components.map.MarkerDefinition;
 import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.internal.math.Vector3D;
 
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerRespawnEvent;
