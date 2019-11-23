@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
 import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
+import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 
 @Singleton
 public class MetricHandler implements Handler {
@@ -25,7 +26,7 @@ public class MetricHandler implements Handler {
 
     @Override
     public void enable() {
-        try {
+        try (Timing timing = new Timing("MetricsEnable")) {
             metrics = new Metrics(voxelGamesLib);
             //TODO add custom charts, like user/gamemode, installed gamesmodes, user/lang, installed langs etc
 

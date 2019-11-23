@@ -32,6 +32,7 @@ import com.voxelgameslib.voxelgameslib.internal.error.ErrorHandler;
 import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
 import com.voxelgameslib.voxelgameslib.internal.log.LoggingHandler;
 import com.voxelgameslib.voxelgameslib.internal.texture.PlayerProfileTypeAdapter;
+import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -39,6 +40,7 @@ import org.bukkit.plugin.Plugin;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 
 public final class VoxelGamesLibModule extends AbstractModule {
 
@@ -107,16 +109,21 @@ public final class VoxelGamesLibModule extends AbstractModule {
     }
 
     @Provides
-    public ClassGraph getScanner() {
-        return new ClassGraph().addClassLoader(getClass().getClassLoader());
+    public ScanResult getScanner() {
+        try (Timing timing = new Timing("ClassPathScanning")) {
+            return new ClassGraph().addClassLoader(getClass().getClassLoader()).enableAllInfo().scan();
+        }
     }
 
     @Provides
     @Named("IncludeAddons")
-    public ClassGraph getScannerWithAddons(ModuleHandler moduleHandler) {
-        ClassGraph scanner = getScanner();
-        moduleHandler.getModuleClassLoaders().forEach(scanner::addClassLoader);
-        return scanner;
+    public ScanResult getScannerWithAddons(ModuleHandler moduleHandler) {
+        try (Timing timing = new Timing("ModuleClassPathScanning")) {
+            ClassGraph scanner = new ClassGraph();
+            scanner.addClassLoader(getClass().getClassLoader());
+            moduleHandler.getModuleClassLoaders().forEach(scanner::addClassLoader);
+            return scanner.enableAllInfo().scan();
+        }
     }
 
     @Provides

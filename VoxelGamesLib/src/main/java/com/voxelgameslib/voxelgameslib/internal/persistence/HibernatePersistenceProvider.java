@@ -39,6 +39,7 @@ import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 import com.voxelgameslib.voxelgameslib.util.Pair;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 
 /**
  * A implementation of the persistence provider based on hibernate
@@ -55,7 +56,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private StartupHandler startupHandler;
     @Inject
     @Named("IncludeAddons")
-    private ClassGraph scanner;
+    private ScanResult scanner;
     @Inject
     private ErrorHandler errorHandler;
 
@@ -96,8 +97,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             MetadataSources sources = new MetadataSources(registry);
 
             try (final Timing timing = new Timing("Init converters")) {
-                scanner.enableClassInfo().scan()
-                        .getClassesImplementing(VGLConverter.class.getName()).loadClasses().forEach((annotatedClass) -> {
+                scanner.getClassesImplementing(VGLConverter.class.getName()).loadClasses().forEach((annotatedClass) -> {
                     try {
                         ((VGLConverter<?, ?>) annotatedClass.newInstance()).init();
                     } catch (InstantiationException | IllegalAccessException e) {
@@ -108,8 +108,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             }
 
             try (final Timing timing = new Timing("RegisterDBEntities")) {
-                scanner.enableClassInfo().enableAnnotationInfo().scan()
-                        .getClassesWithAnnotation(Entity.class.getName()).loadClasses().forEach((annotatedClass) -> {
+                scanner.getClassesWithAnnotation(Entity.class.getName()).loadClasses().forEach((annotatedClass) -> {
                     if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
                 });
             }

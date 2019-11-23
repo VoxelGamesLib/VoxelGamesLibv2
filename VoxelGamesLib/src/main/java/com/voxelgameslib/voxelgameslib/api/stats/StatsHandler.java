@@ -33,6 +33,7 @@ import com.voxelgameslib.voxelgameslib.util.Pair;
 import org.bukkit.Bukkit;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 
 @Singleton
 public class StatsHandler implements Handler {
@@ -49,7 +50,7 @@ public class StatsHandler implements Handler {
     private PersistenceHandler persistenceHandler;
     @Inject
     @Named("IncludeAddons")
-    private ClassGraph scanner;
+    private ScanResult scanner;
     @Inject
     private ErrorHandler errorHandler;
 
@@ -64,7 +65,7 @@ public class StatsHandler implements Handler {
 
         try (final Timing timing = new Timing("RegisterStatTypes")) {
             //noinspection unchecked
-            scanner.enableClassInfo().scan().getSubclasses(Stat.class.getName()).loadClasses()
+            scanner.getSubclasses(Stat.class.getName()).loadClasses()
                     .forEach(clazz -> registerStatType((Class<? extends Stat>) clazz));
         }
         log.info("Registered " + statTypes.size() + " StatsTypes");

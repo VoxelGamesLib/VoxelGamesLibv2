@@ -21,6 +21,7 @@ import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 import com.voxelgameslib.voxelgameslib.internal.timings.Timing;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 
 /**
  * Created by Martin on 04.10.2016.
@@ -33,7 +34,7 @@ public class MapHandler implements Handler {
     private GameHandler gameHandler;
     @Inject
     @Named("IncludeAddons")
-    private ClassGraph scanner;
+    private ScanResult scanner;
 
     //TODO implement chests
     @Nonnull
@@ -44,8 +45,7 @@ public class MapHandler implements Handler {
     @Override
     public void enable() {
         try (final Timing timing = new Timing("ScanningFeatures")) {
-            scanner.enableClassInfo().enableAnnotationInfo().scan()
-                    .getClassesWithAnnotation(FeatureInfo.class.getName()).loadClasses().forEach((clazz) -> {
+            scanner.getClassesWithAnnotation(FeatureInfo.class.getName()).loadClasses().forEach((clazz) -> {
                 if (!Feature.class.isAssignableFrom(clazz)) {
                     log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
                     return;
