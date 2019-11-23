@@ -2,11 +2,11 @@ package com.voxelgameslib.survivalgames;
 
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.game.AbstractGame;
-import com.voxelgameslib.voxelgameslib.game.GameDefinition;
-import com.voxelgameslib.voxelgameslib.game.GameInfo;
-import com.voxelgameslib.voxelgameslib.phase.phases.GracePhase;
-import com.voxelgameslib.voxelgameslib.phase.phases.LobbyWithVotePhase;
+import com.voxelgameslib.voxelgameslib.api.game.AbstractGame;
+import com.voxelgameslib.voxelgameslib.api.game.GameDefinition;
+import com.voxelgameslib.voxelgameslib.api.game.GameInfo;
+import com.voxelgameslib.voxelgameslib.api.phase.phases.GracePhase;
+import com.voxelgameslib.voxelgameslib.api.phase.phases.LobbyWithVotePhase;
 
 @GameInfo(name = "SurvivalGames", author = "MiniDigger", version = "v1.0", description = "Hungergames inspired gamemode")
 public class SurvivalGamesGame extends AbstractGame {

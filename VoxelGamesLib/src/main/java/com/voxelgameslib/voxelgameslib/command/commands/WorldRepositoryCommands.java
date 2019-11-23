@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.world.WorldHandler;
+import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.components.world.WorldHandler;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;

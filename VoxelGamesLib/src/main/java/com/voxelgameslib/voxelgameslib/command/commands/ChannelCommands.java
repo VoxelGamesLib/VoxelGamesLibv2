@@ -5,8 +5,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.chat.ChatHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.components.chat.ChatHandler;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.command.CommandSender;
 

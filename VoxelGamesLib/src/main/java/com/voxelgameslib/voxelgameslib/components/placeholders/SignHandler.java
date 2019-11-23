@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 /**
  * Handles placeholder sign and interaction signs

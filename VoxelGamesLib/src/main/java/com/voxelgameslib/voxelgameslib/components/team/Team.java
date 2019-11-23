@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.ChatColor;
 

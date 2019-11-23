@@ -4,12 +4,12 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.lang.LangHandler;
-import com.voxelgameslib.voxelgameslib.lang.LangKey;
-import com.voxelgameslib.voxelgameslib.lang.Locale;
-import com.voxelgameslib.voxelgameslib.persistence.PersistenceHandler;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangHandler;
+import com.voxelgameslib.voxelgameslib.internal.lang.LangKey;
+import com.voxelgameslib.voxelgameslib.internal.lang.Locale;
+import com.voxelgameslib.voxelgameslib.internal.persistence.PersistenceHandler;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;

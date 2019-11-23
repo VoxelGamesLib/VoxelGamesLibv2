@@ -3,8 +3,8 @@ package com.voxelgameslib.voxelgameslib.components.scoreboard;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.utils.RandomUtil;
+import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.util.utils.RandomUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;

@@ -7,10 +7,10 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.voxelgameslib.voxelgameslib.game.Game;
-import com.voxelgameslib.voxelgameslib.game.GameHandler;
-import com.voxelgameslib.voxelgameslib.tick.Tickable;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.api.game.Game;
+import com.voxelgameslib.voxelgameslib.api.game.GameHandler;
+import com.voxelgameslib.voxelgameslib.api.tick.Tickable;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;

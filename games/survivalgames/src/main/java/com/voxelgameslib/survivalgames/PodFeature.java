@@ -8,12 +8,12 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeature;
-import com.voxelgameslib.voxelgameslib.feature.Feature;
-import com.voxelgameslib.voxelgameslib.feature.FeatureInfo;
-import com.voxelgameslib.voxelgameslib.feature.features.MapFeature;
-import com.voxelgameslib.voxelgameslib.map.BasicMarkerDefinition;
-import com.voxelgameslib.voxelgameslib.map.MarkerDefinition;
+import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeature;
+import com.voxelgameslib.voxelgameslib.api.feature.Feature;
+import com.voxelgameslib.voxelgameslib.api.feature.FeatureInfo;
+import com.voxelgameslib.voxelgameslib.api.feature.features.MapFeature;
+import com.voxelgameslib.voxelgameslib.components.map.BasicMarkerDefinition;
+import com.voxelgameslib.voxelgameslib.components.map.MarkerDefinition;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -7,9 +7,9 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.feature.AbstractFeatureCommand;
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.phase.Phase;
+import com.voxelgameslib.voxelgameslib.api.feature.AbstractFeatureCommand;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
+import com.voxelgameslib.voxelgameslib.api.phase.Phase;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

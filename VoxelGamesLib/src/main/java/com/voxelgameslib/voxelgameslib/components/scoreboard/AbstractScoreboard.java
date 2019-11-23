@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.exception.ScoreboardException;
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.api.exception.ScoreboardException;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 /**
  * Abstract implementation of a scoreboard, implements some limited functionality

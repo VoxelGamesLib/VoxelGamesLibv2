@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.voxelgameslib.voxelgameslib.components.ability.Ability;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
+import com.voxelgameslib.voxelgameslib.util.utils.ItemBuilder;
 
 import org.bukkit.inventory.ItemStack;
 

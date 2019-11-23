@@ -2,7 +2,7 @@ package com.voxelgameslib.voxelgameslib.components.points;
 
 import javax.persistence.Table;
 
-import com.voxelgameslib.voxelgameslib.game.GameMode;
+import com.voxelgameslib.voxelgameslib.api.game.GameMode;
 
 //@Entity
 @Table(name = "point_definition")

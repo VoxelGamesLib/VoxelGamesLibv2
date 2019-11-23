@@ -1,6 +1,6 @@
 package com.voxelgameslib.voxelgameslib.components.team;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 /**
  * Handles the teams

@@ -25,13 +25,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.voxelgameslib.voxelgameslib.VoxelGamesLib;
-import com.voxelgameslib.voxelgameslib.lang.Lang;
-import com.voxelgameslib.voxelgameslib.stats.StatsHandler;
-import com.voxelgameslib.voxelgameslib.stats.Trackable;
-import com.voxelgameslib.voxelgameslib.user.User;
-import com.voxelgameslib.voxelgameslib.user.UserHandler;
-import com.voxelgameslib.voxelgameslib.utils.ChatUtil;
-import com.voxelgameslib.voxelgameslib.utils.Pair;
+import com.voxelgameslib.voxelgameslib.internal.lang.Lang;
+import com.voxelgameslib.voxelgameslib.api.stats.StatsHandler;
+import com.voxelgameslib.voxelgameslib.api.stats.Trackable;
+import com.voxelgameslib.voxelgameslib.components.user.User;
+import com.voxelgameslib.voxelgameslib.components.user.UserHandler;
+import com.voxelgameslib.voxelgameslib.util.utils.ChatUtil;
+import com.voxelgameslib.voxelgameslib.util.Pair;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

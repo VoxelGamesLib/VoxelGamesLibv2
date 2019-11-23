@@ -20,8 +20,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.voxelgameslib.voxelgameslib.handler.Handler;
-import com.voxelgameslib.voxelgameslib.utils.ItemBuilder;
+import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
+import com.voxelgameslib.voxelgameslib.util.utils.ItemBuilder;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

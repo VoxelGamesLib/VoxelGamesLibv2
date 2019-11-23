@@ -4,7 +4,7 @@ import net.kyori.text.Component;
 
 import javax.annotation.Nonnull;
 
-import com.voxelgameslib.voxelgameslib.user.User;
+import com.voxelgameslib.voxelgameslib.components.user.User;
 
 import org.bukkit.Location;
 
