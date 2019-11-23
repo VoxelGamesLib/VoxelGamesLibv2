@@ -20,7 +20,7 @@ import com.voxelgameslib.voxelgameslib.game.GameHandler;
 import com.voxelgameslib.voxelgameslib.handler.Handler;
 import com.voxelgameslib.voxelgameslib.timings.Timing;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.classgraph.ClassGraph;
 
 /**
  * Created by Martin on 04.10.2016.
@@ -33,7 +33,7 @@ public class MapHandler implements Handler {
     private GameHandler gameHandler;
     @Inject
     @Named("IncludeAddons")
-    private FastClasspathScanner scanner;
+    private ClassGraph scanner;
 
     //TODO implement chests
     @Nonnull
@@ -44,7 +44,8 @@ public class MapHandler implements Handler {
     @Override
     public void enable() {
         try (final Timing timing = new Timing("ScanningFeatures")) {
-            scanner.matchClassesWithAnnotation(FeatureInfo.class, (clazz) -> {
+            scanner.enableClassInfo().enableAnnotationInfo().scan()
+                    .getClassesWithAnnotation(FeatureInfo.class.getName()).loadClasses().forEach((clazz) -> {
                 if (!Feature.class.isAssignableFrom(clazz)) {
                     log.log(Level.WARNING, "Feature " + clazz.getName() + " is malformed, its not a subtype of feature!");
                     return;
@@ -56,7 +57,7 @@ public class MapHandler implements Handler {
                 } catch (InstantiationException | IllegalAccessException e) {
                     log.log(Level.WARNING, "Feature " + cls.getName() + " is malformed!", e);
                 }
-            }).scan();
+            });
         }
         log.info("Loaded " + markerDefinitions.size() + " MarkerDefinitions");
     }

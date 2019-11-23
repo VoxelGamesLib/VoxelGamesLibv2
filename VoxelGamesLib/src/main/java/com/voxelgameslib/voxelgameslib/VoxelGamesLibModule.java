@@ -38,7 +38,7 @@ import org.bukkit.plugin.Plugin;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.timings.lib.TimingManager;
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.classgraph.ClassGraph;
 
 public final class VoxelGamesLibModule extends AbstractModule {
 
@@ -107,14 +107,14 @@ public final class VoxelGamesLibModule extends AbstractModule {
     }
 
     @Provides
-    public FastClasspathScanner getScanner() {
-        return new FastClasspathScanner().addClassLoader(getClass().getClassLoader());
+    public ClassGraph getScanner() {
+        return new ClassGraph().addClassLoader(getClass().getClassLoader());
     }
 
     @Provides
     @Named("IncludeAddons")
-    public FastClasspathScanner getScannerWithAddons(ModuleHandler moduleHandler) {
-        FastClasspathScanner scanner = getScanner();
+    public ClassGraph getScannerWithAddons(ModuleHandler moduleHandler) {
+        ClassGraph scanner = getScanner();
         moduleHandler.getModuleClassLoaders().forEach(scanner::addClassLoader);
         return scanner;
     }

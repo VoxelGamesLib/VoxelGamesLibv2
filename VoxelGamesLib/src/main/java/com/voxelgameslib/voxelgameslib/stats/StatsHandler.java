@@ -32,8 +32,7 @@ import com.voxelgameslib.voxelgameslib.utils.Pair;
 
 import org.bukkit.Bukkit;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.SubclassMatchProcessor;
+import io.github.classgraph.ClassGraph;
 
 @Singleton
 public class StatsHandler implements Handler {
@@ -50,7 +49,7 @@ public class StatsHandler implements Handler {
     private PersistenceHandler persistenceHandler;
     @Inject
     @Named("IncludeAddons")
-    private FastClasspathScanner scanner;
+    private ClassGraph scanner;
     @Inject
     private ErrorHandler errorHandler;
 
@@ -64,7 +63,9 @@ public class StatsHandler implements Handler {
         Bukkit.getScheduler().runTaskTimer(vgl, () -> statTypes.stream().filter(Stat::shouldTick).forEach(Stat::tickOneMinute), 20 * 60, 20 * 60);
 
         try (final Timing timing = new Timing("RegisterStatTypes")) {
-            scanner.matchSubclassesOf(Stat.class, (SubclassMatchProcessor<Stat>) this::registerStatType).scan();
+            //noinspection unchecked
+            scanner.enableClassInfo().scan().getSubclasses(Stat.class.getName()).loadClasses()
+                    .forEach(clazz -> registerStatType((Class<? extends Stat>) clazz));
         }
         log.info("Registered " + statTypes.size() + " StatsTypes");
 

@@ -38,7 +38,7 @@ import com.voxelgameslib.voxelgameslib.stats.Trackable;
 import com.voxelgameslib.voxelgameslib.timings.Timing;
 import com.voxelgameslib.voxelgameslib.utils.Pair;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.classgraph.ClassGraph;
 
 /**
  * A implementation of the persistence provider based on hibernate
@@ -55,7 +55,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
     private StartupHandler startupHandler;
     @Inject
     @Named("IncludeAddons")
-    private FastClasspathScanner scanner;
+    private ClassGraph scanner;
     @Inject
     private ErrorHandler errorHandler;
 
@@ -96,20 +96,22 @@ public class HibernatePersistenceProvider implements PersistenceProvider {
             MetadataSources sources = new MetadataSources(registry);
 
             try (final Timing timing = new Timing("Init converters")) {
-                scanner.matchClassesImplementing(VGLConverter.class, (annotatedClass) -> {
+                scanner.enableClassInfo().scan()
+                        .getClassesImplementing(VGLConverter.class.getName()).loadClasses().forEach((annotatedClass) -> {
                     try {
-                        annotatedClass.newInstance().init();
+                        ((VGLConverter<?, ?>) annotatedClass.newInstance()).init();
                     } catch (InstantiationException | IllegalAccessException e) {
                         log.warning("Error while initializing converter " + annotatedClass.getSimpleName());
                         e.printStackTrace();
                     }
-                }).scan();
+                });
             }
 
             try (final Timing timing = new Timing("RegisterDBEntities")) {
-                scanner.matchClassesWithAnnotation(Entity.class, (annotatedClass) -> {
+                scanner.enableClassInfo().enableAnnotationInfo().scan()
+                        .getClassesWithAnnotation(Entity.class.getName()).loadClasses().forEach((annotatedClass) -> {
                     if (!annotatedClass.getName().contains("ebean")) sources.addAnnotatedClass(annotatedClass);
-                }).scan();
+                });
             }
 
             try {
