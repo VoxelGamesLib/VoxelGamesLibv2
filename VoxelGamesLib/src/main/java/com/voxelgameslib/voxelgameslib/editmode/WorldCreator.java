@@ -104,7 +104,7 @@ public class WorldCreator extends BaseCommand {
         worldHandler.loadLocalWorld(worldName);
         Location spawnLoc = Bukkit.getWorld(worldName).getSpawnLocation();
         Vector3D spawn = new Vector3D(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ());
-        sender.getPlayer().teleport(spawnLoc);
+        sender.getPlayer().teleportAsync(spawnLoc);
 
         game = gameHandler.startGame(EditModeGame.GAMEMODE);
         game.getActivePhase().getNextPhase().getFeature(SpawnFeature.class).addSpawn(spawn);

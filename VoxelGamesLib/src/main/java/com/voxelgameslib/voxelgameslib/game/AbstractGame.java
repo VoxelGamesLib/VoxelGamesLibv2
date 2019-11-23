@@ -412,7 +412,7 @@ public abstract class AbstractGame implements Game {
         GamePostLeaveEvent event = new GamePostLeaveEvent(this, user, Bukkit.getWorlds().get(0).getSpawnLocation(), shouldTeleportToSpawn);
         event.callEvent();
         if (event.shouldTeleportToSpawn()) {
-            user.getPlayer().teleport(event.getSpawnLocation());
+            user.getPlayer().teleportAsync(event.getSpawnLocation());
         }
 
         user.removeListeningChannel(chatChannel.getIdentifier());

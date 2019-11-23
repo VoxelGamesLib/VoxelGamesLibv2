@@ -57,7 +57,7 @@ public class SpawnFeature extends AbstractFeature {
 
         if (isInitialSpawn) {
             for (User user : getPhase().getGame().getPlayers()) {
-                user.getPlayer().teleport(getSpawn(user.getPlayer().getUniqueId()));
+                user.getPlayer().teleportAsync(getSpawn(user.getPlayer().getUniqueId()));
             }
         }
     }
@@ -88,7 +88,7 @@ public class SpawnFeature extends AbstractFeature {
     @SuppressWarnings("JavaDoc")
     @GameEvent
     public void onJoin(@Nonnull GameJoinEvent e) {
-        e.getUser().getPlayer().teleport(getSpawn(e.getUser().getUuid()));
+        e.getUser().getPlayer().teleportAsync(getSpawn(e.getUser().getUuid()));
     }
 
     @Override

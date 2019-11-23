@@ -62,7 +62,7 @@ public class GameListener implements Listener {
     public void onJoin(@Nonnull PlayerJoinEvent event) {
         if (gameHandler.getDefaultGame() != null) {
             gameHandler.getDefaultGame().getActivePhase().getOptionalFeature(SpawnFeature.class).ifPresent(spawnFeature ->
-                    event.getPlayer().teleport(spawnFeature.getSpawn(event.getPlayer().getUniqueId())));
+                    event.getPlayer().teleportAsync(spawnFeature.getSpawn(event.getPlayer().getUniqueId())));
         }
 
         Bukkit.getScheduler().runTaskLater(voxelGamesLib, () -> {

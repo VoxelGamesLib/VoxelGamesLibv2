@@ -84,7 +84,7 @@ public class WorldModifyCommands extends BaseCommand {
         worldHandler.loadLocalWorld(map.getLoadedName(editor.getUuid()));
 
         // tp
-        user.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName(user.getUuid())));
+        user.getPlayer().teleportAsync(map.getCenter().toLocation(map.getLoadedName(user.getUuid())));
 
         if (gameHandler.getDefaultGame().isParticipating(editor.getUuid())) {
             gameHandler.getDefaultGame().leave(editor, false);

@@ -99,11 +99,11 @@ public class WorldCommands extends BaseCommand {
         Optional<Map> o = handler.getMap(world);
         if (o.isPresent()) {
             Map map = o.get();
-            sender.getPlayer().teleport(map.getCenter().toLocation(map.getLoadedName(sender.getUuid())));
+            sender.getPlayer().teleportAsync(map.getCenter().toLocation(map.getLoadedName(sender.getUuid())));
         } else {
             World w = Bukkit.getWorld(world);
             if (w != null) {
-                sender.getPlayer().teleport(Bukkit.getWorld(world).getSpawnLocation());
+                sender.getPlayer().teleportAsync(Bukkit.getWorld(world).getSpawnLocation());
             }
             Lang.msg(sender, LangKey.WORLD_UNKNOWN_MAP, world);
         }

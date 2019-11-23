@@ -40,11 +40,11 @@ public class SpectatorFeature extends AbstractFeature {
         if (spawns.size() > 0) {
             Location location = spawns.get(ThreadLocalRandom.current().nextInt(spawns.size()))
                     .toLocation(map.getLoadedName(getPhase().getGame().getUuid())).add(0.5, 0, 0.5);
-            event.getUser().getPlayer().teleport(location);
+            event.getUser().getPlayer().teleportAsync(location);
         } else if (spawnFeature.isPresent()) {
-            event.getUser().getPlayer().teleport(spawnFeature.get().getSpawn(event.getUser().getUuid()));
+            event.getUser().getPlayer().teleportAsync(spawnFeature.get().getSpawn(event.getUser().getUuid()));
         } else if (event.getGame().getPlayers().size() > 0) {
-            event.getUser().getPlayer().teleport(event.getGame().getPlayers().get(0).getPlayer().getLocation());
+            event.getUser().getPlayer().teleportAsync(event.getGame().getPlayers().get(0).getPlayer().getLocation());
         } else {
             log.warning("Could not figure out a spectator spawn point");
         }

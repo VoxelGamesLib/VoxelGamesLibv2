@@ -32,7 +32,7 @@ public class VoidTeleportFeature extends AbstractFeature {
         if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             Player player = (Player) event.getEntity();
 
-            player.teleport(getPhase().getFeature(SpawnFeature.class).getSpawn(player.getUniqueId()));
+            player.teleportAsync(getPhase().getFeature(SpawnFeature.class).getSpawn(player.getUniqueId()));
 
             event.setCancelled(true);
         }
@@ -42,7 +42,7 @@ public class VoidTeleportFeature extends AbstractFeature {
     public void onFellOutOfWorld(@Nonnull PlayerMoveEvent event) {
         // just in case damage is disabled
         if (event.getTo().getY() < 0) {
-            event.getPlayer().teleport(getPhase().getFeature(SpawnFeature.class).getSpawn(event.getPlayer().getUniqueId()));
+            event.getPlayer().teleportAsync(getPhase().getFeature(SpawnFeature.class).getSpawn(event.getPlayer().getUniqueId()));
         }
     }
 }

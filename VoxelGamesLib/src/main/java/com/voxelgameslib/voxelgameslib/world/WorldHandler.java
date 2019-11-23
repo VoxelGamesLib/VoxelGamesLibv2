@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
@@ -42,11 +43,13 @@ import com.voxelgameslib.voxelgameslib.utils.NMSUtil;
 import com.voxelgameslib.voxelgameslib.utils.ZipUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.block.Block;
 
 /**
  * Handles the worlds (loading, unloading etc)
@@ -165,22 +168,24 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
 
         World world = loadLocalWorld(map.getLoadedName(gameid));
 
-        if (replaceMarkers) {
-            replaceMarkers(world, map);
-        }
-
         // load chunks based on markers
         int i = 0;
         int a = 0;
+        List<CompletableFuture<Chunk>> futures = new ArrayList<>();
         for (Marker m : map.getMarkers()) {
             Location l = m.getLoc().toLocation(world.getName());
-            if (!l.getChunk().isLoaded() || !l.getWorld().isChunkLoaded(l.getChunk())) {
-                l.getChunk().load();
-                l.getWorld().loadChunk(l.getChunk());
+            if (!l.isChunkLoaded()) {
+                futures.add(l.getWorld().getChunkAtAsync(l));
                 i++;
             } else {
                 a++;
             }
+        }
+
+        if (replaceMarkers) {
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenRun(() -> {
+                replaceMarkers(world, map);
+            });
         }
 
         log.finer("Loaded " + i + " chunks and ignored " + a + " already loaded");
@@ -208,7 +213,11 @@ public class WorldHandler implements Handler, Provider<WorldConfig> {
      * @param map   the map defining the markers
      */
     public void replaceMarkers(@Nonnull World world, @Nonnull Map map) {
-        map.getMarkers().forEach(marker -> marker.getLoc().toLocation(world.getName()).getBlock().setType(Material.AIR));
+        map.getMarkers().forEach(marker -> {
+            Block block = marker.getLoc().toLocation(world.getName()).getBlock();
+            block.getState(); // force load tile before removal...
+            block.setType(Material.AIR);
+        });
         log.finer("Replaced " + map.getMarkers().size() + " markers with air");
         //TODO chest markers?
     }
