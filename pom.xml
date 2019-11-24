@@ -13,10 +13,23 @@
     <url>https://voxelgameslib.com</url>
     <inceptionYear>2015</inceptionYear>
 
+    <developers>
+        <developer>
+            <name>MiniDigger</name>
+            <email>admin@minidigger.me</email>
+            <organization>MiniDigger</organization>
+            <organizationUrl>https://minidigger.me/</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--suppress UnresolvedMavenProperty -->
         <version.number>${project.version}-${git.commit.id.abbrev}</version.number>
+        <main.basedir>${project.basedir}</main.basedir>
     </properties>
 
     <licenses>
@@ -89,34 +102,6 @@
                             <arg>-parameters</arg>
                             <arg>-proc:none</arg>
                         </compilerArgs>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <stylesheetfile>${basedir}/VoxelGamesGamesLib/src/main/javadocs/javadoc_stylesheet.css
-                        </stylesheetfile>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -231,4 +216,43 @@
         <module>games/survivalgames</module>
         <module>games/tixtax</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>site</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <stylesheetfile>
+                                ${maven.multiModuleProjectDirectory}/VoxelGamesLib/src/main/javadocs/javadoc_stylesheet.css
+                            </stylesheetfile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
