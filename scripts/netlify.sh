@@ -8,7 +8,7 @@ echo "Cloning Submodules"
 git submodule update --init --recursive
 
 echo "Running maven"
-mvn -B package
+../mvnw -B package
 
 echo "copy stuff to deploy"
 
@@ -27,5 +27,5 @@ do
 done
 
 echo "create index"
-sudo pip install mako
+pip install mako
 python scripts/make_index.py --header "VGL Deployments" deploy-stuff
