@@ -8,7 +8,7 @@ echo "Cloning Submodules"
 git submodule update --init --recursive
 
 echo "Running maven"
-./mvnw -B package
+./mvnw -B -Psite package
 
 echo "copy stuff to deploy"
 
