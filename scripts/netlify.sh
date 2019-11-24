@@ -12,7 +12,7 @@ echo "Running maven"
 
 echo "copy stuff to deploy"
 
-mkdir deploy-stuff
+mkdir ./deploy-stuff
 
 declare -a paths=("VoxelGamesLib/" "games/1vs1/" "games/Deathmatch/" "games/Hub/" "tools/ChatMenuAPI/" "tools/commandline-tools/" "tools/KVGL/" "tools/dependencies/")
 declare -a names=("VGL" "1vs1" "Deathmatch" "Hub" "ChatMenuAPI" "commandline-tools" "KVGL" "dependencies")
@@ -22,6 +22,7 @@ arraylength=${#paths[@]}
 for (( i=1; i<${arraylength}+1; i++ ));
 do
   echo $i " / " ${arraylength}
+  mkdir ./deploy-stuff/${names[$i-1]}
   #cp -R ${paths[$i-1]}build/dependencyUpdates/. deploy-stuff/${names[$i-1]}
   cp -R ./${paths[$i-1]}target/apidocs/. ./deploy-stuff/${names[$i-1]}/javadoc
   #cp -R ${paths[$i-1]}build/reports/. deploy-stuff/${names[$i-1]}
