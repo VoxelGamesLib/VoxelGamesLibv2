@@ -1,8 +1,9 @@
 # VoxelGamesLib v2
 
-[![pipeline status](https://gitlab.com/VoxelGamesLib/VoxelGamesLibv2/badges/master/pipeline.svg)](https://gitlab.com/VoxelGamesLib/VoxelGamesLibv2/commits/master)
+[![pipeline status](https://github.com/VoxelGamesLib/VoxelGamesLibv2/workflows/Java%20CI/badge.svg)](https://github.com/VoxelGamesLib/VoxelGamesLibv2/actions)
 [![codebeat badge](https://codebeat.co/badges/fca40169-ef87-4f2a-af71-5524970eb058)](https://codebeat.co/projects/github-com-voxelgameslib-voxelgameslibv2-master)
 [![license](https://img.shields.io/github/license/VoxelGamesLib/VoxelGamesLibv2.svg)](LICENSE)
+[![Coding time tracker](https://wakatime.com/badge/github/VoxelGamesLib/VoxelGamesLibv2.svg)](https://wakatime.com/badge/github/VoxelGamesLib/VoxelGamesLibv2)
 
 Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
 
