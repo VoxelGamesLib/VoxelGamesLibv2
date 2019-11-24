@@ -23,7 +23,7 @@ for (( i=1; i<${arraylength}+1; i++ ));
 do
   echo $i " / " ${arraylength}
   #cp -R ${paths[$i-1]}build/dependencyUpdates/. deploy-stuff/${names[$i-1]}
-  cp -R ${paths[$i-1]}build/apidocs/. deploy-stuff/${names[$i-1]}/javadoc
+  cp -R ${paths[$i-1]}target/apidocs/. deploy-stuff/${names[$i-1]}/javadoc
   #cp -R ${paths[$i-1]}build/reports/. deploy-stuff/${names[$i-1]}
   #cp -R ${paths[$i-1]}build/libs/. deploy-stuff/${names[$i-1]}
 done
