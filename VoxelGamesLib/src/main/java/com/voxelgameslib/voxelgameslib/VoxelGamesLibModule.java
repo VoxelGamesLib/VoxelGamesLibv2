@@ -38,7 +38,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import co.aikar.commands.BukkitCommandManager;
-import co.aikar.timings.lib.TimingManager;
+import co.aikar.commands.lib.timings.TimingManager;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 

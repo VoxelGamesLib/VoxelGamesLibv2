@@ -35,15 +35,27 @@ IRC: irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc)).
 The repository is located at `https://repo.minidigger.me/repository/voxelgameslib/`
 
 Gradle:
-URL:
 ```
 repositories {
     maven { url 'https://repo.minidigger.me/repository/voxelgameslib/' }
 }
 
 dependencies {
-    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '2.0-SNAPSHOT'
+    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '
+    <version>1.0.0-SNAPSHOT</version>'
 }
+```
+
+Maven:
+```
+<repositories>
+    <repository>
+        <id>voxelgameslib</id>
+        <url>https://repo.minidigger.me/repository/maven-public/</url>
+    </repository>
+</repositories>
+
+
 ```
 
 # Contributing

@@ -15,8 +15,8 @@ import com.voxelgameslib.voxelgameslib.internal.handler.Handler;
 
 import org.bukkit.Bukkit;
 
-import co.aikar.timings.lib.MCTiming;
-import co.aikar.timings.lib.TimingManager;
+import co.aikar.commands.lib.timings.MCTiming;
+import co.aikar.commands.lib.timings.TimingManager;
 
 /**
  * The TickHandler handles the ticking of all Tickables on the server. However not every Tickable is registered here.

@@ -87,10 +87,10 @@ import co.aikar.commands.CommandReplacements;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.lib.timings.TimingManager;
 import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
-import co.aikar.timings.lib.TimingManager;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 
 public final class VoxelGamesLib extends JavaPlugin {

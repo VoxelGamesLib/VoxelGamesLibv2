@@ -40,8 +40,8 @@ import com.voxelgameslib.voxelgameslib.internal.graph.Graph;
 import org.bukkit.event.Listener;
 
 import co.aikar.commands.BukkitCommandManager;
-import co.aikar.timings.lib.MCTiming;
-import co.aikar.timings.lib.TimingManager;
+import co.aikar.commands.lib.timings.MCTiming;
+import co.aikar.commands.lib.timings.TimingManager;
 
 /**
  * Simple implementation of a {@link Phase}. Implements the necessary {@link Feature}-handling.
