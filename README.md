@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '1.0.0-SNAPSHOT'
+    compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib-parent', version: '1.0.0-SNAPSHOT'
 }
 ```
 
