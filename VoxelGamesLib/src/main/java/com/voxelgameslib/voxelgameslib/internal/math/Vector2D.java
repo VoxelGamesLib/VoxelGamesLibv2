@@ -145,6 +145,29 @@ public class Vector2D implements Cloneable {
     }
 
     /**
+     * Subtracts values from this vector
+     *
+     * @param x The amount to subtract from the x value
+     * @param y The amount to subtract from the y value
+     * @return A new vector
+     */
+    @Nonnull
+    public final Vector2D subtract(double x, double y) {
+        return new Vector2D(this.x - x, this.y - y);
+    }
+
+    /**
+     * Performs vector subtraction
+     *
+     * @param vector The vector to subtract from this vector
+     * @return A new vector
+     */
+    @Nonnull
+    public final Vector2D subtract(@Nonnull Vector2D vector) {
+        return new Vector2D(this.x - vector.x, this.y - vector.y);
+    }
+
+    /**
      * Performs scalar multiplication on this vector
      *
      * @param amount The scalar to multiply by

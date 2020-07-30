@@ -165,6 +165,30 @@ public class Vector3D implements Cloneable {
     }
 
     /**
+     * Subtract values from this vector
+     *
+     * @param x The amount to subtract from the x value
+     * @param y The amount to subtract from the y value
+     * @param z The amount to subtract from the z value
+     * @return A new vector
+     */
+    @Nonnull
+    public final Vector3D subtract(double x, double y, double z) {
+        return new Vector3D(this.x - x, this.y - y, this.z - z);
+    }
+
+    /**
+     * Performs vector subtraction
+     *
+     * @param vector The vector to subtract from this vector
+     * @return A new vector
+     */
+    @Nonnull
+    public final Vector3D subtract(@Nonnull Vector3D vector) {
+        return new Vector3D(this.x - vector.x, this.y - vector.y, this.z - vector.z);
+    }
+
+    /**
      * Performs scalar multiplication on this vector
      *
      * @param amount The scalar to multiply by
