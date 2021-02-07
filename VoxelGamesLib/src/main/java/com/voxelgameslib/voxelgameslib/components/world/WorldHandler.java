@@ -6,7 +6,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
