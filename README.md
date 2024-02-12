@@ -5,7 +5,17 @@
 [![license](https://img.shields.io/github/license/VoxelGamesLib/VoxelGamesLibv2.svg)](LICENSE)
 [![Coding time tracker](https://wakatime.com/badge/github/VoxelGamesLib/VoxelGamesLibv2.svg)](https://wakatime.com/badge/github/VoxelGamesLib/VoxelGamesLibv2)
 
-Powerful, feature-packed, abstract and expandable Minecraft minigames framework.
+VoxelGamesLib is a powerful, feature-packed, abstract and expandable Minecraft minigames framework. VoxelGamesLib empowers game developers, designers, and map builders to channel their creativity into crafting captivating and enjoyable games. By providing a comprehensive set of APIs and extensive support for designers and builders, it alleviates the need for repetitive coding tasks and minimizes concerns about potential bugs. The development process becomes a seamless and enjoyable experience, allowing developers to concentrate on what's important. Gameplay.
+
+# Features
+
+VoxelGamesLib provides developers and designers a wide-set of features to be implemented into their game. Such as:
+
+* Elo-Based Matching
+* Multiple Game Modes
+* Server-Admin Support
+* Stats-Tracking
+* Easy Map Configurations
 
 # Download
 
@@ -20,14 +30,46 @@ Javadocs can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL
 
 VoxelGamesLib uses [Maven](https://maven.apache.org/) as our build system. To compile:
 
-* Install Git and Maven
-* Clone the repository
+* Install [Git](https://git-scm.com/downloads) and [Maven](https://maven.apache.org/)
+* Clone the repository `git clone https://github.com/VoxelGamesLib/VoxelGamesLibv2.git`
 * Run `git submodule update --init --recursive` to clone all submodule if you want to
 * Run `mvn`
 
+VoxelGamesLib is also heavily dependent on [Guice](https://github.com/google/guice), a dependency injection framework. 
+A useful add-on plugin for VoxelGamesLib is [Bukkit](https://dev.bukkit.org/), an open source server modification tool.
+
+# Usage
+
+The basics of developing a game are including [features](https://voxelgameslib.github.io/docs/components/features/) and developing [phases](https://voxelgameslib.github.io/docs/developer-area/how-to-write-a-phase/). The basic format of a game should look similar to this:
+
+Create a game class and constructor
+
+`@GameInfo(name = "NewGame", author = "", version = "", description = "Game Description")
+public class NewGame extends AbstractGame {
+    public newGame() {
+        super(newGamePlugin.GAMEMODE);
+    }`
+
+Next you want to include two methods `initGameFromModule` and `initGameFromDefinition`. Include your phases and features within `initGameFromModule`.
+
+`@Override // For more information check out Guice Documentation linked above
+    public void initGameFromDefinition(@Nonnull GameDefinition gameDefinition) {
+        super.initGameFromDefinition(gameDefinition);
+        loadMap(); // Loads the lobby map
+    }
+@Override
+    public void initGameFromModule() {
+        // Add Features
+        // Add Phases
+        loadMap();
+    }`
+    
+To start a game run `/game start <gamemode>`.
+Have fun building!
+
 # Chat
 
-You can find the active contributors on IRC or [Discord](https://s.minidigger.me/discord).
+You can find the active contributors on IRC or [Discord](https://discord.gg/VsZH2rR).
 IRC: irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc)).
 
 # Repository
@@ -65,7 +107,14 @@ For contributing information, see: [Contributing.md](CONTRIBUTING.md)
 
 Dependency report can be found [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL/report.txt)  
 Test results can be found here [here](https://voxelgameslib.github.io/VoxelGamesLibv2/VGL/tests/test/)  
+Contact us: contributors@voxelgameslib.com
+
+# Credit
+
+Author: Martin Benndorf 
+Website: https://benndorf.dev/
+Contact: admin@minidigger.me
 
 # License
 
-[MIT](LICENSE)
+This project is [MIT](LICENSE) licensed.
