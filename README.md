@@ -32,14 +32,13 @@ IRC: irc.spi.gt #minidigger (or [webchat](https://s.minidigger.me/irc)).
 
 # Repository
 
-The repository is located at `https://repo.minidigger.me/repository/voxelgameslib/`
+Unfortunately I don't host a Nexus instance anymore so there is no repository for this, sorry!
+
+You need to build it yourself and publish it to your own Maven local repository,
+this could be done by [running the steps described above](#Building).
 
 Gradle:
 ```
-repositories {
-    maven { url 'https://repo.minidigger.me/repository/voxelgameslib/' }
-}
-
 dependencies {
     compileOnly group: 'com.voxelgameslib', name: 'voxelgameslib', version: '1.0.0-SNAPSHOT'
 }
@@ -47,14 +46,13 @@ dependencies {
 
 Maven:
 ```
-<repositories>
-    <repository>
-        <id>voxelgameslib</id>
-        <url>https://repo.minidigger.me/repository/maven-public/</url>
-    </repository>
-</repositories>
-
-
+<dependencies>
+    <dependency>
+        <groupId>com.voxelgameslib</groupId>
+        <artifactId>voxelgameslib</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 ```
 
 # Contributing
